@@ -5,7 +5,7 @@
 
 .. Welcome to FR's documentation!
 
-欢迎访问法奥文档！
+歡迎參觀法奧文件！
 =========================================
 
 .. figure:: _static/product_matrix.png
@@ -14,7 +14,7 @@
 
 .. toctree::
    :maxdepth: 6
-   :caption: 用户手册
+   :caption: 使用者手冊
 
    CobotsManual/intro
    SDKManual/index
@@ -24,13 +24,13 @@
 
 .. toctree:: 
    :maxdepth: 6
-   :caption: 开放平台
+   :caption: 開放平台
 
    ROSGuide/index
 
 .. toctree:: 
    :maxdepth: 6
-   :caption: 资料下载
+   :caption: 資料下載
 
    download
 
