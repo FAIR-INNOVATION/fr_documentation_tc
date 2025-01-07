@@ -1,0 +1,461 @@
+自訂協定從站指令 
+===========================
+
+.. toctree:: 
+   :maxdepth: 6
+
+概述
+-------------------
+
+為了方便PLC透過不同的工業匯流排協定（CC-Link、Profinet、Ethernet/IP和EtherCAT）對機器人進行運動控制，在整合式mini控制箱上增加赫優訊闆卡模組，實現功能如下：
+
+1) CC-Link slave 協定支援；
+2) Profinet slave 協定支援；
+3) Ethernet/IP slave 協定支援；
+4) EtherCAT slave 協定支援；
+
+環境配置
+--------------------------
+
+硬體環境搭建
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. 將赫優訊闆卡安裝到整合式mini控制箱，如圖所示。
+
+.. image:: custom_protocol_slave/001.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-1 赫優訊闆卡安裝
+
+.. image:: custom_protocol_slave/002.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-2 赫優訊闆卡網口
+
+2. 機器人控制箱和PLC接線如下圖所示。
+
+.. image:: custom_protocol_slave/003.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-3 控制箱&三菱PLC接線圖
+
+.. image:: custom_protocol_slave/004.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-4 控制箱&西門子PLC接線圖
+
+.. image:: custom_protocol_slave/005.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-5 控制箱&歐姆龍PLC接線圖
+
+.. image:: custom_protocol_slave/006.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-6 控制箱&歐姆龍PLC接線圖
+
+.. note::
+ 1：機器人控制箱（闆卡網口）；
+ 2：交換器；
+ 3：筆記本PC；
+ 4：三菱PLC（CC-link網口）；
+ 5：西門子PLC（Profinet網路埠）；
+ 6：歐姆龍PLC（Ethernet/IP網路埠）；
+ 7：歐姆龍PLC（EtherCAT網口）；
+
+.. important:: 當協定切換為EtherCAT匯流排時，闆卡的網口需要區分為EtherCAT_IN和EtherCAT_OUT，此時，歐姆龍PLC的EtherCAT網口需要與卡的EtherCAT_IN網口透過一條網線直連。
+
+軟體環境搭建
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. 瀏覽器IP輸入192.168.58.2，帳號為admin，密碼為123，點選“登入”，進入機器人控制箱Web介面。
+
+.. image:: custom_protocol_slave/007.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 17.2-7 Web登入介面
+
+2. 點選輔助應用->工具應用->系統升級介面，選擇software.tar.gz文件，上傳升級包。
+
+.. image:: custom_protocol_slave/008.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-8 軟體升級
+
+.. note:: qnx控制箱web版本需要3.7.6以上，linux控制箱web版本需要3.7.4以上。
+
+3. 進入周邊->遠端控制， 控制模式選擇“Profinet控制”，廠商選擇“Hilscher”，循環週期選擇“4ms”，點選“設定”。
+
+.. image:: custom_protocol_slave/009.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-9 介面配置
+
+4. 點選右上角「本地模式」->切換遠端模式。
+
+.. image:: custom_protocol_slave/010.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-10 切換遠端模式
+
+5. 選擇控制器從站協議，點選「設定」按鈕。
+
+.. image:: custom_protocol_slave/011.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 17.2-11 配置通訊協議
+
+.. note:: 切換不同的協議，需要重新啟動控制箱再進行協議的設定。
+
+PLC環境搭建
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+實現各協定從站指令所搭建的測試環境如下表所示，其中包括各協議中所使用PLC的型號，韌體版本及測試軟體。
+
+.. list-table:: 
+   :widths: 100 100 100 100 100
+   :header-rows: 1
+   :align: center
+
+   * - 協定
+     - 品牌
+     - 型號
+     - 韌體
+     - 軟體
+
+   * - Profinet
+     - 西門子
+     - CPU 1515-2 PN
+     - 6ES75152AM020AB0
+     - TIA Portal V17
+
+   * - CC-link
+     - 三菱
+     - FX5S-30TR/DS
+     - 30MR/ES V1.3
+     - GX Works3 V1.097B
+
+   * - Ethernet/IP
+     - 歐姆龍
+     - MX102-1100
+     - V1.3
+     - Sysmac Studio V1.50
+
+   * - EtherCAT
+     - 歐姆龍
+     - MX102-1100
+     - V1.3
+     - Sysmac Studio V1.50
+
+西門子Profinet
+++++++++++++++++++++++++++++++++++
+
+1. GSD檔（XML檔）導入
+
+開啟西門子程式設計軟體TIA Portal V17，新建PLC工程，選擇“設備與網路”，右側“硬體目錄”選擇雙擊6ES7 515-2AM02-0AB0新增PLC模組。
+
+.. image:: custom_protocol_slave/012.png
+   :width: 6in
+   :align: center
+
+在 TIA PORTAL 軟體中選單列選擇「選項」->「管理通用站描述檔(GSD)」可安裝或刪除已安裝完成的 GSD 檔案。
+
+.. image:: custom_protocol_slave/013.png
+   :width: 6in
+   :align: center
+
+以安裝赫優訊 GSD 檔案為例，如上選擇“管理通用站描述檔(GSD)”，出現“管理通用站描述檔”視窗。
+
+從「來源路徑」選擇要安裝 GSD 文件的資料夾，從所顯示 GSD 文件的清單中選擇要安裝的一個或多個文件，按一下「安裝」按鈕。如下圖所示。
+
+.. image:: custom_protocol_slave/014.png
+   :width: 6in
+   :align: center
+
+安裝成功後，可在硬體目錄下，其它現場設備找到安裝的 GSD 檔案的設備，如下圖所示。
+
+.. image:: custom_protocol_slave/015.png
+   :width: 4in
+   :align: center
+
+2. 運行程式
+
+開啟工程“QNXtest”。
+
+.. image:: custom_protocol_slave/016.png
+   :width: 6in
+   :align: center
+
+編譯程式：左側項目樹雙擊進入“設備和網路”，右鍵單擊“PLC_1”模組，下拉式選單選擇編譯，單機“硬體和軟體（僅更改）”。編譯完成後將在軟體視圖下方提示「編譯完成」。
+
+.. image:: custom_protocol_slave/017.png
+   :width: 6in
+   :align: center
+
+.. image:: custom_protocol_slave/018.png
+   :width: 6in
+   :align: center
+
+下載程式到設備：左側項目樹雙擊進入“設備和網路”，右鍵單擊“PLC_1”模組，下拉式選單選擇“下載到設備”，單機“硬體和軟體（僅更改）”。
+
+.. image:: custom_protocol_slave/019.png
+   :width: 6in
+   :align: center
+
+搜尋並下載設備：彈跳窗後如下圖配置PG/PC介面類型，點選開始搜索，選擇需要下載程式的設備，點選下載。
+
+.. image:: custom_protocol_slave/020.png
+   :width: 6in
+   :align: center
+
+.. image:: custom_protocol_slave/021.png
+   :width: 6in
+   :align: center
+
+三菱CC-link
+++++++++++++++++++++++++++++++++++
+
+1. CC-Link IEF Basic設置
+
+開啟使用CC-link：左側導覽功能表列選擇“乙太網路連接埠”，設定PLC ip位址，確保與赫優訊闆卡位址同網段。點選“CC-link IEF Basic使用有無”，選擇 “使用”。
+
+.. image:: custom_protocol_slave/022.png
+   :width: 6in
+   :align: center
+
+CC-Link 網路配置設定：同樣在CC-Link IEF Basic設置，選擇“網路配置設定”，模組選擇赫優訊CIFX Digital I/O模組。拖曳到視圖左下方，完成硬體配置。
+
+.. image:: custom_protocol_slave/023.png
+   :width: 6in
+   :align: center
+
+CC-Link 刷新設定：同樣在CC-Link IEF Basic設置，點選刷新設置，自訂傳輸設定：256位元組接收，256位元組發送。
+
+.. image:: custom_protocol_slave/024.png
+   :width: 6in
+   :align: center
+
+2. 程式下載
+
+開啟測試程式後，點選「線上」→「寫入至可程式控制器」進入下載介面。
+
+.. image:: custom_protocol_slave/025.png
+   :width: 6in
+   :align: center
+
+開啟下載介面後，點選左上方“參數+程式”，再點選右下角“執行”進行下載，等待下載完成。
+
+.. image:: custom_protocol_slave/026.png
+   :width: 6in
+   :align: center
+
+HMI設定（CC-link仿真）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. 登入HMI介面後啟用「Enable Task」建立PLC與控制器通訊連線。
+
+.. image:: custom_protocol_slave/027.png
+   :width: 6in
+   :align: center
+
+2. 點選01_MC_EnableRobot介面後再點選「EnableRobot」啟用機器人，使用過程中如有報錯，點選「Reset」重設。
+
+.. image:: custom_protocol_slave/028.png
+   :width: 6in
+   :align: center
+
+3. 點選「02_MC_ToolData」進入工具資訊介面，左邊輸入參數後點選WriteToolData寫入工具資訊；右邊點選ReadToolData讀取現有工具資訊。
+   
+.. image:: custom_protocol_slave/029.png
+   :width: 6in
+   :align: center
+
+4. 點選「03_MC_FrameData」進入工件資訊介面，左邊輸入參數後點選WriteFrameData寫入工件資訊；右邊點選ReadFrameData讀取現有工件資訊。
+   
+.. image:: custom_protocol_slave/030.png
+   :width: 6in
+   :align: center
+
+5. 點選「04_MC_LoadData」進入負載資訊介面，左邊輸入參數後點選WriteLoadData寫入負載資訊；右邊點選ReadLoadData讀取現有負載資訊。
+   
+.. image:: custom_protocol_slave/031.png
+   :width: 6in
+   :align: center
+
+6. 點選「05_MC_RobotReferenceDynamics」進入機器人最大速度和最大加速度介面，左邊輸入參數後點選WriteRobotRefD寫入最大速度和最大加速度資訊；右邊點選ReadRobotRefD讀取最大速度和最大加速資訊。
+   
+.. image:: custom_protocol_slave/032.png
+   :width: 6in
+   :align: center
+
+7. 點選「06_MC_Robot DefaultDynamics」進入機器人預設速度與預設加速度介面，左邊輸入參數後點選WriteRobotDefD寫入預設速度與預設加速資訊；右邊點選ReadRobotDefD讀取預設速度與預設加速資訊。
+   
+.. image:: custom_protocol_slave/033.png
+   :width: 6in
+   :align: center
+
+8. 點選「07_MC_RobotSwLimits」進入座標限位介面，左邊輸入最大限位與最小限位參數值後點選WriteRobotSwLimits寫入限位參數資訊；右邊點選ReadRobotSwLimits讀取現有限位元參數資訊。
+   
+.. image:: custom_protocol_slave/034.png
+   :width: 6in
+   :align: center
+
+9. 點選「08_MC_ReadActualPosition」進入讀取實際位置介面，點選讀取ReadPosition讀取現有位置資訊。
+   
+.. image:: custom_protocol_slave/035.png
+   :width: 6in
+   :align: center
+
+10. 點選「09_MC_MoveLinearAbsolute」進入線性運動介面，輸入座標參數後點選MoveLinearAbsolute使機器人以目標位置線性移動。
+   
+.. image:: custom_protocol_slave/036.png
+   :width: 6in
+   :align: center
+
+11. 點選「10_MC_MoveAxesAbsolute」進入軸座標運動介面，輸入座標參數後點選MoveAxesAbsolute使機器人以輸入的軸座標為終點向目標位置移動。
+   
+.. image:: custom_protocol_slave/037.png
+   :width: 6in
+   :align: center
+
+12. 點選「11_MC_MoveDirectAbsolute」進入直接運動介面，輸入座標參數後點選MoveDirectAbsolute使機器人以輸入參數為終點直接向目標位置移動。
+   
+.. image:: custom_protocol_slave/038.png
+   :width: 6in
+   :align: center
+
+13. 點選「12_MC_Groups」進入直接運動操作介面，其中，點選GroupInterrupt可以讓機器人在運動過程中中斷移動，點選GroupContinue使機器人繼續往目標位置移動。點擊GroupStop停止（結束）正在進行的位置移動動作。如過程中觸犯警報或錯誤，點選GroupReset重設機器人錯誤。
+   
+.. image:: custom_protocol_slave/039.png
+   :width: 6in
+   :align: center
+
+14. 點選「13_MC_PositionConversion」進入位置換算介面，XtoJ1可進行笛卡爾位姿到關節角度的轉換，J1toX可進行關節角度到笛卡爾位姿的轉換。
+   
+.. image:: custom_protocol_slave/040.png
+   :width: 6in
+   :align: center
+
+15. 點選「14_MC_GroupJog」進入機器人點動介面，配置完畢後下拉座標軸選擇需要點動的軸，再選擇軸的旋轉方向。點選JogMove進行點動。右邊MC_ChangeSpeedOverride可調整機械手臂的移動速度。
+   
+.. image:: custom_protocol_slave/041.png
+   :width: 6in
+   :align: center
+
+HMI設定（Profinet仿真）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. 開啟程式後點選選擇項目樹中的“HMI_1[ktp700 Basic PN]”，之後在選單列中點選“線上”→“模擬”→“啟動”。等待軟體編譯並模擬。
+
+2. 模擬後功能與威綸通螢幕（CC-link）內容一致。可參考上述內容設定。
+   
+.. image:: custom_protocol_slave/042.png
+   :width: 6in
+   :align: center   
+
+.. image:: custom_protocol_slave/043.png
+   :width: 6in
+   :align: center
+
+附錄
+-------------------
+
+指令列表
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. list-table:: 
+   :widths: 20 80
+   :header-rows: 1
+   :align: center
+
+   * - 命令碼
+     - 指令描述
+
+   * - 0x1000
+     - 機器人使能
+
+   * - 0x1001
+     - 重置所有錯誤
+
+   * - 0x1002
+     - 機器人停止運動
+
+   * - 0x1003
+     - 讀取實際位置
+
+   * - 0x1004
+     - 設定機器人速度
+
+   * - 0x1005
+     - 機器人繼續運動
+
+   * - 0x1006
+     - 機器人暫停運動
+
+   * - 0x1007
+     - 根據joint位置計算出笛卡爾位置
+
+   * - 0x1008
+     - 根據笛卡爾位置計算joint位置
+
+   * - 0x2000
+     - 寫工具訊息
+
+   * - 0x2001
+     - 讀工具訊息
+
+   * - 0x2002
+     - 寫工件訊息
+
+   * - 0x2003
+     - 讀工件訊息
+
+   * - 0x2004
+     - 寫負載訊息
+
+   * - 0x2005
+     - 讀負載訊息
+
+   * - 0x2006
+     - 寫reference dynamic訊息
+
+   * - 0x2007
+     - 讀reference dynamic訊息
+
+   * - 0x2008
+     - 寫default dynamic訊息
+
+   * - 0x2009
+     - 讀default dynamic訊息
+
+   * - 0x2010
+     - 寫軟限位訊息
+
+   * - 0x2011
+     - 讀軟限位訊息
+
+   * - 0x3000
+     - MoveAxes（基於關節角度）
+
+   * - 0x3001
+     - MoveLinear
+
+   * - 0x3002
+     - MoveDirect（基於笛卡爾座標系）
+
+   * - 0x3003
+     - jog運動
+
+   * - 0x3004
+     - jog停止
