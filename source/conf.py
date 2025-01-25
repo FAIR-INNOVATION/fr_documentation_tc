@@ -44,3 +44,10 @@ html_theme_options = {
 #     app.add_css_file('_static/custom.css')
 
 # rst_epilog = '\n.. include:: .custom-style.rst\n'
+
+latex_elements = {
+    'preamble': r'''
+    \addto\captionsenglish{\renewcommand{\chaptername}{}}
+    \usepackage[UTF8, scheme = plain]{ctex}
+    ''',
+}
