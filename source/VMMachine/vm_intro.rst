@@ -1,7 +1,7 @@
 FAIRINO SimMachine
 =======================
 
-.. 简介
+.. 簡介
 .. ------------
 .. toctree:: 
     :maxdepth: 6

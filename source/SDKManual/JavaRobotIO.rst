@@ -1,146 +1,146 @@
-机器人IO
+機器人IO
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-设置控制箱数字量输出
+設定控制箱數位量輸出
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置控制箱数字量输出
-    * @param  [in] id  io编号，范围[0~15]
-    * @param  [in] status 0-关，1-开
+    * @brief  設定控制箱數位量輸出
+    * @param  [in] id  io編號，範圍[0~15]
+    * @param  [in] status 0-關，1-開
     * @param  [in] smooth 0-不平滑， 1-平滑
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     int SetDO(int id, int status, int smooth, int block); 
 
-设置工具数字量输出
+設定工具數位量輸出
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置工具数字量输出
-    * @param  [in] id  io编号，范围[0~1]
-    * @param  [in] status 0-关，1-开
+    * @brief  設定工具數位量輸出
+    * @param  [in] id  io編號，範圍[0~1]
+    * @param  [in] status 0-關，1-開
     * @param  [in] smooth 0-不平滑， 1-平滑
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     int SetToolDO(int id, int status, int smooth, int block); 
 
-设置控制箱模拟量输出
+設定控制箱類比輸出
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置控制箱模拟量输出
-    * @param  [in] id  id  io编号，范围[0~1]
-    * @param  [in] id  value 电流或电压值百分比，范围[0~100]对应电流值[0~20mA]或电压[0~10V]
+    * @brief  設定控制箱類比輸出
+    * @param  [in] id  id  io編號，範圍[0~1]
+    * @param  [in] id  value 電流或電壓值百分比，範圍[0~100]對應電流值[0~20mA]或電壓[0~10V]
     * @param  [in] id  block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     int SetAO(int id, double value, int block); 
 
-设置工具模拟量输出
+設定工具類比輸出
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置工具模拟量输出
-    * @param  [in] id  io编号，范围[0]
-    * @param  [in] value 电流或电压值百分比，范围[0~100]对应电流值[0~20mA]或电压[0~10V]
+    * @brief  設定工具類比輸出
+    * @param  [in] id  io編號，範圍[0]
+    * @param  [in] value 電流或電壓值百分比，範圍[0~100]對應電流值[0~20mA]或電壓[0~10V]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     int SetToolAO(int id, double value, int block); 
 
-等待控制箱数字量输入
+等待控制箱數位量輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待控制箱数字量输入
-    * @param  [in]  id  io编号，范围[0~15]
-    * @param  [in]  status 0-关，1-开
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待控制箱數位量輸入
+    * @param  [in]  id  io編號，範圍[0~15]
+    * @param  [in]  status 0-關，1-開
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     int WaitDI(int id, int status, int max_time, int opt); 
 
-等待控制箱多路数字量输入
+等待控制箱多路數字量輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待控制箱多路数字量输入
-    * @param  [in] mode 0-多路与，1-多路或
-    * @param  [in] id  io编号，bit0~bit7对应DI0~DI7，bit8~bit15对应CI0~CI7
-    * @param  [in] status 0-关，1-开
-    * @param  [in] max_time  最大等待时间，单位ms
-    * @param  [in] opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待控制箱多路數字量輸入
+    * @param  [in] mode 0-多路與，1-多路或
+    * @param  [in] id  io編號，bit0~bit7對應DI0~DI7，bit8~bit15對應CI0~CI7
+    * @param  [in] status 0-關，1-開
+    * @param  [in] max_time  最大等待時間，單位ms
+    * @param  [in] opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     int WaitMultiDI(int mode, int id, int status, int max_time, int opt); 
 
-等待工具数字量输入
+等待工具數位量輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待工具数字量输入
-    * @param  [in]  id  io编号，范围[0~1]
-    * @param  [in]  status 0-关，1-开
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待工具數位量輸入
+    * @param  [in]  id  io編號，範圍[0~1]
+    * @param  [in]  status 0-關，1-開
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     int WaitToolDI(int id, int status, int max_time, int opt); 
 
-等待控制箱模拟量输入
+等待控制箱模擬量輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待控制箱模拟量输入
-    * @param  [in]  id  io编号，范围[0~1]
-    * @param  [in]  sign 0-大于，1-小于
-    * @param  [in]  value 输入电流或电压值百分比，范围[0~100]对应电流值[0~20mS]或电压[0~10V]
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待控制箱模擬量輸入
+    * @param  [in]  id  io編號，範圍[0~1]
+    * @param  [in]  sign 0-大於，1-小於
+    * @param  [in]  value 輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mS]或電壓[0~10V]
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     int WaitAI(int id, int sign, double value, int max_time, int opt);   
 
-等待工具模拟量输入
+等待工具類比輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待工具模拟量输入
-    * @param  [in]  id  io编号，范围[0]
-    * @param  [in]  sign 0-大于，1-小于
-    * @param  [in]  value 输入电流或电压值百分比，范围[0~100]对应电流值[0~20mS]或电压[0~10V]
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待工具類比輸入
+    * @param  [in]  id  io編號，範圍[0]
+    * @param  [in]  sign 0-大於，1-小於
+    * @param  [in]  value 輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mS]或電壓[0~10V]
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     int WaitToolAI(int id, int sign, double value, int max_time, int opt); 
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -148,16 +148,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.SetDO(8, 1, 0, 0);
@@ -193,79 +193,79 @@
         System.out.println("wait  end ");
     }
 
-设置控制箱DO停止/暂停后输出是否复位
+設定控制箱DO停止/暫停後輸出是否重設
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置控制箱DO停止/暂停后输出是否复位 
-    * @param [in] resetFlag  0-不复位；1-复位
-    * @return 错误码 
+    * @brief 設定控制箱DO停止/暫停後輸出是否重設 
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @return 錯誤碼 
     */ 
     int SetOutputResetCtlBoxDO(int resetFlag);
 
-设置控制箱AO停止/暂停后输出是否复位
+設定控制箱AO停止/暫停後輸出是否重設
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置控制箱AO停止/暂停后输出是否复位 
-    * @param [in] resetFlag  0-不复位；1-复位
-    * @return 错误码 
+    * @brief 設定控制箱AO停止/暫停後輸出是否重設 
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @return 錯誤碼 
     */ 
     int SetOutputResetCtlBoxAO(int resetFlag);
 
-设置末端工具DO停止/暂停后输出是否复位
+設定末端工具DO停止/暫停後輸出是否重設
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置末端工具DO停止/暂停后输出是否复位
-    * @param [in] resetFlag  0-不复位；1-复位
-    * @return 错误码 
+    * @brief 設定末端工具DO停止/暫停後輸出是否重設
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @return 錯誤碼 
     */ 
     int SetOutputResetAxleDO(int resetFlag);
 
-设置末端工具AO停止/暂停后输出是否复位
+設定末端工具AO停止/暫停後輸出是否重設
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置末端工具AO停止/暂停后输出是否复位 
-    * @param [in] resetFlag  0-不复位；1-复位
-    * @return 错误码 
+    * @brief 設定末端工具AO停止/暫停後輸出是否重設 
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @return 錯誤碼 
     */ 
     int SetOutputResetAxleAO(int resetFlag);
     
-设置扩展DO停止/暂停后输出是否复位
+設定擴充DO停止/暫停後輸出是否重設
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置扩展DO停止/暂停后输出是否复位
-    * @param [in] resetFlag  0-不复位；1-复位
-    * @return 错误码 
+    * @brief 設定擴充DO停止/暫停後輸出是否重設
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @return 錯誤碼 
     */ 
     int SetOutputResetExtDO(int resetFlag);
     
-设置扩展AO停止/暂停后输出是否复位
+設定擴充AO停止/暫停後輸出是否重設
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置扩展AO停止/暂停后输出是否复位
-    * @param [in] resetFlag  0-不复位；1-复位
-    * @return 错误码 
+    * @brief 設定擴充AO停止/暫停後輸出是否重設
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @return 錯誤碼 
     */ 
     int SetOutputResetExtAO(int resetFlag);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -273,16 +273,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.SetOutputResetCtlBoxDO(1);

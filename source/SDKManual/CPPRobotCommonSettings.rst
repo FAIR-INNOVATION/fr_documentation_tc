@@ -1,83 +1,83 @@
-机器人常用设置
+機器人常用設定
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置全局速度
+設定全域速度
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置全局速度
-    * @param  [in]  vel  速度百分比，范围[0~100]
-    * @return  错误码
+    * @brief  設定全域速度
+    * @param  [in]  vel  速度百分比，範圍[0~100]
+    * @return  錯誤碼
     */
     errno_t  SetSpeed(int vel);
 
-设置系统变量值
+設定係統變數值
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置系统变量值
-    * @param  [in]  id  变量编号，范围[1~20]
-    * @param  [in]  value 变量值
-    * @return  错误码
+    * @brief  設定係統變數值
+    * @param  [in]  id  變數編號，範圍[1~20]
+    * @param  [in]  value 變數值
+    * @return  錯誤碼
     */
     errno_t  SetSysVarValue(int id, float value);
 
-设置工具参考点-六点法
+設定工具參考點-六點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 设置工具参考点-六点法
-     * @param [in] point_num 点编号,范围[1~6] 
-     * @return 错误码
+     * @brief 設定工具參考點-六點法
+     * @param [in] point_num 點編號,範圍[1~6] 
+     * @return 錯誤碼
      */
     errno_t SetToolPoint(int point_num);
 
-计算工具坐标系
+計算工具座標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  计算工具坐标系
-     * @param [out] tcp_pose 工具坐标系
-     * @return 错误码
+     * @brief  計算工具座標系
+     * @param [out] tcp_pose 工具座標系
+     * @return 錯誤碼
      */
     errno_t ComputeTool(DescPose *tcp_pose);
 
-设置工具参考点-四点法
+設定工具參考點-四點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 设置工具参考点-四点法
-     * @param [in] point_num 点编号,范围[1~4] 
-     * @return 错误码
+     * @brief 設定工具參考點-四點法
+     * @param [in] point_num 點編號,範圍[1~4] 
+     * @return 錯誤碼
      */
     errno_t SetTcp4RefPoint(int point_num);
 
-计算工具坐标系
+計算工具座標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  计算工具坐标系
-     * @param [out] tcp_pose 工具坐标系
-     * @return 错误码
+     * @brief  計算工具座標系
+     * @param [out] tcp_pose 工具座標系
+     * @return 錯誤碼
      */
     errno_t ComputeTcp4(DescPose *tcp_pose);
 
-设置工具坐标系
+設定工具坐標系
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.5.0
 
@@ -85,18 +85,18 @@
     :linenos:
 
 	/**
-	 * @brief  设置工具坐标系
-	 * @param  [in] id 坐标系编号，范围[0~14]
-	 * @param  [in] coord  工具中心点相对于末端法兰中心位姿
-	 * @param  [in] type  0-工具坐标系，1-传感器坐标系
-	 * @param  [in] install 安装位置，0-机器人末端，1-机器人外部
+	 * @brief  設定工具坐標系
+	 * @param  [in] id 座標系編號，範圍[0~14]
+	 * @param  [in] coord  工具中心點相對於末端法蘭中心位姿
+	 * @param  [in] type  0-工具坐標系，1-感測器座標系
+	 * @param  [in] install 安裝位置，0-機器人末端，1-機器人外部
 	 * @param  [in] toolID 工具ID
-	 * @param  [in] loadNum 负载编号
-	 * @return  错误码
+	 * @param  [in] loadNum 負載編號
+	 * @return  錯誤碼
 	 */
 	errno_t SetToolCoord(int id, DescPose *coord, int type, int install, int toolID, int loadNum);
 
-设置工具坐标系列表
+設定工具坐標系列表
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.5.0
 
@@ -104,41 +104,41 @@
     :linenos:
 
     /**
-	 * @brief  设置工具坐标系列表
-	 * @param  [in] id 坐标系编号，范围[0~14]
-	 * @param  [in] coord  工具中心点相对于末端法兰中心位姿
-	 * @param  [in] type  0-工具坐标系，1-传感器坐标系
-	 * @param  [in] install 安装位置，0-机器人末端，1-机器人外部
-	 * @param  [in] loadNum 负载编号
-	 * @return  错误码
+	 * @brief  設定工具坐標系列表
+	 * @param  [in] id 座標系編號，範圍[0~14]
+	 * @param  [in] coord  工具中心點相對於末端法蘭中心位姿
+	 * @param  [in] type  0-工具坐標系，1-感測器座標系
+	 * @param  [in] install 安裝位置，0-機器人末端，1-機器人外部
+	 * @param  [in] loadNum 負載編號
+	 * @return  錯誤碼
 	 */
 	errno_t SetToolList(int id, DescPose *coord, int type, int install, int loadNum);
 
-设置外部工具参考点-六点法
+設定外部工具參考點-六點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 设置外部工具参考点-六点法
-     * @param [in] point_num 点编号,范围[1~4] 
-     * @return 错误码
+     * @brief 設定外部工具參考點-六點法
+     * @param [in] point_num 點編號,範圍[1~4] 
+     * @return 錯誤碼
      */
     errno_t SetExTCPPoint(int point_num);
 
-计算外部工具坐标系
+计算外部工具座標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  计算外部工具坐标系
-     * @param [out] tcp_pose 外部工具坐标系
-     * @return 错误码
+     * @brief  计算外部工具座標系
+     * @param [out] tcp_pose 外部工具座標系
+     * @return 錯誤碼
      */
     errno_t ComputeExTCF(DescPose *tcp_pose);  
 
-设置外部工具坐标系
+設定外部工具坐標系
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -146,15 +146,15 @@
     :linenos:
 
     /**
-    * @brief  设置外部工具坐标系
-    * @param  [in] id 坐标系编号，范围[0~14]
-    * @param  [in] etcp  工具中心点相对末端法兰中心位姿
+    * @brief  設定外部工具坐標系
+    * @param  [in] id 座標系編號，範圍[0~14]
+    * @param  [in] etcp  工具中心點相對末端法蘭中心位姿
     * @param  [in] etool  待定
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  SetExToolCoord(int id, DescPose *etcp, DescPose *etool);
 
-设置外部工具坐标系列表
+設定外部工具坐標系列表
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -162,27 +162,27 @@
     :linenos:
 
     /**
-    * @brief  设置外部工具坐标系列表
-    * @param  [in] id 坐标系编号，范围[0~14]
-    * @param  [in] etcp  工具中心点相对末端法兰中心位姿
+    * @brief  設定外部工具坐標系列表
+    * @param  [in] id 座標系編號，範圍[0~14]
+    * @param  [in] etcp  工具中心點相對末端法蘭中心位姿
     * @param  [in] etool  待定
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  SetExToolList(int id, DescPose *etcp, DescPose *etool);
 
-设置工件参考点-三点法
+設定工件參考點-三點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 设置工件参考点-三点法
-     * @param [in] point_num 点编号,范围[1~3] 
-     * @return 错误码
+     * @brief 設定工件參考點-三點法
+     * @param [in] point_num 點編號,範圍[1~3] 
+     * @return 錯誤碼
      */
     errno_t SetWObjCoordPoint(int point_num);
 
-计算工件坐标系
+計算工件座標系
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.5.0
 
@@ -190,15 +190,15 @@
     :linenos:
 
 	/**
-	 * @brief  计算工件坐标系
-	 * @param [in] method 计算方法 0：原点-x轴-z轴  1：原点-x轴-xy平面
-	 * @param [in] refFrame 参考坐标系
-	 * @param [out] wobj_pose 工件坐标系
-	 * @return 错误码
+	 * @brief  計算工件座標系
+	 * @param [in] method 計算方法 0：原點-x軸-z軸  1：原點-x軸-xy平面
+	 * @param [in] refFrame 參考座標系
+	 * @param [out] wobj_pose 工件座標系
+	 * @return 錯誤碼
 	 */
 	errno_t ComputeWObjCoord(int method, int refFrame, DescPose *wobj_pose);
 
-设置工件坐标系
+設定工件座標系
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.5.0
 
@@ -206,15 +206,15 @@
     :linenos:
 
     /**
-	 * @brief  设置工件坐标系
-	 * @param  [in] id 坐标系编号，范围[0~14]
-	 * @param  [in] coord  工件坐标系相对于末端法兰中心位姿
-	 * @param  [in] refFrame 参考坐标系
-	 * @return  错误码
+	 * @brief  設定工件座標系
+	 * @param  [in] id 座標系編號，範圍[0~14]
+	 * @param  [in] coord  工件坐標系相對於末端法蘭中心位姿
+	 * @param  [in] refFrame 參考座標系
+	 * @return  錯誤碼
 	 */
 	errno_t SetWObjCoord(int id, DescPose *coord, int refFrame);
 
-设置工件坐标系列表
+設定工件座標系列表
 ++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.5.0
     
@@ -222,76 +222,76 @@
     :linenos:
 
 	/**
-	 * @brief  设置工件坐标系列表
-	 * @param  [in] id 坐标系编号，范围[0~14]
-	 * @param  [in] coord  工件坐标系相对于末端法兰中心位姿
-	 * @param  [in] refFrame 参考坐标系
-	 * @return  错误码
+	 * @brief  設定工件座標系列表
+	 * @param  [in] id 座標系編號，範圍[0~14]
+	 * @param  [in] coord  工件坐標系相對於末端法蘭中心位姿
+	 * @param  [in] refFrame 參考座標系
+	 * @return  錯誤碼
 	 */
 	errno_t SetWObjList(int id, DescPose *coord, int refFrame);
 
-设置末端负载重量
+設定末端負載重量
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置末端负载重量
-    * @param  [in] weight  负载重量，单位kg
-    * @return  错误码
+    * @brief  設定末端負載重量
+    * @param  [in] weight  負載重量，單位kg
+    * @return  錯誤碼
     */
     errno_t  SetLoadWeight(float weight);
 
-设置末端负载质心坐标
+設定末端負載質心座標
 +++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置末端负载质心坐标
-    * @param  [in] coord 质心坐标，单位mm
-    * @return  错误码
+    * @brief  設定末端負載質心座標
+    * @param  [in] coord 質心座標，單位mm
+    * @return  錯誤碼
     */
     errno_t  SetLoadCoord(DescTran *coord);
 
-设置机器人安装方式
+設定機器人安裝方式
 +++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置机器人安装方式
-    * @param  [in] install  安装方式，0-正装，1-侧装，2-倒装
-    * @return  错误码
+    * @brief  設定機器人安裝方式
+    * @param  [in] install  安裝方式，0-正裝，1-側裝，2-倒裝
+    * @return  錯誤碼
     */
     errno_t  SetRobotInstallPos(uint8_t install);   
 
-设置机器人安装角度
+設定機器人安裝角度
 +++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置机器人安装角度，自由安装
-    * @param  [in] yangle  倾斜角
-    * @param  [in] zangle  旋转角
-    * @return  错误码
+    * @brief  設定機器人安裝角度，自由安裝
+    * @param  [in] yangle  傾斜角
+    * @param  [in] zangle  旋轉角
+    * @return  錯誤碼
     */
     errno_t  SetRobotInstallAngle(double yangle, double zangle);
 
-等待指定时间
+等待指定時間
 +++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  等待指定时间
-    * @param  [in]  t_ms  单位ms
-    * @return  错误码
+    * @brief  等待指定時間
+    * @param  [in]  t_ms  單位ms
+    * @return  錯誤碼
     */
     errno_t  WaitMs(int t_ms);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -308,8 +308,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         int i;
         float value;
@@ -391,7 +391,7 @@
         return 0;
     }
 
-代码示例
+代碼範例
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
 
@@ -400,10 +400,10 @@
     
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -488,14 +488,14 @@
         printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", wobj_0_pose.tran.x, wobj_0_pose.tran.y, wobj_0_pose.tran.z, wobj_0_pose.rpy.rx, wobj_0_pose.rpy.ry, wobj_0_pose.rpy.rz);
     }
 
-设置机器人加速度
+設定機器人加速度
 +++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
 	/**
-	 * @brief 设置机器人加速度
-	 * @param [in] acc 机器人加速度百分比
-	 * @return 错误码
+	 * @brief 設定機器人加速度
+	 * @param [in] acc 機器人加速度百分比
+	 * @return 錯誤碼
 	 */
 	errno_t SetOaccScale(double acc);

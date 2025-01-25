@@ -1,65 +1,65 @@
-机器人轨迹复现
+機器人軌跡復現
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置轨迹记录参数
+設定軌跡記錄參數
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置轨迹记录参数
-    * @param  [in] type  记录数据类型，1-关节位置
-    * @param  [in] name  轨迹文件名
-    * @param  [in] period_ms  数据采样周期，固定值2ms或4ms或8ms
-    * @param  [in] di_choose  DI选择,bit0~bit7对应控制箱DI0~DI7，bit8~bit9对应末端DI0~DI1，0-不选择，1-选择
-    * @param  [in] do_choose  DO选择,bit0~bit7对应控制箱DO0~DO7，bit8~bit9对应末端DO0~DO1，0-不选择，1-选择
-    * @return  错误码
+    * @brief  設定軌跡記錄參數
+    * @param  [in] type  記錄資料類型，1-關節位置
+    * @param  [in] name  軌跡檔名
+    * @param  [in] period_ms  資料採樣週期，固定值2ms或4ms或8ms
+    * @param  [in] di_choose  DI選擇,bit0~bit7對應控制箱DI0~DI7，bit8~bit9對應末端DI0~DI1，0-不選擇，1-選擇
+    * @param  [in] do_choose  DO選擇,bit0~bit7對應控制箱DO0~DO7，bit8~bit9對應末端DO0~DO1，0-不選擇，1-選擇
+    * @return  錯誤碼
     */
     int SetTPDParam(int type, string name, int period_ms, UInt16 di_choose, UInt16 do_choose);
 
-开始轨迹记录
+開始軌跡記錄
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  开始轨迹记录
-    * @param  [in] type  记录数据类型，1-关节位置
-    * @param  [in] name  轨迹文件名
-    * @param  [in] period_ms  数据采样周期，固定值2ms或4ms或8ms
-    * @param  [in] di_choose  DI选择,bit0~bit7对应控制箱DI0~DI7，bit8~bit9对应末端DI0~DI1，0-不选择，1-选择
-    * @param  [in] do_choose  DO选择,bit0~bit7对应控制箱DO0~DO7，bit8~bit9对应末端DO0~DO1，0-不选择，1-选择
-    * @return  错误码
+    * @brief  開始軌跡記錄
+    * @param  [in] type  記錄資料類型，1-關節位置
+    * @param  [in] name  軌跡檔名
+    * @param  [in] period_ms  資料採樣週期，固定值2ms或4ms或8ms
+    * @param  [in] di_choose  DI選擇,bit0~bit7對應控制箱DI0~DI7，bit8~bit9對應末端DI0~DI1，0-不選擇，1-選擇
+    * @param  [in] do_choose  DO選擇,bit0~bit7對應控制箱DO0~DO7，bit8~bit9對應末端DO0~DO1，0-不選擇，1-選擇
+    * @return  錯誤碼
     */
     int SetTPDStart(int type, string name, int period_ms, UInt16 di_choose, UInt16 do_choose); 
 
-停止轨迹记录
+停止軌跡記錄
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  停止轨迹记录
-    * @return  错误码
+    * @brief  停止軌跡記錄
+    * @return  錯誤碼
     */
     int SetWebTPDStop(); 
 
-删除轨迹记录
+刪除軌跡記錄
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  删除轨迹记录
-    * @param  [in] name  轨迹文件名
-    * @return  错误码
+    * @brief  刪除軌跡記錄
+    * @param  [in] name  軌跡檔名
+    * @return  錯誤碼
     */   
     int SetTPDDelete(string name); 
 
-代码示例
+代碼範例
 ++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -88,46 +88,46 @@
         //robot.SetTPDDelete(name);
     }
 
-轨迹预加载
+軌跡預載
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  轨迹预加载
-    * @param  [in] name  轨迹文件名
-    * @return  错误码
+    * @brief  軌跡預載
+    * @param  [in] name  軌跡檔名
+    * @return  錯誤碼
     */      
     int LoadTPD(string name);
 
-获取轨迹起始位姿
+取得軌跡起始位姿
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取轨迹起始位姿 
-    * @param [in] name  轨迹文件名
-    * @param [out] desc_pose 轨迹起始位姿 
-    * @return 错误码 
+    * @brief 取得軌跡起始位姿 
+    * @param [in] name  軌跡檔名
+    * @param [out] desc_pose 軌跡起始位姿 
+    * @return 錯誤碼 
     */ 
     int GetTPDStartPose(string name, ref DescPose desc_pose); 
 
-轨迹复现
+軌跡復現
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  轨迹复现
-    * @param  [in] name  轨迹文件名
+    * @brief  軌跡復現
+    * @param  [in] name  軌跡檔名
     * @param  [in] blend 0-不平滑，1-平滑
-    * @param  [in] ovl  速度缩放百分比，范围[0~100]
-    * @return  错误码
+    * @param  [in] ovl  速度縮放百分比，範圍[0~100]
+    * @return  錯誤碼
     */
     int MoveTPD(string name, byte blend, float ovl); 
 
-代码示例
+代碼範例
 ++++++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -157,153 +157,153 @@
         robot.MoveTPD(name, blend, 100.0f);
     }
 
-外部轨迹文件预处理
+外部軌跡檔案預處理
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 外部轨迹文件预处理 
-    * @param [in] name 轨迹文件名  
-    * @param [in] ovl 速度缩放百分比，范围[0~100] 
-    * @param [in] opt 1-控制点，默认为1 
-    * @return 错误码 
+    * @brief 外部軌跡檔案預處理 
+    * @param [in] name 軌跡檔名  
+    * @param [in] ovl 速度縮放百分比，範圍[0~100] 
+    * @param [in] opt 1-控制點，預設為1 
+    * @return 錯誤碼 
     */ 
     int LoadTrajectoryJ(string name, float ovl, int opt); 
 
-外部轨迹文件轨迹复现
+外部軌跡文件軌跡復現
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 外部轨迹文件轨迹复现  
-    * @return 错误码 
+    * @brief 外部軌跡文件軌跡復現  
+    * @return 錯誤碼 
     */
     int MoveTrajectoryJ();
 
-获取轨迹文件轨迹起始位置
+取得軌跡檔案軌跡起始位置
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取轨迹文件轨迹起始位置 
-    * @param [in] name 轨迹文件名  
-    * @param [out] desc_pose 轨迹起始位姿  
-    * @return 错误码 
+    * @brief 取得軌跡檔案軌跡起始位置 
+    * @param [in] name 軌跡檔名  
+    * @param [out] desc_pose 軌跡起始位姿  
+    * @return 錯誤碼 
     */ 
     int GetTrajectoryStartPose(string name, ref DescPose desc_pose); 
 
-获取轨迹文件轨迹点编号
+取得軌跡檔案軌跡點編號
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取轨迹点编号   
-    * @param [out] pnum 轨迹点编号  
-    * @return 错误码 
+    * @brief 取得軌跡點編號   
+    * @param [out] pnum 軌跡點編號  
+    * @return 錯誤碼 
     */  
     int GetTrajectoryPointNum(ref int pnum);
 
-设置轨迹文件轨迹运行速度
+設定軌跡檔案軌跡運行速度
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹文件轨迹运行速度   
+    * @brief 設定軌跡檔案軌跡運行速度   
     * @param [in] ovl 速度百分比  
-    * @return 错误码 
+    * @return 錯誤碼 
     */  
     int SetTrajectoryJSpeed(double ovl);
 
-设置轨迹文件轨迹运行中的力和力矩
+設定軌跡檔案軌跡運行中的力和力矩
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹文件轨迹运行中的力和力矩  
-    * @param [in] ft 三个方向的力和扭矩，单位N和Nm
-    * @return 错误码 
+    * @brief 設定軌跡檔案軌跡運行中的力和力矩  
+    * @param [in] ft 三個方向的力和扭矩，單位N和Nm
+    * @return 錯誤碼 
     */
     int SetTrajectoryJForceTorque(ForceTorque ft); 
 
-设置轨迹运行中的沿x方向的力
+設定軌跡運行中的沿x方向的力
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹运行中的沿x方向的力  
-    * @param [in] fx  沿x方向的力，单位N
-    * @return 错误码 
+    * @brief 設定軌跡運行中的沿x方向的力  
+    * @param [in] fx  沿x方向的力，單位N
+    * @return 錯誤碼 
     */
     int SetTrajectoryJForceFx(double fx);
 
-设置轨迹运行中的沿y方向的力
+設定軌跡運行中的沿y方向的力
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹运行中的沿y方向的力  
-    * @param [in] fy  沿y方向的力，单位N
-    * @return 错误码 
+    * @brief 設定軌跡運行中的沿y方向的力  
+    * @param [in] fy  沿y方向的力，單位N
+    * @return 錯誤碼 
     */
     int SetTrajectoryJForceFy(double fy);
 
-设置轨迹运行中的沿z方向的力
+設定軌跡運行中的沿z方向的力
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹运行中的沿z方向的力  
-    * @param [in] fz  沿z方向的力，单位N
-    * @return 错误码 
+    * @brief 設定軌跡運行中的沿z方向的力  
+    * @param [in] fz  沿z方向的力，單位N
+    * @return 錯誤碼 
     */
     int SetTrajectoryJForceFz(double fz);
 
-设置轨迹运行中的绕x轴的扭矩
+設定軌跡運轉中的繞x軸的扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹运行中的绕x轴的扭矩  
-    * @param [in] tx  绕x轴的扭矩，单位Nm
-    * @return 错误码 
+    * @brief 設定軌跡運轉中的繞x軸的扭矩  
+    * @param [in] tx  繞x軸的扭矩，單位Nm
+    * @return 錯誤碼 
     */
     int SetTrajectoryJTorqueTx(double tx);
 
-设置轨迹运行中的绕y轴的扭矩
+設定軌跡運轉中的繞y軸的扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹运行中的绕y轴的扭矩  
-    * @param [in] ty  绕y轴的扭矩，单位Nm
-    * @return 错误码 
+    * @brief 設定軌跡運轉中的繞y軸的扭矩  
+    * @param [in] ty  繞y軸的扭矩，單位Nm
+    * @return 錯誤碼 
     */
     int SetTrajectoryJTorqueTy(double ty);
 
-设置轨迹运行中的绕z轴的扭矩
+設定軌跡運轉中的繞z軸的扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置轨迹运行中的绕z轴的扭矩  
-    * @param [in] tz  绕z轴的扭矩，单位Nm
-    * @return 错误码 
+    * @brief 設定軌跡運轉中的繞z軸的扭矩  
+    * @param [in] tz  繞z軸的扭矩，單位Nm
+    * @return 錯誤碼 
     */
     int SetTrajectoryJTorqueTz(double tz);
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:

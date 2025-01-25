@@ -4,157 +4,157 @@
 .. toctree:: 
     :maxdepth: 5
 
-传动带启动、停止
+傳動皮帶啟動、停止
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 传动带启动、停止 
-    * @param [in] status 状态，1-启动，0-停止
-    * @return 错误码 
+    * @brief 傳動皮帶啟動、停止 
+    * @param [in] status 狀態，1-啟動，0-停止
+    * @return 錯誤碼 
     */ 
     int ConveyorStartEnd(byte status); 
 
-记录IO检测点
+記錄IO檢測點
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 记录IO检测点 
-    * @return 错误码 
+    * @brief 記錄IO檢測點 
+    * @return 錯誤碼 
     */ 
     int ConveyorPointIORecord(); 
 
-记录A点
+記錄A點
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 记录A点 
-    * @return 错误码 
+    * @brief 記錄A點 
+    * @return 錯誤碼 
     */ 
     int ConveyorPointARecord();
 
-记录参考点
+記錄參考點
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 记录参考点 
-    * @return 错误码 
+    * @brief 記錄參考點 
+    * @return 錯誤碼 
     */ 
     int ConveyorRefPointRecord(); 
 
-记录B点
+記錄B點
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 记录B点 
-    * @return 错误码 
+    * @brief 記錄B點 
+    * @return 錯誤碼 
     */ 
     int ConveyorPointBRecord();
 
-传送带工件IO检测
+傳送帶工件IO檢測
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 传送带工件IO检测 
-    * @param [in] max_t 最大检测时间，单位ms
-    * @return 错误码 
+    * @brief 傳送帶工件IO檢測 
+    * @param [in] max_t 最大檢測時間，單位ms
+    * @return 錯誤碼 
     */ 
     int ConveyorIODetect(int max_t);
 
-获取物体当前位置
+取得物體目前位置
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取物体当前位置 
-    * @param [in] mode 1-跟踪抓取，2-跟踪运动，3-TPD跟踪
-    * @return 错误码 
+    * @brief 取得物體目前位置 
+    * @param [in] mode 1-跟踪抓取，2-跟踪運動，3-TPD跟踪
+    * @return 錯誤碼 
     */ 
     int ConveyorGetTrackData(int mode);
 
-传动带跟踪开始
+傳動皮帶追蹤開始
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 传动带跟踪开始 
-    * @param [in] status 状态，1-启动，0-停止
-    * @return 错误码 
+    * @brief 傳動皮帶追蹤開始 
+    * @param [in] status 狀態，1-啟動，0-停止
+    * @return 錯誤碼 
     */
     int ConveyorTrackStart(byte status);
 
-传动带跟踪停止
+傳動皮帶追蹤停止
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 传动带跟踪停止 
-    * @return 错误码 
+    * @brief 傳動皮帶追蹤停止 
+    * @return 錯誤碼 
     */
     int ConveyorTrackEnd();
 
-传动带参数配置
+傳動帶參數配置
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 传动带参数配置 
-    * @param [in] encChannel 编码器通道 1~2
-    * @param [in] resolution 编码器转一圈的脉冲数
-    * @param [in] lead 编码器转一圈传送带行走距离
-    * @param [in] wpAxis 工件坐标系编号 针对跟踪运动功能选择工件坐标系编号，跟踪抓取、TPD跟踪设为0
-    * @param [in] vision 是否配视觉  0-不配，1-配
-    * @param [in] speedRadio 速度比:针对传送带跟踪抓取选项（1-100）其他选项默认为1
-    * @return 错误码 
+    * @brief 傳動帶參數配置 
+    * @param [in] encChannel 編碼器通道 1~2
+    * @param [in] resolution 編碼器轉一圈的脈衝數
+    * @param [in] lead 編碼器轉一圈傳送帶行走距離
+    * @param [in] wpAxis 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
+    * @param [in] vision 是否配視覺 0-不配，1-配
+    * @param [in] speedRadio 速度比:針對傳送帶追蹤抓取選項（1-100）其他選項預設為1
+    * @return 錯誤碼 
     */
     int ConveyorSetParam(int encChannel, int resolution, double lead, int wpAxis, int vision, double speedRadio);
 
-设置传动带抓取点补偿
+設定傳動皮帶抓取點補償
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 设置传动带抓取点补偿 
-    * @param [in] cmp 补偿位置 double[3]{x, y, z}
-    * @return 错误码 
+    * @brief 設定傳動皮帶抓取點補償 
+    * @param [in] cmp 補償位置 double[3]{x, y, z}
+    * @return 錯誤碼 
     */
     int ConveyorCatchPointComp(double[] cmp);
 
-传送带跟踪直线运动
+傳送帶追蹤直線運動
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 传送带跟踪直线运动 
-    * @param [in] name 运动点名称
-    * @param [in] tool 工具坐标号，范围[0~14] 
-    * @param [in] wobj 工件坐标号，范围[0~14] 
-    * @param [in] vel 速度百分比，范围[0~100] 
-    * @param [in] acc 加速度百分比，范围[0~100],暂不开放 
-    * @param [in] ovl 速度缩放因子，范围[0~100] 
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm  
-    * @return 错误码 
+    * @brief 傳送帶追蹤直線運動 
+    * @param [in] name 運動點名稱
+    * @param [in] tool 工具座標號，範圍[0~14] 
+    * @param [in] wobj 工件座標號，範圍[0~14] 
+    * @param [in] vel 速度百分比，範圍[0~100] 
+    * @param [in] acc 加速度百分比，範圍[0~100],暫不開放 
+    * @param [in] ovl 速度縮放因子，範圍[0~100] 
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm  
+    * @return 錯誤碼 
     */
     int ConveyorTrackMoveL(string name, int tool, int wobj, float vel, float acc, float ovl, float blendR);
 
-代码示例
+代碼範例
 +++++++++
 .. code-block:: c#
     :linenos:
@@ -218,81 +218,81 @@
         Console.WriteLine($"MoveGripper: rtn  {rtn}");
     }
 
-获取SSH公钥
+取得SSH公鑰
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取SSH公钥 
-    * @param [out] keygen 公钥
-    * @return 错误码 
+    * @brief 取得SSH公鑰 
+    * @param [out] keygen 公鑰
+    * @return 錯誤碼 
     */
     int GetSSHKeygen(ref string keygen);
 
-计算指定路径下文件的MD5值
+計算指定路徑下檔案的MD5值
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 计算指定路径下文件的MD5值 
-    * @param [in] file_path 文件路径包含文件名，默认Traj文件夹路径为:"/fruser/traj/",如"/fruser/traj/trajHelix_aima_1.txt"
+    * @brief 計算指定路徑下檔案的MD5值 
+    * @param [in] file_path 檔案路徑包含檔名，預設Traj資料夾路徑為:"/fruser/traj/",如"/fruser/traj/trajHelix_aima_1.txt"
     * @param [out] md5 文件MD5值
-    * @return 错误码 
+    * @return 錯誤碼 
     */
     int ComputeFileMD5(string file_path, ref string md5);
 
-获取机器人急停状态
+取得機器人急停狀態
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取机器人急停状态 
-    * @param [out] state 急停状态，0-非急停，1-急停
-    * @return 错误码 
+    * @brief 取得機器人急停狀態 
+    * @param [out] state 急停狀態，0-非急停，1-急停
+    * @return 錯誤碼 
     */
     int GetRobotEmergencyStopState(ref byte state);
 
-获取SDK与机器人的通讯状态
+取得SDK與機器人的通訊狀態
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取SDK与机器人的通讯状态 
-    * @param [out] state 通讯状态，0-通讯正常，1-通讯异常
-    * @return 错误码 
+    * @brief 取得SDK與機器人的通訊狀態 
+    * @param [out] state 通訊狀態，0-通訊正常，1-通訊異常
+    * @return 錯誤碼 
     */
     int GetSDKComState(ref int state)
 
-获取安全停止信号
+取得安全停止訊號
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取安全停止信号 
-    * @param [out] si0_state 安全停止信号SI0，0-无效，1-有效
-    * @param [out] si1_state 安全停止信号SI1，0-无效，1-有效
-    * @return 错误码 
+    * @brief 取得安全停止訊號 
+    * @param [out] si0_state 安全停止訊號SI0，0-無效，1-有效
+    * @param [out] si1_state 安全停止訊號SI1，0-無效，1-有效
+    * @return 錯誤碼 
     */
     int GetSafetyStopState(ref byte si0_state, ref byte si1_state)
 
-获取机器人DH参数补偿值
+取得機器人DH參數補償值
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取安全停止信号 
-    * @param [out] dhCompensation 机器人DH参数补偿值(mm) [cmpstD1,cmpstA2,cmpstA3,cmpstD4,cmpstD5,cmpstD6]
-    * @return 错误码 
+    * @brief 取得機器人DH參數補償值 
+    * @param [out] dhCompensation 機器人DH參數補償值(mm) [cmpstD1,cmpstA2,cmpstA3,cmpstD4,cmpstD5,cmpstD6]
+    * @return 錯誤碼 
     */
     int GetDHCompensation(ref double[] dhCompensation)
 
-代码示例
+代碼範例
 +++++++++
 .. code-block:: c#
     :linenos:
@@ -327,46 +327,46 @@
         Console.WriteLine($"GetSafetyStopState:  rtn  {rtn}   si0_state  {si0_state}   si1_state  {si1_state}");
     }
 
-上传点位表
+上傳點位表
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 点位表从本地计算机上传至机器人控制器 
-    * @param [in] pointTableFilePath 点位表在本地计算机的绝对路径C://test/pointTabl e1.db
-    * @return 错误码 
+    * @brief 點位表從本地電腦上傳至機器人控制器 
+    * @param [in] pointTableFilePath 點位表在本機的絕對路徑C://test/pointTabl e1.db
+    * @return 錯誤碼 
     */
     int PointTableUpLoad(string pointTableFilePath);
 
-下载点位表
+下載點位表
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 点位表从机器人控制器下载到本地计算机 
-    * @param [in] pointTableName 控制器中的点位表名称：pointTable1.db
-    * @param [in] saveFilePath 点位表下载到计算机的路径 C://test/
-    * @return 错误码 
+    * @brief 點位表從機器人控制器下載到本地計算機 
+    * @param [in] pointTableName 控制器中的點位表名稱：pointTable1.db
+    * @param [in] saveFilePath 點位表下載到電腦的路徑 C://test/
+    * @return 錯誤碼 
     */
     int PointTableDownLoad(string pointTableName, string saveFilePath);
 
-点位表更新Lua程序
+點位表更新Lua程序
 +++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 使用给定的点位表更新lua程序中的点
-    * @param [in] pointTableName 控制器中的点位表名称："pointTable1.db", 当点位表为空，即""时，表示将lua程序更新为未应用点位表的初始程序
-    * @param [in] luaFileName 要更新的lua文件名称   "test.lua"
-    * @param [out] errorStr 点位表更新lua错误信息  
-    * @return 错误码 
+    * @brief 使用給定的點位表更新Lua程式中的點
+    * @param [in] pointTableName 控制器中的點位表名稱："pointTable1.db", 當點位表為空，即""時，表示將lua程序更新為未應用點位表的初始程序
+    * @param [in] luaFileName 要更新的lua檔案名稱   "test.lua"
+    * @param [out] errorStr 點位表更新lua錯誤訊息  
+    * @return 錯誤碼 
     */
     int PointTableUpdateLua(string pointTableName, string luaFileName, ref string errorStr);
 
-代码示例
+代碼範例
 +++++++++
 .. code-block:: c#
     :linenos:
@@ -386,7 +386,7 @@
         rtn = robot.ProgramRun();
     }
 
-初始化日志参数
+初始化日誌參數
 +++++++++++++++++++++++++++++
 
 .. versionadded:: C#SDK-v1.0.5
@@ -395,17 +395,17 @@
     :linenos:
 
     /**
-    * @brief 初始化日志参数
-    * @param [in] logType：输出模式，DIRECT-直接输出；BUFFER-缓冲输出；ASYNC-异步输出
-    * @param [in] logLevel：日志过滤等级，ERROR-错误；WARNING-警告;INFO-信息；DEBUG-调试
-    * @param [in] filePath: 文件保存路径，如“D://Log/”
-    * @param [in] saveFileNum：保存文件个数，同时超出保存文件个数和保存文件天数的文件将被删除
-    * @param [in] saveDays: 保存文件天数，同时超出保存文件个数和保存文件天数的文件将被删除
-    * @return 错误码
+    * @brief 初始化日誌參數
+    * @param [in] logType：輸出模式，DIRECT-直接輸出；BUFFER-緩衝輸出；ASYNC-非同步輸出
+    * @param [in] logLevel：日誌過濾等級，ERROR-錯誤；WARNING-警告;INFO-訊息；DEBUG-調試
+    * @param [in] filePath: 檔案保存路徑，如“D://Log/”
+    * @param [in] saveFileNum：儲存檔案個數，同時超出儲存檔案數量和儲存檔案天數的檔案將被刪除
+    * @param [in] saveDays: 儲存檔案天數，同時超出儲存檔案數量和儲存檔案天數的檔案將被刪除
+    * @return 錯誤碼
     */
     public int LoggerInit(FrLogType logType = FrLogType.DIRECT, FrLogLevel logLevel = FrLogLevel.ERROR, string filePath = "", int saveFileNum = 10, int saveDays = 10);
 
-设置日志过滤等级
+設定日誌過濾等級
 +++++++++++++++++++++++++++++
 .. versionadded:: C#SDK-v1.0.5
 
@@ -413,14 +413,14 @@
     :linenos:
 
     /**
-    * @brief 设置日志过滤等级;
-    * @param [in] logLevel: 日志过滤等级，ERROR-错误；WARNING-警告;INFO-信息；DEBUG-调试
-    * @return 错误码
+    * @brief 設定日誌過濾等級;
+    * @param [in] logLevel: 日誌過濾等級，ERROR-錯誤；WARNING-警告;INFO-訊息；DEBUG-調試
+    * @return 錯誤碼
     */
     public int SetLoggerLevel(FrLogLevel logLevel);
 
 
-代码示例
+代碼範例
 +++++++++
 
 .. versionadded:: C#SDK-v1.0.5
@@ -430,14 +430,14 @@
 
     private void btnTestLog_Click(object sender, EventArgs e)
     {
-        robot = new Robot();//实例化机器人对象
-        robot.RPC("192.168.58.2"); //与控制箱建立连接
+        robot = new Robot();//實例化機器人對象
+        robot.RPC("192.168.58.2"); //與控制箱建立連接
         string path = "D://log/";
         robot.LoggerInit(FrLogType.ASYNC, FrLogLevel.DEBUG, path, 5, 5);
         robot.SetLoggerLevel(FrLogLevel.INFO);
     }
 
-设置机器人外设协议
+設置機器人週邊協議
 +++++++++++++++++++++++++++++
 .. versionadded:: C#SDK-v1.0.6
 
@@ -445,13 +445,13 @@
     :linenos:
 
     /** 
-    * @brief 设置机器人外设协议
-    * @param [in] protocol 机器人外设协议号 4096-扩展轴控制卡；4097-ModbusSlave；4098-ModbusMaster
-    * @return 错误码 
+    * @brief 設置機器人週邊協議
+    * @param [in] protocol 機器人週邊協議號 4096-擴充軸控制卡；4097-ModbusSlave；4098-ModbusMaster
+    * @return 錯誤碼 
     */
     int SetExDevProtocol(int protocol);
 
-获取机器人外设协议
+取得機器人週邊協議
 +++++++++++++++++++++++++++++
 .. versionadded:: C#SDK-v1.0.6
 
@@ -459,13 +459,13 @@
     :linenos:
 
     /** 
-    * @brief 获取机器人外设协议
-    * @param [out] protocol 机器人外设协议号 4096-扩展轴控制卡；4097-ModbusSlave；4098-ModbusMaster
-    * @return 错误码 
+    * @brief 取得機器人週邊協議
+    * @param [out] protocol 機器人週邊協議號 4096-擴充軸控制卡；4097-ModbusSlave；4098-ModbusMaster
+    * @return 錯誤碼 
     */
     int GetExDevProtocol(ref int protocol);
 
-代码示例
+代碼範例
 ++++++++++
 .. versionadded:: C#SDK-v1.0.6
 

@@ -1,65 +1,65 @@
-机器人轨迹复现
+機器人軌跡復現
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置TPD轨迹记录参数
+設定TPD軌跡記錄參數
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置TPD轨迹记录参数
-    * @param  [in] type  记录数据类型，1-关节位置
-    * @param  [in] name  轨迹文件名
-    * @param  [in] period_ms  数据采样周期，固定值2ms或4ms或8ms
-    * @param  [in] di_choose  DI选择,bit0~bit7对应控制箱DI0~DI7，bit8~bit9对应末端DI0~DI1，0-不选择，1-选择
-    * @param  [in] do_choose  DO选择,bit0~bit7对应控制箱DO0~DO7，bit8~bit9对应末端DO0~DO1，0-不选择，1-选择
-    * @return  错误码
+    * @brief  設定TPD軌跡記錄參數
+    * @param  [in] type  記錄資料類型，1-關節位置
+    * @param  [in] name  軌跡檔名
+    * @param  [in] period_ms  資料採樣週期，固定值2ms或4ms或8ms
+    * @param  [in] di_choose  DI選擇,bit0~bit7對應控制箱DI0~DI7，bit8~bit9對應末端DI0~DI1，0-不選擇，1-選擇
+    * @param  [in] do_choose  DO選擇,bit0~bit7對應控制箱DO0~DO7，bit8~bit9對應末端DO0~DO1，0-不選擇，1-選擇
+    * @return  錯誤碼
     */
     errno_t  SetTPDParam(int type, char name[30], int period_ms, uint16_t di_choose, uint16_t do_choose);
 
-开始TPD轨迹记录
+開始TPD軌跡記錄
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  开始TPD轨迹记录
-    * @param  [in] type  记录数据类型，1-关节位置
-    * @param  [in] name  轨迹文件名
-    * @param  [in] period_ms  数据采样周期，固定值2ms或4ms或8ms
-    * @param  [in] di_choose  DI选择,bit0~bit7对应控制箱DI0~DI7，bit8~bit9对应末端DI0~DI1，0-不选择，1-选择
-    * @param  [in] do_choose  DO选择,bit0~bit7对应控制箱DO0~DO7，bit8~bit9对应末端DO0~DO1，0-不选择，1-选择
-    * @return  错误码
+    * @brief  開始TPD軌跡記錄
+    * @param  [in] type  記錄資料類型，1-關節位置
+    * @param  [in] name  軌跡檔名
+    * @param  [in] period_ms  資料採樣週期，固定值2ms或4ms或8ms
+    * @param  [in] di_choose  DI選擇,bit0~bit7對應控制箱DI0~DI7，bit8~bit9對應末端DI0~DI1，0-不選擇，1-選擇
+    * @param  [in] do_choose  DO選擇,bit0~bit7對應控制箱DO0~DO7，bit8~bit9對應末端DO0~DO1，0-不選擇，1-選擇
+    * @return  錯誤碼
     */
     errno_t  SetTPDStart(int type, char name[30], int period_ms, uint16_t di_choose, uint16_t do_choose); 
 
-停止TPD轨迹记录
+停止TPD軌跡記錄
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  停止TPD轨迹记录
-    * @return  错误码
+    * @brief  停止TPD軌跡記錄
+    * @return  錯誤碼
     */
     errno_t  SetWebTPDStop();
 
-删除TPD轨迹记录
+删除TPD軌跡記錄
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  删除TPD轨迹记录
-    * @param  [in] name  轨迹文件名
-    * @return  错误码
+    * @brief  删除TPD軌跡記錄
+    * @param  [in] name  軌跡檔名
+    * @return  錯誤碼
     */   
     errno_t  SetTPDDelete(char name[30]);
 
-代码示例
+代碼範例
 ++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -76,8 +76,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         int type = 1;
         char name[30] = "tpd2023";
@@ -100,45 +100,45 @@
         return 0;
     }
 
-TPD轨迹预加载
+TPD軌跡預載
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  TPD轨迹预加载
-    * @param  [in] name  轨迹文件名
-    * @return  错误码
+    * @brief  TPD軌跡預載
+    * @param  [in] name  軌跡檔名
+    * @return  錯誤碼
     */      
     errno_t  LoadTPD(char name[30]);
 
-TPD轨迹复现
+TPD軌跡復現
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  TPD轨迹复现
-    * @param  [in] name  轨迹文件名
+    * @brief  TPD軌跡復現
+    * @param  [in] name  軌跡檔名
     * @param  [in] blend 0-不平滑，1-平滑
-    * @param  [in] ovl  速度缩放百分比，范围[0~100]
-    * @return  错误码
+    * @param  [in] ovl  速度縮放百分比，範圍[0~100]
+    * @return  錯誤碼
     */
     errno_t  MoveTPD(char name[30], uint8_t blend, float ovl);
 
-获取TPD起始位姿
+獲取TPD起始位姿
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取TPD起始位姿
-     * @param  [in] name TPD文件名,不需要文件后缀
-     * @return  错误码
+     * @brief  獲取TPD起始位姿
+     * @param  [in] name TPD文件名,不需要文件後綴
+     * @return  錯誤碼
      */     
     errno_t  GetTPDStartPose(char name[30], DescPose *desc_pose);
 
-代码示例
+代碼範例
 ++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -147,10 +147,10 @@ TPD轨迹复现
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -205,151 +205,151 @@ TPD轨迹复现
         return 0;
     }
 
-轨迹预处理
+軌跡預處理
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  轨迹预处理
-     * @param  [in] name  轨迹文件名
-     * @param  [in] ovl 速度缩放百分比，范围[0~100]
-     * @param  [in] opt 1-控制点，默认为1
-     * @return  错误码
+     * @brief  軌跡預處理
+     * @param  [in] name  軌跡檔名
+     * @param  [in] ovl 速度縮放百分比，範圍[0~100]
+     * @param  [in] opt 1-控制點，預設為1
+     * @return  錯誤碼
      */     
     errno_t  LoadTrajectoryJ(char name[30], float ovl, int opt);
 
-轨迹复现
+軌跡復現
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  轨迹复现
-     * @return  错误码
+     * @brief  軌跡復現
+     * @return  錯誤碼
      */     
     errno_t  MoveTrajectoryJ();
 
-获取轨迹起始位姿
+取得軌跡起始位姿
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取轨迹起始位姿
-     * @param  [in] name 轨迹文件名
-     * @return  错误码
+     * @brief  取得軌跡起始位姿
+     * @param  [in] name 軌跡檔名
+     * @return  錯誤碼
      */     
     errno_t  GetTrajectoryStartPose(char name[30], DescPose *desc_pose);
 
-获取轨迹点编号
+取得軌跡點編號
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取轨迹点编号
-     * @return  错误码
+     * @brief  取得軌跡點編號
+     * @return  錯誤碼
      */     
     errno_t  GetTrajectoryPointNum(int *pnum);
 
-设置轨迹运行中的速度
+設定軌跡運行中的速度
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的速度
+     * @brief  設定軌跡運行中的速度
      * @param  [in] ovl 速度百分比
-     * @return  错误码
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJSpeed(float ovl);
 
-设置轨迹运行中的力和扭矩
+設定軌跡运行中的力和扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的力和扭矩
-     * @param  [in] ft 三个方向的力和扭矩，单位N和Nm
-     * @return  错误码
+     * @brief  設定軌跡运行中的力和扭矩
+     * @param  [in] ft 三個方向的力和扭矩，單位N和Nm
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJForceTorque(ForceTorque *ft);
 
-设置轨迹运行中的沿x方向的力
+設定軌跡運行中的沿x方向的力
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的沿x方向的力
-     * @param  [in] fx 沿x方向的力，单位N
-     * @return  错误码
+     * @brief  設定軌跡運行中的沿x方向的力
+     * @param  [in] fx 沿x方向的力，單位N
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJForceFx(double fx);
 
-设置轨迹运行中的沿y方向的力
+設定軌跡運行中的沿y方向的力
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的沿y方向的力
-     * @param  [in] fy 沿y方向的力，单位N
-     * @return  错误码
+     * @brief  設定軌跡運行中的沿y方向的力
+     * @param  [in] fy 沿y方向的力，單位N
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJForceFy(double fy);
 
-设置轨迹运行中的沿z方向的力
+設定軌跡運行中的沿z方向的力
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的沿z方向的力
-     * @param  [in] fz 沿x方向的力，单位N
-     * @return  错误码
+     * @brief  設定軌跡運行中的沿z方向的力
+     * @param  [in] fz 沿x方向的力，單位N
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJForceFz(double fz);
 
-设置轨迹运行中的绕x轴的扭矩
+設定軌跡運轉中的繞x軸的扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的绕x轴的扭矩
-     * @param  [in] tx 绕x轴的扭矩，单位Nm
-     * @return  错误码
+     * @brief  設定軌跡運轉中的繞x軸的扭矩
+     * @param  [in] tx 繞x軸的扭矩，單位Nm
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJTorqueTx(double tx);
 
-设置轨迹运行中的绕y轴的扭矩
+設定軌跡運轉中的繞y軸的扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的绕y轴的扭矩
-     * @param  [in] ty 绕y轴的扭矩，单位Nm
-     * @return  错误码
+     * @brief  設定軌跡運轉中的繞y軸的扭矩
+     * @param  [in] ty 繞y軸的扭矩，單位Nm
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJTorqueTy(double ty);
 
-设置轨迹运行中的绕z轴的扭矩
+設定軌跡運轉中的繞z軸的扭矩
 ++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  设置轨迹运行中的绕z轴的扭矩
-     * @param  [in] tz 绕z轴的扭矩，单位Nm
-     * @return  错误码
+     * @brief  設定軌跡運轉中的繞z軸的扭矩
+     * @param  [in] tz 繞z軸的扭矩，單位Nm
+     * @return  錯誤碼
      */     
     errno_t  SetTrajectoryJTorqueTz(double tz);
 
-代码示例
+代碼範例
 ++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
     
@@ -358,10 +358,10 @@ TPD轨迹复现
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -428,4 +428,53 @@ TPD轨迹复现
 
         retval = robot.MoveTrajectoryJ();
         printf("MoveTrajectoryJ retval is: %d\n", retval);
+    }
+
+上傳軌跡J文件
++++++++++++++++++++++++++++++
+.. versionadded:: V3.7.7
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+	 * @brief 上傳軌跡J文件
+	 * @param [in] filePath 上傳軌跡檔案的全路徑名   C://test/testJ.txt
+	 * @return 錯誤碼
+	 */
+	errno_t TrajectoryJUpLoad(const std::string& filePath);
+
+刪除軌跡J文件
++++++++++++++++++++++++++++++
+.. versionadded:: V3.7.7
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+	 * @brief 刪除軌跡J文件
+	 * @param [in] fileName 文件名稱 testJ.txt
+	 * @return 錯誤碼
+	 */
+	errno_t TrajectoryJDelete(const std::string& fileName);
+
+代碼範例
+******************
+.. versionadded:: V3.7.7
+
+.. code-block:: c++
+    :linenos:
+
+    void TrajectoryJUpload(FRRobot* robot)
+    {
+        int rtn = -1;
+        rtn = robot->TrajectoryJUpLoad("D://zUP/testA.txt");
+        printf("Upload TrajectoryJ A %d\n", rtn);
+        rtn = robot->TrajectoryJUpLoad("D://zUP/testB.txt");
+        printf("Upload TrajectoryJ B %d\n", rtn);
+
+        rtn = robot->TrajectoryJDelete("testA.txt");
+        printf("Delete TrajectoryJ A %d\n", rtn);
+        rtn = robot->TrajectoryJDelete("testB.txt");
+        printf("Delete TrajectoryJ B %d\n", rtn);
     }

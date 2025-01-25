@@ -9,7 +9,7 @@
 project = '法奧意威協作機器人使用手冊'
 copyright = '2022-2025, 法奧意威（蘇州）機器人系統有限公司'
 author = '法奧意威（蘇州）機器人系統有限公司'
-release = '3.7.7'
+release = '3.7.8'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -20,9 +20,9 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 language = 'zh_TW'
-locale_dirs = ['locale/']  # 设置本地化数据目录
+locale_dirs = ['locale/']  # 設定本地化資料目錄
 
-# 注：在生成html的时候这句话要注释
+# 註：在生成html的時候這句話要註釋
 # latex_engine = 'xelatex'
 
 # -- Options for HTML output -------------------------------------------------

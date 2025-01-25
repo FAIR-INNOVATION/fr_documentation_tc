@@ -1,74 +1,74 @@
-机器人安全设置
+機器人安全設定
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置碰撞等级
+設定碰撞等級
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置碰撞等级
-    * @param  [in]  mode  0-等级，1-百分比
-    * @param  [in]  level 碰撞阈值，等级对应范围[1 - 10对应等级1-10， 100-关闭],百分比对应范围[0~10 对应 0% - 100%]
-    * @param  [in]  config 0-不更新配置文件，1-更新配置文件
-    * @return  错误码
+    * @brief 設定碰撞等級
+    * @param  [in]  mode  0-等級，1-百分比
+    * @param  [in]  level 碰撞阈值，等级对应範圍[1 - 10对应等级1-10， 100-關閉],百分比对应範圍[0~10 对应 0% - 100%]
+    * @param  [in]  config 0-不更新設定文件，1-更新設定文件
+    * @return  錯誤碼
     */
     int SetAnticollision(int mode, Object[] level, int config); 
 
-设置碰撞后策略
+設定碰撞後策略
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置碰撞后策略
-    * @param  [in] strategy  0-报错停止，1-继续运行
-    * @param  [in] safeTime  安全停止时间[1000 - 2000]ms
-    * @param  [in] safeDistance  安全停止距离[1-150]mm
-    * @param  [in] safetyMargin  j1-j6安全系数[1-10]
-    * @return  错误码  
+    * @brief  設定碰撞後策略
+    * @param  [in] strategy  0-報錯停止，1-繼續運行
+    * @param  [in] safeTime  安全停止時間[1000 - 2000]ms
+    * @param  [in] safeDistance  安全停止距離[1-150]mm
+    * @param  [in] safetyMargin  j1-j6安全係數[1-10]
+    * @return  錯誤碼  
     */
     int SetCollisionStrategy(int strategy, int safeTime, int safeDistance, int safetyMargin[]); 
 
-设置正限位
+設定正限位
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置正限位
-    * @param  [in] limit 六个关节位置，单位deg
-    * @return  错误码
+    * @brief  設定正限位
+    * @param  [in] limit 六個關節位置，單位deg
+    * @return  錯誤碼
     */
     int SetLimitPositive(Object[] limit); 
 
-设置负限位
+設定負限位
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置负限位
-    * @param  [in] limit 六个关节位置，单位deg
-    * @return  错误码
+    * @brief  設定負限位
+    * @param  [in] limit 六個關節位置，單位deg
+    * @return  錯誤碼
     */
     int SetLimitNegative(Object[] limit); 
 
-错误状态清除
+錯誤狀態清除
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  错误状态清除
-    * @return  错误码
+    * @brief  錯誤狀態清除
+    * @return  錯誤碼
     */
     int ResetAllError(); 
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -76,16 +76,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         Object[] config = {2.0, 2.0, 2.0, 2.0, 2.0, 2.0};
@@ -107,67 +107,67 @@
         robot.ResetAllError();
     }
 
-关节摩擦力补偿开关
+關節摩擦力補償開關
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 关节摩擦力补偿开关 
-    * @param [in] state  0-关，1-开
-    * @return 错误码 
+    * @brief 關節摩擦力補償開關 
+    * @param [in] state  0-關，1-開
+    * @return 錯誤碼 
     */ 
     int FrictionCompensationOnOff(int state); 
 
-设置关节摩擦力补偿系数-正装
+設定關節摩擦力補償係數-正裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-正装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-正裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_level(Object[] coeff);
 
-设置关节摩擦力补偿系数-侧装
+設定關節摩擦力補償係數-側裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-侧装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-側裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_wall(Object[] coeff); 
 
-设置关节摩擦力补偿系数-倒装
+設定關節摩擦力補償係數-倒裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-倒装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-倒裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_ceiling(Object[] coeff);
 
-设置关节摩擦力补偿系数-自由安装
+設定關節摩擦力補償係數-自由安裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-自由安装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-自由安裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_freedom(Object[] coeff);
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -175,16 +175,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         Object[] lcoeff = { 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 };
@@ -194,42 +194,42 @@
 
         robot.FrictionCompensationOnOff(1);
 
-        robot.SetFrictionValue_level(lcoeff);//正装
+        robot.SetFrictionValue_level(lcoeff);//正裝
 
-        robot.SetFrictionValue_wall(wcoeff);//侧装
+        robot.SetFrictionValue_wall(wcoeff);//側裝
 
-        robot.SetFrictionValue_ceiling(ccoeff);//倒装
+        robot.SetFrictionValue_ceiling(ccoeff);//倒裝
 
-        robot.SetFrictionValue_freedom(fcoeff);//自由安装
+        robot.SetFrictionValue_freedom(fcoeff);//自由安裝
     }
 
-开始奇异位姿保护
+開始奇異位姿保護
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  开始奇异位姿保护
-    * @param  [in]  protectMode 奇异保护模式，0：关节模式；1-笛卡尔模式
-    * @param  [in]  minShoulderPos 肩奇异调整范围(mm), 默认100
-    * @param  [in]  minElbowPos 肘奇异调整范围(mm), 默认50
-    * @param  [in]  minWristPos 腕奇异调整范围(°), 默认10
-    * @return  错误码
+    * @brief  開始奇異位姿保護
+    * @param  [in]  protectMode 奇異保護模式，0：關節模式；1-笛卡爾模式
+    * @param  [in]  minShoulderPos 肩奇異調整範圍(mm), 默認100
+    * @param  [in]  minElbowPos 肘奇異調整範圍(mm), 默認50
+    * @param  [in]  minWristPos 腕奇異調整範圍(°), 預設10
+    * @return  錯誤碼
     */
     int SingularAvoidStart(int protectMode, double minShoulderPos, double minElbowPos, double minWristPos);
 
-停止奇异位姿保护
+停止奇異位姿保護
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  停止奇异位姿保护
-    * @return  错误码
+    * @brief  停止奇異位姿保護
+    * @return  錯誤碼
     */
     int SingularAvoidEnd();
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -237,16 +237,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         DescPose startdescPose=new DescPose(-402.473, -185.876, 103.985, -175.367, 59.682, 94.221);

@@ -1,171 +1,171 @@
-开发指导
+開發指導
 =========================
 
 .. toctree:: 
    :maxdepth: 6
 
-开发环境及条件
+開發環境及條件
 ---------------
 
-开发环境最低需满足以下配置：
+開發環境最低需滿足以下配置：
 
-- CPU：1.6 GHz或更快的处理器；
-- RAM：>=1 GB（建议2 GB以上）；
+- CPU：1.6 GHz或更快的處理器；
+- RAM：>=1 GB（建議2 GB以上）；
 - ROM：>=128GB；
-- OS：需要 Windows 10或更高版本、macOS 10.15或更高版本、Linux（x64）系统（Ubuntu、Debian等）。
+- OS：需要 Windows 10或更高版本、macOS 10.15或更高版本、Linux（x64）系統（Ubuntu、Debian等）。
 
-我们已经封装了一些接口和模块，但想要达到一个较好的开发效果，建议对Web开发有一定的了解，最好熟悉以下技术：
+我們已經封裝了一些介面和模組，但想要達到一個較好的開發效果，建議對Web開發有一定的了解，最好熟悉以下技術：
 
 - HTML，JavaScript/TypeScript，CSS；
 - Vue3；
 - Vite；
 - Node.js。
 
-开发工具
+開發工具
 -------------
-我们推荐使用最新的Visual Studio Code（VSCode）软件进行开发。下载请访问VSCode官方下载页面，选择对应系统下载即可。
+我們推薦使用最新的Visual Studio Code（VSCode）軟體進行開發。下載請造訪VSCode官方下載頁面，選擇對應系統下載即可。
 
-同时在本地计算机中需安装有Node.js运行时环境，安装Node.js时会附带安装npm等工具，方便进行包管理。访问Node.js官方下载页面，选择版本为v20的对应系统下载即可。
+同時在本機電腦中需安裝有Node.js執行環境，安裝Node.js時會附帶安裝npm等工具，方便進行套件管理。造訪Node.js官方下載頁面，選擇版本為v20的對應系統下載即可。
 
-在VSCode中开发还有可能会使用到以下的VSCode插件，可以按需进行安装配置。
+在VSCode中開發還有可能會使用到以下的VSCode插件，可以按需進行安裝配置。
 
 - Vue；
 - ESlint；
 - npm Intellisense；
 - Vue Language Features (Volar)；
-- TypeScript Vue Plugin (Volar)或者Vue.volar；
+- TypeScript Vue Plugin (Volar)或Vue.volar；
 - Tailwind CSS IntelliSense。
 
-FRCap项目结构
+FRCap專案結構
 -------------
 
-FRCap的项目文件结构：
+FRCap的專案文件結構：
 
 .. image:: frcap_pictures/012.png
    :width: 3in
    :align: center
 
-.. centered:: 图表 5-1  FRCap项目结构
+.. centered:: 圖表 5-1  FRCap專案結構
 
 - Public：
 
-公共资源文件夹，在构建过程中不会对内部文件进行构建处理，而是直接完整复制到构建目录下。
+公共資源資料夾，在建置過程中不會對內部文件進行建置處理，而是直接完整複製到建置目錄下。
 
-内部默认包含了action文件夹和logo.svg。
+內部預設包含了action資料夾和logo.svg。
 
-Action文件夹是用来存放自定义指令后台接口逻辑文件的。
+Action資料夾是用來存放自訂指令後台介面邏輯檔案的。
 
-Logo.svg是插件图标。
+Logo.svg是插件圖示。
 
 - Src：
 
-Assets文件夹主要用来放置静态资源。
+Assets資料夾主要用來放置靜態資源。
 
-Components文件夹主要用来放置组件。
+Components資料夾主要用來放置元件。
 
-Utils文件夹主要用来放置工具类。
+Utils資料夾主要用來放置工具類別。
 
-App.vue首页代码。
+App.vue首頁程式碼。
 
-Main.js主要负责资源全局引入，Vue框架创建等。
+Main.js主要負責資源全域引入，Vue框架創建等。
 
-Style.css项目基础样式文件。
+Style.css專案基礎樣式檔。
 
-- Build.bat：Windows平台构建脚本。
-- Index.html：页面UI主框架。
-- Package.json：包描述文件和编译策略等。
-- Vite.config.js：Vite配置文件。
+- Build.bat：Windows平台建置腳本。
+- Index.html：頁面UI主框架。
+- Package.json：套件描述檔和編譯策略等。
+- Vite.config.js：Vite設定檔。
 
 前端frcap-ui、frcap-api使用
 ----------------------------
 
-Frcap-ui提供了一些已经通过Vue组件封装好的HTML控件，可以导入项目中进行使用，降低页面UI开发难度和代码量，提高代码可读性。当然，您也可以选择一些优秀开源的UI组件库，例如Element plus等。
+Frcap-ui提供了一些已經透過Vue元件封裝好的HTML控件，可以導入專案中進行使用，降低頁面UI開發難度和程式碼量，提高程式碼可讀性。當然，您也可以選擇一些優秀開源的UI元件庫，例如Element plus等。
 
-首先在您的项目路径下打开终端，安装frcap-ui。
+首先在您的專案路徑下開啟終端，安裝frcap-ui。
 
 .. code-block:: c++
    :linenos:
 
    npm install frcap-ui -s
 
-安装成功后，在需要使用frcap-ui的组件中引入，以按钮控件为例。
+安裝成功後，在需要使用frcap-ui的元件中引入，以按鈕控制項為例。
 
 .. code-block:: javascript
    :linenos:
 
    import { AppButton } from 'frcap-ui'
 
-然后在组件的<template>元素中使用。
+然後在組件的<template>元素中使用。
 
 .. code-block:: c++
    :linenos:
 
    <AppButton button-text="Start" button-type="primary"></AppButton>
 
-在浏览器中预览开发项目效果。
+在瀏覽器中預覽開發專案效果。
 
 .. image:: frcap_pictures/009.png
    :width: 6in
    :align: center
 
-.. centered:: 图表 5-2  AppButton效果
+.. centered:: 圖表 5-2  AppButton效果
 
-目前我们提供了4种比较常见的控件组件。
+目前我們提供了4種比較常見的控制組件。
 
-- AppButton：按钮组件。
-  
-  - buttonType: 按钮类型，String，对应不同的按钮样式，缺省为primary。
-  
-    - primary：蓝色；
-    - secondery：灰色；
-    - safety：绿色；
-    - warning：黄色；
-    - serious：红色。
-  
-  - buttonText：按钮文本，String，缺省值为“primary”。
+- AppButton：按鈕元件。
 
-- AppInput：输入组件。
-  
-  - Type：必要项，String，缺省值text。表示输入框的类型。
-  
-    - Number：数字输入框；
-    - Text：文本输入框。
-  
-  - inputLabel：必要项，String，输入框标签文本。
-  - inputUnit：String，输入框单位文本。
-  - hasUnit：Boolean，缺省false，指示是否需要单位文本。
-  - isEmptyErr：Boolean，输入框是否为空。
-  - isReadonly：Boolean，输入框是否只读。
+ - buttonType: 按鈕類型，String，對應不同的按鈕樣式，預設為primary。
 
-- AppSelect：选择框组件。
-  
-  - selectionLabel：必要项，String，选择框标签文本。
-  - optionsData：必要项，Array，选项数据。
+ - primary：藍色；
+ - secondery：灰色；
+ - safety：綠色；
+ - warning：黃色；
+ - serious：紅。
 
-- Modal：模态窗组件。
-  
-  - show：Boolean，是否弹出模态窗。
-  - title：String，模态窗标题。
+ - buttonText：按鈕文本，String，預設值為「primary」。
 
-我们为了方便FRCap中可能会创建自定义指令开发，已经将Http请求和API内置在“创建向导”下载的初始FRCap项目中。这样可以将自定义指令和默认提供的指令都放到frcap-api中的api.js文件中。api.js具体路径为“./src/api/api.js”。
+- AppInput：輸入元件。
 
-Frcap-api的使用与frcap-ui类似，具体如下：
+ - Type：必要項，String，缺省值text。表示輸入框的類型。
 
-1. 在组件等需要用到api的文件中导入api。
+ - Number：數字輸入框；
+ - Text：文字輸入框。
+
+ - inputLabel：必要項，String，輸入框標籤文字。
+ - inputUnit：String，輸入框單位文字。
+ - hasUnit：Boolean，缺省false，指示是否需要單位文本。
+ - isEmptyErr：Boolean，輸入框是否為空。
+ - isReadonly：Boolean，輸入框是否唯讀。
+
+- AppSelect：選擇框組件。
+
+ - selectionLabel：必要項，String，選擇框標籤文字。
+ - optionsData：必要項，Array，選項資料。
+
+- Modal：模態窗組件。
+
+ - show：Boolean，是否彈出模態窗。
+ - title：String，模態視窗標題。
+
+我們為了方便FRCap中可能會建立自訂指令開發，已經將Http請求和API內建在「建立精靈」下載的初始FRCap專案中。這樣可以將自訂指令和預設提供的指令都放到frcap-api中的api.js檔案中。 api.js具體路徑為「./src/api/api.js」。
+
+Frcap-api的使用與frcap-ui類似，具體如下：
+
+1. 在元件等需要用到api的檔案中導入api。
 
 .. code-block:: javascript
    :linenos:
 
    import api from '@/api/api';
 
-2. 在接口中调用默认提供的指令。
+2. 在介面中呼叫預設提供的指令。
 
 .. code-block:: c++
    :linenos:
 
    api.getRobotStatus()
 
-3. 在返回的promise中编写处理逻辑。
+3. 在傳回的promise中編寫處理邏輯。
 
 .. code-block:: c++
    :linenos:
@@ -178,13 +178,13 @@ Frcap-api的使用与frcap-ui类似，具体如下：
         console.error(err);
     });
 
-后端自定义指令开发
+後端自訂指令開發
 ----------------------------
 
-数据库操作示例
+資料庫操作範例
 +++++++++++++++++++++++++
 
-1. 引入数据库模块
+1. 引入資料庫模組
 
 .. code-block:: javascript
    :linenos:
@@ -193,30 +193,30 @@ Frcap-api的使用与frcap-ui类似，具体如下：
     var Sqlite3_Action = require(node + '/better-sqlite3/better-sqlite3.js');
     var sqlite = new Sqlite3_Action();
 
-2. 获取点位数据库中内容
+2. 取得點位資料庫中內容
    
 .. code-block:: javascript
    :linenos:
 
     // 匹配 cmd
     case 'get_points':
-    // 编写sql语句，按照数字升序 + 首字母开头升序 + 中文开头升序 的方式，反馈数据给前端页面进行显示
+    // 寫sql語句，依照數字升序 + 首字母開頭升序 + 中文開頭升序 的方式，回饋資料給前端頁面顯示
     var sql = "select * from points order by name ASC"; 
     var sql_data = sqlite.queryall(DB_POINTS, sql); 
-    // json数据格式化
+    // json數據格式
     for (var i = 0; i < sql_data.length; i++) {
         response_data[sql_data[i].name] = sql_data[i];
     }
-    //json数据反馈给前端
+    //json數據回饋給前端
     event_socket.emit('response', res, response_status, response_data);
     break;  
 
-3. socket通信操作示例
+3. socket通訊操作範例
 
-socket通信操作示例
+socket通訊操作範例
 +++++++++++++++++++++++++
 
-- 引入socket通信模块
+- 引入socket通訊模組
    
 .. code-block:: javascript
    :linenos:
@@ -225,18 +225,18 @@ socket通信操作示例
     var Socket_Cmd = require(node + '/socket/socket_cmd');
     var socket_cmd = new Socket_Cmd();
 
-- 下发设置系统变量指令
+- 下發設定係統變數指令
   
 .. code-block:: javascript
    :linenos:
 
    // 匹配 cmd
     case 511:
-    //获取发送数据内容
+    //取得發送數據內容
     content = data_json.content;
-    //获取发送数据长度
+    //取得發送資料長度
     len = data_json.content.length;
-    //组发送数据
+    //群組發送數據
     send_content = '/f/bIII1III511III' + len + 'III' + content + 'III/b/f'
     //socket send
     socket_cmd.send(send_content);

@@ -1,64 +1,64 @@
-机器人力控
+機器人力控
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-力传感器配置
+力感測器配置
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  配置力传感器
-    * @param  [in] company  力传感器厂商，17-坤维科技
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  配置力感測器
+    * @param  [in] company  力傳感器廠商，17-坤維科技
+    * @param  [in] device  設備號，暫不使用，預設為0
+    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     int FT_SetConfig(int company, int device, int softvesion, int bus); 
 
-获取力传感器配置 
+取得力傳感器配置 
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 获取力传感器配置 
-    * @param [out] deviceID 力传感器编号 
-    * @param [out] company 力传感器厂商，，力传感器厂商，17-坤维科技，19-航天十一院，20-ATI传感器，21-中科米点，22-伟航敏芯
-    * @param [out] device  设备号，坤维(0-KWR75B)，航天十一院(0-MCS6A-200-4)，ATI (0-AXIA80 -M8)，中科米点(0-MST2010)，伟航敏芯(0-WHC6L-YB-10A) 
-    * @param [out] softvesion 软件版本号，暂不使用，默认为 0 
-    * @return 错误码 
+    * @brief 取得力傳感器配置 
+    * @param [out] deviceID 力傳感器編號 
+    * @param [out] company 力傳感器廠商，17-坤維科技，19-航天十一院，20-ATI 傳感器，21-中科米點，22-伟航敏芯
+    * @param [out] device  設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI (0-AXIA80 -M8)，中科米點(0-MST2010)，偉航敏芯(0 -WHC6L-YB-10A)
+    * @param [out] softvesion 軟體版本號，暫不使用，預設為 0 
+    * @return 錯誤碼 
     */ 
     int FT_GetConfig(ref int deviceID, ref int company, ref int device, ref int softvesion); 
 
-力传感器激活
+力傳感器激活
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  力传感器激活
-    * @param  [in] act  0-复位，1-激活
-    * @return  错误码
+    * @brief  力傳感器激活
+    * @param  [in] act  0-復位，1-激活
+    * @return  錯誤碼
     */
     int FT_Activate(byte act); 
 
-力传感器校零
+力傳感器校零
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  力传感器校零
-    * @param  [in] act  0-去除零点，1-零点矫正
-    * @return  错误码
+    * @brief  力傳感器校零
+    * @param  [in] act  0-去除零點，1-零點矯正
+    * @return  錯誤碼
     */
     int FT_SetZero(byte act); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -94,13 +94,13 @@
                 
         robot.SetLoadCoord(coord);
         Thread.Sleep(1000);
-        robot.FT_SetZero(0);//0去除零点  1零点矫正
+        robot.FT_SetZero(0);//0去除零點  1零點矫正
         Thread.Sleep(1000);
 
         ForceTorque ft = new ForceTorque(0, 0, 0, 0, 0, 0);
         int rtn = robot.FT_GetForceTorqueOrigin(1, ref ft);
         Console.WriteLine($"ft origin : {ft.fx}, {ft.fy}, { ft.fz}, { ft.tx}, { ft.ty}, { ft.tz}    rtn   {rtn}");
-        rtn = robot.FT_SetZero(1);//零点矫正
+        rtn = robot.FT_SetZero(1);//零點矫正
         //Console.WriteLine($"set zero rtn {rtn}");
 
         Thread.Sleep(2000);
@@ -111,68 +111,68 @@
         Console.WriteLine($"FT_GetForceTorqueRCS rcs : {ft.fx}, {ft.fy}, {ft.fz}, {ft.tx}, {ft.ty}, {ft.tz}");
     }
 
-设置力传感器参考坐标系
+設定力傳感器參考座標系
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置力传感器参考坐标系
-    * @param  [in] ref  0-工具坐标系，1-基坐标系
-    * @return  错误码
+    * @brief  設定力傳感器參考座標系
+    * @param  [in] ref  0-工具座標系，1-基坐標系
+    * @return  錯誤碼
     */
     int FT_SetRCS(byte type); 
 
-负载重量辨识记录
+負載重量辨識記錄
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  负载重量辨识记录
-    * @param  [in] id  传感器坐标系编号，范围[1~14]
-    * @return  错误码
+    * @brief  負載重量辨識記錄
+    * @param  [in] id   傳感器座標系編號，範圍[1~14]
+    * @return  錯誤碼
     */
     int FT_PdIdenRecord(int id);
 
-负载重量辨识计算
+負載重量辨識計算
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  负载重量辨识计算
-    * @param  [out] weight  负载重量，单位kg
-    * @return  错误码
+    * @brief  負載重量辨識計算
+    * @param  [out] weight  負載重量，單位kg
+    * @return  錯誤碼
     */   
     int FT_PdIdenCompute(ref double weight);
 
-负载质心辨识记录
+負載質心辨識記錄
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  负载质心辨识记录
-    * @param  [in] id  传感器坐标系编号，范围[1~14]
-    * @param  [in] index 点编号，范围[1~3]
-    * @return  错误码
+    * @brief  負載質心辨識記錄
+    * @param  [in] id   傳感器座標系編號，範圍[1~14]
+    * @param  [in] index 點編號，範圍[1~3]
+    * @return  錯誤碼
     */
     int FT_PdCogIdenRecord(int id, int index); 
 
-负载质心辨识计算
+負載質心辨識計算
 +++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  负载质心辨识计算
-    * @param  [out] cog  负载质心，单位mm
-    * @return  错误码
+    * @brief  負載質心辨識計算
+    * @param  [out] cog  負載質心，單位mm
+    * @return  錯誤碼
     */   
     int FT_PdCogIdenCompute(ref DescTran cog);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -239,49 +239,49 @@
         Console.WriteLine($"cog : {cog.x}, {cog.y}, {cog.z}");
     }
 
-获取参考坐标系下力/扭矩数据
+取得參考坐標系下力/扭力數據
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取参考坐标系下力/扭矩数据
+    * @brief  取得參考坐標系下力/扭力數據
     * @param  [out] ft  力/扭矩，fx,fy,fz,tx,ty,tz
-    * @return  错误码
+    * @return  錯誤碼
     */   
     int FT_GetForceTorqueRCS(byte flag, ref ForceTorque ft); 
 
-获取力传感器原始力/扭矩数据
+取得力傳感器原始力/扭力數據
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取力传感器原始力/扭矩数据
+    * @brief  取得力傳感器原始力/扭力數據
     * @param  [out] ft  力/扭矩，fx,fy,fz,tx,ty,tz
-    * @return  错误码
+    * @return  錯誤碼
     */   
     int FT_GetForceTorqueOrigin(byte flag, ref ForceTorque ft); 
 
-碰撞守护
+碰撞守護
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  碰撞守护
-    * @param  [in] flag 0-关闭碰撞守护，1-开启碰撞守护
-    * @param  [in] sensor_id 力传感器编号
-    * @param  [in] select  选择六个自由度是否检测碰撞，0-不检测，1-检测
+    * @brief  碰撞守護
+    * @param  [in] flag 0-關閉碰撞守護，1-開啟碰撞守護
+    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] select  選擇六個自由度是否偵測碰撞，0-不偵測，1-偵測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] max_threshold 最大阈值
-    * @param  [in] min_threshold 最小阈值
-    * @note   力/扭矩检测范围：(ft-min_threshold, ft+max_threshold)
-    * @return  错误码
+    * @param  [in] max_threshold 最大閾值
+    * @param  [in] min_threshold 最小閾值
+    * @note   力/扭力檢測範圍：(ft-min_threshold, ft+max_threshold)
+    * @return  錯誤碼
     */   
     int FT_Guard(int flag, int sensor_id, int[] select, ForceTorque ft, double[] max_threshold, double[] min_threshold); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -293,7 +293,7 @@
 
         byte flag = 1;
         byte sensor_id = 1;
-        int[] select = new int[6]{ 1, 0, 0, 0, 0, 0 };//只启用x轴碰撞守护
+        int[] select = new int[6]{ 1, 0, 0, 0, 0, 0 };//只啟用x軸碰撞守護
         double[] max_threshold = new double[6]{ 5.0f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f };
         double[] min_threshold = new double[6]{ 3.0f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f };
 
@@ -335,27 +335,27 @@
         Console.WriteLine($"FT_Guard end rtn {rtn}");
     }
 
-恒力控制
+恆力控制
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  恒力控制
-    * @param  [in] flag 0-关闭恒力控制，1-开启恒力控制
-    * @param  [in] sensor_id 力传感器编号
-    * @param  [in] select  选择六个自由度是否检测碰撞，0-不检测，1-检测
+    * @brief  恆力控制
+    * @param  [in] flag 0-關閉恆力控制，1-開啟恆力控制
+    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] select  選擇六個自由度是否偵測碰撞，0-不偵測，1-偵測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] ft_pid 力pid参数，力矩pid参数
-    * @param  [in] adj_sign 自适应启停控制，0-关闭，1-开启
-    * @param  [in] ILC_sign ILC启停控制， 0-停止，1-训练，2-实操
-    * @param  [in] 最大调整距离，单位mm
-    * @param  [in] 最大调整角度，单位deg
-    * @return  错误码
+    * @param  [in] ft_pid 力pid參數，力矩pid參數
+    * @param  [in] adj_sign 自適應啟動停止控制，0-關閉，1-開啟
+    * @param  [in] ILC_sign ILC啟停控制， 0-停止，1-訓練，2-實操
+    * @param  [in] 最大調整距離，單位mm
+    * @param  [in] 最大調整角度，單位deg
+    * @return  錯誤碼
     */   
     int FT_Control(int flag, int sensor_id, int[] select, ForceTorque ft, double[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang);   
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -413,31 +413,31 @@
         Console.WriteLine($"FT_Control end rtn {rtn}");
     }
 
-柔顺控制开启
+柔順控制開啟
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  柔顺控制开启
-    * @param  [in] p 位置调节系数或柔顺系数
-    * @param  [in] force 柔顺开启力阈值，单位N
-    * @return  错误码
+    * @brief  柔順控制開啟
+    * @param  [in] p 位置調節係數或柔順係數
+    * @param  [in] force 柔順開啟力閾值，單位N
+    * @return  錯誤碼
     */   
     int FT_ComplianceStart(float p, float force);
 
-柔顺控制关闭
+柔順控制關閉
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  柔顺控制关闭
-    * @return  错误码
+    * @brief  柔順控制關閉
+    * @return  錯誤碼
     */   
     int FT_ComplianceStop(); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -507,9 +507,7 @@
         robot.FT_Control(flag, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang);
     }
 
-
-
-负载辨识初始化
+負載辨識初始化
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C#SDK-v1.0.4
@@ -518,12 +516,12 @@
     :linenos:
 
     /**
-    * @brief 负载辨识初始化
-    * @return 错误码
+    * @brief 負載辨識初始化
+    * @return 錯誤碼
     */
     int LoadIdentifyDynFilterInit();
 
-负载辨识变量初始化
+負載辨識變數初始化
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C#SDK-v1.0.4
@@ -532,12 +530,12 @@
     :linenos:
 
     /**
-    * @brief 负载辨识变量初始化
-    * @return 错误码
+    * @brief 負載辨識變數初始化
+    * @return 錯誤碼
     */
     int LoadIdentifyDynVarInit();
 
-负载辨识主程序
+負荷辨識主程序
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C#SDK-v1.0.4
@@ -546,15 +544,15 @@
     :linenos:
 
     /**
-    * @brief 负载辨识主程序
-    * @param [in] joint_torque 关节扭矩
-    * @param [in] joint_pos 关节位置
-    * @param [in] t 采样周期
-    * @return 错误码
+    * @brief 負荷辨識主程序
+    * @param [in] joint_torque 關節扭矩
+    * @param [in] joint_pos 關節位置
+    * @param [in] t 採樣週期
+    * @return 錯誤碼
     */
     int LoadIdentifyMain(double[] joint_torque, double[] joint_pos, double t);
 
-获取负载辨识结果
+獲取負荷辨識結果
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C#SDK-v1.0.4
@@ -563,10 +561,10 @@
     :linenos:
 
     /**
-    * @brief 获取负载辨识结果
-    * @param [in] gain  重力项系数double[6]，离心项系数double[6]
-    * @param [out] weight 负载重量
-    * @param [out] cog 负载质心
-    * @return 错误码
+    * @brief 獲取負荷辨識結果
+    * @param [in] gain  重力項係數double[6]，離心項係數double[6]
+    * @param [out] weight 負載重量
+    * @param [out] cog 負載質心
+    * @return 錯誤碼
     */
     int LoadIdentifyGetResult(double[] gain, ref double weight, ref DescTran cog);

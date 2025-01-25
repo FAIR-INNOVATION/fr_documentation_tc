@@ -1,10 +1,10 @@
-扩展轴
+擴展軸
 =============
 
 .. toctree:: 
     :maxdepth: 5
 
-设置485扩展轴参数
+設定485擴展軸參數
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -12,18 +12,18 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴参数
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [in] servoCompany 伺服驱动器厂商，1-戴纳泰克
-    * @param [in] servoModel 伺服驱动器型号，1-FD100-750C
-    * @param [in] servoSoftVersion 伺服驱动器软件版本，1-V1.0
-    * @param [in] servoResolution 编码器分辨率
-    * @param [in] axisMechTransRatio 机械传动比
-    * @return 错误码
+    * @brief 設定485擴展軸參數
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [in] servoCompany 伺服驅動器廠商，1-戴納泰克
+    * @param [in] servoModel 伺服驅動器型號，1-FD100-750C
+    * @param [in] servoSoftVersion 伺服驅動器軟體版本，1-V1.0
+    * @param [in] servoResolution 編碼器分辨率
+    * @param [in] axisMechTransRatio 機械傳動比
+    * @return 錯誤碼
     */
     errno_t AuxServoSetParam(int servoId, int servoCompany, int servoModel, int servoSoftVersion, int servoResolution, double axisMechTransRatio);
 
-获取485扩展轴配置参数
+取得485擴展軸配置參數
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -31,18 +31,18 @@
     :linenos:
 
     /**
-    * @brief 获取485扩展轴配置参数
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [out] servoCompany 伺服驱动器厂商，1-戴纳泰克
-    * @param [out] servoModel 伺服驱动器型号，1-FD100-750C
-    * @param [out] servoSoftVersion 伺服驱动器软件版本，1-V1.0
-    * @param [out] servoResolution 编码器分辨率
-    * @param [out] axisMechTransRatio 机械传动比
-    * @return 错误码
+    * @brief 取得485擴展軸配置參數
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [out] servoCompany 伺服驅動器廠商，1-戴納泰克
+    * @param [out] servoModel 伺服驅動器型號，1-FD100-750C
+    * @param [out] servoSoftVersion 伺服驅動器軟體版本，1-V1.0
+    * @param [out] servoResolution 編碼器分辨率
+    * @param [out] axisMechTransRatio 機械傳動比
+    * @return 錯誤碼
     */
     errno_t AuxServoGetParam(int servoId, int* servoCompany, int* servoModel, int* servoSoftVersion, int* servoResolution, double* axisMechTransRatio);
     
-代码示例
+代碼範例
 **************
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -51,10 +51,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -105,7 +105,7 @@
         return 0;
     }
     
-设置485扩展轴使能/去使能
+設定485擴展軸使能/去使能
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -113,14 +113,14 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴使能/去使能
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [in] status 使能状态，0-去使能， 1-使能
-    * @return 错误码
+    * @brief 設定485擴展軸使能/去使能
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [in] status 使能狀態，0-去使能， 1-使能
+    * @return 錯誤碼
     */
     errno_t AuxServoEnable(int servoId, int status);
 
-设置485扩展轴控制模式
+設定485擴展軸控制模式
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -128,14 +128,14 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴控制模式
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
+    * @brief 設定485擴展軸控制模式
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
     * @param [in] mode 控制模式，0-位置模式，1-速度模式
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t AuxServoSetControlMode(int servoId, int mode);
 
-设置485扩展轴目标位置(位置模式)
+設定485擴展軸目標位置(位置模式)
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -143,15 +143,15 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴目标位置(位置模式)
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [in] pos 目标位置，mm或°
-    * @param [in] speed 目标速度，mm/s或°/s
-    * @return 错误码
+    * @brief 設定485擴展軸目標位置(位置模式)
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [in] pos 目標位置，mm或°
+    * @param [in] speed 目標速度，mm/s或°/s
+    * @return 錯誤碼
     */
     errno_t AuxServoSetTargetPos(int servoId, double pos, double speed);
 
-设置485扩展轴目标转矩(力矩模式) - 暂未开放
+設定485擴展軸目標轉矩(力矩模式) - 暫未開放
 ++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -159,14 +159,14 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴目标转矩(力矩模式)
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [in] torque 目标力矩，Nm
-    * @return 错误码
+    * @brief 設定485擴展軸目標轉矩(力矩模式)
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [in] torque 目標力矩，Nm
+    * @return 錯誤碼
     */
     errno_t AuxServoSetTargetTorque(int servoId, double torque);
 
-设置485扩展轴回零
+設定485擴展軸回零
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -174,16 +174,16 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴回零
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [in] mode 回零模式，0-当前位置回零；1-限位回零
+    * @brief 設定485擴展軸回零
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [in] mode 回零模式，0-目前位置回零；1-限位回零
     * @param [in] searchVel 回零速度，mm/s或°/s
     * @param [in] latchVel 箍位速度，mm/s或°/s
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t AuxServoHoming(int servoId, int mode, double searchVel, double latchVel);
     
-清除485扩展轴错误信息
+清除485擴展軸錯誤訊息
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -191,13 +191,13 @@
     :linenos:
 
     /**
-    * @brief 清除485扩展轴错误信息
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @return 错误码
+    * @brief 清除485擴展軸錯誤訊息
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @return 錯誤碼
     */
     errno_t AuxServoClearError(int servoId);
 
-获取485扩展轴伺服状态
+取得485擴展軸伺服狀態
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -205,18 +205,18 @@
     :linenos:
 
     /**
-    * @brief 获取485扩展轴伺服状态
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [out] servoErrCode 伺服驱动器故障码
-    * @param [out] servoState 伺服驱动器状态[十进制数转为二进制，bit0-bit5：伺服使能-伺服运行-正限位触发-负限位触发-定位完成-回零完成]
-    * @param [out] servoPos 伺服当前位置 mm或°
-    * @param [out] servoSpeed 伺服当前速度 mm/s或°/s
-    * @param [out] servoTorque 伺服当前转矩Nm
-    * @return 错误码
+    * @brief 取得485擴展軸伺服狀態
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [out] servoErrCode 伺服驅動器故障碼
+    * @param [out] servoState 伺服驅動器狀態[十进制数转為二进制，bit0-bit5：伺服使能-伺服运行-正限位触发-负限位触发-定位完成-回零完成]
+    * @param [out] servoPos 伺服當前位置 mm或°
+    * @param [out] servoSpeed 伺服當前速度 mm/s或°/s
+    * @param [out] servoTorque 伺服當前轉矩Nm
+    * @return 錯誤碼
     */
     errno_t AuxServoGetStatus(int servoId, int* servoErrCode, int* servoState, double* servoPos, double* servoSpeed, double* servoTorque);
 
-代码示例
+代碼範例
 **************
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -225,10 +225,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -288,7 +288,7 @@
         return 0;
     }
 
-设置485扩展轴目标速度(速度模式)
+設定485擴展軸目標速度（速度模式）
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -296,14 +296,14 @@
     :linenos:
 
     /**
-    * @brief 设置485扩展轴目标速度(速度模式)
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @param [in] speed 目标速度，mm/s或°/s
-    * @return 错误码
+    * @brief 設定485擴展軸目標速度（速度模式）
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @param [in] speed 目標速度，mm/s或°/s
+    * @return 錯誤碼
     */
     errno_t AuxServoSetTargetSpeed(int servoId, double speed);
     
-设置状态反馈中485扩展轴数据轴号
+設定狀態回饋中485擴展軸資料軸號
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -311,13 +311,13 @@
     :linenos:
 
     /**
-    * @brief 设置状态反馈中485扩展轴数据轴号
-    * @param [in] servoId 伺服驱动器ID，范围[1-15],对应从站ID
-    * @return 错误码
+    * @brief 設定狀態回饋中485擴展軸資料軸號
+    * @param [in] servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+    * @return 錯誤碼
     */
     errno_t AuxServosetStatusID(int servoId);
         
-获取机器人实时状态结构体
+取得機器人即時狀態結構體
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -325,13 +325,13 @@
     :linenos:
 
     /**
-    * @brief 获取机器人实时状态结构体
-    * @param [out] pkg 机器人实时状态结构体
-    * @return 错误码
+    * @brief 取得機器人即時狀態結構體
+    * @param [out] pkg 機器人即時狀態結構體
+    * @return 錯誤碼
     */
     errno_t GetRobotRealTimeState(ROBOT_STATE_PKG *pkg);
         
-UDP扩展轴通讯参数配置
+UDP擴展軸通訊參數配置
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -339,21 +339,21 @@ UDP扩展轴通讯参数配置
     :linenos:
 
     /**
-    * @brief UDP扩展轴通讯参数配置
+    * @brief UDP擴展軸通訊參數配置
     * @param [in] ip PLC IP地址
-    * @param [in] port	端口号
-    * @param [in] period	通讯周期(ms，默认为2，请勿修改此参数)
-    * @param [in] lossPkgTime	丢包检测时间(ms)
-    * @param [in] lossPkgNum	丢包次数
-    * @param [in] disconnectTime	通讯断开确认时长
-    * @param [in] reconnectEnable	通讯断开自动重连使能 0-不使能 1-使能
-    * @param [in] reconnectPeriod	重连周期间隔(ms)
-    * @param [in] reconnectNum	重连次数
-    * @return 错误码
+    * @param [in] port	連接埠號
+    * @param [in] period	通訊週期(ms，預設為2，請勿修改此參數)
+    * @param [in] lossPkgTime	丟包檢測時間(ms)
+    * @param [in] lossPkgNum	丟包次數
+    * @param [in] disconnectTime	通訊斷開確認時長
+    * @param [in] reconnectEnable	通訊斷開自動重連啟用 0-不啟用 1-啟用
+    * @param [in] reconnectPeriod	重連週期間隔(ms)
+    * @param [in] reconnectNum	重連次數
+    * @return 錯誤碼
     */
     errno_t ExtDevSetUDPComParam(std::string ip, int port, int period, int lossPkgTime, int lossPkgNum, int disconnectTime, int reconnectEnable, int reconnectPeriod, int reconnectNum);
         
-获取UDP扩展轴通讯参数配置
+取得UDP擴充軸通訊參數配置
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -361,21 +361,21 @@ UDP扩展轴通讯参数配置
     :linenos:
 
     /**
-    * @brief 获取UDP扩展轴通讯参数
+    * @brief 取得UDP擴充軸通訊參數
     * @param [out] ip PLC IP地址
-    * @param [out] port	端口号
-    * @param [out] period	通讯周期(ms，默认为2，请勿修改此参数)
-    * @param [out] lossPkgTime	丢包检测时间(ms)
-    * @param [out] lossPkgNum	丢包次数
-    * @param [out] disconnectTime	通讯断开确认时长
-    * @param [out] reconnectEnable	通讯断开自动重连使能 0-不使能 1-使能
-    * @param [out] reconnectPeriod	重连周期间隔(ms)
-    * @param [out] reconnectNum	重连次数
-    * @return 错误码
+    * @param [out] port	連接埠號
+    * @param [out] period	通訊週期(ms，預設為2，請勿修改此參數)
+    * @param [out] lossPkgTime	丟包檢測時間(ms)
+    * @param [out] lossPkgNum	丟包次數
+    * @param [out] disconnectTime	通訊斷開確認時長
+    * @param [out] reconnectEnable	通訊斷開自動重連啟用 0-不啟用 1-啟用
+    * @param [out] reconnectPeriod	重連週期間隔(ms)
+    * @param [out] reconnectNum	重連次數
+    * @return 錯誤碼
     */
     errno_t ExtDevGetUDPComParam(std::string& ip, int& port, int& period, int& lossPkgTime, int& lossPkgNum, int& disconnectTime, int& reconnectEnable, int& reconnectPeriod, int& reconnectNum);
         
-加载UDP通信
+加載UDP通信
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -383,12 +383,12 @@ UDP扩展轴通讯参数配置
     :linenos:
 
     /**
-    * @brief 加载UDP通信
-    * @return 错误码
+    * @brief 加載UDP通信
+    * @return 錯誤碼
     */
     errno_t ExtDevLoadUDPDriver();
 
-卸载UDP通信
+卸載UDP通信
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -396,12 +396,12 @@ UDP扩展轴通讯参数配置
     :linenos:
 
     /**
-    * @brief 卸载UDP通信
-    * @return 错误码
+    * @brief 卸載UDP通信
+    * @return 錯誤碼
     */
     errno_t ExtDevUnloadUDPDriver();
 
-代码示例
+代碼範例
 **************
 
 .. code-block:: c++
@@ -423,7 +423,7 @@ UDP扩展轴通讯参数配置
         return 0;
     }
 
-UDP扩展轴通信异常断开后恢复连接
+UDP擴充軸通訊異常斷開後恢復連接
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -431,12 +431,12 @@ UDP扩展轴通信异常断开后恢复连接
     :linenos:
 
     /**
-    * @brief UDP扩展轴通信异常断开后恢复连接
-    * @return 错误码
+    * @brief UDP擴充軸通訊異常斷開後恢復連接
+    * @return 錯誤碼
     */
     errno_t ExtDevUDPClientComReset();
 
-UDP扩展轴通信异常断开后关闭通讯
+UDP擴充軸通訊異常斷開後關閉通訊
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -444,12 +444,12 @@ UDP扩展轴通信异常断开后关闭通讯
     :linenos:
 
     /**
-    * @brief UDP扩展轴通信异常断开后关闭通讯
-    * @return 错误码
+    * @brief UDP擴充軸通訊異常斷開後關閉通訊
+    * @return 錯誤碼
     */
     errno_t ExtDevUDPClientComClose();
 
-UDP扩展轴参数配置
+UDP擴充軸參數配置
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -457,25 +457,25 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief UDP扩展轴参数配置
-    * @param [in] axisID 轴号
-    * @param [in] axisType 扩展轴类型 0-平移；1-旋转
-    * @param [in] axisDirection 扩展轴方向 0-正向；1-方向 
-    * @param [in] axisMax 扩展轴最大位置 mm
-    * @param [in] axisMin 扩展轴最小位置 mm
+    * @brief UDP擴充軸參數配置
+    * @param [in] axisID 軸號
+    * @param [in] axisType 擴展軸類型 0-平移；1-旋轉
+    * @param [in] axisDirection 擴展軸方向 0-正向；1-方向
+    * @param [in] axisMax 擴展軸最大位置 mm
+    * @param [in] axisMin 擴展軸最小位置 mm
     * @param [in] axisVel 速度mm/s
     * @param [in] axisAcc 加速度mm/s2
-    * @param [in] axisLead 导程mm
-    * @param [in] encResolution 编码器分辨率
-    * @param [in] axisOffect焊缝起始点扩展轴偏移量
-    * @param [in] axisCompany 驱动器厂家 1-禾川；2-汇川；3-松下
-    * @param [in] axisModel 驱动器型号 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-汇川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
-    * @param [in] axisEncType 编码器类型  0-增量；1-绝对值
-    * @return 错误码
+    * @param [in] axisLead 導程mm
+    * @param [in] encResolution 編碼器分辨率
+    * @param [in] axisOffect焊接起始點擴展軸偏移量
+    * @param [in] axisCompany 驅動器廠商 1-禾川；2-匯川；3-松下
+    * @param [in] axisModel 驅動器型號 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-匯川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
+    * @param [in] axisEncType 編碼器類型 0-增量；1-絕對值
+    * @return 錯誤碼
     */
     errno_t ExtAxisParamConfig(int axisID, int axisType, int axisDirection, double axisMax, double axisMin, double axisVel, double axisAcc, double axisLead, long encResolution, double axisOffect, int axisCompany, int axisModel, int axisEncType);
 
-设置扩展轴安装位置
+設定擴展軸安裝位置
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -483,13 +483,13 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 设置扩展轴安装位置
-    * @param [in] installType 0-机器人安装在外部轴上，1-机器人安装在外部轴外
-    * @return 错误码
+    * @brief 設定擴展軸安裝位置
+    * @param [in] installType 0-機器人安裝在外部軸上，1-機器人安裝在外部軸外
+    * @return 錯誤碼
     */
     errno_t SetRobotPosToAxis(int installType);
 
-设置扩展轴系统DH参数配置
+設定擴展軸系統DH參數配置
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -497,21 +497,21 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 设置扩展轴系统DH参数配置
-    * @param [in]  axisConfig 外部轴构型，0-单自由度直线滑轨，1-两自由度L型变位机，2-三自由度，3-四自由度，4-单自由度变位机
-    * @param [in]  axisDHd1 外部轴DH参数d1 mm
-    * @param [in]  axisDHd2 外部轴DH参数d2 mm
-    * @param [in]  axisDHd3 外部轴DH参数d3 mm
-    * @param [in]  axisDHd4 外部轴DH参数d4 mm
-    * @param [in]  axisDHa1 外部轴DH参数11 mm
-    * @param [in]  axisDHa2 外部轴DH参数a2 mm
-    * @param [in]  axisDHa3 外部轴DH参数a3 mm
-    * @param [in]  axisDHa4 外部轴DH参数a4 mm
-    * @return 错误码
+    * @brief 設定擴展軸系統DH參數配置
+    * @param [in]  axisConfig 外部軸構型，0-單自由度直線滑軌，1-兩自由度L型變位機，2-三自由度，3-四自由度，4-單自由度變位機
+    * @param [in]  axisDHd1 外部軸DH參數d1 mm
+    * @param [in]  axisDHd2 外部軸DH參數d2 mm
+    * @param [in]  axisDHd3 外部軸DH參數d3 mm
+    * @param [in]  axisDHd4 外部軸DH參數d4 mm
+    * @param [in]  axisDHa1 外部軸DH參數11 mm
+    * @param [in]  axisDHa2 外部軸DH參數a2 mm
+    * @param [in]  axisDHa3 外部軸DH參數a3 mm
+    * @param [in]  axisDHa4 外部軸DH參數a4 mm
+    * @return 錯誤碼
     */
     errno_t SetAxisDHParaConfig(int axisConfig, double axisDHd1, double axisDHd2, double axisDHd3, double axisDHd4, double axisDHa1, double axisDHa2, double axisDHa3, double axisDHa4);
 
-代码示例
+代碼範例
 **********
 
 .. code-block:: c++
@@ -529,7 +529,7 @@ UDP扩展轴参数配置
         return 0;
     }
 
-设置扩展轴坐标系参考点-四点法
+設定擴展軸座標系參考點-四點法
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -537,13 +537,13 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 设置扩展轴坐标系参考点-四点法
-    * @param [in]  pointNum 点编号[1-4]
-    * @return 错误码
+    * @brief 設定擴展軸座標系參考點-四點法
+    * @param [in]  pointNum 點編號[1-4]
+    * @return 錯誤碼
     */
     errno_t ExtAxisSetRefPoint(int pointNum);
 
-计算扩展轴坐标系-四点法
+計算擴展軸座標系-四點法
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -551,13 +551,13 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 计算扩展轴坐标系-四点法
-    * @param [out]  coord 坐标系值
-    * @return 错误码
+    * @brief 計算擴展軸座標系-四點法
+    * @param [out]  coord 座標系值
+    * @return 錯誤碼
     */
     errno_t ExtAxisComputeECoordSys(DescPose& coord);
 
-应用扩展轴坐标系
+應用擴展軸座標系
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -565,16 +565,16 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 应用扩展轴坐标系
-    * @param [in]  applyAxisId 扩展轴编号 bit0-bit3对应扩展轴编号1-4，如应用扩展轴1和3，则是 0b 0000 0101；也就是5
-    * @param [in]  axisCoordNum 扩展轴坐标系编号
-    * @param [in]  coord 坐标系值
-    * @param [in]  calibFlag 标定标志 0-否，1-是
-    * @return 错误码
+    * @brief 應用擴展軸座標系
+    * @param [in]  applyAxisId 擴展軸編號 bit0-bit3對應擴展軸編號1-4，如應用擴展軸1和3，則是 0b 0000 0101；也就是5
+    * @param [in]  axisCoordNum 擴展軸座標系編號
+    * @param [in]  coord 座標系值
+    * @param [in]  calibFlag 標定標誌 0-否，1-是
+    * @return 錯誤碼
     */
     errno_t ExtAxisActiveECoordSys(int applyAxisId, int axisCoordNum, DescPose coord, int calibFlag);
 
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -596,7 +596,7 @@ UDP扩展轴参数配置
         return 0;
     }
 
-设置标定参考点在变位机末端坐标系下位姿
+設定標定參考點在變位機末端座標系下位姿
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -604,13 +604,13 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 设置标定参考点在变位机末端坐标系下位姿
-    * @param [in] pos 位姿值
-    * @return 错误码
+    * @brief 設定標定參考點在變位機末端座標系下位姿
+    * @param [in] pos 位元姿值
+    * @return 錯誤碼
     */
     errno_t SetRefPointInExAxisEnd(DescPose pos);
 
-变位机坐标系参考点设置
+變位機座標系參考點設置
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -618,13 +618,13 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 变位机坐标系参考点设置
-    * @param [in]  pointNum 点编号[1-4]
-    * @return 错误码
+    * @brief 變位機座標系參考點設置
+    * @param [in]  pointNum 點編號[1-4]
+    * @return 錯誤碼
     */
     errno_t PositionorSetRefPoint(int pointNum);
 
-变位机坐标系计算-四点法
+變位機座標系計算-四點法
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -632,13 +632,13 @@ UDP扩展轴参数配置
     :linenos:
 
     /**
-    * @brief 变位机坐标系计算-四点法
-    * @param [out] coord 坐标系值
-    * @return 错误码
+    * @brief 變位機座標系計算-四點法
+    * @param [out] coord 座標系值
+    * @return 錯誤碼
     */
     errno_t PositionorComputeECoordSys(DescPose& coord);
 
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -671,7 +671,7 @@ UDP扩展轴参数配置
         return 0;
     }
 
-UDP扩展轴使能
+UDP擴展軸使能
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -679,14 +679,14 @@ UDP扩展轴使能
     :linenos:
 
     /**
-    * @brief UDP扩展轴使能
-    * @param [in] axisID 轴号[1-4]
+    * @brief UDP擴展軸使能
+    * @param [in] axisID 軸號[1-4]
     * @param [in] status 0-去使能；1-使能
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t ExtAxisServoOn(int axisID, int status);
 
-UDP扩展轴回零
+UDP擴展軸回零
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -694,16 +694,16 @@ UDP扩展轴回零
     :linenos:
 
     /**
-    * @brief UDP扩展轴回零
-    * @param [in] axisID 轴号[1-4]
-    * @param [in] mode 回零方式 0-当前位置回零，1-负限位回零，2-正限位回零
-    * @param [in] searchVel 寻零速度(mm/s)
-    * @param [in] latchVel 寻零箍位速度(mm/s)
-    * @return 错误码
+    * @brief UDP擴展軸回零
+    * @param [in] axisID 軸號[1-4]
+    * @param [in] mode 回零方式 0-目前位置回零，1-負限位回零，2-正限位回零
+    * @param [in] searchVel 尋零速度(mm/s)
+    * @param [in] latchVel 尋零箍位速度(mm/s)
+    * @return 錯誤碼
     */
     errno_t ExtAxisSetHoming(int axisID, int mode, double searchVel, double latchVel);
 
-UDP扩展轴点动开始
+UDP擴展軸點動開始
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -711,17 +711,17 @@ UDP扩展轴点动开始
     :linenos:
 
     /**
-    * @brief UDP扩展轴点动开始
-    * @param [in] axisID 轴号[1-4]
-    * @param [in] direction 转动方向 0-反向；1-正向
+    * @brief UDP擴展軸點動開始
+    * @param [in] axisID 軸號[1-4]
+    * @param [in] direction 轉動方向 0-反向；1-正向
     * @param [in] vel 速度(mm/s)
     * @param [in] acc 加速度 (mm/s2)
-    * @param [in] maxDistance 最大点动距离
-    * @return 错误码
+    * @param [in] maxDistance 最大點動距離
+    * @return 錯誤碼
     */
     errno_t ExtAxisStartJog(int axisID, int direction, double vel, double acc, double maxDistance);
     
-UDP扩展轴点动停止
+UDP擴展軸點動停止
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -729,13 +729,13 @@ UDP扩展轴点动停止
     :linenos:
 
     /**
-    * @brief UDP扩展轴点动停止
-    * @param [in] axisID 轴号[1-4]
-    * @return 错误码
+    * @brief UDP擴展軸點動停止
+    * @param [in] axisID 軸號[1-4]
+    * @return 錯誤碼
     */
     errno_t ExtAxisStopJog(int axisID);
 
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -754,7 +754,7 @@ UDP扩展轴点动停止
         return 0;
     }
 
-UDP扩展轴运动
+UDP擴展軸運動
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -762,14 +762,14 @@ UDP扩展轴运动
     :linenos:
 
     /**
-    * @brief UDP扩展轴运动
-    * @param [in] pos 目标位置
+    * @brief UDP擴展軸運動
+    * @param [in] pos 目標位置
     * @param [in] ovl 速度百分比
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t ExtAxisMove(ExaxisPos pos, double ovl);
 
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -786,7 +786,7 @@ UDP扩展轴运动
         return 0;
     }
 
-UDP扩展轴与机器人关节运动同步运动
+UDP擴展軸與機器人關節運動同步運動
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -794,23 +794,23 @@ UDP扩展轴与机器人关节运动同步运动
     :linenos:
 
     /**
-    * @brief UDP扩展轴与机器人关节运动同步运动
-    * @param [in] joint_pos 目标关节位置,单位deg
-    * @param [in] desc_pos 目标笛卡尔位姿
-    * @param [in] tool 工具坐标号，范围[0~14]
-    * @param [in] user 工件坐标号，范围[0~14]
-    * @param [in] vel 速度百分比，范围[0~100]
-    * @param [in] acc 加速度百分比，范围[0~100],暂不开放
-    * @param [in] ovl 速度缩放因子，范围[0~100]
-    * @param [in] epos 扩展轴位置，单位mm
-    * @param [in] blendT [-1.0]-运动到位(阻塞)，[0~500.0]-平滑时间(非阻塞)，单位ms
-    * @param [in] offset_flag  0-不偏移，1-基坐标系/工件坐标系偏移，2-工具坐标系偏移
-    * @param [in] offset_pos  位姿偏移量
-    * @return  错误码
+    * @brief UDP擴展軸與機器人關節運動同步運動
+    * @param [in] joint_pos 目標關節位置,單位deg
+    * @param [in] desc_pos 目標笛卡兒位姿
+    * @param [in] tool 工具座標號，範圍[0~14]
+    * @param [in] user 工件座標號，範圍[0~14]
+    * @param [in] vel 速度百分比，範圍[0~100]
+    * @param [in] acc 加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl 速度縮放因子，範圍[0~100]
+    * @param [in] epos 擴展軸位置，單位mm
+    * @param [in] blendT [-1.0]-運動到位(阻塞)，[0~500.0]-平滑時間(非阻塞)，單位ms
+    * @param [in] offset_flag  0-不偏移，1-基坐標系/工件坐標系偏移，2-工具坐標系偏移
+    * @param [in] offset_pos  位元位偏移量
+    * @return  錯誤碼
     */
     errno_t ExtAxisSyncMoveJ(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, float ovl, ExaxisPos epos, float blendT, byte offset_flag, DescPose offset_pos);
 
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -821,62 +821,62 @@ UDP扩展轴与机器人关节运动同步运动
     Robot robot = new Robot();
     robot.RPC("192.168.58.2");
 
-    //1.标定并应用机器人工具坐标系，您可以使用四点法或六点法进行工具坐标系的标定和应用，涉及工具坐标系标定的接口如下：
-        //    int SetToolPoint(int point_num);  //设置工具参考点-六点法
-        //    int ComputeTool(ref DescPose tcp_pose);  //计算工具坐标系
-        //    int SetTcp4RefPoint(int point_num);    //设置工具参考点-四点法
-        //    int ComputeTcp4(ref DescPose tcp_pose);   //计算工具坐标系-四点法
-        //    int SetToolCoord(int id, DescPose coord, int type, int install);  //设置应用工具坐标系
-        //    int SetToolList(int id, DescPose coord, int type, int install);   //设置应用工具坐标系列表
+    //1.標定並應用機器人工具坐標系，您可以使用四點法或六點法進行工具坐標系的標定和應用，涉及工具坐標系標定的接口如下：
+        //    int SetToolPoint(int point_num);  //設定工具參考點-六點法
+        //    int ComputeTool(ref DescPose tcp_pose);  //計算工具座標系
+        //    int SetTcp4RefPoint(int point_num);    //設定工具參考點-四點法
+        //    int ComputeTcp4(ref DescPose tcp_pose);   //計算工具座標系-四點法
+        //    int SetToolCoord(int id, DescPose coord, int type, int install);  //設定應用工具坐標系
+        //    int SetToolList(int id, DescPose coord, int type, int install);   //設定應用工具坐標系列表
 
-        //2.设置UDP通信参数，并加载UDP通信
+        //2.設定UDP通訊參數，並載入UDP通信
         robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10);
         robot.ExtDevLoadUDPDriver();
 
-        //3.设置扩展轴参数，包括扩展轴类型、扩展轴驱动器参数、扩展轴DH参数
-        robot.SetAxisDHParaConfig(4, 200, 200, 0, 0, 0, 0, 0, 0); //单轴变位机及DH参数
-        robot.SetRobotPosToAxis(1);  //扩展轴安装位置
-        robot.ExtAxisParamConfig(1, 0, 1, 100, -100, 10, 10, 12, 131072, 0, 1, 0, 0); //伺服驱动器参数，本示例为单轴变位机，因此只需要设置一个驱动器参数，若您选择包含多个轴的扩展轴类型，需要每一个轴设置驱动器参数
+        //3.設定擴展軸參數，包括擴展軸類型、擴展軸驅動器參數、擴展軸DH參數
+        robot.SetAxisDHParaConfig(4, 200, 200, 0, 0, 0, 0, 0, 0); //單軸变位机及DH參數
+        robot.SetRobotPosToAxis(1);  //擴充軸安裝位置
+        robot.ExtAxisParamConfig(1, 0, 1, 100, -100, 10, 10, 12, 131072, 0, 1, 0, 0); //伺服驅動器參數，本示例為單軸变位机，因此只需要設定一個驅動器參數，若您選擇包含多個軸的擴展軸類型，需要每一個軸設定驅動器參數
 
-        //4.设置所选的轴使能、回零
+        //4.設定所選的軸使能、回零
         robot.ExtAxisServoOn(1, 0);
         robot.ExtAxisSetHoming(1, 0, 20, 3);
 
-        //5.进行扩展轴坐标系标定及应用
-        DescPose pos = {/* 输入您的标定点坐标 */ };
+        //5.進行擴展軸座標系標定及應用
+        DescPose pos = {/* 輸入您的標定點座標 */ };
         robot.SetRefPointInExAxisEnd(pos);
-        robot.PositionorSetRefPoint(1); /*您需要通过四个不同位置的点来标定扩展轴，因此需要调用此接口4次才能完成标定 */
+        robot.PositionorSetRefPoint(1); /*您需要透過四個不同位置的點來標定擴充軸，因此需要呼叫此介面4次才能完成標定 */
         DescPose coord = {};
-        robot.PositionorComputeECoordSys(coord); //计算扩展轴标定结果
-        robot.ExtAxisActiveECoordSys(1, 1, coord, 1);  //将标定结果应用到扩展轴坐标系
+        robot.PositionorComputeECoordSys(coord); //計算擴展軸標定結果
+        robot.ExtAxisActiveECoordSys(1, 1, coord, 1);  //將標定結果應用到擴展軸座標系
 
-        //6.在扩展轴上标定工件坐标系，您需要用到以下接口
+        //6.在擴充軸上標定工件坐標系，您需要用到以下接口
         //int SetWObjCoordPoint(int point_num);
         //int ComputeWObjCoord(int method, ref DescPose wobj_pose);
         //int SetWObjCoord(int id, DescPose coord);
         //int SetWObjList(int id, DescPose coord);
 
-        //7.记录您的同步关节运动起始点
-        DescPose startdescPose = {/*输入您的坐标*/ };
-        JointPos startjointPos = {/*输入您的坐标*/ };
-        ExaxisPos startexaxisPos = {/* 输入您的扩展轴起始点坐标 */ };
+        //7.記錄您的同步關節運動起始點
+        DescPose startdescPose = {/*輸入您的座標*/ };
+        JointPos startjointPos = {/*輸入您的座標*/ };
+        ExaxisPos startexaxisPos = {/* 輸入您的擴展軸起始點座標 */ };
 
-        //8.记录您的同步关节运动终点坐标
-        DescPose enddescPose = {/*输入您的坐标*/ };
-        JointPos endjointPos = {/*输入您的坐标*/ };
-        ExaxisPos endexaxisPos = {/* 输入您的扩展轴终点坐标 */ };
+        //8.記錄您的同步關節運動終點座標
+        DescPose enddescPose = {/*輸入您的座標*/ };
+        JointPos endjointPos = {/*輸入您的座標*/ };
+        ExaxisPos endexaxisPos = {/* 輸入您的擴展軸終點座標 */ };
 
-        //9.编写同步运动程序
-        //运动到起始点，假设应用的工具坐标系、工件坐标系都是1
+        //9.編寫同步運動程式
+        //運動到起始點，假設應用的工具坐標系、工件坐標係都是1
         robot.ExtAxisMove(startexaxisPos, 20);
         DescPose offdese = { 0, 0, 0, 0, 0, 0 };
         robot.MoveJ(&startjointPos, &startdescPose, 1, 1, 100, 100, 100, &startexaxisPos, 0, 0, &offdese);
 
-        //开始同步运动
+        //開始同步運動
         robot.ExtAxisSyncMoveJ(endjointPos, enddescPose, 1, 1, 100, 100, 100, endexaxisPos, -1, 0, offdese);
     }
 
-UDP扩展轴与机器人直线运动同步运动
+UDP擴展軸與機器人直線運動同步運動
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -884,23 +884,23 @@ UDP扩展轴与机器人直线运动同步运动
     :linenos:
 
     /**
-    * @brief UDP扩展轴与机器人直线运动同步运动
-    * @param [in] joint_pos  目标关节位置,单位deg
-    * @param [in] desc_pos   目标笛卡尔位姿
-    * @param [in] tool  工具坐标号，范围[0~14]
-    * @param [in] user  工件坐标号，范围[0~14]
-    * @param [in] vel  速度百分比，范围[0~100]
-    * @param [in] acc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] ovl  速度缩放因子，范围[0~100]
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm
-    * @param [in] epos  扩展轴位置，单位mm
-    * @param [in] offset_flag  0-不偏移，1-基坐标系/工件坐标系偏移，2-工具坐标系偏移
-    * @param [in] offset_pos  位姿偏移量
-    * @return 错误码
+    * @brief UDP擴展軸與機器人直線運動同步運動
+    * @param [in] joint_pos  目標關節位置,單位deg
+    * @param [in] desc_pos   目標笛卡兒位姿
+    * @param [in] tool  工具座標號，範圍[0~14]
+    * @param [in] user  工件座標號，範圍[0~14]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] offset_flag  0-不偏移，1-基坐標系/工件坐標系偏移，2-工具坐標系偏移
+    * @param [in] offset_pos  位元位偏移量
+    * @return 錯誤碼
     */
     errno_t ExtAxisSyncMoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, float ovl, float blendR, ExaxisPos epos, int offset_flag, DescPose offset_pos);
 
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -911,62 +911,62 @@ UDP扩展轴与机器人直线运动同步运动
     Robot robot = new Robot();
     robot.RPC("192.168.58.2");
 
-    //1.标定并应用机器人工具坐标系，您可以使用四点法或六点法进行工具坐标系的标定和应用，涉及工具坐标系标定的接口如下：
-        //    int SetToolPoint(int point_num);  //设置工具参考点-六点法
-        //    int ComputeTool(ref DescPose tcp_pose);  //计算工具坐标系
-        //    int SetTcp4RefPoint(int point_num);    //设置工具参考点-四点法
-        //    int ComputeTcp4(ref DescPose tcp_pose);   //计算工具坐标系-四点法
-        //    int SetToolCoord(int id, DescPose coord, int type, int install);  //设置应用工具坐标系
-        //    int SetToolList(int id, DescPose coord, int type, int install);   //设置应用工具坐标系列表
+    //1.標定並應用機器人工具坐標系，您可以使用四點法或六點法進行工具坐標系的標定和應用，涉及工具坐標系標定的接口如下：
+        //    int SetToolPoint(int point_num);  //設定工具參考點-六點法
+        //    int ComputeTool(ref DescPose tcp_pose);  //計算工具座標系
+        //    int SetTcp4RefPoint(int point_num);    //設定工具參考點-四點法
+        //    int ComputeTcp4(ref DescPose tcp_pose);   //計算工具座標系-四點法
+        //    int SetToolCoord(int id, DescPose coord, int type, int install);  //設定應用工具坐標系
+        //    int SetToolList(int id, DescPose coord, int type, int install);   //設定應用工具坐標系列表
 
-        //2.设置UDP通信参数，并加载UDP通信
+        //2.設定UDP通訊參數，並載入UDP通信
         robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10);
         robot.ExtDevLoadUDPDriver();
 
-        //3.设置扩展轴参数，包括扩展轴类型、扩展轴驱动器参数、扩展轴DH参数
-        robot.SetAxisDHParaConfig(4, 200, 200, 0, 0, 0, 0, 0, 0); //单轴变位机及DH参数
-        robot.SetRobotPosToAxis(1);  //扩展轴安装位置
-        robot.ExtAxisParamConfig(1, 0, 1, 100, -100, 10, 10, 12, 131072, 0, 1, 0, 0); //伺服驱动器参数，本示例为单轴变位机，因此只需要设置一个驱动器参数，若您选择包含多个轴的扩展轴类型，需要每一个轴设置驱动器参数
+        //3.設定擴展軸參數，包括擴展軸類型、擴展軸驅動器參數、擴展軸DH參數
+        robot.SetAxisDHParaConfig(4, 200, 200, 0, 0, 0, 0, 0, 0); //單軸变位机及DH參數
+        robot.SetRobotPosToAxis(1);  //擴充軸安裝位置
+        robot.ExtAxisParamConfig(1, 0, 1, 100, -100, 10, 10, 12, 131072, 0, 1, 0, 0); //伺服驅動器參數，本示例為單軸变位机，因此只需要設定一個驅動器參數，若您選擇包含多個軸的擴展軸類型，需要每一個軸設定驅動器參數
 
-        //4.设置所选的轴使能、回零
+        //4.設定所選的軸使能、回零
         robot.ExtAxisServoOn(1, 0);
         robot.ExtAxisSetHoming(1, 0, 20, 3);
 
-        //5.进行扩展轴坐标系标定及应用
-        DescPose pos = {/* 输入您的标定点坐标 */ };
+        //5.進行擴展軸座標系標定及應用
+        DescPose pos = {/* 輸入您的標定點座標 */ };
         robot.SetRefPointInExAxisEnd(pos);
-        robot.PositionorSetRefPoint(1); /*您需要通过四个不同位置的点来标定扩展轴，因此需要调用此接口4次才能完成标定 */
+        robot.PositionorSetRefPoint(1); /*您需要透過四個不同位置的點來標定擴充軸，因此需要呼叫此介面4次才能完成標定 */
         DescPose coord = {};
-        robot.PositionorComputeECoordSys(coord); //计算扩展轴标定结果
-        robot.ExtAxisActiveECoordSys(1, 1, coord, 1);  //将标定结果应用到扩展轴坐标系
+        robot.PositionorComputeECoordSys(coord); //計算擴展軸標定結果
+        robot.ExtAxisActiveECoordSys(1, 1, coord, 1);  //將標定結果應用到擴展軸座標系
 
-        //6.在扩展轴上标定工件坐标系，您需要用到以下接口
+        //6.在擴充軸上標定工件坐標系，您需要用到以下接口
         //int SetWObjCoordPoint(int point_num);
         //int ComputeWObjCoord(int method, ref DescPose wobj_pose);
         //int SetWObjCoord(int id, DescPose coord);
         //int SetWObjList(int id, DescPose coord);
 
-        //7.记录您的同步直线运动起始点
-        DescPose startdescPose = {/*输入您的坐标*/ };
-        JointPos startjointPos = {/*输入您的坐标*/ };
-        ExaxisPos startexaxisPos = {/* 输入您的扩展轴起始点坐标 */ };
+        //7.記錄您的同步直線運動起始點
+        DescPose startdescPose = {/*輸入您的座標*/ };
+        JointPos startjointPos = {/*輸入您的座標*/ };
+        ExaxisPos startexaxisPos = {/* 輸入您的擴展軸起始點座標 */ };
 
-        //8.记录您的同步直线运动终点坐标
-        DescPose enddescPose = {/*输入您的坐标*/ };
-        JointPos endjointPos = {/*输入您的坐标*/ };
-        ExaxisPos endexaxisPos = {/* 输入您的扩展轴终点坐标 */ };
+        //8.記錄您的同步直線運動終點座標
+        DescPose enddescPose = {/*輸入您的座標*/ };
+        JointPos endjointPos = {/*輸入您的座標*/ };
+        ExaxisPos endexaxisPos = {/* 輸入您的擴展軸終點座標 */ };
 
-        //9.编写同步运动程序
-        //运动到起始点，假设应用的工具坐标系、工件坐标系都是1
+        //9.編寫同步運動程式
+        //運動到起始點，假設應用的工具坐標系、工件坐標係都是1
         robot.ExtAxisMove(startexaxisPos, 20);
         DescPose offdese = { 0, 0, 0, 0, 0, 0 };
         robot.MoveJ(&startjointPos, &startdescPose, 1, 1, 100, 100, 100, &startexaxisPos, 0, 0, &offdese);
 
-        //开始同步运动
+        //開始同步運動
         robot.ExtAxisSyncMoveL(endjointPos, enddescPose, 1, 1, 100, 100, 100, 0, endexaxisPos, 0, offdese);
     }
     
-UDP扩展轴与机器人圆弧运动同步运动
+UDP擴展軸與機器人圓弧運動同步運動
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -974,32 +974,32 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief UDP扩展轴与机器人圆弧运动同步运动
-    * @param [in] joint_pos_p  路径点关节位置,单位deg
-    * @param [in] desc_pos_p   路径点笛卡尔位姿
-    * @param [in] ptool  工具坐标号，范围[0~14]
-    * @param [in] puser  工件坐标号，范围[0~14]
-    * @param [in] pvel  速度百分比，范围[0~100]
-    * @param [in] pacc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] epos_p  中间点扩展轴位置，单位mm
-    * @param [in] poffset_flag  0-不偏移，1-基坐标系/工件坐标系偏移，2-工具坐标系偏移
-    * @param [in] offset_pos_p  位姿偏移量
-    * @param [in] joint_pos_t  目标点关节位置,单位deg
-    * @param [in] desc_pos_t   目标点笛卡尔位姿
-    * @param [in] ttool  工具坐标号，范围[0~14]
-    * @param [in] tuser  工件坐标号，范围[0~14]
-    * @param [in] tvel  速度百分比，范围[0~100]
-    * @param [in] tacc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] epos_t  扩展轴位置，单位mm
-    * @param [in] toffset_flag  0-不偏移，1-基坐标系/工件坐标系偏移，2-工具坐标系偏移
-    * @param [in] offset_pos_t  位姿偏移量	 
-    * @param [in] ovl  速度缩放因子，范围[0~100]
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm
-    * @return 错误码
+    * @brief UDP擴展軸與機器人圓弧運動同步運動
+    * @param [in] joint_pos_p  路徑點關節位置,單位deg
+    * @param [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param [in] ptool  工具座標號，範圍[0~14]
+    * @param [in] puser  工件座標號，範圍[0~14]
+    * @param [in] pvel  速度百分比，範圍[0~100]
+    * @param [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_p  中间點擴展軸位置，單位mm
+    * @param [in] poffset_flag  0-不偏移，1-基坐標系/工件坐標系偏移，2-工具坐標系偏移
+    * @param [in] offset_pos_p  位元位偏移量
+    * @param [in] joint_pos_t  目標點關節位置,單位deg
+    * @param [in] desc_pos_t   目標點笛卡爾位姿
+    * @param [in] ttool  工具座標號，範圍[0~14]
+    * @param [in] tuser  工件座標號，範圍[0~14]
+    * @param [in] tvel  速度百分比，範圍[0~100]
+    * @param [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_t  擴展軸位置，單位mm
+    * @param [in] toffset_flag  0-不偏移，1-基坐標系/工件坐標系偏移，2-工具坐標系偏移
+    * @param [in] offset_pos_t  位元位偏移量	 
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @return 錯誤碼
     */
     errno_t ExtAxisSyncMoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, float pvel, float pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, float tvel, float tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, float ovl, float blendR);
     
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -1010,67 +1010,67 @@ UDP扩展轴与机器人圆弧运动同步运动
     Robot robot = new Robot();
     robot.RPC("192.168.58.2");
 
-    //1.标定并应用机器人工具坐标系，您可以使用四点法或六点法进行工具坐标系的标定和应用，涉及工具坐标系标定的接口如下：
-        //    int SetToolPoint(int point_num);  //设置工具参考点-六点法
-        //    int ComputeTool(ref DescPose tcp_pose);  //计算工具坐标系
-        //    int SetTcp4RefPoint(int point_num);    //设置工具参考点-四点法
-        //    int ComputeTcp4(ref DescPose tcp_pose);   //计算工具坐标系-四点法
-        //    int SetToolCoord(int id, DescPose coord, int type, int install);  //设置应用工具坐标系
-        //    int SetToolList(int id, DescPose coord, int type, int install);   //设置应用工具坐标系列表
+    //1.標定並應用機器人工具坐標系，您可以使用四點法或六點法進行工具坐標系的標定和應用，涉及工具坐標系標定的接口如下：
+        //    int SetToolPoint(int point_num);  //設定工具參考點-六點法
+        //    int ComputeTool(ref DescPose tcp_pose);  //計算工具座標系
+        //    int SetTcp4RefPoint(int point_num);    //設定工具參考點-四點法
+        //    int ComputeTcp4(ref DescPose tcp_pose);   //計算工具座標系-四點法
+        //    int SetToolCoord(int id, DescPose coord, int type, int install);  //設定應用工具坐標系
+        //    int SetToolList(int id, DescPose coord, int type, int install);   //設定應用工具坐標系列表
 
-        //2.设置UDP通信参数，并加载UDP通信
+        //2.設定UDP通訊參數，並載入UDP通信
         robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10);
         robot.ExtDevLoadUDPDriver();
 
-        //3.设置扩展轴参数，包括扩展轴类型、扩展轴驱动器参数、扩展轴DH参数
-        robot.SetAxisDHParaConfig(4, 200, 200, 0, 0, 0, 0, 0, 0); //单轴变位机及DH参数
-        robot.SetRobotPosToAxis(1);  //扩展轴安装位置
-        robot.ExtAxisParamConfig(1, 0, 1, 100, -100, 10, 10, 12, 131072, 0, 1, 0, 0); //伺服驱动器参数，本示例为单轴变位机，因此只需要设置一个驱动器参数，若您选择包含多个轴的扩展轴类型，需要每一个轴设置驱动器参数
+        //3.設定擴展軸參數，包括擴展軸類型、擴展軸驅動器參數、擴展軸DH參數
+        robot.SetAxisDHParaConfig(4, 200, 200, 0, 0, 0, 0, 0, 0); //單軸变位机及DH參數
+        robot.SetRobotPosToAxis(1);  //擴充軸安裝位置
+        robot.ExtAxisParamConfig(1, 0, 1, 100, -100, 10, 10, 12, 131072, 0, 1, 0, 0); //伺服驅動器參數，本示例為單軸变位机，因此只需要設定一個驅動器參數，若您選擇包含多個軸的擴展軸類型，需要每一個軸設定驅動器參數
 
-        //4.设置所选的轴使能、回零
+        //4.設定所選的軸使能、回零
         robot.ExtAxisServoOn(1, 0);
         robot.ExtAxisSetHoming(1, 0, 20, 3);
 
-        //5.进行扩展轴坐标系标定及应用
-        DescPose pos = {/* 输入您的标定点坐标 */ };
+        //5.進行擴展軸座標系標定及應用
+        DescPose pos = {/* 輸入您的標定點座標 */ };
         robot.SetRefPointInExAxisEnd(pos);
-        robot.PositionorSetRefPoint(1); /*您需要通过四个不同位置的点来标定扩展轴，因此需要调用此接口4次才能完成标定 */
+        robot.PositionorSetRefPoint(1); /*您需要透過四個不同位置的點來標定擴充軸，因此需要呼叫此介面4次才能完成標定 */
         DescPose coord = {};
-        robot.PositionorComputeECoordSys(coord); //计算扩展轴标定结果
-        robot.ExtAxisActiveECoordSys(1, 1, coord, 1);  //将标定结果应用到扩展轴坐标系
+        robot.PositionorComputeECoordSys(coord); //計算擴展軸標定結果
+        robot.ExtAxisActiveECoordSys(1, 1, coord, 1);  //將標定結果應用到擴展軸座標系
 
-        //6.在扩展轴上标定工件坐标系，您需要用到以下接口
+        //6.在擴充軸上標定工件坐標系，您需要用到以下接口
         //int SetWObjCoordPoint(int point_num);
         //int ComputeWObjCoord(int method, ref DescPose wobj_pose);
         //int SetWObjCoord(int id, DescPose coord);
         //int SetWObjList(int id, DescPose coord);
 
-        //7.记录您的同步圆弧运动起始点
-        DescPose startdescPose = {/*输入您的坐标*/ };
-        JointPos startjointPos = {/*输入您的坐标*/ };
-        ExaxisPos startexaxisPos = {/* 输入您的扩展轴起始点坐标 */ };
+        //7.記錄您的同步圓弧運動起始點
+        DescPose startdescPose = {/*輸入您的座標*/ };
+        JointPos startjointPos = {/*輸入您的座標*/ };
+        ExaxisPos startexaxisPos = {/* 輸入您的擴展軸起始點座標 */ };
 
-        //8.记录您的同步圆弧运动终点坐标
-        DescPose enddescPose = {/*输入您的坐标*/ };
-        JointPos endjointPos = {/*输入您的坐标*/ };
-        ExaxisPos endexaxisPos = {/* 输入您的扩展轴终点坐标 */ };
+        //8.記錄您的同步圓弧運動終點座標
+        DescPose enddescPose = {/*輸入您的座標*/ };
+        JointPos endjointPos = {/*輸入您的座標*/ };
+        ExaxisPos endexaxisPos = {/* 輸入您的擴展軸終點座標 */ };
 
-        //9.记录您的同步圆弧运动中间点坐标
-        DescPose middescPose = {/*输入您的坐标*/ };
-        JointPos midjointPos = {/*输入您的坐标*/ };
-        ExaxisPos midexaxisPos = {/* 输入机器人圆弧中间点时的扩展轴坐标 */ };
+        //9.記錄您的同步圓弧運動中間點座標
+        DescPose middescPose = {/*輸入您的座標*/ };
+        JointPos midjointPos = {/*輸入您的座標*/ };
+        ExaxisPos midexaxisPos = {/* 輸入機器人圓弧中間點時的擴展軸座標 */ };
 
-        //10.编写同步运动程序
-        //运动到起始点，假设应用的工具坐标系、工件坐标系都是1
+        //10.編寫同步運動程式
+        //運動到起始點，假設應用的工具坐標系、工件坐標係都是1
         robot.ExtAxisMove(startexaxisPos, 20);
         DescPose offdese = { 0, 0, 0, 0, 0, 0 };
         robot.MoveJ(&startjointPos, &startdescPose, 1, 1, 100, 100, 100, &startexaxisPos, 0, 0, &offdese);
 
-        //开始同步运动
+        //開始同步運動
         robot.ExtAxisSyncMoveC(midjointPos, middescPose, 1, 1, 100, 100, midexaxisPos, 0, offdese, endjointPos, enddescPose, 1, 1, 100, 100, endexaxisPos, 0, offdese, 100, 0);
     }
     
-设置扩展DO
+設定擴充DO
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1078,16 +1078,16 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 设置扩展DO
-    * @param [in] DONum DO编号
-    * @param [in] bOpen 开关 true-开；false-关
+    * @brief 設定擴充DO
+    * @param [in] DONum DO編號
+    * @param [in] bOpen 開關 true-開；false-關
     * @param [in] smooth 是否平滑
     * @param [in] block 是否阻塞
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t SetAuxDO(int DONum, bool bOpen, bool smooth, bool block);
         
-设置扩展AO
+設定擴充AO
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1095,15 +1095,15 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 设置扩展AO
-    * @param [in] AONum AO编号 
-    * @param [in] value 模拟量值[0-4095]
+    * @brief 設定擴充AO
+    * @param [in] AONum AO編號 
+    * @param [in] value 類比量值[0-4095]
     * @param [in] block 是否阻塞
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t SetAuxAO(int AONum, double value, bool block);
     
-代码示例
+代碼範例
 ************
 
 .. code-block:: c++
@@ -1133,7 +1133,7 @@ UDP扩展轴与机器人圆弧运动同步运动
         return 0;
     }
             
-设置扩展DI输入滤波时间
+設定擴充DI輸入濾波時間
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1141,13 +1141,13 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 设置扩展DI输入滤波时间
-    * @param [in] filterTime 滤波时间(ms)
-    * @return 错误码
+    * @brief 設定擴充DI輸入濾波時間
+    * @param [in] filterTime 濾波時間(ms)
+    * @return 錯誤碼
     */
     errno_t SetAuxDIFilterTime(int filterTime);
 
-设置扩展AI输入滤波时间
+設定擴展AI輸入濾波時間
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1155,13 +1155,13 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 设置扩展AI输入滤波时间
-    * @param [in] filterTime 滤波时间(ms)
-    * @return 错误码
+    * @brief 設定擴展AI輸入濾波時間
+    * @param [in] filterTime 濾波時間(ms)
+    * @return 錯誤碼
     */
     errno_t SetAuxAIFilterTime(int filterTime);
 
-等待扩展DI输入
+等待擴充DI輸入
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1169,16 +1169,16 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 等待扩展DI输入
-    * @param [in] DINum DI编号
-    * @param [in] bOpen 开关 0-关；1-开
-    * @param [in] time 最大等待时间(ms)
-    * @param [in] errorAlarm 是否继续运动
-    * @return 错误码
+    * @brief 等待擴充DI輸入
+    * @param [in] DINum DI編號
+    * @param [in] bOpen 開關 0-關；1-開
+    * @param [in] time 最大等待時間(ms)
+    * @param [in] errorAlarm 是否繼續運動
+    * @return 錯誤碼
     */
     errno_t WaitAuxDI(int DINum, bool bOpen, int time, bool errorAlarm);
     
-等待扩展AI输入
+等待擴展AI輸入
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1186,17 +1186,17 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 等待扩展AI输入
-    * @param [in] AINum AI编号
-    * @param [in] sign 0-大于；1-小于
+    * @brief 等待擴展AI輸入
+    * @param [in] AINum AI編號
+    * @param [in] sign 0-大於；1-小於
     * @param [in] value AI值
-    * @param [in] time 最大等待时间(ms)
-    * @param [in] errorAlarm 是否继续运动
-    * @return 错误码
+    * @param [in] time 最大等待時間(ms)
+    * @param [in] errorAlarm 是否繼續運動
+    * @return 錯誤碼
     */
     errno_t WaitAuxAI(int AINum, int sign, int value, int time, bool errorAlarm);
         
-获取扩展DI值
+取得擴展DI值
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1204,15 +1204,15 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 获取扩展DI值
-    * @param [in] DINum DI编号
+    * @brief 取得擴展DI值
+    * @param [in] DINum DI編號
     * @param [in] isNoBlock 是否阻塞
-    * @param [out] isOpen 0-关；1-开
-    * @return 错误码
+    * @param [out] isOpen 0-關；1-開
+    * @return 錯誤碼
     */
     errno_t GetAuxDI(int DINum, bool isNoBlock, bool& isOpen);
             
-获取扩展AI值
+取得擴展AI值
 +++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.4.0
 
@@ -1220,15 +1220,15 @@ UDP扩展轴与机器人圆弧运动同步运动
     :linenos:
 
     /**
-    * @brief 获取扩展AI值
-    * @param [in] AINum AI编号
+    * @brief 取得擴展AI值
+    * @param [in] AINum AI編號
     * @param [in] isNoBlock 是否阻塞
-    * @param [in] value 输入值
-    * @return 错误码
+    * @param [in] value 輸入值
+    * @return 錯誤碼
     */
     errno_t GetAuxAI(int AINum, bool isNoBlock, int& value);
 
-代码示例
+代碼範例
 ***********
 .. code-block:: c++
     :linenos:

@@ -1,53 +1,53 @@
-机器人外设
+機器人週邊
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-配置夹爪
+配置夾爪
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  配置夹爪
-    * @param  [in] company  夹爪厂商，待定
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  配置夾爪
+    * @param  [in] company  夾爪廠商，待定
+    * @param  [in] device  設備號，暫不使用，預設為0
+    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     errno_t  SetGripperConfig(int company, int device, int softvesion, int bus);
 
-获取夹爪配置
+取得夾爪配置
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取夹爪配置
-    * @param  [in] company  夹爪厂商，待定
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  取得夾爪配置
+    * @param  [in] company  夾爪廠商，待定
+    * @param  [in] device  設備號，暫不使用，預設為0
+    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     errno_t  GetGripperConfig(int *company, int *device, int *softvesion, int *bus);
 
-激活夹爪
+啟動夾爪
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  激活夹爪
-    * @param  [in] index  夹爪编号
-    * @param  [in] act  0-复位，1-激活
-    * @return  错误码
+    * @brief  啟動夾爪
+    * @param  [in] index  夾爪編號
+    * @param  [in] act  0-復位，1-激活
+    * @return  錯誤碼
     */
     errno_t  ActGripper(int index, uint8_t act);
 
-控制夹爪
+控制夾爪
 ++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.5.0
 
@@ -55,143 +55,143 @@
     :linenos:
 
     /**
-	 * @brief  控制夹爪
-	 * @param  [in] index  夹爪编号
-	 * @param  [in] pos  位置百分比，范围[0~100]
-	 * @param  [in] vel  速度百分比，范围[0~100]
-	 * @param  [in] force  力矩百分比，范围[0~100]
-	 * @param  [in] max_time  最大等待时间，范围[0~30000]，单位ms
+	 * @brief  控制夾爪
+	 * @param  [in] index  夾爪編號
+	 * @param  [in] pos  位置百分比，範圍[0~100]
+	 * @param  [in] vel  速度百分比，範圍[0~100]
+	 * @param  [in] force  力矩百分比，範圍[0~100]
+	 * @param  [in] max_time  最大等待時間，範圍[0~30000]，單位ms
 	 * @param  [in] block  0-阻塞，1-非阻塞
-	 * @param  [in] type 夹爪类型，0-平行夹爪；1-旋转夹爪
-	 * @param  [in] rotNum 旋转圈数
-	 * @param  [in] rotVel 旋转速度百分比[0-100]
-	 * @param  [in] rotTorque 旋转力矩百分比[0-100]
-	 * @return  错误码
+	 * @param  [in] type 夾爪類型，0-平行夾爪；1-旋轉夾爪
+	 * @param  [in] rotNum 旋轉圈數
+	 * @param  [in] rotVel 旋轉速度百分比[0-100]
+	 * @param  [in] rotTorque 旋轉力矩百分比[0-100]
+	 * @return  錯誤碼
 	 */
 	errno_t MoveGripper(int index, int pos, int vel, int force, int max_time, uint8_t block, int type, double rotNum, int rotVel, int rotTorque);
 
 
 
-获取夹爪运动状态
+取得夾爪運動狀態
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪运动状态
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] staus  0-运动未完成，1-运动完成
-     * @return  错误码
+     * @brief  取得夾爪運動狀態
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] staus  0-運動未完成，1-運動完成
+     * @return  錯誤碼
      */
     errno_t  GetGripperMotionDone(uint16_t *fault, uint8_t *status);
 
-获取夹爪激活状态
+取得夾爪啟動狀態
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪激活状态
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] status  bit0~bit15对应夹爪编号0~15，bit=0为未激活，bit=1为激活
-     * @return  错误码
+     * @brief  取得夾爪啟動狀態
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] status  bit0~bit15对应夾爪編號0~15，bit=0為未激活，bit=1為激活
+     * @return  錯誤碼
      */
     errno_t  GetGripperActivateStatus(uint16_t *fault, uint16_t *status);
 
-获取夹爪位置
+取得夾爪位置
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪位置
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] position  位置百分比，范围0~100%
-     * @return  错误码
+     * @brief  取得夾爪位置
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] position  位置百分比，範圍0~100%
+     * @return  錯誤碼
      */
     errno_t  GetGripperCurPosition(uint16_t *fault, uint8_t *position);
 
-获取夹爪速度
+取得夾爪速度
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪速度
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] speed  速度百分比，范围0~100%
-     * @return  错误码
+     * @brief  取得夾爪速度
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] speed  速度百分比，範圍0~100%
+     * @return  錯誤碼
      */
     errno_t  GetGripperCurSpeed(uint16_t *fault, int8_t *speed);
 
-获取夹爪电流
+取得夾爪電流
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪电流
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] current  电流百分比，范围0~100%
-     * @return  错误码
+     * @brief  取得夾爪電流
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] current  電流百分比，範圍0~100%
+     * @return  錯誤碼
      */
     errno_t  GetGripperCurCurrent(uint16_t *fault, int8_t *current);
 
-获取夹爪电压
+取得夾爪電壓
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪电压
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] voltage  电压,单位0.1V
-     * @return  错误码
+     * @brief  取得夾爪電壓
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] voltage  電壓,單位0.1V
+     * @return  錯誤碼
      */
     errno_t  GetGripperVoltage(uint16_t *fault, int *voltage);
 
-获取夹爪温度
+取得夾爪溫度
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取夹爪温度
-     * @param  [out] fault  0-无错误，1-有错误
-     * @param  [out] temp  温度，单位℃
-     * @return  错误码
+     * @brief  取得夾爪溫度
+     * @param  [out] fault  0-無錯誤，1-有錯誤
+     * @param  [out] temp  溫度，單位℃
+     * @return  錯誤碼
      */
     errno_t  GetGripperTemp(uint16_t *fault, int *temp);
 
-计算预抓取点-视觉
+計算預抓取點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  计算预抓取点-视觉
-     * @param  [in] desc_pos  抓取点笛卡尔位姿
-     * @param  [in] zlength   z轴偏移量
-     * @param  [in] zangle    绕z轴旋转偏移量
-     * @return  错误码 
+     * @brief  計算預抓取點-視覺
+     * @param  [in] desc_pos  抓取點笛卡爾位姿
+     * @param  [in] zlength   z軸偏移量
+     * @param  [in] zangle    繞z軸旋轉偏移量
+     * @return  錯誤碼 
      */
     errno_t  ComputePrePick(DescPose *desc_pos, double zlength, double zangle, DescPose *pre_pos);
 
-计算撤退点-视觉
+計算撤退點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  计算撤退点-视觉
-     * @param  [in] desc_pos  抓取点笛卡尔位姿
-     * @param  [in] zlength   z轴偏移量
-     * @param  [in] zangle    绕z轴旋转偏移量
-     * @return  错误码 
+     * @brief  計算撤退點-視覺
+     * @param  [in] desc_pos  抓取點笛卡爾位姿
+     * @param  [in] zlength   z軸偏移量
+     * @param  [in] zangle    繞z軸旋轉偏移量
+     * @return  錯誤碼 
      */
     errno_t  ComputePostPick(DescPose *desc_pos, double zlength, double zangle, DescPose *post_pos);
 
-代码示例
+代碼範例
 ++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -200,10 +200,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -308,7 +308,7 @@
         return 0;
     }
 
-焊接开始
+焊接開始
 ++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -317,15 +317,15 @@
     :linenos:
 
     /**
-    * @brief 焊接开始
-    * @param [in] ioType io类型 0-控制器IO； 1-扩展IO
-    * @param [in] arcNum 焊机配置文件编号
-    * @param [in] timeout 起弧超时时间
-    * @return 错误码
+    * @brief 焊接開始
+    * @param [in] ioType io 類型 0-控制器IO；1-擴展IO
+    * @param [in] arcNum 焊機設定檔編號
+    * @param [in] timeout 起弧超時時間
+    * @return 錯誤碼
     */
     errno_t ARCStart(int ioType, int arcNum, int timeout);
 
-焊接结束
+焊接結束
 ++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -334,15 +334,15 @@
     :linenos:
 
     /**
-    * @brief 焊接结束
-    * @param [in] ioType io类型 0-控制器IO； 1-扩展IO
-    * @param [in] arcNum 焊机配置文件编号
-    * @param [in] timeout 熄弧超时时间
-    * @return 错误码
+    * @brief 焊接結束
+    * @param [in] ioType io 類型 0-控制器IO；1-擴展IO
+    * @param [in] arcNum 焊機設定檔編號
+    * @param [in] timeout 熄弧超時時間
+    * @return 錯誤碼
     */
     errno_t ARCEnd(int ioType, int arcNum, int timeout);
 
-设置焊接电流与输出模拟量对应关系
+設定焊接電流與輸出模擬量對應關係
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -351,16 +351,16 @@
     :linenos:
 
     /**
-    * @brief 设置焊接电流与输出模拟量对应关系
-    * @param [in] currentMin 焊接电流-模拟量输出线性关系左侧点电流值(A)
-    * @param [in] currentMax 焊接电流-模拟量输出线性关系右侧点电流值(A)
-    * @param [in] outputVoltageMin 焊接电流-模拟量输出线性关系左侧点模拟量输出电压值(V)
-    * @param [in] outputVoltageMax 焊接电流-模拟量输出线性关系右侧点模拟量输出电压值(V)
-    * @return 错误码
+    * @brief 設定焊接電流與輸出模擬量對應關係
+    * @param [in] currentMin 焊接電流-類比量輸出線性關係左點電流值(A)
+    * @param [in] currentMax 焊接電流-類比量輸出線性關係右側點電流值(A)
+    * @param [in] outputVoltageMin 焊接電流-類比輸出線性關係左側點類比量輸出電壓值(V)
+    * @param [in] outputVoltageMax 焊接電流-類比輸出線性關係右側點類比量輸出電壓值(V)
+    * @return 錯誤碼
     */
     errno_t WeldingSetCurrentRelation(double currentMin, double currentMax, double outputVoltageMin, double outputVoltageMax);
 
-设置焊接电压与输出模拟量对应关系
+設定焊接電壓與輸出模擬量對應關係
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -369,16 +369,16 @@
     :linenos:
 
     /**
-    * @brief 设置焊接电压与输出模拟量对应关系
-    * @param [in] weldVoltageMin 焊接电压-模拟量输出线性关系左侧点焊接电压值(A)
-    * @param [in] weldVoltageMax 焊接电压-模拟量输出线性关系右侧点焊接电压值(A)
-    * @param [in] outputVoltageMin 焊接电压-模拟量输出线性关系左侧点模拟量输出电压值(V)
-    * @param [in] outputVoltageMax 焊接电压-模拟量输出线性关系右侧点模拟量输出电压值(V)
-    * @return 错误码
+    * @brief 設定焊接電壓與輸出模擬量對應關係
+    * @param [in] weldVoltageMin 焊接電壓-類比輸出線性關係左點焊接電壓值(A)
+    * @param [in] weldVoltageMax 焊接電壓-類比輸出線性關係右側點焊接電壓值(A)
+    * @param [in] outputVoltageMin 焊接電壓-類比輸出線性關係左側點類比輸出電壓值(V)
+    * @param [in] outputVoltageMax 焊接電壓-類比輸出線性關係右側點類比輸出電壓值(V)
+    * @return 錯誤碼
     */
     errno_t WeldingSetVoltageRelation(double weldVoltageMin, double weldVoltageMax, double outputVoltageMin, double outputVoltageMax);
 
-获取焊接电流与输出模拟量对应关系
+取得焊接電流與輸出模擬量對應關係
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -387,16 +387,16 @@
     :linenos:
 
     /**
-    * @brief 获取焊接电流与输出模拟量对应关系
-    * @param [out] currentMin 焊接电流-模拟量输出线性关系左侧点电流值(A)
-    * @param [out] currentMax 焊接电流-模拟量输出线性关系右侧点电流值(A)
-    * @param [out] outputVoltageMin 焊接电流-模拟量输出线性关系左侧点模拟量输出电压值(V)
-    * @param [out] outputVoltageMax 焊接电流-模拟量输出线性关系右侧点模拟量输出电压值(V)
-    * @return 错误码
+    * @brief 取得焊接電流與輸出模擬量對應關係
+    * @param [out] currentMin 焊接電流-類比量輸出線性關係左點電流值(A)
+    * @param [out] currentMax 焊接電流-類比量輸出線性關係右側點電流值(A)
+    * @param [out] outputVoltageMin 焊接電流-類比輸出線性關係左側點類比量輸出電壓值(V)
+    * @param [out] outputVoltageMax 焊接電流-類比輸出線性關係右側點類比量輸出電壓值(V)
+    * @return 錯誤碼
     */
     errno_t WeldingGetCurrentRelation(double *currentMin, double *currentMax, double *outputVoltageMin, double *outputVoltageMax);
 
-获取焊接电压与输出模拟量对应关系
+取得焊接電壓與輸出類比對應關係
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -405,16 +405,16 @@
     :linenos:
 
     /**
-    * @brief 获取焊接电压与输出模拟量对应关系
-    * @param [out] weldVoltageMin 焊接电压-模拟量输出线性关系左侧点焊接电压值(A)
-    * @param [out] weldVoltageMax 焊接电压-模拟量输出线性关系右侧点焊接电压值(A)
-    * @param [out] outputVoltageMin 焊接电压-模拟量输出线性关系左侧点模拟量输出电压值(V)
-    * @param [out] outputVoltageMax 焊接电压-模拟量输出线性关系右侧点模拟量输出电压值(V)
-    * @return 错误码
+    * @brief 取得焊接電壓與輸出類比對應關係
+    * @param [out] weldVoltageMin 焊接電壓-類比輸出線性關係左點焊接電壓值(A)
+    * @param [out] weldVoltageMax 焊接電壓-類比輸出線性關係右側點焊接電壓值(A)
+    * @param [out] outputVoltageMin 焊接電壓-類比輸出線性關係左側點類比輸出電壓值(V)
+    * @param [out] outputVoltageMax 焊接電壓-類比輸出線性關係右側點類比輸出電壓值(V)
+    * @return 錯誤碼
     */
     errno_t WeldingGetVoltageRelation(double *weldVoltageMin, double *weldVoltageMax, double *outputVoltageMin, double *outputVoltageMax);
 
-设置焊接电流
+設定焊接電流
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -423,15 +423,15 @@
     :linenos:
 
     /**
-    * @brief 设置焊接电流
-    * @param [in] ioType 控制IO类型 0-控制箱IO；1-扩展IO
-    * @param [in] current 焊接电流值(A)
-    * @param [in] AOIndex 焊接电流控制箱模拟量输出端口(0-1)
-    * @return 错误码
+    * @brief 設定焊接電流
+    * @param [in] ioType 控制IO類型 0-控制箱IO；1-擴充IO
+    * @param [in] current 焊接電流值(A)
+    * @param [in] AOIndex 焊接電流控制箱類比輸出端口(0-1)
+    * @return 錯誤碼
     */
     errno_t WeldingSetCurrent(int ioType, double current, int AOIndex);
 
-设置焊接电压
+設定焊接電壓
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -440,15 +440,15 @@
     :linenos:
 
     /**
-    * @brief 设置焊接电压
-    * @param [in] ioType 控制IO类型 0-控制箱IO；1-扩展IO
-    * @param [in] voltage 焊接电压值(A)
-    * @param [in] AOIndex 焊接电压控制箱模拟量输出端口(0-1)
-    * @return 错误码
+    * @brief 設定焊接電壓
+    * @param [in] ioType 控制IO類型 0-控制箱IO；1-擴充IO
+    * @param [in] voltage 焊接電壓值(A)
+    * @param [in] AOIndex 焊接電壓控制箱類比輸出端口(0-1)
+    * @return 錯誤碼
     */
     errno_t WeldingSetVoltage(int ioType, double voltage, int AOIndex);
 
-设置摆动参数
+設定擺動參數
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -457,21 +457,21 @@
     :linenos:
 
     /**
-    * @brief 设置摆动参数
-    * @param [in] weaveNum 摆焊参数配置编号
-    * @param [in] weaveType 摆动类型 0-平面三角波摆动；1-垂直L型三角波摆动；2-顺时针圆形摆动；3-逆时针圆形摆动；4-平面正弦波摆动；5-垂直L型正弦波摆动；6-垂直三角波摆动；7-垂直正弦波摆动
-    * @param [in] weaveFrequency 摆动频率(Hz)
-    * @param [in] weaveIncStayTime 等待模式 0-周期不包含等待时间；1-周期包含等待时间
-    * @param [in] weaveRange 摆动幅度(mm)
-    * @param [in] weaveLeftStayTime 摆动左停留时间(ms)
-    * @param [in] weaveRightStayTime 摆动右停留时间(ms)
-    * @param [in] weaveCircleRadio 圆形摆动-回调比率(0-100%)
-    * @param [in] weaveStationary 摆动位置等待，0-等待时间内位置继续移动；1-等待时间内位置静止
-    * @return 错误码
+    * @brief 設定擺動參數
+    * @param [in] weaveNum 擺焊參數配置編號
+    * @param [in] weaveType 擺動類型0-平面三角波擺動；1-垂直L型三角波擺動；2-順時針圓形擺動；3-逆時針圓形擺動；4-平面正弦波擺動；5-垂直L型正弦波擺動；6-垂直三角波擺動；7-垂直正弦波擺動
+    * @param [in] weaveFrequency 擺動頻率(Hz)
+    * @param [in] weaveIncStayTime 等待模式 0-週期不包含等待時間；1-週期包含等待時間
+    * @param [in] weaveRange 擺動幅度(mm)
+    * @param [in] weaveLeftStayTime 擺動左停留時間(ms)
+    * @param [in] weaveRightStayTime 擺動右停留時間(ms)
+    * @param [in] weaveCircleRadio 圓形擺動-回調比率(0-100%)
+    * @param [in] weaveStationary 擺動位置等待，0-等待時間內位置繼續移動；1-等待時間內位置靜止
+    * @return 錯誤碼
     */
     errno_t WeaveSetPara(int weaveNum, int weaveType, double weaveFrequency, int weaveIncStayTime, double weaveRange, int weaveLeftStayTime, int weaveRightStayTime, int weaveCircleRadio, int weaveStationary);
 
-即时设置摆动参数
+即时設定擺動參數
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -480,21 +480,21 @@
     :linenos:
 
     /**
-    * @brief 即时设置摆动参数
-    * @param [in] weaveNum 摆焊参数配置编号
-    * @param [in] weaveType 摆动类型 0-平面三角波摆动；1-垂直L型三角波摆动；2-顺时针圆形摆动；3-逆时针圆形摆动；4-平面正弦波摆动；5-垂直L型正弦波摆动；6-垂直三角波摆动；7-垂直正弦波摆动
-    * @param [in] weaveFrequency 摆动频率(Hz)
-    * @param [in] weaveIncStayTime 等待模式 0-周期不包含等待时间；1-周期包含等待时间
-    * @param [in] weaveRange 摆动幅度(mm)
-    * @param [in] weaveLeftStayTime 摆动左停留时间(ms)
-    * @param [in] weaveRightStayTime 摆动右停留时间(ms)
-    * @param [in] weaveCircleRadio 圆形摆动-回调比率(0-100%)
-    * @param [in] weaveStationary 摆动位置等待，0-等待时间内位置继续移动；1-等待时间内位置静止
-    * @return 错误码
+    * @brief 即时設定擺動參數
+    * @param [in] weaveNum 擺焊參數配置編號
+    * @param [in] weaveType 擺動類型0-平面三角波擺動；1-垂直L型三角波擺動；2-順時針圓形擺動；3-逆時針圓形擺動；4-平面正弦波擺動；5-垂直L型正弦波擺動；6-垂直三角波擺動；7-垂直正弦波擺動
+    * @param [in] weaveFrequency 擺動頻率(Hz)
+    * @param [in] weaveIncStayTime 等待模式 0-週期不包含等待時間；1-週期包含等待時間
+    * @param [in] weaveRange 擺動幅度(mm)
+    * @param [in] weaveLeftStayTime 擺動左停留時間(ms)
+    * @param [in] weaveRightStayTime 擺動右停留時間(ms)
+    * @param [in] weaveCircleRadio 圓形擺動-回調比率(0-100%)
+    * @param [in] weaveStationary 擺動位置等待，0-等待時間內位置繼續移動；1-等待時間內位置靜止
+    * @return 錯誤碼
     */
     errno_t WeaveOnlineSetPara(int weaveNum, int weaveType, double weaveFrequency, int weaveIncStayTime, double weaveRange, int weaveLeftStayTime, int weaveRightStayTime, int weaveCircleRadio, int weaveStationary);
 
-摆动开始
+擺盪開始
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -503,13 +503,13 @@
     :linenos:
 
     /**
-    * @brief 摆动开始
-    * @param [in] weaveNum 摆焊参数配置编号
-    * @return 错误码
+    * @brief 擺盪開始
+    * @param [in] weaveNum 擺焊參數配置編號
+    * @return 錯誤碼
     */
     errno_t WeaveStart(int weaveNum);
 
-摆动结束
+擺盪結束
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -518,13 +518,13 @@
     :linenos:
 
     /**
-    * @brief 摆动结束
-    * @param [in] weaveNum 摆焊参数配置编号
-    * @return 错误码
+    * @brief 擺盪結束
+    * @param [in] weaveNum 擺焊參數配置編號
+    * @return 錯誤碼
     */
     errno_t WeaveEnd(int weaveNum);
 
-正向送丝
+正向送絲
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -533,14 +533,14 @@
     :linenos:
 
     /**
-    * @brief 正向送丝
-    * @param [in] ioType io类型  0-控制器IO；1-扩展IO
-    * @param [in] wireFeed 送丝控制  0-停止送丝；1-送丝
-    * @return 错误码
+    * @brief 正向送絲
+    * @param [in] ioType io類型 0-控制器IO；1-擴充IO
+    * @param [in] wireFeed 送絲控制 0-停止送絲；1-送絲
+    * @return 錯誤碼
     */
     errno_t SetForwardWireFeed(int ioType, int wireFeed);
 
-反向送丝
+反向送絲
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -549,14 +549,14 @@
     :linenos:
 
     /**
-    * @brief 反向送丝
-    * @param [in] ioType io类型  0-控制器IO；1-扩展IO
-    * @param [in] wireFeed 送丝控制  0-停止送丝；1-送丝
-    * @return 错误码
+    * @brief 反向送絲
+    * @param [in] ioType io類型 0-控制器IO；1-擴充IO
+    * @param [in] wireFeed 送絲控制 0-停止送絲；1-送絲
+    * @return 錯誤碼
     */
     errno_t SetReverseWireFeed(int ioType, int wireFeed);
 
-送气
+送氣
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -565,14 +565,14 @@
     :linenos:
 
     /**
-    * @brief 送气
-    * @param [in] ioType io类型  0-控制器IO；1-扩展IO
-    * @param [in] airControl 送气控制  0-停止送气；1-送气
-    * @return 错误码
+    * @brief 送氣
+    * @param [in] ioType io類型 0-控制器IO；1-擴充IO
+    * @param [in] airControl 送氣控制  0-停止送氣；1-送氣
+    * @return 錯誤碼
     */
     errno_t SetAspirated(int ioType, int airControl);
 
-段焊开始
+段焊開始
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -581,33 +581,33 @@
     :linenos:
 
     /**
-    * @brief 段焊开始
-    * @param [in] startDesePos 起始点笛卡尔位置
-    * @param [in] endDesePos 结束点笛卡尔位姿
-    * @param [in] startJPos 起始点关节位姿
-    * @param [in] endJPos 结束点关节位姿
-    * @param [in] weldLength 焊接段长度(mm)
-    * @param [in] noWeldLength 非焊接段长度(mm)
-    * @param [in] weldIOType 焊接IO类型(0-控制箱IO；1-扩展IO)
-    * @param [in] arcNum 焊机配置文件编号
-    * @param [in] weldTimeout 起/收弧超时时间
-    * @param [in] isWeave 是否摆动
-    * @param [in] weaveNum 摆焊参数配置编号
-    * @param [in] tool 工具坐标号，范围[0~14]
-    * @param [in] user 工件坐标号，范围[0~14]
-    * @param [in] vel 速度百分比，范围[0~100]
-    * @param [in] acc 加速度百分比，范围[0~100],暂不开放
-    * @param [in] ovl 速度缩放因子，范围[0~100]
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm
-    * @param [in] epos 扩展轴位置，单位mm
-    * @param [in] search 0-不焊丝寻位，1-焊丝寻位
-    * @param [in] offset_flag 0-不偏移，1-基坐标系/工件坐标系下偏移，2-工具坐标系下偏移
-    * @param [in] offset_pos 位姿偏移量
-    * @return 错误码
+    * @brief 段焊開始
+    * @param [in] startDesePos 起始點笛卡爾位置
+    * @param [in] endDesePos 结束點笛卡兒位姿
+    * @param [in] startJPos 起始點關節位姿
+    * @param [in] endJPos 結束點關節位姿
+    * @param [in] weldLength 焊接段長度(mm)
+    * @param [in] noWeldLength 非焊接段長度(mm)
+    * @param [in] weldIOType 焊接IO類型(0-控制箱IO；1-擴展IO)
+    * @param [in] arcNum 焊機設定檔編號
+    * @param [in] weldTimeout 起/收弧逾時時間
+    * @param [in] isWeave 是否擺動
+    * @param [in] weaveNum 擺焊參數配置編號
+    * @param [in] tool 工具座標號，範圍[0~14]
+    * @param [in] user 工件座標號，範圍[0~14]
+    * @param [in] vel 速度百分比，範圍[0~100]
+    * @param [in] acc 加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl 速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] epos 擴展軸位置，單位mm
+    * @param [in] search 0-不焊絲尋位，1-焊絲尋位
+    * @param [in] offset_flag 0-不偏移，1-基座標系/工件坐標系下偏移，2-工具坐標系下偏移
+    * @param [in] offset_pos 位元位偏移量
+    * @return 錯誤碼
     */
     errno_t SegmentWeldStart(DescPose *startDesePos, DescPose *endDesePos, JointPos *startJPos, JointPos *endJPos, double weldLength, double noWeldLength, int weldIOType, int arcNum, int weldTimeout, bool isWeave, int weaveNum, int tool, int user, float vel, float acc, float ovl, float blendR, ExaxisPos *epos, uint8_t search, uint8_t offset_flag, DescPose *offset_pos);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -616,10 +616,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -753,7 +753,7 @@
         retval = robot.SetAspirated(1, 0);
         cout << "SetAspirated retval " << retval << endl;
 
-        /* 所有的坐标点请以实际工况为准 */
+        /* 所有的座標點請以實際工況為準 */
         start_descpose.rpy.rx = 7.178;
         start_descpose.rpy.ry = -0.809;
         start_descpose.rpy.rz = -133.134;
@@ -791,6 +791,81 @@
         {
             cout << "SegmentWeldStart end " << retval << endl;
         }
+
+        return 0;
+    }
+
+取得旋轉夾爪的旋轉圈數
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. versionadded:: 3.7.6版本加入
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+	 * @brief  取得旋轉夾爪的旋轉圈數
+	 * @param  [out] fault  0-無錯誤，1-有錯誤
+	 * @param  [out] num  旋轉圈數
+	 * @return  錯誤碼
+	 */
+	errno_t GetGripperRotNum(uint16_t* fault, double* num);
+
+取得旋轉夾爪的旋轉速度
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. versionadded:: V3.7.6
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+	 * @brief  取得旋轉夾爪的旋轉速度
+	 * @param  [out] fault  0-無錯誤，1-有錯誤
+	 * @param  [out] speed  旋轉速度百分比
+	 * @return  錯誤碼
+	 */
+	errno_t GetGripperRotSpeed(uint16_t* fault, int* speed);
+
+取得旋轉夾爪的旋轉力矩
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. versionadded:: V3.7.6
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+	 * @brief  取得旋轉夾爪的旋轉力矩
+	 * @param  [out] fault  0-無錯誤，1-有錯誤
+	 * @param  [out] torque  旋轉力矩百分比
+	 * @return  錯誤碼
+	 */
+	errno_t GetGripperRotTorque(uint16_t* fault, int* torque);
+
+範例程式
+********************
+
+.. versionadded:: V3.7.6
+
+.. code-block:: c++
+    :linenos:
+
+    int MoveRotGripper(FRRobot* robot, int pos, double rotPos)
+    {
+        robot->ResetAllError();
+        robot->ActGripper(1, 1);
+        robot->Sleep(1000);
+        int rtn = robot->MoveGripper(1, pos, 50, 50, 5000, 1, 1, rotPos, 50, 100);
+        printf("move gripper rtn is %d\n", rtn);
+        uint16_t fault = 0;
+        double rotNum = 0.0;
+        int rotSpeed = 0;
+        int rotTorque = 0;
+        robot->GetGripperRotNum(&fault, &rotNum);
+        robot->GetGripperRotSpeed (&fault, &rotSpeed);
+        robot->GetGripperRotTorque(&fault, &rotTorque);
+        printf("gripper rot num : %lf, gripper rotSpeed : %d, gripper rotTorque : %d\n", rotNum, rotSpeed, rotTorque);
 
         return 0;
     }

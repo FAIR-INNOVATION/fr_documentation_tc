@@ -1,16 +1,16 @@
-数据结构说明
+資料結構說明
 ================
 
 .. toctree:: 
     :maxdepth: 5
 
-关节位置数据类型
+關節位置資料類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 关节位置数据类型 
+    * @brief 關節位置資料類型 
     */  
     public class JointPos
     {
@@ -37,19 +37,19 @@
       }
     }
 
-笛卡尔空间位置数据类型
+笛卡爾空間位置資料類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 笛卡尔空间位置数据类型
+    * @brief 笛卡爾空間位置資料類型
     */
     public class DescTran
     {
-      public double x = 0.0;    /* x轴坐标，单位mm  */
-      public double y = 0.0;    /* y轴坐标，单位mm  */
-      public double z = 0.0;    /* z轴坐标，单位mm  */
+      public double x = 0.0;    /* x軸座標，單位mm  */
+      public double y = 0.0;    /* y軸座標，單位mm  */
+      public double z = 0.0;    /* z軸座標，單位mm  */
       public DescTran(double posX, double posY, double posZ)
       {
         x = posX;
@@ -64,19 +64,19 @@
 
     }
 
-欧拉角姿态数据类型
+歐拉角姿態資料型態
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 欧拉角姿态数据类型
+    * @brief 歐拉角姿態資料型態
     */
     public class Rpy
     {
-      public double rx = 0.0;   /* 绕固定轴X旋转角度，单位：deg  */
-      public double ry = 0.0;   /* 绕固定轴Y旋转角度，单位：deg  */
-      public double rz = 0.0;   /* 绕固定轴Z旋转角度，单位：deg  */
+      public double rx = 0.0;   /* 繞固定軸X旋轉角度，單位：deg  */
+      public double ry = 0.0;   /* 繞固定軸Y旋轉角度，單位：deg  */
+      public double rz = 0.0;   /* 繞固定軸Z旋轉角度，單位：deg  */
       public Rpy(double rotateX, double rotateY, double rotateZ)
       {
         rx = rotateX;
@@ -85,18 +85,18 @@
       }
     }
 
-笛卡尔空间位姿数据类型
+笛卡爾空間位姿資料類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    *@brief 笛卡尔空间位姿类型
+    *@brief 笛卡兒空間位姿類型
     */
     public class DescPose
     {
-      public DescTran tran = new DescTran(0.0, 0.0, 0.0);      /* 笛卡尔空间位置  */
-      public Rpy rpy = new Rpy(0.0, 0.0, 0.0);			       /* 笛卡尔空间姿态  */
+      public DescTran tran = new DescTran(0.0, 0.0, 0.0);      /* 笛卡兒空間位置  */
+      public Rpy rpy = new Rpy(0.0, 0.0, 0.0);			       /* 笛卡兒空間姿態  */
 
       public DescPose()
       {
@@ -125,13 +125,13 @@
       }
     }
 
-扩展轴位置数据类型
+擴展軸位置資料類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 扩展轴位置数据类型
+    * @brief 擴展軸位置資料類型
     */
     public class ExaxisPos
     {
@@ -161,22 +161,22 @@
       }
     }
 
-力矩传感器数据类型
+力矩感測器資料類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 力传感器的受力分量和力矩分量
+    * @brief 力感測器的受力分量和力矩分量
     */
     public class ForceTorque
     {
-      public double fx;  /* 沿x轴受力分量，单位N  */
-      public double fy;  /* 沿y轴受力分量，单位N  */
-      public double fz;  /* 沿z轴受力分量，单位N  */
-      public double tx;  /* 绕x轴力矩分量，单位Nm */
-      public double ty;  /* 绕y轴力矩分量，单位Nm */
-      public double tz;  /* 绕z轴力矩分量，单位Nm */
+      public double fx;  /* 沿x軸受力分量，單位N  */
+      public double fy;  /* 沿y軸受力分量，單位N  */
+      public double fz;  /* 沿z軸受力分量，單位N  */
+      public double tx;  /* 绕x軸力矩分量，單位Nm */
+      public double ty;  /* 绕y軸力矩分量，單位Nm */
+      public double tz;  /* 绕z軸力矩分量，單位Nm */
       public ForceTorque(double fX, double fY, double fZ, double tX, double tY, double tZ)
       {
         fx = fX;
@@ -188,22 +188,22 @@
       }
     }
 
-螺旋参数数据类型
+螺旋參數資料類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  螺旋参数数据类型
+    * @brief  螺旋參數資料類型
     */
     public class SpiralParam
     {
-      public int circle_num;              /* 螺旋圈数  */
-      public double circle_angle;         /* 螺旋倾角  */
-      public double rad_init;             /* 螺旋初始半径，单位mm  */
-      public double rad_add;              /* 半径增量  */
-      public double rotaxis_add;          /* 转轴方向增量  */
-      public int rot_direction;           /* 旋转方向，0-顺时针，1-逆时针  */
+      public int circle_num;              /* 螺旋圈數  */
+      public double circle_angle;         /* 螺旋傾角  */
+      public double rad_init;             /* 螺旋初始半徑，單位mm  */
+      public double rad_add;              /* 半徑增量  */
+      public double rotaxis_add;          /* 轉軸方向增量  */
+      public int rot_direction;           /* 旋轉方向，0-順時針，1-逆時針  */
       public SpiralParam(int circleNum, double circleAngle, double radInit, double radAdd, double rotaxisAdd, int rotDirection)
       {
         circle_num = circleNum;
@@ -215,44 +215,44 @@
       }
     }
 
-扩展轴状态类型
+擴展軸狀態類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  扩展轴状态类型
+    * @brief  擴展軸狀態類型
     */
     public class EXT_AXIS_STATUS
     {
-     public double pos = 0;        //扩展轴位置
-     public double vel = 0;        //扩展轴速度
-     public int errorCode = 0;     //扩展轴故障码
+     public double pos = 0;        //擴展軸位置
+     public double vel = 0;        //擴展軸速度
+     public int errorCode = 0;     //擴展軸故障码
      public int ready = 0;        //伺服准备好
      public int inPos = 0;        //伺服到位
      public int alarm = 0;        //伺服报警
      public int flerr = 0;        //跟随误差
      public int nlimit = 0;       //到负限位
      public int pLimit = 0;       //到正限位
-     public int mdbsOffLine = 0;  //驱动器485总线掉线
+     public int mdbsOffLine = 0;  //驅動器485总线掉线
      public int mdbsTimeout = 0;  //控制卡与控制箱485通信超时
-     public int homingStatus = 0; //扩展轴回零状态
+     public int homingStatus = 0; //擴展軸回零狀態
     }
 
-传感器类型
+感測器類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  传感器类型
+    * @brief  感測器類型
     */
     public class DeviceConfig
     {
-      int company = 0;          // 厂商
-      int device = 0;           // 类型/设备号
-      int softwareVersion = 0;  // 软件版本
-      int bus = 0;              // 挂载位置
+      int company = 0;          // 廠商
+      int device = 0;           // 類型/設備號
+      int softwareVersion = 0;  // 軟體版本
+      int bus = 0;              // 掛載位置
 
       public DeviceConfig()
       {
@@ -268,21 +268,21 @@
       }
     }
 
-485扩展轴配置
+485擴展軸配置
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  485扩展轴配置
+    * @brief  485擴展軸配置
     */
     public class Axis485Param
     {
-      int servoCompany;           // 伺服驱动器厂商，1-戴纳泰克
-      int servoModel;             // 伺服驱动器型号，1-FD100-750C
-      int servoSoftVersion;       // 伺服驱动器软件版本，1-V1.0
-      int servoResolution;        // 编码器分辨率
-      double axisMechTransRatio;  // 机械传动比
+      int servoCompany;           // 伺服驅動器廠商，1-戴納泰克
+      int servoModel;             // 伺服驅動器型號，1-FD100-750C
+      int servoSoftVersion;       // 伺服驅動器軟體版本，1-V1.0
+      int servoResolution;        // 編碼器分辨率
+      double axisMechTransRatio;  // 機械傳動比
 
       public Axis485Param(int company, int model, int softVersion, int resolution, double mechTransRatio)
       {
@@ -299,97 +299,97 @@
       }
     }
 
-伺服控制器状态
+伺服控制器狀態
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  伺服控制器状态
+    * @brief  伺服控制器狀態
     */
     public class ROBOT_AUX_STATE
     {
-      public int servoId = 0;           //伺服驱动器ID号
-      public int servoErrCode = 0;       //伺服驱动器故障码
-      public int servoState = 0;         //伺服驱动器状态
-      public double servoPos = 0;        //伺服当前位置
-      public float servoVel = 0;         //伺服当前速度
-      public float servoTorque = 0;      //伺服当前转矩    25
+      public int servoId = 0;           //伺服驅動器ID号
+      public int servoErrCode = 0;       //伺服驅動器故障碼
+      public int servoState = 0;         //伺服驅動器狀態
+      public double servoPos = 0;        //伺服當前位置
+      public float servoVel = 0;         //伺服當前速度
+      public float servoTorque = 0;      //伺服當前轉矩    25
     }
 
-机器人状态反馈结构体类型
+機器人狀態回饋結構體類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  机器人状态反馈结构体类型
+    * @brief  機器人狀態回饋結構體類型
     */
     public class ROBOT_STATE_PKG
     {
-      public short frame_head = 0;            //帧头 0x5A5A
-      public byte frame_cnt = 0;              //帧计数
-      public short data_len = 0;              //数据长度  5
-      public int program_state = 0;          //程序运行状态，1-停止；2-运行；3-暂停
-      public int robot_state = 0;            //机器人运动状态，1-停止；2-运行；3-暂停；4-拖动  7
-      public int main_code = 0;               //主故障码
-      public int sub_code = 0;                //子故障码
-      public int robot_mode = 0;             //机器人模式，0-自动模式；1-手动模式 16
-      public double[] jt_cur_pos  =new double[6];                  //关节当前位置
-      public double[] tl_cur_pos = new double[6];                  //工具当前位姿
-      public double[] flange_cur_pos = new double[6];              //末端法兰当前位姿
-      public double[] actual_qd = new double[6];                   //机器人当前关节速度
-      public double[] actual_qdd = new double[6];                  //机器人当前关节加速度
-      public double[] target_TCP_CmpSpeed = new double[2];         //机器人TCP合成指令速度
-      public double[] target_TCP_Speed = new double[6];            //机器人TCP指令速度
-      public double[] actual_TCP_CmpSpeed = new double[2];         //机器人TCP合成实际速度
-      public double[] actual_TCP_Speed = new double[6];            //机器人TCP实际速度
-      public double[] jt_cur_tor = new double[6];                             //当前扭矩
-      public int tool = 0;                        //工具号
-      public int user = 0;                        //工件号
-      public int cl_dgt_output_h = 0;            //数字输出15-8
-      public int cl_dgt_output_l = 0;            //数字输出7-0
-      public int tl_dgt_output_l = 0;            //工具数字输出7-0(仅bit0-bit1有效)
-      public int cl_dgt_input_h = 0;             //数字输入15-8
-      public int cl_dgt_input_l = 0;             //数字输入7-0
-      public int tl_dgt_input_l = 0;             //工具数字输入7-0(仅bit0-bit1有效)
-      public short[] cl_analog_input = new short[2];          //控制箱模拟量输入
-      public short tl_anglog_input = 0;                       //工具模拟量输入
-      public double[] ft_sensor_raw_data = new double[6];     //力/扭矩传感器原始数据
-      public double[] ft_sensor_data = new double[6];         //参考坐标系下力/扭矩传感器数据
-      public int ft_sensor_active = 0;           //力/扭矩传感器激活状态， 0-复位，1-激活
-      public int EmergencyStop = 0;              //急停标志
-      public int motion_done = 0;                 //到位信号
-      public int gripper_motiondone = 0;         //夹爪运动完成信号
-      public int mc_queue_len = 0;                //运动队列长度
-      public int collisionState = 0;             //碰撞检测，1-碰撞；0-无碰撞
-      public int trajectory_pnum = 0;             //轨迹点编号
-      public int safety_stop0_state = 0;  /* 安全停止信号SI0 */
-      public int safety_stop1_state = 0;  /* 安全停止信号SI1 */
-      public int gripper_fault_id = 0;    /* 错误夹爪号 */               // + 19 = 567
-      public short gripper_fault = 0;      /* 夹爪故障 */
-      public short gripper_active = 0;     /* 夹爪激活状态 */
-      public int gripper_position = 0;    /* 夹爪位置 */
-      public int gripper_speed = 0;       /* 夹爪速度 */
-      public int gripper_current = 0;     /* 夹爪电流 */
-      public int gripper_tmp = 0;          /* 夹爪温度 */
-      public int gripper_voltage = 0;      /* 夹爪电压 */
-      public ROBOT_AUX_STATE auxState = new ROBOT_AUX_STATE(); /* 485扩展轴状态 */
+      public short frame_head = 0;            //幀頭 0x5A5A
+      public byte frame_cnt = 0;              //幀計數
+      public short data_len = 0;              //數據長度  5
+      public int program_state = 0;          //程序運作狀態，1-停止；2-運轉；3-暫停
+      public int robot_state = 0;            //機器人運動狀態，1-停止；2-運轉；3-暫停；4-拖曳 7
+      public int main_code = 0;               //主故障碼
+      public int sub_code = 0;                //子故障碼
+      public int robot_mode = 0;             //機器人模式，0-自動模式；1-手動模式 16
+      public double[] jt_cur_pos  =new double[6];                  //關節目前位置
+      public double[] tl_cur_pos = new double[6];                  //工具當前位姿
+      public double[] flange_cur_pos = new double[6];              //末端法蘭目前位姿
+      public double[] actual_qd = new double[6];                   //機器人目前關節速度
+      public double[] actual_qdd = new double[6];                  //機器人當前關節加速度
+      public double[] target_TCP_CmpSpeed = new double[2];         //機器人TCP合成指令速度
+      public double[] target_TCP_Speed = new double[6];            //機器人TCP指令速度
+      public double[] actual_TCP_CmpSpeed = new double[2];         //機器人TCP合成實際速度
+      public double[] actual_TCP_Speed = new double[6];            //機器人TCP實際速度
+      public double[] jt_cur_tor = new double[6];                             //當前扭矩
+      public int tool = 0;                        //工具號
+      public int user = 0;                        //工件號
+      public int cl_dgt_output_h = 0;            //數位輸出15-8
+      public int cl_dgt_output_l = 0;            //數位輸出7-0
+      public int tl_dgt_output_l = 0;            //工具數位輸出7-0(僅bit0-bit1有效)
+      public int cl_dgt_input_h = 0;             //數字輸入15-8
+      public int cl_dgt_input_l = 0;             //數字輸入7-0
+      public int tl_dgt_input_l = 0;             //工具數字輸入7-0(僅bit0-bit1有效)
+      public short[] cl_analog_input = new short[2];          //控制箱類比輸入
+      public short tl_anglog_input = 0;                       //工具類比輸入
+      public double[] ft_sensor_raw_data = new double[6];     //力/扭矩传感器原始數據
+      public double[] ft_sensor_data = new double[6];         //參考座標系下力/扭矩传感器數據
+      public int ft_sensor_active = 0;           //力/扭力感測器啟動狀態， 0-復位，1-激活
+      public int EmergencyStop = 0;              //急停標誌
+      public int motion_done = 0;                 //到位訊號
+      public int gripper_motiondone = 0;         //夹爪運動完成信号
+      public int mc_queue_len = 0;                //運動队列長度
+      public int collisionState = 0;             //碰撞检测，1-碰撞；0-無碰撞
+      public int trajectory_pnum = 0;             //軌跡點編號
+      public int safety_stop0_state = 0;  /* 安全停止訊號SI0 */
+      public int safety_stop1_state = 0;  /* 安全停止訊號SI1 */
+      public int gripper_fault_id = 0;    /* 錯誤夾爪號 */               // + 19 = 567
+      public short gripper_fault = 0;      /* 夾爪故障 */
+      public short gripper_active = 0;     /* 夾爪激活狀態 */
+      public int gripper_position = 0;    /* 夾爪位置 */
+      public int gripper_speed = 0;       /* 夾爪速度 */
+      public int gripper_current = 0;     /* 夾爪電流 */
+      public int gripper_tmp = 0;          /* 夾爪溫度 */
+      public int gripper_voltage = 0;      /* 夾爪電壓 */
+      public ROBOT_AUX_STATE auxState = new ROBOT_AUX_STATE(); /* 485擴展軸狀態 */
       public EXT_AXIS_STATUS extAxisStatus0 = new EXT_AXIS_STATUS();
       public EXT_AXIS_STATUS extAxisStatus1 = new EXT_AXIS_STATUS();
       public EXT_AXIS_STATUS extAxisStatus2 = new EXT_AXIS_STATUS();
       public EXT_AXIS_STATUS extAxisStatus3 = new EXT_AXIS_STATUS();
-      public short[] extDIState = new short[8];        //扩展DI输入
-      public short[] extDOState = new short[8];        //扩展DO输出
-      public short[] extAIState = new short[4];        //扩展AI输入
-      public short[] extAOState = new short[4];        //扩展AO输出
-      public int rbtEnableState = 0;       //机器人使能状态--robot enable s
-      public double[] jointDriverTorque  =new double[6];       //关节驱动器当前扭矩
-      public double[] jointDriverTemperature = new double[6];  //关节驱动器当前温度
+      public short[] extDIState = new short[8];        //擴充DI輸入
+      public short[] extDOState = new short[8];        //擴展DO輸出
+      public short[] extAIState = new short[4];        //擴展AI輸入
+      public short[] extAOState = new short[4];        //擴展AO輸出
+      public int rbtEnableState = 0;       //機器人使能狀態--robot enable s
+      public double[] jointDriverTorque  =new double[6];       //關節驅動器當前扭矩
+      public double[] jointDriverTemperature = new double[6];  //關節驅動器當前溫度
       public ROBOT_TIME robotTime = new ROBOT_TIME();
-      public int softwareUpgradeState = 0;   //机器人软件升级状态 0-空闲中或上传升级包中；1~100：升级完成百分比；-1:升级软件失败；-2：校验失败；-3：版本校验失败；-4：解压失败；-5：用户配置升级失败；-6：外设配置升级失败；-7：扩展轴配置升级失败；-8：机器人配置升级失败；-9：DH参数配置升级失败
-      public int endLuaErrCode;              //末端LUA运行状态
-      public short check_sum = 0;          /* 和校验 */
+      public int softwareUpgradeState = 0;   //機器人軟體升級狀態0-空閒或上傳升級包；1~100：升級完成百分比；-1:升級軟體失敗；-2：校驗失敗；-3：版本校驗失敗；-4：解壓縮失敗； -5：使用者配置升級失敗；-6：週邊配置升級失敗；-7：擴展軸配置升級失敗；-8：機器人配置升級失敗；-9：DH參數配置升級失敗
+      public int endLuaErrCode;              //末端LUA運行狀態
+      public short check_sum = 0;          /* 和校驗 */
 
       public ROBOT_STATE_PKG()
       {

@@ -1,49 +1,49 @@
-机器人状态查询
+機器人狀態查詢
 ===============
 
 .. toctree:: 
     :maxdepth: 5
 
-获取机器人安装角度
+取得機器人安裝角度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取机器人安装角度
-    * @param  [out] yangle 倾斜角
-    * @param  [out] zangle 旋转角
-    * @return  错误码
+    * @brief  取得機器人安裝角度
+    * @param  [out] yangle 傾斜角
+    * @param  [out] zangle 旋轉角
+    * @return  錯誤碼
     */
     errno_t  GetRobotInstallAngle(float *yangle, float *zangle);
 
-获取系统变量值
+取得系統變數值
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取系统变量值
-    * @param  [in] id 系统变量编号，范围[1~20]
-    * @param  [out] value  系统变量值
-    * @return  错误码
+    * @brief  取得系統變數值
+    * @param  [in] id 系統變數編號，範圍[1~20]
+    * @param  [out] value  系統變數值
+    * @return  錯誤碼
     */
     errno_t  GetSysVarValue(int id, float *value);
 
-获取当前关节位置(角度)
+取得目前關節位置(角度)
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前关节位置(角度)
+    * @brief  取得目前關節位置(角度)
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] jPos 六个关节位置，单位deg
-    * @return  错误码
+    * @param  [out] jPos 六個關節位置，單位deg
+    * @return  錯誤碼
     */
     errno_t  GetActualJointPosDegree(uint8_t flag, JointPos *jPos);
 
-获取当前关节位置(弧度)
+取得目前關節位置(弧度)
 +++++++++++++++++++++++++++++++++
 
 .. deprecated:: C++SDK-v2.1.1.0
@@ -52,331 +52,331 @@
     :linenos:
 
     /**
-    * @brief  获取当前关节位置(弧度)
+    * @brief  取得目前關節位置(弧度)
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] jPos 六个关节位置，单位rad
-    * @return  错误码
+    * @param  [out] jPos 六個關節位置，單位rad
+    * @return  錯誤碼
     */   
     errno_t  GetActualJointPosRadian(uint8_t flag, JointPos *jPos);
 
-获取关节反馈速度
+取得關節回饋速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取关节反馈速度-deg/s
+     * @brief  取得關節回饋速度-deg/s
      * @param  [in] flag 0-阻塞，1-非阻塞
-     * @param  [out] speed 六个关节速度
-     * @return  错误码 
+     * @param  [out] speed 六個關節速度
+     * @return  錯誤碼 
      */ 
     errno_t  GetActualJointSpeedsDegree(uint8_t flag, float speed[6]);
 
-获取关节反馈加速度
+取得關節回饋加速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取关节反馈加速度-deg/s^2
+     * @brief  取得關節回饋加速度-deg/s^2
      * @param  [in] flag 0-阻塞，1-非阻塞
-     * @param  [out] acc 六个关节加速度
-     * @return  错误码 
+     * @param  [out] acc 六個關節加速度
+     * @return  錯誤碼 
      */ 
     errno_t  GetActualJointAccDegree(uint8_t flag, float acc[6]);   
 
-获取TCP指令速度
+取得TCP指令速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取TCP指令速度
+     * @brief  取得TCP指令速度
      * @param  [in] flag 0-阻塞，1-非阻塞
-     * @param  [out] tcp_speed 线性速度
-     * @param  [out] ori_speed 姿态速度
-     * @return  错误码 
+     * @param  [out] tcp_speed 線性速度
+     * @param  [out] ori_speed 姿態速度
+     * @return  錯誤碼 
      */
     errno_t  GetTargetTCPCompositeSpeed(uint8_t flag, float *tcp_speed, float *ori_speed);
 
-获取TCP反馈速度
+獲取TCP回饋速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取TCP反馈速度
+     * @brief  獲取TCP回饋速度
      * @param  [in] flag 0-阻塞，1-非阻塞
-     * @param  [out] tcp_speed 线性速度
-     * @param  [out] ori_speed 姿态速度
-     * @return  错误码 
+     * @param  [out] tcp_speed 線性速度
+     * @param  [out] ori_speed 姿態速度
+     * @return  錯誤碼 
      */ 
     errno_t  GetActualTCPCompositeSpeed(uint8_t flag, float *tcp_speed, float *ori_speed);
 
-获取TCP指令速度
+取得TCP指令速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取TCP指令速度
+     * @brief  取得TCP指令速度
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] speed [x,y,z,rx,ry,rz]速度
-     * @return  错误码 
+     * @return  錯誤碼 
      */ 
     errno_t  GetTargetTCPSpeed(uint8_t flag, float speed[6]);
 
-获取TCP反馈速度
+獲取TCP回饋速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  获取TCP反馈速度
+     * @brief  獲取TCP回饋速度
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] speed [x,y,z,rx,ry,rz]速度
-     * @return  错误码 
+     * @return  錯誤碼 
      */ 
     errno_t  GetActualTCPSpeed(uint8_t flag, float speed[6]);
 
-获取当前工具位姿
+取得當前工具位姿
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前工具位姿
+    * @brief  取得當前工具位姿
     * @param  [in] flag  0-阻塞，1-非阻塞
     * @param  [out] desc_pos  工具位姿
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  GetActualTCPPose(uint8_t flag, DescPose *desc_pos);
 
-获取当前工具坐标系编号
+取得目前工具坐標系編號
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前工具坐标系编号
+    * @brief  取得目前工具坐標系編號
     * @param  [in] flag  0-阻塞，1-非阻塞
-    * @param  [out] id  工具坐标系编号
-    * @return  错误码
+    * @param  [out] id  工具座標系編號
+    * @return  錯誤碼
     */
     errno_t  GetActualTCPNum(uint8_t flag, int *id);
 
-获取当前工件坐标系编号
+取得目前工件坐標系編號
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前工件坐标系编号
+    * @brief  取得目前工件坐標系編號
     * @param  [in] flag  0-阻塞，1-非阻塞
-    * @param  [out] id  工件坐标系编号
-    * @return  错误码
+    * @param  [out] id  工件座標系編號
+    * @return  錯誤碼
     */
     errno_t  GetActualWObjNum(uint8_t flag, int *id);  
 
-获取当前末端法兰位姿
+取得目前末端法蘭位姿
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前末端法兰位姿
+    * @brief  取得目前末端法蘭位姿
     * @param  [in] flag  0-阻塞，1-非阻塞
-    * @param  [out] desc_pos  法兰位姿
-    * @return  错误码
+    * @param  [out] desc_pos  法蘭位姿
+    * @return  錯誤碼
     */
     errno_t  GetActualToolFlangePose(uint8_t flag, DescPose *desc_pos);  
 
-逆运动学求解
+逆運動學求解
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  逆运动学求解
-    * @param  [in] type 0-绝对位姿(基坐标系)，1-增量位姿(基坐标系)，2-增量位姿(工具坐标系)
-    * @param  [in] desc_pos 笛卡尔位姿
-    * @param  [in] config 关节空间配置，[-1]-参考当前关节位置解算，[0~7]-依据特定关节空间配置求解
-    * @param  [out] joint_pos 关节位置
-    * @return  错误码
+    * @brief  逆運動學求解
+    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡兒位姿
+    * @param  [in] config 關節空間配置，[-1]-參考目前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [out] joint_pos 關節位置
+    * @return  錯誤碼
     */
     errno_t  GetInverseKin(int type, DescPose *desc_pos, int config, JointPos *joint_pos);
 
-逆运动学求解
+逆運動學求解
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  逆运动学求解，参考指定关节位置求解
-    * @param  [in] type 0-绝对位姿(基坐标系)，1-增量位姿(基坐标系)，2-增量位姿(工具坐标系)
-    * @param  [in] desc_pos 笛卡尔位姿
-    * @param  [in] joint_pos_ref 参考关节位置
-    * @param  [out] joint_pos 关节位置
-    * @return  错误码
+    * @brief  逆運動學求解，參考指定關節位置求解
+    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡兒位姿
+    * @param  [in] joint_pos_ref 參考關節位置
+    * @param  [out] joint_pos 關節位置
+    * @return  錯誤碼
     */   
     errno_t  GetInverseKinRef(int type, DescPose *desc_pos, JointPos *joint_pos_ref, JointPos *joint_pos);
 
-逆运动学求解
+逆運動學求解
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  逆运动学求解，参考指定关节位置判断是否有解
-    * @param  [in] type 0-绝对位姿(基坐标系)，1-增量位姿(基坐标系)，2-增量位姿(工具坐标系)
-    * @param  [in] desc_pos 笛卡尔位姿
-    * @param  [in] joint_pos_ref 参考关节位置
-    * @param  [out] result 0-无解，1-有解
-    * @return  错误码
+    * @brief  逆運動學求解，參考指定關節位置判断是否有解
+    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡兒位姿
+    * @param  [in] joint_pos_ref 參考關節位置
+    * @param  [out] result 0-無解，1-有解
+    * @return  錯誤碼
     */   
     errno_t  GetInverseKinHasSolution(int type, DescPose *desc_pos, JointPos *joint_pos_ref, uint8_t *result);
 
-正运动学求解
+正運動學求解
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  正运动学求解
-    * @param  [in] joint_pos 关节位置
-    * @param  [out] desc_pos 笛卡尔位姿
-    * @return  错误码
+    * @brief  正運動學求解
+    * @param  [in] joint_pos 關節位置
+    * @param  [out] desc_pos 笛卡兒位姿
+    * @return  錯誤碼
     */
     errno_t  GetForwardKin(JointPos *joint_pos, DescPose *desc_pos);
 
-获取当前关节转矩
+取得當前關節轉矩
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 获取当前关节转矩
+    * @brief 取得當前關節轉矩
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] torques 关节转矩
-    * @return  错误码
+    * @param  [out] torques 關節轉矩
+    * @return  錯誤碼
     */
     errno_t  GetJointTorques(uint8_t flag, float torques[6]);
 
-获取当前负载的重量
+取得目前負載的重量
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前负载的重量
+    * @brief  取得目前負載的重量
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] weight 负载重量，单位kg
-    * @return  错误码
+    * @param  [out] weight 負載重量，單位kg
+    * @return  錯誤碼
     */
     errno_t  GetTargetPayload(uint8_t flag, float *weight);
 
-获取当前负载的质心
+取得目前負載的質心
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前负载的质心
+    * @brief  取得目前負載的質心
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] cog 负载质心，单位mm
-    * @return  错误码
+    * @param  [out] cog 負載質心，單位mm
+    * @return  錯誤碼
     */   
     errno_t  GetTargetPayloadCog(uint8_t flag, DescTran *cog);
 
-获取当前工具坐标系
+獲取當前工具坐標系
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前工具坐标系
+    * @brief  獲取當前工具坐標系
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] desc_pos 工具坐标系位姿
-    * @return  错误码
+    * @param  [out] desc_pos 工具坐標系位姿
+    * @return  錯誤碼
     */
     errno_t  GetTCPOffset(uint8_t flag, DescPose *desc_pos);
 
-获取当前工件坐标系
+取得當前工件坐標系
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取当前工件坐标系
+    * @brief  取得當前工件坐標系
     * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] desc_pos 工件坐标系位姿
-    * @return  错误码
+    * @param  [out] desc_pos 工件座標系位姿
+    * @return  錯誤碼
     */   
     errno_t  GetWObjOffset(uint8_t flag, DescPose *desc_pos);
 
-获取关节软限位角度
+取得關節軟限位角度
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取关节软限位角度
+    * @brief  取得關節軟限位角度
     * @param  [in] flag 0-阻塞，1-非阻塞    
-    * @param  [out] negative  负限位角度，单位deg
-    * @param  [out] positive  正限位角度，单位deg
-    * @return  错误码
+    * @param  [out] negative  負限位角度，單位deg
+    * @param  [out] positive  正限位角度，單位deg
+    * @return  錯誤碼
     */
     errno_t  GetJointSoftLimitDeg(uint8_t flag, float negative[6], float positive[6]);
 
-获取系统时间
+取得系統時間
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取系统时间
-    * @param  [out] t_ms 单位ms
-    * @return  错误码
+    * @brief  取得系統時間
+    * @param  [out] t_ms 單位ms
+    * @return  錯誤碼
     */
     errno_t  GetSystemClock(float *t_ms);
 
-获取机器人当前关节配置
+取得機器人當前關節配置
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取机器人当前关节位置
-    * @param  [out]  config  关节空间配置，范围[0~7]
-    * @return  错误码
+    * @brief  取得機器人當前關節位置
+    * @param  [out]  config  關節空間配置，範圍[0~7]
+    * @return  錯誤碼
     */
     errno_t  GetRobotCurJointsConfig(int *config);
 
-获取当前速度
+取得當前速度
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取机器人默认速度
-    * @param  [out]  vel  速度，单位mm/s
-    * @return  错误码
+    * @brief  取得機器人預設速度
+    * @param  [out]  vel  速度，單位mm/s
+    * @return  錯誤碼
     */   
     errno_t  GetDefaultTransVel(float *vel);
 
-查询机器人运动是否完成
+查詢機器人運動是否完成
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  查询机器人运动是否完成
+    * @brief  查詢機器人運動是否完成
     * @param  [out]  state  0-未完成，1-完成
-    * @return  错误码
+    * @return  錯誤碼
     */   
     errno_t  GetRobotMotionDone(uint8_t *state);
 
-代码示例
+代碼範例
 +++++++++++
 .. code-block:: c++
     :linenos:
@@ -393,8 +393,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         float yangle, zangle;
         int flag = 0;
@@ -469,45 +469,45 @@
         return 0;
     }
 
-查询机器人错误码
+查詢機器人錯誤碼
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  查询机器人错误码
-     * @param  [out]  maincode  主错误码
-     * @param  [out]  subcode   子错误码
-     * @return  错误码
+     * @brief  查詢機器人錯誤碼
+     * @param  [out]  maincode  主錯誤碼
+     * @param  [out]  subcode   子錯誤碼
+     * @return  錯誤碼
      */ 
     errno_t  GetRobotErrorCode(int *maincode, int *subcode);
 
-查询机器人示教管理点位数据
+查詢機器人示教管理點位數據
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  查询机器人示教管理点位数据
-     * @param  [in]  name  点位名
-     * @param  [out]  data   点位数据
-     * @return  错误码
+     * @brief  查詢機器人示教管理點位數據
+     * @param  [in]  name  點位名
+     * @param  [out]  data   點位數據
+     * @return  錯誤碼
      */ 
     errno_t  GetRobotTeachingPoint(char name[64], float data[20]);
 
-查询机器人运动队列缓存长度
+查詢機器人運動隊列緩存長度
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  查询机器人运动队列缓存长度
-     * @param  [out]  len  缓存长度
-     * @return  错误码
+     * @brief  查詢機器人運動隊列緩存長度
+     * @param  [out]  len 緩存長度
+     * @return  錯誤碼
      */ 
     errno_t  GetMotionQueueLength(int *len);
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
     
@@ -516,10 +516,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -586,7 +586,7 @@
         offset_pos2.rpy.rx = -5.0;
 
         retval = 0;
-        retval = robot.GetForwardKin(&j, &desc_pos); // 只有关节位置的情况下，可用正运动学接口求解笛卡尔空间坐标
+        retval = robot.GetForwardKin(&j, &desc_pos); // 只有關節位置的情况下，可用正運動学接口求解笛卡兒空间座標
         printf("GetForwardKin ret is: %d \n", retval);
         printf("GetForwardKin result:%f,%f,%f,%f,%f,%f\n", desc_pos.tran.x, desc_pos.tran.y, desc_pos.tran.z, desc_pos.rpy.rx, desc_pos.rpy.ry, desc_pos.rpy.rz);
 
@@ -598,7 +598,7 @@
         printf("joint is: %f, %f, %f,%f, %f, %f\n", start_joint_pose.jPos[0], start_joint_pose.jPos[1], start_joint_pose.jPos[2], start_joint_pose.jPos[3], start_joint_pose.jPos[4], start_joint_pose.jPos[5]);
 
         retval = 0;
-        retval = robot.GetInverseKinHasSolution(1, &offset_pos1, &j, &result); // 根据参考关节坐标，判断目标位姿是否有解
+        retval = robot.GetInverseKinHasSolution(1, &offset_pos1, &j, &result); // 根据參考關節座標，判断目標位姿是否有解
         printf("GetInverseKinHasSolution ret: %d\n", result);
         if (0 == result)
         {

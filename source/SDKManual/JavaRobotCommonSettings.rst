@@ -1,116 +1,116 @@
-机器人常用设置
+機器人常用設定
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置全局速度
+設定全域速度
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置全局速度
-    * @param  [in]  vel  速度百分比，范围[0~100]
-    * @return  错误码
+    * @brief  設定全域速度
+    * @param  [in]  vel  速度百分比，範圍[0~100]
+    * @return  錯誤碼
     */
     int SetSpeed(int vel); 
 
-设置系统变量值
+設定係統變數值
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置系统变量值
-    * @param  [in]  id  变量编号，范围[1~20]
-    * @param  [in]  value 变量值
-    * @return  错误码
+    * @brief  設定係統變數值
+    * @param  [in]  id  變數編號，範圍[1~20]
+    * @param  [in]  value 變數值
+    * @return  錯誤碼
     */
     int SetSysVarValue(int id, double value); 
 
-设置工具参考点-六点法
+設定工具參考點-六點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置工具参考点-六点法
-    * @param [in] point_num 点编号,范围[1~6]
-    * @return 错误码 
+    * @brief 設定工具參考點-六點法
+    * @param [in] point_num 點編號,範圍[1~6]
+    * @return 錯誤碼 
     */ 
     int SetToolPoint(int point_num); 
 
-计算工具坐标系--六点法
+計算工具座標系--六點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 计算工具坐标系
-    * @param [out] tcp_pose 工具坐标系
-    * @return 错误码 
+    * @brief 計算工具座標系
+    * @param [out] tcp_pose 工具座標系
+    * @return 錯誤碼 
     */ 
     int ComputeTool(DescPose tcp_pose); 
 
-设置工具参考点-四点法
+設定工具參考點-四點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置工具参考点-四点法
-    * @param [in] point_num 点编号,范围[1~4]
-    * @return 错误码 
+    * @brief 設定工具參考點-四點法
+    * @param [in] point_num 點編號,範圍[1~4]
+    * @return 錯誤碼 
     */ 
     int SetTcp4RefPoint(int point_num);
 
-计算工具坐标系-四点法
+計算工具座標系-四點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 计算工具坐标系
-    * @param [out] tcp_pose 工具坐标系
-    * @return 错误码 
+    * @brief 計算工具座標系
+    * @param [out] tcp_pose 工具座標系
+    * @return 錯誤碼 
     */ 
     int ComputeTcp4(DescPose tcp_pose);
 
-设置工具坐标系
+設定工具坐標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置工具坐标系 
-    * @param [in] id 坐标系编号，范围[0~14]
-    * @param [in] coord  工具中心点相对于末端法兰中心位姿
-    * @param [in] type  0-工具坐标系，1-传感器坐标系
-    * @param [in] install 安装位置，0-机器人末端，1-机器人外部
+    * @brief 設定工具坐標系 
+    * @param [in] id 座標系編號，範圍[0~14]
+    * @param [in] coord  工具中心點相對於末端法蘭中心位姿
+    * @param [in] type  0-工具坐標系，1-感測器座標系
+    * @param [in] install 安裝位置，0-機器人末端，1-機器人外部
     * @param [in] toolID  工具ID
-    * @param [in] loadNum  负载编号
-    * @return 错误码 
+    * @param [in] loadNum  負載編號
+    * @return 錯誤碼 
     */ 
     int SetToolCoord(int id, DescPose coord, int type, int install, int toolID, int loadNum);  
 
-设置工具坐标系列表
+設定工具坐標系列表
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置工具坐标系列表
-    * @param  [in] id 坐标系编号，范围[0~14]
-    * @param  [in] coord  工具中心点相对于末端法兰中心位姿
-    * @param  [in] type  0-工具坐标系，1-传感器坐标系
-    * @param  [in] install 安装位置，0-机器人末端，1-机器人外部
-    * @param  [in] loadNum 负载编号
-    * @return  错误码
+    * @brief  設定工具坐標系列表
+    * @param  [in] id 座標系編號，範圍[0~14]
+    * @param  [in] coord  工具中心點相對於末端法蘭中心位姿
+    * @param  [in] type  0-工具坐標系，1-感測器座標系
+    * @param  [in] install 安裝位置，0-機器人末端，1-機器人外部
+    * @param  [in] loadNum 負載編號
+    * @return  錯誤碼
     */
     int SetToolList(int id, DescPose coord, int type, int install, int loadNum);  
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -118,16 +118,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.Mode(1);
@@ -140,7 +140,7 @@
         }
         for(int i = 1; i < 10; i++)
         {
-            List<Number> rtnArr = robot.GetSysVarValue(i);//获取系统变量
+            List<Number> rtnArr = robot.GetSysVarValue(i);//獲取系統變數
             System.out.println("SysVarValue " +  i  + " is " + rtnArr.get(1));
         }
 
@@ -187,63 +187,63 @@
         robot.ComputeTool(coord);
         System.out.println("result is " + coord.tran.x + "  " + coord.tran.y + "  " + coord.tran.z + "  " + coord.rpy.rx + "  " + coord.rpy.ry + "  " + coord.rpy.rz);
 
-        robot.SetToolCoord(5, coord, 0, 0,0,0);//设置工具坐标系
+        robot.SetToolCoord(5, coord, 0, 0,0,0);//設定工具坐標系
         robot.SetToolList(5, coord, 0, 0, 0);
     }
 
-设置外部工具坐标参考点-三点法
+設定外部工具座標參考點-三點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置外部工具参考点-三点法 
-    * @param [in] point_num 点编号,范围[1~3]
-    * @return 错误码 
+    * @brief 設定外部工具參考點-三點法
+    * @param [in] point_num 點編號,範圍[1~3]
+    * @return 錯誤碼 
     */ 
     int SetExTCPPoint(int point_num); 
 
-计算外部工具坐标系-三点法
+計算外部工具坐標系-三點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
     
     /** 
-    * @brief 计算外部工具坐标系-三点法
-    * @param [out] tcp_pose 外部工具坐标系
-    * @return 错误码 
+    * @brief 計算外部工具坐標系-三點法
+    * @param [out] tcp_pose 外部工具座標系
+    * @return 錯誤碼 
     */ 
     int ComputeExTCF(DescPose tcp_pose); 
 
-设置外部工具坐标系
+設定外部工具坐標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置外部工具坐标系 
-    * @param [in] id 坐标系编号，范围[0~14]
-    * @param [in] etcp  工具中心点相对末端法兰中心位姿
+    * @brief 設定外部工具坐標系 
+    * @param [in] id 座標系編號，範圍[0~14]
+    * @param [in] etcp  工具中心點相對末端法蘭中心位姿
     * @param [in] etool  待定
-    * @return 错误码 
+    * @return 錯誤碼 
     */
     int SetExToolCoord(int id, DescPose etcp, DescPose etool); 
 
-设置外部工具坐标系列表
+設定外部工具坐標系列表
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置外部工具坐标系列表
-    * @param  [in] id 坐标系编号，范围[0~14]
-    * @param  [in] etcp  工具中心点相对末端法兰中心位姿
+    * @brief  設定外部工具坐標系列表
+    * @param  [in] id 座標系編號，範圍[0~14]
+    * @param  [in] etcp  工具中心點相對末端法蘭中心位姿
     * @param  [in] etool  待定
-    * @return  错误码
+    * @return  錯誤碼
     */
     int SetExToolList(int id, DescPose etcp, DescPose etool); 
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -251,16 +251,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.Mode(1);
@@ -273,7 +273,7 @@
         }
         for(int i = 1; i < 10; i++)
         {
-            List<Number> rtnArr = robot.GetSysVarValue(i);//获取系统变量
+            List<Number> rtnArr = robot.GetSysVarValue(i);//獲取系統變數
             System.out.println("SysVarValue " +  i  + " is " + rtnArr.get(1));
         }
 
@@ -310,61 +310,61 @@
         robot.SetExToolList(5,coordE, coordE);
     }
 
-设置工件坐标系参考点-三点法
+設定工件座標系參考點-三點法
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置工件参考点-三点法 
-    * @param [in] point_num 点编号,范围[1~3]
-    * @return 错误码 
+    * @brief 設定工件參考點-三點法 
+    * @param [in] point_num 點編號,範圍[1~3]
+    * @return 錯誤碼 
     */ 
     int SetWObjCoordPoint(int point_num); 
 
-计算工件坐标系
+計算工件座標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 计算工件坐标系
-    * @param [in]  method 计算方式 0：原点-x轴-z轴  1：原点-x轴-xy平面
-    * @param [in]  refFrame 参考坐标系
-    * @param [out]  wobj_pose 工件坐标系
-    * @return 错误码 
+    * @brief 計算工件座標系
+    * @param [in]  method 計算方式 0：原點-x軸-z軸 1：原點-x軸-xy平面
+    * @param [in]  refFrame 參考座標系
+    * @param [out]  wobj_pose 工件座標系
+    * @return 錯誤碼 
     */ 
     int ComputeWObjCoord(int method, int refFrame, DescPose wobj_pose); 
 
-设置工件坐标系
+設定工件座標系
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置工件坐标系
-    * @param  [in] id 坐标系编号，范围[1~15]
-    * @param  [in] coord  工件坐标系相对于末端法兰中心位姿
-    * @param  [in] refFrame 参考坐标系
-    * @return  错误码
+    * @brief  設定工件座標系
+    * @param  [in] id 座標系編號，範圍[1~15]
+    * @param  [in] coord  工件坐標系相對於末端法蘭中心位姿
+    * @param  [in] refFrame 參考座標系
+    * @return  錯誤碼
     */    
     int SetWObjCoord(int id, DescPose coord, int refFrame);
 
-设置工件坐标系列表
+設定工件座標系列表
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置工件坐标系列表
-    * @param  [in] id 坐标系编号，范围[1~15]
-    * @param  [in] coord  工件坐标系相对于末端法兰中心位姿
-    * @param  [in] refFrame 参考坐标系
-    * @return  错误码
+    * @brief  設定工件座標系列表
+    * @param  [in] id 座標系編號，範圍[1~15]
+    * @param  [in] coord  工件坐標系相對於末端法蘭中心位姿
+    * @param  [in] refFrame 參考座標系
+    * @return  錯誤碼
     */    
     int SetWObjList(int id, DescPose coord, int refFrame);
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -372,16 +372,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
 
@@ -416,56 +416,56 @@
         robot.SetWObjList(5,coordE,0);
     }
 
-设置末端负载重量
+設定末端負載重量
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置末端负载重量
-    * @param  [in] weight  负载重量，单位kg
-    * @return  错误码
+    * @brief  設定末端負載重量
+    * @param  [in] weight  負載重量，單位kg
+    * @return  錯誤碼
     */
     int SetLoadWeight(double weight);
 
-设置末端负载质心坐标
+設定末端負載質心座標
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置末端负载质心坐标
-    * @param  [in] coord 质心坐标，单位mm
-    * @return  错误码
+    * @brief  設定末端負載質心座標
+    * @param  [in] coord 質心座標，單位mm
+    * @return  錯誤碼
     */
     int SetLoadCoord(DescTran coord); 
 
-设置机器人安装方式
+設定機器人安裝方式
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置机器人安装方式
-    * @param  [in]  install  安装方式，0-正装，1-侧装，2-倒装
-    * @return  错误码
+    * @brief  設定機器人安裝方式
+    * @param  [in]  install  安裝方式，0-正裝，1-側裝，2-倒裝
+    * @return  錯誤碼
     */
     int SetRobotInstallPos(int install); 
 
-设置机器人安装角度
+設定機器人安裝角度
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置机器人安装角度，自由安装
-    * @param  [in] yangle  倾斜角
-    * @param  [in] zangle  旋转角
-    * @return  错误码
+    * @brief  設定機器人安裝角度，自由安裝
+    * @param  [in] yangle  傾斜角
+    * @param  [in] zangle  旋轉角
+    * @return  錯誤碼
     */
     int SetRobotInstallAngle(double yangle, double zangle); 
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -473,16 +473,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.SetLoadWeight(2);
@@ -491,26 +491,26 @@
         robot.SetRobotInstallAngle(0, 0);
     }
 
-等待指定时间
+等待指定時間
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  等待指定时间
-    * @param  [in]  t_ms  单位ms
-    * @return  错误码
+    * @brief  等待指定時間
+    * @param  [in]  t_ms  單位ms
+    * @return  錯誤碼
     */
     int WaitMs(int t_ms);
 
-设置机器人加速度
+設定機器人加速度
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置机器人加速度
-    * @param [in] acc 机器人加速度百分比
-    * @return 错误码
+    * @brief 設定機器人加速度
+    * @param [in] acc 機器人加速度百分比
+    * @return 錯誤碼
     */
     int SetOaccScale(double acc);

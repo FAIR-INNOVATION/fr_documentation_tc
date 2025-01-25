@@ -1,265 +1,265 @@
-传动带
+傳動帶
 ======================
 
 .. toctree:: 
     :maxdepth: 5
 
-传动带启动、停止
+傳動皮帶啟動、停止
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorStartEnd(status)``"
-    "描述", "传动带启动、停止"
-    "必选参数", "- ``status``： 传动带状态，1-启动，0-停止"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "傳動皮帶啟動、停止"
+    "必選參數", "- ``status``： 傳動帶狀態，1-啟動，0-停止"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    #传送带运动，1-运动，0-停止
+    #传送带運動，1-運動，0-停止
     status = 1
     robot.ConveyorStartEnd(status)
-    #点记录
+    #點記錄
     ret = robot.ConveyorPointIORecord()
-    print("记录IO检测点",ret)
+    print("記錄IO檢測點",ret)
     ret = robot.ConveyorPointARecord()
-    print("记录A点",ret)
+    print("記錄A點",ret)
     ret = robot.ConveyorRefPointRecord()
-    print("记录参考点",ret)
+    print("記錄參考點",ret)
     ret = robot.ConveyorPointBRecord()
-    print("记录B点",ret)
+    print("記錄B點",ret)
 
-记录IO检测点
+記錄IO檢測點
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorPointIORecord()``"
-    "描述", "记录IO检测点"
-    "必选参数", "无"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "記錄IO檢測點"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-记录A点
+記錄A點
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorPointARecord()``"
-    "描述", "记录A点"
-    "必选参数", "无"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "記錄A點"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-记录参考点
+記錄參考點
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorRefPointRecord()``"
-    "描述", "记录参考点"
-    "必选参数", "无"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "記錄參考點"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ----------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接。 成功连接返回机器人对象
+    # 與機器人控制器建立連線。成功連結返回機器人對象
     robot = Robot.RPC('192.168.58.2')
     ret = robot. ConveyorRefPointRecord()
     print("Convey record reference point ",ret)
 
-记录B点
+記錄B點
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorPointBRecord()``"
-    "描述", "记录B点"
-    "必选参数", "无"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "記錄B點"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ----------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接。 成功连接返回机器人对象
+    # 與機器人控制器建立連線。成功連結返回機器人對象
     robot = Robot.RPC('192.168.58.2')
     ret = robot.ConveyorPointBRecord()
     print("Convey record B point ",ret)
 
-传动带参数配置
+傳動帶參數配置
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorSetParam(param)``"
-    "描述", "传动带参数配置"
-    "必选参数", "- `` param``： = [encChannel,resolution,lead,wpAxis,vision,speedRadio] 
-                                    - ``encChannel``: 编码器通道 1-2
-                                    - ``resolution``: 编码器分辨率 编码器旋转一圈脉冲个数
-                                    - ``lead``: 机械传动比 编码器旋转一圈传送带移动距离
-                                    - ``wpAxis``: 工件坐标系编号 针对跟踪运动功能选择工件坐标系编号，跟踪抓取、TPD跟踪设为0
+    "描述", "傳動帶參數配置"
+    "必選參數", "- `` param``： = [encChannel,resolution,lead,wpAxis,vision,speedRadio] 
+                                    - ``encChannel``: 編码器通道 1-2
+                                    - ``resolution``: 編碼器分辨率 編码器旋转一圈脉冲個数
+                                    - ``lead``: 機械傳動比 編码器旋转一圈传送带移動距离
+                                    - ``wpAxis``: 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
                                     - ``vision``: 是否配视觉  0-不配 1-配,
-                                    - ``speedRadio``: 速度比  针对传送带跟踪抓取速度范围为（1-100）  跟踪运动、TPD跟踪设置为1"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+                                    - ``speedRadio``: 速度比  针对傳送帶追蹤抓取速度範圍為（1-100）  跟踪運動、TPD跟踪設定為1"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ----------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
-    # 与机器人控制器建立连接。 成功连接返回机器人对象
+    # 與機器人控制器建立連線。成功連結返回機器人對象
     robot = Robot.RPC('192.168.58.2')
     param=[1,10000,200,0,0,20]
     ret = robot.ConveyorSetParam(param)
     print("Set Conveyor Param",ret)
 
-传动带抓取点补偿
+傳動帶抓取點補償
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorCatchPointComp(cmp)``"
-    "描述", "传动带抓取点补偿"
-    "必选参数", "- ``cmp``： 补偿位置 [x,y,z]"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "傳動帶抓取點補償"
+    "必選參數", "- ``cmp``： 補償位置 [x,y,z]"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-传送带工件IO检测
+傳送帶工件IO檢測
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorIODetect(max_t)``"
-    "描述", "传送带工件IO检测"
-    "必选参数", "- ``max_t``： 最大检测时间，单位ms"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "傳送帶工件IO檢測"
+    "必選參數", "- ``max_t``： 最大檢測時間，單位ms"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    #传送带跟踪抓取
+    #傳送帶追蹤抓取
     while(1):
         robot.MoveL([-333.597, 60.354, 404.341, -179.143, -0.778, 91.275],0,0)
         error =robot.ConveyorIODetect(1000)
-        print("传送带工件IO检测错误码",error)
+        print("傳送帶工件IO檢測錯誤碼",error)
         error =robot.ConveyorGetTrackData(1)
-        print("获取物体当前位置错误码",error)
+        print("取得物體目前位置錯誤碼",error)
         error =robot.ConveyorTrackStart(1)
-        print("传动带跟踪开始错误码",error)
+        print("傳動皮帶追蹤開始錯誤碼",error)
         error =robot.ConveyorTrackMoveL("cvrCatchPoint",0,0,vel = 60.0)
-        print("直线运动错误码",error)
+        print("直線運動錯誤碼",error)
         error =robot.MoveGripper(1,55,20,20,30000,0)
-        print("夹爪控制错误码",error)
+        print("夹爪控制錯誤碼",error)
         error =robot.ConveyorTrackMoveL("cvrRaisePoint",0,0,vel = 60.0)
-        print("直线运动错误码",error)
+        print("直線運動錯誤碼",error)
         error = robot.ConveyorTrackEnd()
-        print("传动带跟踪结束错误码错误码",error)
+        print("傳動帶跟踪结束錯誤碼錯誤碼",error)
         error = robot.MoveL([-333.625, -229.039, 404.340, -179.141, -0.778, 91.276], 0, 0,vel =30)
         error = robot.MoveL([-333.564, 332.204, 342.217, -179.145, -0.780, 91.268], 0, 0,vel =30)
         error = robot.MoveGripper(1,100,10,21,30000,0)
-        print("夹爪控制错误码",error)
+        print("夹爪控制錯誤碼",error)
 
-获取物体当前位置
+取得物體目前位置
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorGetTrackData(mode)``"
-    "描述", "获取物体当前位置"
-    "必选参数", "- ``mode``： 1-跟踪抓取 2-跟踪运动 3-TPD跟踪"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "取得物體目前位置"
+    "必選參數", "- ``mode``： 1-跟踪抓取 2-跟踪運動 3-TPD跟踪"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-传动带跟踪开始
+傳動皮帶追蹤開始
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorTrackStart(status)``"
-    "描述", "传动带跟踪开始"
-    "必选参数", "- ``status``： 状态，1-启动，0-停止"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "傳動皮帶追蹤開始"
+    "必選參數", "- ``status``： 狀態，1-啟動，0-停止"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-传动带跟踪停止
+傳動皮帶追蹤停止
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorTrackEnd()``"
-    "描述", "传动带跟踪停止"
-    "必选参数", "无"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "傳動皮帶追蹤停止"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-直线运动
+直線運動
 ++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``ConveyorTrackMoveL(name,tool,wobj,vel=20,acc=100,ovl=100,blendR=-1.0)``"
-    "描述", "直线运动"
-    "必选参数", "- ``name``：cvrCatchPoint 或cvrRaisePoint
-    - ``tool``: 工具号
-    - ``wobj``:  工件号"
-    "默认参数", "- ``vel``: 速度 默认20
-    - ``acc``: 加速度 默认100
-    - ``ovl``: 速度缩放因子 默认100
-    - ``blendR``: [-1.0]-运动到位 (阻塞)，[0~1000]-平滑半径 (非阻塞)，单位 [mm] 默认-1.0"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "直線運動"
+    "必選參數", "- ``name``：cvrCatchPoint 或cvrRaisePoint
+    - ``tool``: 工具號
+    - ``wobj``:  工件號"
+    "默認參數", "- ``vel``: 速度 默認20
+    - ``acc``: 加速度 默認100
+    - ``ovl``: 速度縮放因子 默認100
+    - ``blendR``: [-1.0]-運動到位 (阻塞)，[0~1000]-平滑半径 (非阻塞)，單位 [mm] 默認-1.0"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    #参数配置
+    #參數配置
     param=[1,10000,200,0,0,20]
     ret = robot.ConveyorSetParam(param)
-    print("传送带参数配置错误码",ret)
+    print("傳送帶參數配置錯誤碼",ret)
     time.sleep(1)
-    #抓取点补偿
+    #抓取點补偿
     comp = [0.00, 0.00, 0.00]
     ret1 = robot.ConveyorCatchPointComp(comp)
-    print("传动带抓取点补偿错误码",ret1)
+    print("傳動帶抓取點補償錯誤碼",ret1)

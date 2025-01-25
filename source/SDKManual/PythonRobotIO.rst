@@ -1,365 +1,364 @@
-机器人IO
+機器人IO
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-设置控制箱数字量输出
+設定控制箱數位量輸出
 ++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetDO(id, status, smooth=0, block=0)``"
-    "描述", "设置控制箱数字量输出"
-    "必选参数", "-  ``id``:io编号，范围[0~15]；
-    - ``status``:0-关，1-开；"
-    "默认参数", "- ``smooth``:0-不平滑，1-平滑 默认0;
-    - ``block``:0-阻塞，1-非阻塞 默认0"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定控制箱數位量輸出"
+    "必選參數", "-  ``id``:io編號，範圍[0~15]；
+    - ``status``:0-關，1-開；"
+    "默認參數", "- ``smooth``:0-不平滑，1-平滑 默認0;
+    - ``block``:0-阻塞，1-非阻塞 默認0"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    # 测试控制箱DO
+    # 測試控制箱DO
     for i in range(0,16):
-        error = robot.SetDO(i,1)      #打开控制箱DO
+        error = robot.SetDO(i,1)      #開啟控制箱DO
     time.sleep(1)
     for i in range(0,16):
-        robot.SetDO(i,0)      #关闭控制箱DO
+        robot.SetDO(i,0)      #關閉控制箱DO
 
-设置工具数字量输出
+設定工具數位量輸出
 ++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetToolDO (id, status, smooth=0, block=0)``"
-    "描述", "设置工具数字量输出"
-    "必选参数", "-  ``id``:io编号，范围[0~1]；
-    - ``status``:0-关，1-开；"
-    "默认参数", "- ``smooth``:0-不平滑，1-平滑；
+    "描述", "設定工具數位量輸出"
+    "必選參數", "-  ``id``:io編號，範圍[0~1]；
+    - ``status``:0-關，1-開；"
+    "默認參數", "- ``smooth``:0-不平滑，1-平滑；
     - ``block``:0-阻塞，1-非阻塞。"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    # 测试工具DO
+    # 測試工具DO
     error_tooldo = 0
     for i in range(0,2):
-        error = robot.SetToolDO(i,1)    #打开工具DO
+        error = robot.SetToolDO(i,1)    #打開工具DO
     robot.WaitMs(1000)
     for i in range(0,2):
-        error = robot.SetToolDO(i,0)    #关闭工具DO
+        error = robot.SetToolDO(i,0)    #關閉工具DO
 
-
-设置控制箱模拟量输出
+設定控制箱類比輸出
 ++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetAO(id,value,block=0)``"
-    "描述", "设置控制箱模拟量输出"
-    "必选参数", "- ``id``:io编号，范围[0~1]；
-    - ``value``:电流或电压值百分比，范围[0~100%]对应电流值[0~20mA]或电压[0~10V]；"
-    "默认参数", "- ``block``:[0]-阻塞，[1]-非阻塞 默认0"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定控制箱類比輸出"
+    "必選參數", "- ``id``:io編號，範圍[0~1]；
+    - ``value``:電流或電壓值百分比，範圍[0~100%]对应電流值[0~20mA]或電壓[0~10V]；"
+    "默認參數", "- ``block``:[0]-阻塞，[1]-非阻塞 默認0"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    # 测试控制箱AO
+    # 測試控制箱AO
     error = robot.SetAO(0,100.0)
-    print("设置AO0错误码:", error)
+    print("設定AO0錯誤碼:", error)
     error = robot.SetAO(1,100.0)
-    print("设置AO1错误码:", error)
+    print("設定AO1錯誤碼:", error)
 
-设置工具模拟量输出
+設定工具類比輸出
 ++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetToolAO(id,value,block=0)``"
-    "描述", "设置工具模拟量输出"
-    "必选参数", "- ``id``:io编号，范围[0]；
-    - ``value``:电流或电压值百分比，范围[0~100%]对应电流值[0~20mA]或电压[0~10V]；"
-    "默认参数", "- ``block``:[0]-阻塞，[1]-非阻塞 默认0"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定工具類比輸出"
+    "必選參數", "- ``id``:io編號，範圍[0]；
+    - ``value``:電流或電壓值百分比，範圍[0~100%]对应電流值[0~20mA]或電壓[0~10V]；"
+    "默認參數", "- ``block``:[0]-阻塞，[1]-非阻塞 默認0"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     # 测试末端AO
     error = robot.SetToolAO(0,100.0)
-    print("设置ToolAO0错误码:", error)
+    print("設定ToolAO0錯誤碼:", error)
     Robot.WaitMs(1000)
     error = robot.SetToolAO(0,0.0)
-    print("设置ToolAO0错误码:", error)
+    print("設定ToolAO0錯誤碼:", error)
 
-获取控制箱数字量输入
+取得控制箱數位量輸入
 +++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``GetDI(id, block=0)``"
-    "描述", "获取控制箱数字量输入"
-    "必选参数", "- ``id``:io编号，范围[0~15]；"
-    "默认参数", "- ``block``:0-阻塞，1-非阻塞 默认0"
-    "返回值", "- 错误码 成功-0  失败- errcode
-    - ``di``: 0-低电平，1-高电平"
+    "描述", "取得控制箱數位量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0~15]；"
+    "默認參數", "- ``block``:0-阻塞，1-非阻塞 默認0"
+    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    - ``di``: 0-低電平，1-高電平"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     error = robot.GetDI(0,0)
-    print("获取DI0",error)
+    print("獲取DI0",error)
 
-获取工具数字量输入
+取得工具數位量輸入
 ++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``GetToolDI(id, block=0)``"
-    "描述", "获取工具数字量输入"
-    "必选参数", "- ``id``:io编号，范围[0~1]；"
-    "默认参数", "- ``block``:0-阻塞，1-非阻塞 默认0"
-    "返回值", "错误码 成功-0  失败- errcode
-    - ``di``: 0-低电平，1-高电平"
+    "描述", "取得工具數位量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0~1]；"
+    "默認參數", "- ``block``:0-阻塞，1-非阻塞 默認0"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode
+    - ``di``: 0-低電平，1-高電平"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     tool_di = robot.GetToolDI(1,0)
-    print("获取ToolDI",tool_di)
+    print("獲取ToolDI",tool_di)
 
-等待控制箱数字量输入
+等待控制箱數位量輸入
 +++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``WaitDI(id,status,maxtime,opt)``"
-    "描述", "等待控制箱数字量输入"
-    "必选参数", "- ``id``:io编号，范围[0~15]；
-    - ``status``:0-关，1-开；
-    - ``maxtime``:最大等待时间，单位[ms]；
-    - ``opt``:超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "等待控制箱數位量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0~15]；
+    - ``status``:0-關，1-開；
+    - ``maxtime``:最大等待時間，單位[ms]；
+    - ``opt``:超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     max_waittime = 2000
     #等待控制箱DI
     error = robot.WaitDI(0,1,max_waittime,0)
-    print("WaitDI错误码",error)
+    print("WaitDI錯誤碼",error)
 
-等待控制箱多路数字量输入
+等待控制箱多路數字量輸入
 ++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``WaitMultiDI(mode,id,status,maxtime,opt)``"
-    "描述", "等待控制箱多路数字量输入"
-    "必选参数", "- ``mode``:[0]-多路与，[1]-多路或；
-    - ``id``:io编号，bit0~bit7对应DI0~DI7，bit8~bit15对应CI0~CI7；
-    - ``status``:bit0~bit7对应DI0~DI7状态，bit8~bit15对应CI0~CI7状态位的状态[0]-关，[1]-开；
-    - ``maxtime``:最大等待时间，单位[ms]；
-    - ``opt``:超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待。"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "等待控制箱多路數字量輸入"
+    "必選參數", "- ``mode``:[0]-多路与，[1]-多路或；
+    - ``id``:io編號，bit0~bit7對應DI0~DI7，bit8~bit15對應CI0~CI7；
+    - ``status``:bit0~bit7对应DI0~DI7狀態，bit8~bit15对应CI0~CI7狀態位的狀態[0]-關，[1]-開；
+    - ``maxtime``:最大等待時間，單位[ms]；
+    - ``opt``:超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待。"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     max_waittime = 2000
     #等待控制箱多路DI
     error = robot.WaitMultiDI(1,3,1,max_waittime,0)
-    print("WaitMultiDI错误码",error)
+    print("WaitMultiDI錯誤碼",error)
 
-等待工具数字量输入
+等待工具數位量輸入
 ++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``WaitToolDI(id,status,maxtime,opt)``"
-    "描述", "等待末端数字量输入"
-    "必选参数", "- ``id``:io编号，范围[0~1]；
-    - ``status``:0-关，1-开；
-    - ``maxtime``:最大等待时间，单位[ms]；
-    - ``opt``:超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "等待末端数字量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0~1]；
+    - ``status``:0-關，1-開；
+    - ``maxtime``:最大等待時間，單位[ms]；
+    - ``opt``:超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     max_waittime = 2000
     #等待工具DI
     error = robot.WaitToolDI(1,1,max_waittime,0)
-    print("WaitToolDI错误码",error)
+    print("WaitToolDI錯誤碼",error)
 
-获取控制箱模拟量输入
+取得控制箱模擬量輸入
 ++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``GetAI(id, block = 0)``"
-    "描述", "获取控制箱模拟量输入"
-    "必选参数", "- ``id``:io编号，范围[0~1]；"
-    "默认参数", "- ``block``:0-阻塞，1-非阻塞 默认0 "
-    "返回值", "- 错误码 成功-0  失败- errcode
-    - ``value``: 输入电流或电压值百分比，范围 [0~100] 对应电流值 [0~20mA] 或电压 [0~10V]"
+    "描述", "取得控制箱模擬量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0~1]；"
+    "默認參數", "- ``block``:0-阻塞，1-非阻塞 默認0 "
+    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    - ``value``: 輸入電流或電壓值百分比，範圍 [0~100] 对应電流值 [0~20mA] 或電壓 [0~10V]"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     error = robot.GetAI(0)
-    print("获取AI0",error)
+    print("獲取AI0",error)
 
-获取工具模拟量输入
+取得工具類比輸入
 +++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``GetToolAI (id, block = 0)``"
-    "描述", "获取末端模拟量输入"
-    "必选参数", "- ``id``:io编号，范围[0]；"
-    "默认参数", "- ``block``:0-阻塞，1-非阻塞 默认0"
-    "返回值", "- 错误码 成功-0  失败- errcode
-    - ``value``: 输入电流或电压值百分比，范围 [0~100] 对应电流值 [0~20mA] 或电压 [0~10V]"
+    "描述", "獲取末端類比量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0]；"
+    "默認參數", "- ``block``:0-阻塞，1-非阻塞 默認0"
+    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    - ``value``: 輸入電流或電壓值百分比，範圍 [0~100] 对应電流值 [0~20mA] 或電壓 [0~10V]"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     error = robot.GetToolAI(0)
-    print("获取ToolAI0",error)
+    print("獲取ToolAI0",error)
 
-等待控制箱模拟量输入
+等待控制箱模擬量輸入
 ++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``WaitAI(id,sign,value,maxtime,opt)``"
-    "描述", "等待控制箱模拟量输入"
-    "必选参数", "- ``id``:io编号，范围[0~1]；
-    - ``sign``:0-大于，1-小于
-    - ``value``:输入电流或电压值百分比，范围[0~100]对应电流值[0~20mA]或电压[0~10V]；
-    - ``maxtime``:最大等待时间，单位[ms]；
-    - ``opt``:超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "等待控制箱模擬量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0~1]；
+    - ``sign``:0-大於，1-小於
+    - ``value``:輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mA]或電壓[0~10V]；
+    - ``maxtime``:最大等待時間，單位[ms]；
+    - ``opt``:超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     max_waittime = 2000
     #等待控制箱AI
-    error = robot.WaitAI(0,0,50,max_waittime,1)         #忽略超时提示程序继续执行
-    print("WaitAI错误码",error)
+    error = robot.WaitAI(0,0,50,max_waittime,1)         #忽略超时提示程序继续執行
+    print("WaitAI錯誤碼",error)
 
-等待工具模拟量输入
+等待工具類比輸入
 ++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``WaitToolAI(id,sign,value,maxtime,opt)``"
-    "描述", "等待末端模拟量输入"
-    "必选参数", "- ``id``:io编号，范围[0]；
-    - ``sign``:0-大于，1-小于
-    - ``value``:输入电流或电压值百分比，范围[0~100]对应电流值[0~20mA]或电压[0~10V]；
-    - ``maxtime``:最大等待时间，单位[ms]；
-    - ``opt``:超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "等待末端類比量輸入"
+    "必選參數", "- ``id``:io編號，範圍[0]；
+    - ``sign``:0-大於，1-小於
+    - ``value``:輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mA]或電壓[0~10V]；
+    - ``maxtime``:最大等待時間，單位[ms]；
+    - ``opt``:超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     max_waittime = 2000
     #等待工具AI
     error = robot.WaitToolAI(0,0,50,max_waittime,0)
-    print("WaitToolAI错误码",error)
+    print("WaitToolAI錯誤碼",error)
 
-设置控制箱DO停止/暂停后输出是否复位
+設定控制箱DO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -368,19 +367,19 @@
     :widths: 10 30
 
     "原型", "``SetOutputResetCtlBoxDO(resetFlag)``"
-    "描述", "设置控制箱DO停止/暂停后输出是否复位"
-    "必选参数", "- ``resetFlag``：0-不复位；1-复位"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定控制箱DO停止/暫停後輸出是否重設"
+    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
 
     robot = Robot.RPC('192.168.58.2')
     time.sleep(5)
@@ -457,7 +456,7 @@
     error = robot.ProgramStop()
     print("ProgramPause return:",error)
 
-设置控制箱AO停止/暂停后输出是否复位
+設定控制箱AO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -466,12 +465,12 @@
     :widths: 10 30
 
     "原型", "``SetOutputResetCtlBoxDO(resetFlag)``"
-    "描述", "设置控制箱AO停止/暂停后输出是否复位"
-    "必选参数", "- ``resetFlag``：0-不复位；1-复位"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定控制箱AO停止/暫停後輸出是否重設"
+    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-设置末端工具DO停止/暂停后输出是否复位
+設定末端工具DO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -480,12 +479,12 @@
     :widths: 10 30
 
     "原型", "``SetOutputResetAxleDO(resetFlag)``"
-    "描述", "设置末端工具DO停止/暂停后输出是否复位"
-    "必选参数", "- ``resetFlag``：0-不复位；1-复位"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定末端工具DO停止/暫停後輸出是否重設"
+    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-设置末端工具AO停止/暂停后输出是否复位
+設定末端工具AO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -494,12 +493,12 @@
     :widths: 10 30
 
     "原型", "``SetOutputResetAxleAO(resetFlag)``"
-    "描述", "设置末端工具AO停止/暂停后输出是否复位"
-    "必选参数", "- ``resetFlag``：0-不复位；1-复位"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定末端工具AO停止/暫停後輸出是否重設"
+    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-设置扩展DO停止/暂停后输出是否复位
+設定擴充DO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -508,19 +507,19 @@
     :widths: 10 30
 
     "原型", "``SetOutputResetExtDO (resetFlag)``"
-    "描述", "设置扩展DO停止/暂停后输出是否复位"
-    "必选参数", "- ``resetFlag``：0-不复位；1-复位"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定擴充DO停止/暫停後輸出是否重設"
+    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
-代码示例
+代碼範例
 ------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
-    # 与机器人控制器建立连接，连接成功返回一个机器人对象
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
 
     robot = Robot.RPC('192.168.58.2')
 
@@ -573,7 +572,7 @@
     error = robot.ProgramStop()
     print("ProgramPause return:",error)
 
-设置扩展AO停止/暂停后输出是否复位
+設定擴充AO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -582,7 +581,7 @@
     :widths: 10 30
 
     "原型", "``SetOutputResetExtAO (resetFlag)``"
-    "描述", "设置扩展AO停止/暂停后输出是否复位"
-    "必选参数", "- ``resetFlag``：0-不复位；1-复位"
-    "默认参数", "无"
-    "返回值", "错误码 成功-0  失败- errcode"
+    "描述", "設定擴充AO停止/暫停後輸出是否重設"
+    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"

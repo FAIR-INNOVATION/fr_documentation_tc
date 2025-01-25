@@ -1,107 +1,107 @@
-扩展轴
+擴展軸
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置485扩展轴参数
+設定485擴展軸參數
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴参数
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [in] param 485扩展轴参数
-    * @return 错误码 
+    * @brief 設定485擴展軸參數
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [in] param 485擴展軸參數
+    * @return 錯誤碼 
     */
     int AuxServoSetParam(int servoId, Axis485Param param)
     
-获取485扩展轴参数
+取得485擴展軸參數
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 获取485扩展轴配置参数
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [out] param 485扩展轴参数
-    * @return 错误码 
+    * @brief 取得485擴展軸配置參數
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [out] param 485擴展軸參數
+    * @return 錯誤碼 
     */
     int AuxServoGetParam(int servoId, Axis485Param param);
 
-设置485扩展轴使能/去使能
+設定485擴展軸使能/去使能
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴使能/去使能
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [in] status 使能状态，0-去使能， 1-使能
-    * @return 错误码 
+    * @brief 設定485擴展軸使能/去使能
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [in] status 使能狀態，0-去使能， 1-使能
+    * @return 錯誤碼 
     */
     int AuxServoEnable(int servoId, int status);
         
-设置485扩展轴控制模式
+設定485擴展軸控制模式
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴控制模式
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
+    * @brief 設定485擴展軸控制模式
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
     * @param [in] mode 控制模式，0-位置模式，1-速度模式
-    * @return 错误码 
+    * @return 錯誤碼 
     */
     int AuxServoSetControlMode(int servoId, int mode);
 
-设置485扩展轴回零
+設定485擴展軸回零
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴回零
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [in] mode 回零模式，1-当前位置回零；2-负限位回零；3-正限位回零
+    * @brief 設定485擴展軸回零
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [in] mode 回零模式，1-目前位置回零；2-負限位回零；3-正限位回零
     * @param [in] searchVel 回零速度，mm/s或°/s
     * @param [in] latchVel 箍位速度，mm/s或°/s
     * @param [in] acc 加速度百分比[0-100]
-    * @return 错误码 
+    * @return 錯誤碼 
     */
     int AuxServoHoming(int servoId, int mode, double searchVel, double latchVel);
 
-设置485扩展轴目标位置(位置模式)
+設定485擴展軸目標位置(位置模式)
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴目标位置(位置模式)
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [in] pos 目标位置，mm或°
-    * @param [in] speed 目标速度，mm/s或°/s
+    * @brief 設定485擴展軸目標位置(位置模式)
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [in] pos 目標位置，mm或°
+    * @param [in] speed 目標速度，mm/s或°/s
     * @param [in] acc 加速度百分比[0-100]
-    * @return 错误码 
+    * @return 錯誤碼 
     */
     int AuxServoSetTargetPos(int servoId, double pos, double speed, double acc);
 
-设置485扩展轴目标速度(速度模式)
+設定485擴展軸目標速度（速度模式）
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴目标速度(速度模式)
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [in] speed 目标速度，mm/s或°/s
+    * @brief 設定485擴展軸目標速度（速度模式）
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [in] speed 目標速度，mm/s或°/s
     * @param [in] acc 加速度百分比[0-100]
-    * @return 错误码 
+    * @return 錯誤碼 
     */
     int AuxServoSetTargetSpeed(int servoId, double speed, double acc);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -109,25 +109,25 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         Axis485Param param = new Axis485Param();
-        param.servoCompany = 1;           // 伺服驱动器厂商，1-戴纳泰克
-        param.servoModel = 1;             // 伺服驱动器型号，1-FD100-750C
-        param.servoSoftVersion = 1;       // 伺服驱动器软件版本，1-V1.0
-        param.servoResolution = 131072;        // 编码器分辨率
-        param.axisMechTransRatio = 13.45;  // 机械传动比
-        robot.AuxServoSetParam(1, param);//设置485扩展轴参数
+        param.servoCompany = 1;           // 伺服驅動器廠商，1-戴納泰克
+        param.servoModel = 1;             // 伺服驅動器型號，1-FD100-750C
+        param.servoSoftVersion = 1;       // 伺服驅動器軟體版本，1-V1.0
+        param.servoResolution = 131072;        // 編碼器分辨率
+        param.axisMechTransRatio = 13.45;  // 機械傳動比
+        robot.AuxServoSetParam(1, param);//設定485擴展軸參數
 
         robot.AuxServoGetParam(1, param);
         System.out.println("auxservo param servoCompany: " + param.servoCompany + "  servoModel:  " + param.servoModel +"  param.servoSoftVersion:  " + param.servoSoftVersion + "  servoResolution:  " + param.servoResolution + "  axisMechTransRatio:  " + param.axisMechTransRatio);
@@ -148,44 +148,44 @@
         robot.AuxServoSetTargetSpeed(1, 0,100);
     }
     
-设置485扩展轴目标转矩(力矩模式)
+設定485擴展軸目標轉矩(力矩模式)
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置485扩展轴目标转矩(力矩模式)-暂未开放
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @param [in] torque 目标力矩，Nm
-    * @return 错误码 
+    * @brief 設定485擴展軸目標轉矩(力矩模式)-暫未開放
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @param [in] torque 目標力矩，Nm
+    * @return 錯誤碼 
     */
     int AuxServoSetTargetTorque(int servoId, double torque);
         
-清除485扩展轴错误信息
+清除485擴展軸錯誤訊息
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 清除485扩展轴错误信息
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @return 错误码 
+    * @brief 清除485擴展軸錯誤訊息
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @return 錯誤碼 
     */
     int AuxServoClearError(int servoId);
 
-设置状态反馈中485扩展轴数据轴号
+設定狀態回饋中485擴展軸資料軸號
 +++++++++++++++++++++++++++++++++++++++++ 
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置状态反馈中485扩展轴数据轴号
-    * @param [in] servoId 伺服驱动器ID，范围[1-16],对应从站ID
-    * @return 错误码 
+    * @brief 設定狀態回饋中485擴展軸資料軸號
+    * @param [in] servoId 伺服驅動器ID，範圍[1-16],對應從站ID
+    * @return 錯誤碼 
     */
     int AuxServosetStatusID(int servoId);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -193,16 +193,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.AuxServoSetControlMode(1, 1);
@@ -228,53 +228,53 @@
         }
     }
 
-UDP扩展轴通讯参数配置
+UDP擴展軸通訊參數配置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴通讯参数配置
-    * @param [in] param 通讯参数
-    * @return 错误码
+    * @brief UDP擴展軸通訊參數配置
+    * @param [in] param 通訊參數
+    * @return 錯誤碼
     */
     int ExtDevSetUDPComParam(UDPComParam param);     
 
-获取UDP扩展轴通讯参数配置
+取得UDP擴充軸通訊參數配置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取UDP扩展轴通讯参数
-    * @param [out] param 通讯参数
-    * @return 错误码
+    * @brief 取得UDP擴充軸通訊參數
+    * @param [out] param 通訊參數
+    * @return 錯誤碼
     */
     int ExtDevGetUDPComParam(UDPComParam param);       
 
-加载UDP通信
+加載UDP通信
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 加载UDP通信
-    * @return 错误码
+    * @brief 加載UDP通信
+    * @return 錯誤碼
     */
     int ExtDevLoadUDPDriver();
 
-卸载UDP通信
+卸載UDP通信
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 卸载UDP通信
-    * @return 错误码
+    * @brief 卸載UDP通信
+    * @return 錯誤碼
     */
     int ExtDevUnloadUDPDriver();
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: Java
@@ -283,123 +283,123 @@ UDP扩展轴通讯参数配置
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         UDPComParam param = new UDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10);
-        robot.ExtDevSetUDPComParam(param);//udp扩展轴通讯
+        robot.ExtDevSetUDPComParam(param);//udp擴展軸通訊
 
         UDPComParam getParam = new UDPComParam();
         robot.ExtDevGetUDPComParam(getParam);
         System.out.println(" " + getParam.ip + " ,   " + getParam.port + " ,   " + getParam.period + " ,  " + getParam.lossPkgTime + " ,   " + getParam.lossPkgNum + " ,   " + getParam.disconnectTime + " ,   " + getParam.reconnectEnable + " ,   " + getParam.reconnectPeriod + " ,   " + getParam.reconnectNum);
-        robot.ExtDevUnloadUDPDriver();//卸载UDP通信
+        robot.ExtDevUnloadUDPDriver();//卸載UDP通信
         robot.Sleep(1000);
-        robot.ExtDevLoadUDPDriver();//加载UDP通信
+        robot.ExtDevLoadUDPDriver();//加載UDP通信
         robot.Sleep(1000);
     }
 
-UDP扩展轴通信异常断开后恢复连接
+UDP擴充軸通訊異常斷開後恢復連接
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴通信异常断开后恢复连接
-    * @return 错误码
+    * @brief UDP擴充軸通訊異常斷開後恢復連接
+    * @return 錯誤碼
     */
     int ExtDevUDPClientComReset();
 
-UDP扩展轴通信异常断开后关闭通讯
+UDP擴充軸通訊異常斷開後關閉通訊
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴通信异常断开后关闭通讯
-    * @return 错误码
+    * @brief UDP擴充軸通訊異常斷開後關閉通訊
+    * @return 錯誤碼
     */
     int ExtDevUDPClientComClose();
 
-UDP扩展轴参数配置
+UDP擴充軸參數配置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴参数配置
-    * @param [in] axisID 轴号
-    * @param [in] axisType 扩展轴类型 0-平移；1-旋转
-    * @param [in] axisDirection 扩展轴方向 0-正向；1-方向
-    * @param [in] axisMax 扩展轴最大位置 mm
-    * @param [in] axisMin 扩展轴最小位置 mm
+    * @brief UDP擴充軸參數配置
+    * @param [in] axisID 軸號
+    * @param [in] axisType 擴展軸類型 0-平移；1-旋轉
+    * @param [in] axisDirection 擴展軸方向 0-正向；1-方向
+    * @param [in] axisMax 擴展軸最大位置 mm
+    * @param [in] axisMin 擴展軸最小位置 mm
     * @param [in] axisVel 速度mm/s
     * @param [in] axisAcc 加速度mm/s2
-    * @param [in] axisLead 导程mm
-    * @param [in] encResolution 编码器分辨率
-    * @param [in] axisOffect 焊缝起始点扩展轴偏移量
-    * @param [in] axisCompany 驱动器厂家 1-禾川；2-汇川；3-松下
-    * @param [in] axisModel 驱动器型号 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-汇川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
-    * @param [in] axisEncType 编码器类型  0-增量；1-绝对值
-    * @return 错误码
+    * @param [in] axisLead 導程mm
+    * @param [in] encResolution 編碼器分辨率
+    * @param [in] axisOffect 焊缝起始點擴展軸偏移量
+    * @param [in] axisCompany 驅動器廠商 1-禾川；2-匯川；3-松下
+    * @param [in] axisModel 驅動器型號 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-匯川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
+    * @param [in] axisEncType 編碼器類型 0-增量；1-絕對值
+    * @return 錯誤碼
     */
     int ExtAxisParamConfig(int axisID, int axisType, int axisDirection, double axisMax, double axisMin, double axisVel, double axisAcc, double axisLead, int encResolution, double axisOffect, int axisCompany, int axisModel, int axisEncType);
 
-获取扩展轴驱动器配置信息
+獲取擴展軸驅動器配置信息
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取扩展轴驱动器配置信息
-    * @param [in] axisId 轴号[1-4]
-    * @return List[0]: 错误码 List[1]: axisCompany 驱动器厂家 1-禾川；2-汇川；3-松下;
-    * List[2]: axisModel 驱动器型号 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-汇川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
-    * List[3]: axisEncType 编码器类型  0-增量；1-绝对值
+    * @brief 獲取擴展軸驅動器配置信息
+    * @param [in] axisId 軸號[1-4]
+    * @return List[0]: 錯誤碼 List[1]: axisCompany 驅動器廠商 1-禾川；2-匯川；3-松下;
+    * List[2]: axisModel 驅動器型號 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-匯川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
+    * List[3]: axisEncType 編碼器類型 0-增量；1-絕對值
     */
     List<Integer> GetExAxisDriverConfig(int axisId);
 
-设置扩展轴安装位置
+設定擴展軸安裝位置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展轴安装位置
-    * @param [in] installType 0-机器人安装在外部轴上，1-机器人安装在外部轴外
-    * @return 错误码
+    * @brief 設定擴展軸安裝位置
+    * @param [in] installType 0-機器人安裝在外部軸上，1-機器人安裝在外部軸外
+    * @return 錯誤碼
     */
     int SetRobotPosToAxis(int installType);
 
-设置扩展轴系统DH参数配置
+設定擴展軸系統DH參數配置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展轴系统DH参数配置
-    * @param [in]  axisConfig 外部轴构型，0-单自由度直线滑轨，1-两自由度L型变位机，2-三自由度，3-四自由度，4-单自由度变位机
-    * @param [in]  axisDHd1 外部轴DH参数d1 mm
-    * @param [in]  axisDHd2 外部轴DH参数d2 mm
-    * @param [in]  axisDHd3 外部轴DH参数d3 mm
-    * @param [in]  axisDHd4 外部轴DH参数d4 mm
-    * @param [in]  axisDHa1 外部轴DH参数11 mm
-    * @param [in]  axisDHa2 外部轴DH参数a2 mm
-    * @param [in]  axisDHa3 外部轴DH参数a3 mm
-    * @param [in]  axisDHa4 外部轴DH参数a4 mm
-    * @return 错误码
+    * @brief 設定擴展軸系統DH參數配置
+    * @param [in]  axisConfig 外部軸構型，0-單自由度直線滑軌，1-兩自由度L型變位機，2-三自由度，3-四自由度，4-單自由度變位機
+    * @param [in]  axisDHd1 外部軸DH參數d1 mm
+    * @param [in]  axisDHd2 外部軸DH參數d2 mm
+    * @param [in]  axisDHd3 外部軸DH參數d3 mm
+    * @param [in]  axisDHd4 外部軸DH參數d4 mm
+    * @param [in]  axisDHa1 外部軸DH參數11 mm
+    * @param [in]  axisDHa2 外部軸DH參數a2 mm
+    * @param [in]  axisDHa3 外部軸DH參數a3 mm
+    * @param [in]  axisDHa4 外部軸DH參數a4 mm
+    * @return 錯誤碼
     */
     int SetAxisDHParaConfig(int axisConfig, double axisDHd1, double axisDHd2, double axisDHd3, double axisDHd4, double axisDHa1, double axisDHa2, double axisDHa3, double axisDHa4);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: Java
@@ -408,22 +408,22 @@ UDP扩展轴参数配置
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
-        robot.ExtAxisServoOn(1, 1);//扩展轴1使能
-        robot.ExtAxisServoOn(2, 1);//扩展轴2使能
+        robot.ExtAxisServoOn(1, 1);//擴展軸1使能
+        robot.ExtAxisServoOn(2, 1);//擴展軸2使能
         robot.Sleep(1000);
-        robot.ExtAxisSetHoming(1, 0, 10, 3);//1,2扩展轴都回零
+        robot.ExtAxisSetHoming(1, 0, 10, 3);//1,2擴展軸都回零
         robot.ExtAxisSetHoming(2, 0, 10, 3);
         robot.Sleep(1000);
 
@@ -438,156 +438,156 @@ UDP扩展轴参数配置
         System.out.println("ExtAxisParamConfig rtn is " + rtn);
     }
 
-设置扩展轴坐标系参考点-四点法
+設定擴展軸座標系參考點-四點法
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展轴坐标系参考点-四点法
-    * @param [in]  pointNum 点编号[1-4]
-    * @return 错误码
+    * @brief 設定擴展軸座標系參考點-四點法
+    * @param [in]  pointNum 點編號[1-4]
+    * @return 錯誤碼
     */
     int ExtAxisSetRefPoint(int pointNum);
 
-计算扩展轴坐标系-四点法
+計算擴展軸座標系-四點法
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 计算扩展轴坐标系-四点法
-    * @param [out]  coord 坐标系值
-    * @return 错误码
+    * @brief 計算擴展軸座標系-四點法
+    * @param [out]  coord 座標系值
+    * @return 錯誤碼
     */
     int ExtAxisComputeECoordSys(DescPose coord);
 
-应用扩展轴坐标系
+應用擴展軸座標系
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 应用扩展轴坐标系
-    * @param [in]  applyAxisId 扩展轴编号 bit0-bit3对应扩展轴编号1-4，如应用扩展轴1和3，则是 0b 0000 0101；也就是5
-    * @param [in]  axisCoordNum 扩展轴坐标系编号
-    * @param [in]  coord 坐标系值
-    * @param [in]  calibFlag 标定标志 0-否，1-是
-    * @return 错误码
+    * @brief 應用擴展軸座標系
+    * @param [in]  applyAxisId 擴展軸編號 bit0-bit3對應擴展軸編號1-4，如應用擴展軸1和3，則是 0b 0000 0101；也就是5
+    * @param [in]  axisCoordNum 擴展軸座標系編號
+    * @param [in]  coord 座標系值
+    * @param [in]  calibFlag 標定標誌 0-否，1-是
+    * @return 錯誤碼
     */
     int ExtAxisActiveECoordSys(int applyAxisId, int axisCoordNum, DescPose coord, int calibFlag);
 
-设置标定参考点在变位机末端坐标系下位姿
+設定標定參考點在變位機末端座標系下位姿
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置标定参考点在变位机末端坐标系下位姿
-    * @param [in] pos 位姿值
-    * @return 错误码
+    * @brief 設定標定參考點在變位機末端座標系下位姿
+    * @param [in] pos 位元姿值
+    * @return 錯誤碼
     */
     int SetRefPointInExAxisEnd(DescPose pos);
 
-变位机坐标系参考点设置
+變位機座標系參考點設置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 变位机坐标系参考点设置
-    * @param [in]  pointNum 点编号[1-4]
-    * @return 错误码
+    * @brief 變位機座標系參考點設置
+    * @param [in]  pointNum 點編號[1-4]
+    * @return 錯誤碼
     */
     int PositionorSetRefPoint(int pointNum);
 
-变位机坐标系计算-四点法
+變位機座標系計算-四點法
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 变位机坐标系计算-四点法
-    * @param [out] coord 坐标系值
-    * @return 错误码
+    * @brief 變位機座標系計算-四點法
+    * @param [out] coord 座標系值
+    * @return 錯誤碼
     */
     int PositionorComputeECoordSys(DescPose coord);
 
-末端传感器寄存器写入
+末端感測器暫存器寫入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 末端传感器寄存器写入
-    * @param [in] devAddr  设备地址编号 0-255
-    * @param [in] regHAddr 寄存器地址高8位
-    * @param [in] regLAddr 寄存器地址低8位
-    * @param [in] regNum  寄存器个数 0-255
-    * @param [in] data1 写入寄存器数值1
-    * @param [in] data2 写入寄存器数值2
+    * @brief 末端感測器暫存器寫入
+    * @param [in] devAddr  設備地址編號 0-255
+    * @param [in] regHAddr 暫存器位址高8位
+    * @param [in] regLAddr 暫存器位址低8位
+    * @param [in] regNum  暫存器個數 0-255
+    * @param [in] data1 寫入暫存器數值1
+    * @param [in] data2 寫入暫存器數值2
     * @param [in] isNoBlock 0-阻塞；1-非阻塞
-    * @return 错误码
+    * @return 錯誤碼
     */
     int AxleSensorRegWrite(int devAddr, int regHAddr, int regLAddr, int regNum, int data1, int data2, int isNoBlock);
 
-UDP扩展轴使能
+UDP擴展軸使能
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴使能
-    * @param [in] axisID 轴号[1-4]
+    * @brief UDP擴展軸使能
+    * @param [in] axisID 軸號[1-4]
     * @param [in] status 0-去使能；1-使能
-    * @return 错误码
+    * @return 錯誤碼
     */
     int ExtAxisServoOn(int axisID, int status);
 
-UDP扩展轴回零
+UDP擴展軸回零
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴回零
-    * @param [in] axisID 轴号[1-4]
-    * @param [in] mode 回零方式 0-当前位置回零，1-负限位回零，2-正限位回零
-    * @param [in] searchVel 寻零速度(mm/s)
-    * @param [in] latchVel 寻零箍位速度(mm/s)
-    * @return 错误码
+    * @brief UDP擴展軸回零
+    * @param [in] axisID 軸號[1-4]
+    * @param [in] mode 回零方式 0-目前位置回零，1-負限位回零，2-正限位回零
+    * @param [in] searchVel 尋零速度(mm/s)
+    * @param [in] latchVel 尋零箍位速度(mm/s)
+    * @return 錯誤碼
     */
     int ExtAxisSetHoming(int axisID, int mode, double searchVel, double latchVel);
 
-UDP扩展轴点动开始
+UDP擴展軸點動開始
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴点动开始
-    * @param [in] axisID 轴号[1-4]
-    * @param [in] direction 转动方向 0-反向；1-正向
+    * @brief UDP擴展軸點動開始
+    * @param [in] axisID 軸號[1-4]
+    * @param [in] direction 轉動方向 0-反向；1-正向
     * @param [in] vel 速度(mm/s)
     * @param [in] acc (加速度 mm/s2)
-    * @param [in] maxDistance 最大点动距离
-    * @return 错误码
+    * @param [in] maxDistance 最大點動距離
+    * @return 錯誤碼
     */
     int ExtAxisStartJog(int axisID, int direction, double vel, double acc, double maxDistance);
     
-UDP扩展轴点动停止
+UDP擴展軸點動停止
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴点动停止
-    * @param [in] axisID 轴号[1-4]
-    * @return 错误码
+    * @brief UDP擴展軸點動停止
+    * @param [in] axisID 軸號[1-4]
+    * @return 錯誤碼
     */
     int ExtAxisStopJog(int axisID);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: Java
@@ -596,16 +596,16 @@ UDP扩展轴点动停止
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
 
@@ -617,193 +617,193 @@ UDP扩展轴点动停止
         robot.ExtAxisServoOn(1, 0);
     }
 
-设置扩展DO
+設定擴充DO
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展DO
-    * @param [in] DONum DO编号
-    * @param [in] bOpen 开关 true-开；false-关
+    * @brief 設定擴充DO
+    * @param [in] DONum DO編號
+    * @param [in] bOpen 開關 true-開；false-關
     * @param [in] smooth 是否平滑
     * @param [in] block 是否阻塞
-    * @return 错误码
+    * @return 錯誤碼
     */
     int SetAuxDO(int DONum, boolean bOpen, boolean smooth, boolean block);
 
-设置扩展AO
+設定擴充AO
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展AO
-    * @param [in] AONum AO编号
-    * @param [in] value 模拟量值[0-4095]
+    * @brief 設定擴充AO
+    * @param [in] AONum AO編號
+    * @param [in] value 類比量值[0-4095]
     * @param [in] block 是否阻塞
-    * @return 错误码
+    * @return 錯誤碼
     */
     int SetAuxAO(int AONum, double value, boolean block);
 
-设置扩展DI输入滤波时间
+設定擴充DI輸入濾波時間
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展DI输入滤波时间
-    * @param [in] filterTime 滤波时间(ms)
-    * @return  错误码
+    * @brief 設定擴充DI輸入濾波時間
+    * @param [in] filterTime 濾波時間(ms)
+    * @return  錯誤碼
     */
     int SetAuxDIFilterTime(int filterTime);
 
-设置扩展AI输入滤波时间
+設定擴展AI輸入濾波時間
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置扩展AI输入滤波时间
-    * @param [in] AONum AO编号
-    * @param [in] filterTime 滤波时间(ms)
-    * @return 错误码
+    * @brief 設定擴展AI輸入濾波時間
+    * @param [in] AONum AO編號
+    * @param [in] filterTime 濾波時間(ms)
+    * @return 錯誤碼
     */
     int SetAuxAIFilterTime(int AONum, int filterTime);
 
-等待扩展DI输入
+等待擴充DI輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待扩展DI输入
-    * @param [in] DINum DI编号
-    * @param [in] bOpen 开关 0-关；1-开
-    * @param [in] time 最大等待时间(ms)
-    * @param [in] errorAlarm 是否继续运动
-    * @return 错误码
+    * @brief 等待擴充DI輸入
+    * @param [in] DINum DI編號
+    * @param [in] bOpen 開關 0-關；1-開
+    * @param [in] time 最大等待時間(ms)
+    * @param [in] errorAlarm 是否繼續運動
+    * @return 錯誤碼
     */
     int WaitAuxDI(int DINum, boolean bOpen, int time, boolean errorAlarm);
 
-等待扩展AI输入
+等待擴展AI輸入
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 等待扩展AI输入
-    * @param [in] AINum AI编号
-    * @param [in] sign 0-大于；1-小于
+    * @brief 等待擴展AI輸入
+    * @param [in] AINum AI編號
+    * @param [in] sign 0-大於；1-小於
     * @param [in] value AI值
-    * @param [in] time 最大等待时间(ms)
-    * @param [in] errorAlarm 是否继续运动
-    * @return 错误码
+    * @param [in] time 最大等待時間(ms)
+    * @param [in] errorAlarm 是否繼續運動
+    * @return 錯誤碼
     */
     int WaitAuxAI(int AINum, int sign, int value, int time, boolean errorAlarm);
     
-获取扩展AI值
+取得擴展AI值
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取扩展AI值
-    * @param [in] AINum AI编号
+    * @brief 取得擴展AI值
+    * @param [in] AINum AI編號
     * @param [in] isNoBlock 是否阻塞
-    * @return List[0]:错误码; List[1] : value 输入值
+    * @return List[0]:錯誤碼; List[1] : value 輸入值
     */
     List<Integer> GetAuxAI(int AINum, boolean isNoBlock);
 
-UDP扩展轴运动
+UDP擴展軸運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴运动
-    * @param [in] pos 目标位置
+    * @brief UDP擴展軸運動
+    * @param [in] pos 目標位置
     * @param [in] ovl 速度百分比
-    * @return 错误码
+    * @return 錯誤碼
     */
     int ExtAxisMove(ExaxisPos pos, double ovl);
 
-UDP扩展轴与机器人关节运动同步运动
+UDP擴展軸與機器人關節運動同步運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴与机器人关节运动同步运动
-    * @param [in] joint_pos  目标关节位置,单位deg
-    * @param [in] desc_pos   目标笛卡尔位姿
-    * @param [in] tool  工具坐标号，范围[0~14]
-    * @param [in] user  工件坐标号，范围[0~14]
-    * @param [in] vel  速度百分比，范围[0~100]
-    * @param [in] acc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] ovl  速度缩放因子，范围[0~100]
-    * @param [in] epos  扩展轴位置，单位mm
-    * @param [in] blendT [-1.0]-运动到位(阻塞)，[0~500.0]-平滑时间(非阻塞)，单位ms
-    * @param [in] offset_flag  0-不偏移，1-基坐标系/工件坐标系下偏移，2-工具坐标系下偏移
-    * @param [in] ffset_pos  位姿偏移量
-    * @return 错误码
+    * @brief UDP擴展軸與機器人關節運動同步運動
+    * @param [in] joint_pos  目標關節位置,單位deg
+    * @param [in] desc_pos   目標笛卡兒位姿
+    * @param [in] tool  工具座標號，範圍[0~14]
+    * @param [in] user  工件座標號，範圍[0~14]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] blendT [-1.0]-運動到位(阻塞)，[0~500.0]-平滑時間(非阻塞)，單位ms
+    * @param [in] offset_flag  0-不偏移，1-基座標系/工件坐標系下偏移，2-工具坐標系下偏移
+    * @param [in] ffset_pos  位元位偏移量
+    * @return 錯誤碼
     */
     int ExtAxisSyncMoveJ(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, ExaxisPos epos, double blendT, int offset_flag, DescPose offset_pos);
     
-UDP扩展轴与机器人直线运动同步运动
+UDP擴展軸與機器人直線運動同步運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴与机器人直线运动同步运动
-    * @param [in] joint_pos  目标关节位置,单位deg
-    * @param [in] desc_pos   目标笛卡尔位姿
-    * @param [in] tool  工具坐标号，范围[0~14]
-    * @param [in] user  工件坐标号，范围[0~14]
-    * @param [in] vel  速度百分比，范围[0~100]
-    * @param [in] acc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] ovl  速度缩放因子，范围[0~100]
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm
-    * @param [in] epos  扩展轴位置，单位mm
-    * @param [in] offset_flag  0-不偏移，1-基坐标系/工件坐标系下偏移，2-工具坐标系下偏移
-    * @param [in] offset_pos  位姿偏移量
-    * @return 错误码
+    * @brief UDP擴展軸與機器人直線運動同步運動
+    * @param [in] joint_pos  目標關節位置,單位deg
+    * @param [in] desc_pos   目標笛卡兒位姿
+    * @param [in] tool  工具座標號，範圍[0~14]
+    * @param [in] user  工件座標號，範圍[0~14]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] offset_flag  0-不偏移，1-基座標系/工件坐標系下偏移，2-工具坐標系下偏移
+    * @param [in] offset_pos  位元位偏移量
+    * @return 錯誤碼
     */
     int ExtAxisSyncMoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, ExaxisPos epos, int offset_flag, DescPose offset_pos);
 
-UDP扩展轴与机器人圆弧运动同步运动
+UDP擴展軸與機器人圓弧運動同步運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief UDP扩展轴与机器人圆弧运动同步运动
-    * @param [in] joint_pos_p  路径点关节位置,单位deg
-    * @param [in] desc_pos_p   路径点笛卡尔位姿
-    * @param [in] ptool  工具坐标号，范围[0~14]
-    * @param [in] puser  工件坐标号，范围[0~14]
-    * @param [in] pvel  速度百分比，范围[0~100]
-    * @param [in] pacc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] epos_p  中间点扩展轴位置，单位mm
-    * @param [in] poffset_flag  0-不偏移，1-基坐标系/工件坐标系下偏移，2-工具坐标系下偏移
-    * @param [in] offset_pos_p  位姿偏移量
-    * @param [in] joint_pos_t  目标点关节位置,单位deg
-    * @param [in] desc_pos_t   目标点笛卡尔位姿
-    * @param [in] ttool  工具坐标号，范围[0~14]
-    * @param [in] tuser  工件坐标号，范围[0~14]
-    * @param [in] tvel  速度百分比，范围[0~100]
-    * @param [in] tacc  加速度百分比，范围[0~100],暂不开放
-    * @param [in] epos_t  扩展轴位置，单位mm
-    * @param [in] toffset_flag  0-不偏移，1-基坐标系/工件坐标系下偏移，2-工具坐标系下偏移
-    * @param [in] offset_pos_t  位姿偏移量
-    * @param [in] ovl  速度缩放因子，范围[0~100]
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm
-    * @return 错误码
+    * @brief UDP擴展軸與機器人圓弧運動同步運動
+    * @param [in] joint_pos_p  路徑點關節位置,單位deg
+    * @param [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param [in] ptool  工具座標號，範圍[0~14]
+    * @param [in] puser  工件座標號，範圍[0~14]
+    * @param [in] pvel  速度百分比，範圍[0~100]
+    * @param [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_p  中间點擴展軸位置，單位mm
+    * @param [in] poffset_flag  0-不偏移，1-基座標系/工件坐標系下偏移，2-工具坐標系下偏移
+    * @param [in] offset_pos_p  位元位偏移量
+    * @param [in] joint_pos_t  目標點關節位置,單位deg
+    * @param [in] desc_pos_t   目標點笛卡爾位姿
+    * @param [in] ttool  工具座標號，範圍[0~14]
+    * @param [in] tuser  工件座標號，範圍[0~14]
+    * @param [in] tvel  速度百分比，範圍[0~100]
+    * @param [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_t  擴展軸位置，單位mm
+    * @param [in] toffset_flag  0-不偏移，1-基座標系/工件坐標系下偏移，2-工具坐標系下偏移
+    * @param [in] offset_pos_t  位元位偏移量
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @return 錯誤碼
     */
     int ExtAxisSyncMoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: Java
@@ -812,16 +812,16 @@ UDP扩展轴与机器人圆弧运动同步运动
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.Mode(0);
@@ -852,7 +852,7 @@ UDP扩展轴与机器人圆弧运动同步运动
         DescPose desc_pos3 = new DescPose(336.049,-444.969,192.799,173.776 ,27.104,-89.455);
         ExaxisPos epos3 = new ExaxisPos(-30.000,-30.000, 0.000, 0.000);
 
-        //圆弧的起点
+        //圓弧的起點
         JointPos j4 = new JointPos(137.204,-98.475,106.624,-97.769,-90.634,-69.24);
         DescPose desc_pos4 = new DescPose(381.269,-218.688,205.735,179.274,0.128,-63.556);
 
@@ -867,19 +867,19 @@ UDP扩展轴与机器人圆弧运动同步运动
 
         DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
 
-        //同步关节运动
+        //同步關節運動
         robot.MoveJ(j0, d0, 1, 0, vel, acc, ovl, exaxisPos, -1, 0, offset_pos);
         robot.ExtAxisMove(exaxisPos,40);
         robot.ExtAxisSyncMoveJ(joint_pos0, desc_pos0, 1, 0,20,100,100,e_pos0,-1,0,offset_pos);
         robot.ExtAxisSyncMoveJ(joint_pos1, desc_pos1, 1, 0,20,100,100,e_pos1,-1,0,offset_pos);
 
 
-        //同步直线运动
+        //同步直線運動
         robot.MoveJ(j0, d0, 1, 0, vel, acc, ovl, exaxisPos, -1, 0, offset_pos);
         robot.ExtAxisMove(exaxisPos,40);
         robot.ExtAxisSyncMoveL(j2, desc_pos2, tool, user, 40, 100, 100, -1, epos2, 0, offset_pos);
         robot.ExtAxisSyncMoveL(j3, desc_pos3, tool, user, 40, 100, 100, -1, epos3, 0, offset_pos);
-        //同步圆弧运动
+        //同步圓弧運動
         robot.MoveJ(j0, d0, 1, 0, vel, acc, ovl, exaxisPos, -1, 0, offset_pos);
         robot.ExtAxisMove(exaxisPos,20);
         robot.MoveJ(j4, desc_pos4, 1, 0, vel, acc, ovl, exaxisPos, -1, 0, offset_pos);
@@ -892,68 +892,68 @@ UDP扩展轴与机器人圆弧运动同步运动
         robot.Mode(1);
     }
 
-可移动装置使能
+可移動裝置使能
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 可移动装置使能
+    * @brief 可移動裝置使能
     * @param [in] enable false-去使能；true-使能
-    * @return 错误码
+    * @return 錯誤碼
     */
     int TractorEnable(Boolean enable);
 
-可移动装置回零
+可移動裝置回零
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 可移动装置回零
-    * @return 错误码
+    * @brief 可移動裝置回零
+    * @return 錯誤碼
     */
     int TractorHoming();
 
-可移动装置直线运动
+可移動裝置直線運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 可移动装置直线运动
-    * @param [in] distance 直线运动距离（mm）
-    * @param [in] vel 直线运动速度百分比（0-100）
-    * @return 错误码
+    * @brief 可移動裝置直線運動
+    * @param [in] distance 直線運動距離（mm）
+    * @param [in] vel 直線運動速度百分比（0-100）
+    * @return 錯誤碼
     */
     int TractorMoveL(double distance, double vel);
 
-可移动装置圆弧运动
+可移動裝置圓弧運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 可移动装置圆弧运动
-    * @param [in] radio 圆弧运动半径（mm）
-    * @param [in] angle 圆弧运动角度（°）
-    * @param [in] vel 直线运动速度百分比（0-100）
-    * @return 错误码
+    * @brief 可移動裝置圓弧運動
+    * @param [in] radio 圓弧運動半徑（mm）
+    * @param [in] angle 圓弧運動角度（°）
+    * @param [in] vel 直線運動速度百分比（0-100）
+    * @return 錯誤碼
     */
     int TractorMoveC(double radio, double angle, double vel);
 
-可移动装置停止运动
+可移動裝置停止運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 可移动装置停止运动
-    * @return 错误码
+    * @brief 可移動裝置停止運動
+    * @return 錯誤碼
     */
     int TractorStop();
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -961,20 +961,20 @@ UDP扩展轴与机器人圆弧运动同步运动
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         UDPComParam param = new UDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10);
-        robot.ExtDevSetUDPComParam(param);//udp扩展轴通讯
+        robot.ExtDevSetUDPComParam(param);//udp擴展軸通訊
         robot.ExtAxisParamConfig(1, 0, 0, 50000, -50000, 1000, 1000, 6.280, 16384, 200, 0, 0, 0);
         robot.ExtAxisParamConfig(2, 0, 0, 50000, -50000, 1000, 1000, 6.280, 16384, 200, 0, 0, 0);
         robot.SetAxisDHParaConfig(5, 0, 0, 0, 0, 0, 0, 0, 0);

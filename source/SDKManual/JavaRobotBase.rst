@@ -1,102 +1,102 @@
-机器人基础
+機器人基礎
 =============
 
 .. toctree:: 
     :maxdepth: 5
 
-实例化机器人
+實例化機器人
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  机器人接口类构造函数
+    * @brief  機器人介面類別建構函數
     */
     Robot robot = new Robot(); 
 
-与控制器建立通信
+與控制器建立通信
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  与机器人控制器建立通信
-    * @param  [in] ip  控制器IP地址，出场默认为192.168.58.2
-    * @return 错误码
+    * @brief  與機器人控制器建立通信
+    * @param  [in] ip  控制器IP位址，出場預設為192.168.58.2
+    * @return 錯誤碼
     */
     int RPC(String ip);
 
-与机器人断开通信
+與機器人斷開通信
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 与机器人控制器断开通信 
-    * @return 错误码 
+    * @brief 與機器人控制器斷開通信 
+    * @return 錯誤碼 
     */ 
     int CloseRPC(); 
 
-查询SDK版本号
+查詢SDK版本號
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 查询 SDK 版本号 
-    * @return 版本号 
+    * @brief 查詢 SDK 版本號 
+    * @return 版本號 
     */  
     String GetSDKVersion();
 
-获取控制器IP
+獲取控制器IP
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  获取控制器IP
+    * @brief  獲取控制器IP
     * @param  [out] ip  控制器IP
-    * @return  错误码
+    * @return  錯誤碼
     */
     int GetControllerIP(String[] ip);
 
-控制机器人进入或退出拖动示教模式
+控制機器人進入或退出拖曳示教模式
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  控制机器人进入或退出拖动示教模式
-    * @param  [in] state 0-退出拖动示教模式，1-进入拖动示教模式
-    * @return  错误码
+    * @brief  控制機器人進入或退出拖曳示教模式
+    * @param  [in] state 0-退出拖曳示教模式，1-進入拖曳示教模式
+    * @return  錯誤碼
     */
     int DragTeachSwitch(int state);
 
-控制机器人上使能或下使能
+控制機器人上使能或下使能
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  控制机器人上使能或下使能，机器人上电后默认自动上使能
+    * @brief  控制機器人上使能或下使能，機器人上電後預設自動上啟用
     * @param  [in] state  0-下使能，1-上使能
-    * @return  错误码
+    * @return  錯誤碼
     */
     int RobotEnable(int state); 
 
-控制机器人手自动模式切换
+控制機器人手自動模式切換
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 控制机器人手自动模式切换
-    * @param [in] mode 0-自动模式，1-手动模式
-    * @return 错误码
+    * @brief 控制機器人手自動模式切換
+    * @param [in] mode 0-自動模式，1-手動模式
+    * @return 錯誤碼
     */
     int Mode(int mode);
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -104,16 +104,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         String[] ip={""};
@@ -122,21 +122,21 @@
         System.out.println("SDK version : " + version);
         int rtn = robot.GetControllerIP(ip);
         System.out.println("controller ip : " +  ip[0] + "  " + rtn);
-        robot.Mode(1);//1-手动模式  0-自动模式
+        robot.Mode(1);//1-手動模式 0-自動模式
         robot.Sleep(1000);
-        robot.DragTeachSwitch(1);//进入拖动模式
+        robot.DragTeachSwitch(1);//進入拖曳模式
         robot.Sleep(1000);
         ROBOT_STATE_PKG pkg = robot.GetRobotRealTimeState();
         System.out.println("drag state : " + pkg.robot_state);
         robot.Sleep(1000);
-        robot.DragTeachSwitch(0);//退出拖动模式
+        robot.DragTeachSwitch(0);//退出拖曳模式
         robot.Sleep(1000);
         pkg = robot.GetRobotRealTimeState();
         System.out.println("drag state : " + pkg.robot_state);
         
         if (pkg.robot_state ==4){
-           System.out.println("拖动模式");
+           System.out.println("拖曳模式");
         }else {
-           System.out.println("非拖动模式");
+           System.out.println("非拖曳模式");
         }
     }

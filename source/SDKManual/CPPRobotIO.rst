@@ -1,239 +1,239 @@
-机器人IO
+機器人IO
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-设置控制箱数字量输出
+設定控制箱數位量輸出
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置控制箱数字量输出
-    * @param  [in] id  io编号，范围[0~15]
-    * @param  [in] status 0-关，1-开
+    * @brief  設定控制箱數位量輸出
+    * @param  [in] id  io編號，範圍[0~15]
+    * @param  [in] status 0-關，1-開
     * @param  [in] smooth 0-不平滑， 1-平滑
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  SetDO(int id, uint8_t status, uint8_t smooth, uint8_t block);
 
-设置工具数字量输出
+設定工具數位量輸出
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置工具数字量输出
-    * @param  [in] id  io编号，范围[0~1]
-    * @param  [in] status 0-关，1-开
+    * @brief  設定工具數位量輸出
+    * @param  [in] id  io編號，範圍[0~1]
+    * @param  [in] status 0-關，1-開
     * @param  [in] smooth 0-不平滑， 1-平滑
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  SetToolDO(int id, uint8_t status, uint8_t smooth, uint8_t block);
 
-设置控制箱模拟量输出
+設定控制箱類比輸出
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置控制箱模拟量输出
-    * @param  [in] id  io编号，范围[0~1]
-    * @param  [in] value 电流或电压值百分比，范围[0~100]对应电流值[0~20mA]或电压[0~10V]
+    * @brief  設定控制箱類比輸出
+    * @param  [in] id  io編號，範圍[0~1]
+    * @param  [in] value 電流或電壓值百分比，範圍[0~100]對應電流值[0~20mA]或電壓[0~10V]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  SetAO(int id, float value, uint8_t block);
 
-设置工具模拟量输出
+設定工具類比輸出
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置工具模拟量输出
-    * @param  [in] id  io编号，范围[0]
-    * @param  [in] value 电流或电压值百分比，范围[0~100]对应电流值[0~20mA]或电压[0~10V]
+    * @brief  設定工具類比輸出
+    * @param  [in] id  io編號，範圍[0]
+    * @param  [in] value 電流或電壓值百分比，範圍[0~100]對應電流值[0~20mA]或電壓[0~10V]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */
     errno_t  SetToolAO(int id, float value, uint8_t block);
 
-获取控制箱数字量输入
+取得控制箱數位量輸入
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取控制箱数字量输入
-    * @param  [in] id  io编号，范围[0~15]
+    * @brief  取得控制箱數位量輸入
+    * @param  [in] id  io編號，範圍[0~15]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @param  [out] result  0-低电平，1-高电平
-    * @return  错误码
+    * @param  [out] result  0-低電平，1-高電平
+    * @return  錯誤碼
     */   
     errno_t  GetDI(int id, uint8_t block, uint8_t *result);
 
-获取工具数字量输入
+取得工具數位量輸入
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取工具数字量输入
-    * @param  [in] id  io编号，范围[0~1]
+    * @brief  取得工具數位量輸入
+    * @param  [in] id  io編號，範圍[0~1]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @param  [out] result  0-低电平，1-高电平
-    * @return  错误码
+    * @param  [out] result  0-低電平，1-高電平
+    * @return  錯誤碼
     */   
     errno_t  GetToolDI(int id, uint8_t block, uint8_t *result);
 
-等待控制箱数字量输入
+等待控制箱數位量輸入
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 等待控制箱数字量输入
-    * @param  [in] id  io编号，范围[0~15]
-    * @param  [in]  status 0-关，1-开
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待控制箱數位量輸入
+    * @param  [in] id  io編號，範圍[0~15]
+    * @param  [in]  status 0-關，1-開
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     errno_t  WaitDI(int id, uint8_t status, int max_time, int opt);
 
-等待控制箱多路数字量输入
+等待控制箱多路數字量輸入
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 等待控制箱多路数字量输入
-    * @param  [in] mode 0-多路与，1-多路或
-    * @param  [in] id  io编号，bit0~bit7对应DI0~DI7，bit8~bit15对应CI0~CI7
-    * @param  [in]  status 0-关，1-开
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待控制箱多路數字量輸入
+    * @param  [in] mode 0-多路與，1-多路或
+    * @param  [in] id  io編號，bit0~bit7對應DI0~DI7，bit8~bit15對應CI0~CI7
+    * @param  [in]  status 0-關，1-開
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     errno_t  WaitMultiDI(int mode, int id, uint8_t status, int max_time, int opt);
 
-等待工具数字量输入
+等待工具數位量輸入
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 等待工具数字量输入
-    * @param  [in] id  io编号，范围[0~1]
-    * @param  [in]  status 0-关，1-开
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待工具數位量輸入
+    * @param  [in] id  io編號，範圍[0~1]
+    * @param  [in]  status 0-關，1-開
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     errno_t  WaitToolDI(int id, uint8_t status, int max_time, int opt);
 
-获取控制箱模拟量输入
+取得控制箱模擬量輸入
 +++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取控制箱模拟量输入
-    * @param  [in] id  io编号，范围[0~1]
+    * @brief  取得控制箱模擬量輸入
+    * @param  [in] id  io編號，範圍[0~1]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @param  [out] result  输入电流或电压值百分比，范围[0~100]对应电流值[0~20mS]或电压[0~10V]
-    * @return  错误码
+    * @param  [out] result  輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mS]或電壓[0~10V]
+    * @return  錯誤碼
     */   
     errno_t  GetAI(int id, uint8_t block, float *result); 
 
-获取工具模拟量输入
+取得工具類比輸入
 +++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取工具模拟量输入
-    * @param  [in] id  io编号，范围[0]
+    * @brief  取得工具類比輸入
+    * @param  [in] id  io編號，範圍[0]
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @param  [out] result  输入电流或电压值百分比，范围[0~100]对应电流值[0~20mS]或电压[0~10V]
-    * @return  错误码
+    * @param  [out] result  輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mS]或電壓[0~10V]
+    * @return  錯誤碼
     */   
     errno_t  GetToolAI(int id, uint8_t block, float *result);
 
-获取机器人末端点记录按钮状态
+取得機器人末端點記錄按鈕狀態
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取机器人末端点记录按钮状态
-     * @param [out] state 按钮状态，0-按下，1-松开
-     * @return 错误码
+     * @brief 取得機器人末端點記錄按鈕狀態
+     * @param [out] state 按鈕狀態，0-按下，1-放開
+     * @return 錯誤碼
      */
     errno_t  GetAxlePointRecordBtnState(uint8_t *state);
 
-获取机器人末端DO输出状态
+取得機器人末端DO輸出狀態
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取机器人末端DO输出状态
-     * @param [out] do_state DO输出状态，do0~do1对应bit1~bit2,从bit0开始
-     * @return 错误码
+     * @brief 取得機器人末端DO輸出狀態
+     * @param [out] do_state DO輸出狀態，do0~do1对应bit1~bit2,从bit0開始
+     * @return 錯誤碼
      */
     errno_t  GetToolDO(uint8_t *do_state);
 
-获取机器人控制器DO输出状态
+取得機器人控制器DO輸出狀態
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取机器人控制器DO输出状态
-     * @param [out] do_state_h DO输出状态，co0~co7对应bit0~bit7
-     * @param [out] do_state_l DO输出状态，do0~do7对应bit0~bit7
-     * @return 错误码
+     * @brief 取得機器人控制器DO輸出狀態
+     * @param [out] do_state_h DO輸出狀態，co0~co7對應bit0~bit7
+     * @param [out] do_state_l DO輸出狀態，do0~do7對應bit0~bit7
+     * @return 錯誤碼
      */
     errno_t  GetDO(uint8_t *do_state_h, uint8_t *do_state_l);
 
-等待控制箱模拟量输入
+等待控制箱模擬量輸入
 +++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 等待控制箱模拟量输入
-    * @param  [in] id  io编号，范围[0~1]
-    * @param  [in]  sign 0-大于，1-小于
-    * @param  [in]  value 输入电流或电压值百分比，范围[0~100]对应电流值[0~20mS]或电压[0~10V]
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待控制箱模擬量輸入
+    * @param  [in] id  io編號，範圍[0~1]
+    * @param  [in]  sign 0-大於，1-小於
+    * @param  [in]  value 輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mS]或電壓[0~10V]
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     errno_t  WaitAI(int id, int sign, float value, int max_time, int opt);  
 
-等待工具模拟量输入
+等待工具類比輸入
 +++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 等待工具模拟量输入
-    * @param  [in] id  io编号，范围[0]
-    * @param  [in]  sign 0-大于，1-小于
-    * @param  [in]  value 输入电流或电压值百分比，范围[0~100]对应电流值[0~20mS]或电压[0~10V]
-    * @param  [in]  max_time  最大等待时间，单位ms
-    * @param  [in]  opt  超时后策略，0-程序停止并提示超时，1-忽略超时提示程序继续执行，2-一直等待
-    * @return  错误码
+    * @brief 等待工具類比輸入
+    * @param  [in] id  io編號，範圍[0]
+    * @param  [in]  sign 0-大於，1-小於
+    * @param  [in]  value 輸入電流或電壓值百分比，範圍[0~100]對應電流值[0~20mS]或電壓[0~10V]
+    * @param  [in]  max_time  最大等待時間，單位ms
+    * @param  [in]  opt  超時後策略，0-程式停止並提示超時，1-忽略超時提示程式繼續執行，2-一直等待
+    * @return  錯誤碼
     */
     errno_t  WaitToolAI(int id, int sign, float value, int max_time, int opt); 
 
-代码示例
+代碼範例
 ++++++++++++++
 
 .. versionchanged:: C++SDK-v2.1.2.0
@@ -243,10 +243,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -347,7 +347,7 @@
         return 0;
     }
 
-获取机器人软件版本
+取得機器人軟體版本
 +++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -356,15 +356,15 @@
     :linenos:
 
     /**
-    * @brief 获取机器人软件版本
-    * @param[out]	robotModel 机器人型号
+    * @brief 取得機器人軟體版本
+    * @param[out]	robotModel 機器人型號
     * @param[out]	webversion web版本
     * @param[out]	controllerVersion 控制器版本
-    * @return 错误码
+    * @return 錯誤碼
     */
     errno_t GetSoftwareVersion(char robotModel[64], char webVersion[64], char controllerVersion[64]);
 
-获取机器人硬件版本
+取得機器人硬體版本
 +++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -373,19 +373,19 @@
     :linenos:
 
     /**
-    * @brief 获取机器人硬件版本
-    * @param[out] ctrlBoxBoardversion 控制箱载板硬件版本
-    * @param[out] driver1version 驱动器1硬件版本
-    * @param[out] driver2version 驱动器2硬件版本
-    * @param[out] driver3version 驱动器3硬件版本
-    * @param[out] driver4version 驱动器4硬件版本
-    * @param[out] driver5version 驱动器5硬件版本
-    * @param[out] driver6version 驱动器6硬件版本
-    * @param[out] endBoardversion 未端版硬件版本
+    * @brief 取得機器人硬體版本
+    * @param[out] ctrlBoxBoardversion 控制箱載板硬體版本
+    * @param[out] driver1version 驅動器1硬體版本
+    * @param[out] driver2version 驅動器2硬體版本
+    * @param[out] driver3version 驅動器3硬體版本
+    * @param[out] driver4version 驅動器4硬體版本
+    * @param[out] driver5version 驅動器5硬體版本
+    * @param[out] driver6version 驅動器6硬體版本
+    * @param[out] endBoardversion 未端版硬體版本
     */
     errno_t GetHardwareVersion(char ctrlBoxBoardversion[128], char driver1version[128], char driver2version[128], char driver3version[128], char driver4version[128], char driver5version[128], char driver6version[128], char endBoardversion[128]);
 
-获取机器人固件版本
+取得機器人韌體版本
 +++++++++++++++++++++++++
 
 .. versionadded:: C++SDK-v2.1.1.0
@@ -394,19 +394,19 @@
     :linenos:
 
     /**
-    * @brief 获取机器人固件版本
-    * @param[out] ctrlBoxBoardversion 控制箱载板固件版本
-    * @param[out] driver1version 驱动器1固件版本
-    * @param[out] driver2version 驱动器2固件版本
-    * @param[out] driver3version 驱动器3固件版本
-    * @param[out] driver4version 驱动器4固件版本
-    * @param[out] driver5version 驱动器5固件版本
-    * @param[out] driver6version 驱动器6固件版本
-    * @param[out] endBoardversion 未端版固件版本
+    * @brief 取得機器人韌體版本
+    * @param[out] ctrlBoxBoardversion 控制箱載板韌體版本
+    * @param[out] driver1version 驅動器1韌體版本
+    * @param[out] driver2version 驅動器2韌體版本
+    * @param[out] driver3version 驅動器3韌體版本
+    * @param[out] driver4version 驅動器4韌體版本
+    * @param[out] driver5version 驅動器5韌體版本
+    * @param[out] driver6version 驅動器6韌體版本
+    * @param[out] endBoardversion 未端版韌體版本
     */
     errno_t GetFirmwareVersion(char ctrlBoxBoardversion[128], char driver1version[128], char driver2version[128], char driver3version[128], char driver4version[128], char driver5version[128], char driver6version[128], char endBoardversion[128]);
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
 
@@ -415,10 +415,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>

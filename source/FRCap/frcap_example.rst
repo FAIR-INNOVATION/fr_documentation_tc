@@ -4,42 +4,42 @@ FRCap案例
 .. toctree:: 
    :maxdepth: 6
 
-FAIRINO Palletizer（码垛机）
+FAIRINO Palletizer（碼垛機）
 -----------------------------
 
-请访问以下地址获取源代码和码垛FRCap包：\ `FAIR-INNOVATION/frcap_palletizer <https://gitee.com/fair-innovation/frcap_palletizer>`__\。
+請造訪以下位址以取得原始碼和碼垛FRCap包：\ `FAIR-INNOVATION/frcap_palletizer <https://gitee.com/fair-innovation/frcap_palletizer>`__\。
 
-或者直接在本地克隆：
+或直接在本地克隆：
 
 .. code-block:: c++
    :linenos:
 
    git clone https://gitee.com/fair-innovation/frcap_palletizer.git
 
-将项目中的build文件夹下的“码垛机Palletizer.frcap”在WebApp中上传注册启用后即可使用。
+將專案中的build資料夾下的「碼垛機Palletizer.frcap」在WebApp中上傳註冊啟用後即可使用。
 
 .. image:: frcap_pictures/011.png
    :width: 6in
    :align: center
 
-.. centered:: 图表 7.1 码垛FRCap使用
+.. centered:: 圖表 7.1 碼垛FRCap使用
 
-码垛工件配置
+碼垛工件配置
 +++++++++++++++
 
-指令名称：palletizing_config_box。 
+指令名稱：palletizing_config_box。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /** 
-   * @param  int length 工件长度
-   * @param  int width 工件速度
-   * @param  int height 工件高度
-   * @param  int payload 工件负载
-   * @param  string grip_point工件抓取点
+   * @param int length 工件長度
+   * @param int width 工件速度
+   * @param int height 工件高度
+   * @param int payload 工件負載
+   * @param string grip_point工件抓取點
    * /
 
 指令案例：
@@ -58,7 +58,7 @@ FAIRINO Palletizer（码垛机）
       }
    } 
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
@@ -68,22 +68,22 @@ FAIRINO Palletizer（码垛机）
    * @return status:404 "fail"
    */
 
-码垛托盘配置
+碼垛托盤配置
 +++++++++++++++
 
-指令名称：palletizing_config_pallet。
+指令名稱：palletizing_config_pallet。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /** 
-   * @param  int front 托盘前边
-   * @param  int side 托盘侧边
-   * @param  int height 托盘高度
-   * @param  int left_pallet 左托盘启用
-   * @param  int right_pallet 右托盘启用
+   * @param int front 托盤前邊
+   * @param int side 托盤側邊
+   * @param int height 托盤高度
+   * @param int left_pallet 左托盤啟用
+   * @param int right_pallet 右托盤啟用
    */
 
 指令案例：
@@ -102,7 +102,7 @@ FAIRINO Palletizer（码垛机）
          }
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
@@ -112,25 +112,25 @@ FAIRINO Palletizer（码垛机）
    * @return status:404 "fail"
    */ 
 
-码垛高级配置
+碼垛高級配置
 +++++++++++++++
 
-指令名称：palletizing_advanced_cfg。
+指令名稱：palletizing_advanced_cfg。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /** 
-   * @param  string height 码垛抓取点抬升高度
-   * @param  string x1 码垛渐进点1：x 方向偏移,单位mm
-   * @param  string y1 码垛渐进点1：y 方向偏移,单位mm
-   * @param  string z1 码垛渐进点1：z 方向偏移,单位mm
-   * @param  string x2 码垛渐进点2：x 方向偏移,单位mm
-   * @param  string y2 码垛渐进点2：y 方向偏移,单位mm
-   * @param  string z2 码垛渐进点2：z 方向偏移,单位mm
-   * @param  string time 吸料等待时间,单位 ms
+   * @param string height 碼垛抓取點抬升高度
+   * @param string x1 碼垛漸進點1：x 方向偏移,單位mm
+   * @param string y1 碼垛漸進點1：y 方向偏移,單位mm
+   * @param string z1 碼垛漸進點1：z 方向偏移,單位mm
+   * @param string x2 碼垛漸進點2：x 方向偏移,單位mm
+   * @param string y2 碼垛漸進點2：y 方向偏移,單位mm
+   * @param string z2 碼垛漸進點2：z 方向偏移,單位mm
+   * @param string time 吸料等待時間,單位 ms
    */ 
 
 指令案例：
@@ -152,7 +152,7 @@ FAIRINO Palletizer（码垛机）
          }
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
@@ -162,21 +162,21 @@ FAIRINO Palletizer（码垛机）
    * @return status:404 "fail"
    */
 
-码垛设备尺寸配置
+碼垛設備尺寸配置
 +++++++++++++++++
 
-指令名称：palletizing_config_device。
+指令名稱：palletizing_config_device。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /** 
-   * @param  int x 左托盘右上角点相对于机器人基座标系坐标轴的x方向绝对值
-   * @param  int y 左托盘右上角点相对于机器人基座标系坐标轴的y方向绝对值
-   * @param  int z 左托盘右上角点相对于机器人基座标系坐标轴的z方向绝对值
-   * @param  int angle 机器人安装时的旋转角度
+   * @param int x 左托盤右上角點相對於機器人基座標系座標軸的x方向絕對值
+   * @param int y 左托盤右上角點相對於機器人基座標系座標軸的y方向絕對值
+   * @param int z 左托盤右上角點相對於機器人基座標系座標軸的z方向絕對值
+   * @param int angle 機器人安裝時的旋轉角度
    */ 
 
 指令案例：
@@ -194,7 +194,7 @@ FAIRINO Palletizer（码垛机）
       }
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
@@ -204,27 +204,27 @@ FAIRINO Palletizer（码垛机）
    * @return status:404 "fail"
    */
 
-码垛模式配置
+碼垛模式配置
 +++++++++++++++
 
-指令名称：palletizing_config_pattern。
+指令名稱：palletizing_config_pattern。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /** 
-   * @param  int layers 码垛层数
-   * @param  int box_gap 工件像素点间隔，单位：mm
-   * @param  string sequence 码垛工作模式
-   * @param  int pattern_b_enable 模式b是否开启，1：开启，0：不开启
-   * @param  string left_pattern_a 左工位模式a笛卡尔坐标
-   * @param  string left_pattern_b 左工位模式b笛卡尔坐标
-   * @param  string right_pattern_a 右工位模式a笛卡尔坐标
-   * @param  string right_pattern_b 右工位模式b笛卡尔坐标
-   * @param  string origin_pattern_a 初始模式a笛卡尔坐标
-   * @param  string origin_pattern_b 初始模式b笛卡尔坐标
+   * @param int layers 碼垛層數
+   * @param int box_gap 工件像素點間隔，單位：mm
+   * @param string sequence 碼垛工作模式
+   * @param int pattern_b_enable 模式b是否開啟，1：開啟，0：不開啟
+   * @param string left_pattern_a 左工位模式a笛卡爾座標
+   * @param string left_pattern_b 左工位模式b笛卡爾座標
+   * @param string right_pattern_a 右工位模式a笛卡爾座標
+   * @param string right_pattern_b 右工位模式b笛卡爾座標
+   * @param string origin_pattern_a 初始模式a笛卡爾座標
+   * @param string origin_pattern_b 初始模式b笛卡爾座標
    */
 
 指令案例：
@@ -248,7 +248,7 @@ FAIRINO Palletizer（码垛机）
       }
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
@@ -261,17 +261,17 @@ FAIRINO Palletizer（码垛机）
 码垛程序生成
 +++++++++++++++
 
-指令名称：generate_palletizing_program。
+指令名稱：generate_palletizing_program。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /**
-   * @param  string palletizing_name 码垛名称
-   * @param  string depalletizing_name 拆垛名称
-   * @param  string flag 码垛或者拆垛程序是否生成，0-不生成，1生成
+   * @param string palletizing_name 碼垛名稱
+   * @param string depalletizing_name 拆垛名稱
+   * @param string flag 碼垛或拆垛程序是否生成，0-不生成，1生成
    */ 
 
 指令案例：
@@ -288,7 +288,7 @@ FAIRINO Palletizer（码垛机）
       }
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
@@ -298,18 +298,18 @@ FAIRINO Palletizer（码垛机）
    * @return status:404 "fail"
    */
 
-获取码垛配方
+取得堆疊配方
 +++++++++++++++
 
-指令名称：get_palletizing_formula。
+指令名稱：get_palletizing_formula。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
    :linenos:
 
    /** 
-   * @param  string name 码垛配方名称
+   * @param  string name 碼垛配方名稱
    */ 
 
 指令案例：
@@ -324,25 +324,25 @@ FAIRINO Palletizer（码垛机）
       }
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
 
    /** 
    * @return status:200 
-   * @param  object box_config 工件配置
-   * @param  object pallet_config 托盘配置
-   * @param  object device_config 安装设备位置
-   * @param  object pattern_config 模式配置
-   * @param  object program_config 程序生成配置
-   * @param  object lefttransitionpoint 左过渡点笛卡尔坐标
-   * @param  object righttransitionpoint 右过渡点笛卡尔坐标
-   * @param  object advanced_config 高级配置
+   * @param object box_config 工件配置
+   * @param object pallet_config 托盤配置
+   * @param object device_config 安裝設備位置
+   * @param object pattern_config 模式配置
+   * @param object program_config 程式產生配置
+   * @param object lefttransitionpoint 左過渡點笛卡爾座標
+   * @param object righttransitionpoint 右過渡點笛卡爾座標
+   * @param object advanced_config 進階配置
    * @return status:404 "fail"
    */
 
-指令反馈案例：
+指令回饋案例：
 
 .. code-block:: c++
    :linenos:
@@ -417,12 +417,12 @@ FAIRINO Palletizer（码垛机）
       }
    }
 
-获取码垛已有配方名称列表
+取得碼垛已有配方名稱列表
 ++++++++++++++++++++++++++++
 
-指令名称：get_palletizing_formula_list。
+指令名稱：get_palletizing_formula_list。
 
-指令参数：无。
+指令參數：無。
 
 指令案例：
 
@@ -433,18 +433,18 @@ FAIRINO Palletizer（码垛机）
       cmd: "get_palletizing_formula_list"
    }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
    :linenos:
 
    /** 
    * @return status:200 
-   * @param  Array ${name} 码垛名称列表
+   * @param  Array ${name} 碼垛名稱列表
    * @return status:404 "fail"
    */
 
-指令反馈案例：
+指令回饋案例：
 
 .. code-block:: c++
    :linenos:

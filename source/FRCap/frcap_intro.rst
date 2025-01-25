@@ -1,4 +1,4 @@
-FRCap插件系统
+FRCap外掛系統
 ================
 
 .. figure:: frcap_pictures/010.png

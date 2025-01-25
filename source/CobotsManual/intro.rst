@@ -1,18 +1,18 @@
-协作机器人 
+協作機器人
 ================
 
-产品矩阵
+產品矩陣
 ------------
 
 .. figure:: ../_static/fr_series_collaborative_robot.jpg
     :align: center
     :figclass: align-center
 
-PDF下载
+PDF下載
 ------------------
-    :download:`法奧意威協作機器人使用手冊 <https://pan.baidu.com/s/1LmliJgt42YejLy9qCUKYQg?pwd=ymvr>`
+    :download:`法奧意威協作機器人使用手冊 <https://pan.baidu.com/s/136hvNwqvb1piX0pmfd9ymA?pwd=j391>`
 
-快速开始
+快速開始
 ------------
 .. toctree:: 
     :maxdepth: 6
@@ -24,7 +24,7 @@ PDF下载
     manual_teaching
     quick_programming
 
-使用手册
+使用手冊
 ------------
 .. toctree:: 
     :maxdepth: 6
@@ -50,7 +50,7 @@ PDF下载
     appendix
     term
 
-版本说明
+版本說明
 -----------
 
 .. toctree:: 

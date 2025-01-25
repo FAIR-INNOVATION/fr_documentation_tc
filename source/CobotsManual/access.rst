@@ -40,7 +40,7 @@ WebApp 存取登入
    :align: center
    :width: 6in
 
-.. centered:: 圖表 2.2‑1 系统初始界面示意图
+.. centered:: 圖表 2.2‑1 系統初始界面示意圖
 
 控制區
 ~~~~~~~~~

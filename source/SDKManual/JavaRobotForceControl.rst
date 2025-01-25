@@ -1,64 +1,64 @@
-机器人力控
+機器人力控
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-力传感器配置
+力感測器配置
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  配置力传感器
-    * @param  [in] config company:力传感器厂商，17-坤维科技，19-航天十一院，20-ATI传感器，21-中科米点，22-伟航敏芯
-    * @param  [in] config device:设备号，坤维(0-KWR75B)，航天十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米点(0-MST2010)，伟航敏芯(0-WHC6L-YB-10A)
-    * @param  [in] config softvesion:软件版本号，暂不使用，默认为0
-    * @param  [in] config bus:设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  配置力感測器
+    * @param  [in] config company:力傳感器廠商，17-坤維科技，19-航天十一院，20-ATI传感器，21-中科米點，22-伟航敏芯
+    * @param  [in] config device:設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0 -WHC6L-YB-10A)
+    * @param  [in] config softvesion:軟體版本號，暫不使用，預設為0
+    * @param  [in] config bus:設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     int FT_SetConfig(DeviceConfig config); 
 
-获取力传感器配置 
+取得力傳感器配置 
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 获取力传感器配置 
-    * @param [out] config company:力传感器厂商，17-坤维科技，19-航天十一院，20-ATI传感器，21-中科米点，22-伟航敏芯
-    * @param [out] config device:设备号，坤维(0-KWR75B)，航天十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米点(0-MST2010)，伟航敏芯(0-WHC6L-YB-10A)
-    * @param [out] config softvesion:软件版本号，暂不使用，默认为0
-    * @param [out] config bus:设备挂在末端总线位置，暂不使用，默认为0
-    * @return 错误码 
+    * @brief 取得力傳感器配置 
+    * @param [out] config company:力傳感器廠商，17-坤維科技，19-航天十一院，20-ATI传感器，21-中科米點，22-伟航敏芯
+    * @param [out] config device:設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0 -WHC6L-YB-10A)
+    * @param [out] config softvesion:軟體版本號，暫不使用，預設為0
+    * @param [out] config bus:設備掛在末端總線位置，暫不使用，預設為0
+    * @return 錯誤碼 
     */ 
     int FT_GetConfig(DeviceConfig config); 
 
-力传感器激活
+力傳感器激活
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  力传感器激活
-    * @param  [in] act  0-复位，1-激活
-    * @return  错误码
+    * @brief  力傳感器激活
+    * @param  [in] act  0-復位，1-激活
+    * @return  錯誤碼
     */
     int FT_Activate(int act); 
 
-力传感器校零
+力傳感器校零
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  力传感器校零
-    * @param  [in] act  0-去除零点，1-零点矫正
-    * @return  错误码
+    * @brief  力傳感器校零
+    * @param  [in] act  0-去除零點，1-零點矯正
+    * @return  錯誤碼
     */
     int FT_SetZero(int act); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -66,16 +66,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         DeviceConfig config = new DeviceConfig();
@@ -96,74 +96,74 @@
         robot.FT_Activate(1);  //激活
         robot.Sleep(2000);
 
-        robot.FT_SetZero(0);//0去除零点
+        robot.FT_SetZero(0);//0去除零點
         robot.Sleep(2000);
 
-        robot.FT_SetZero(1);//1零点矫正
+        robot.FT_SetZero(1);//1零點矫正
     }
 
-设置力传感器参考坐标系
-+++++++++++++++++++++++
+設定力道感測器參考座標系
++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  设置力传感器参考坐标系
-    * @param  [in] type  0-工具坐标系，1-基坐标系, 2-自由坐标系
-    * @param  [in] coord  自由坐标系值
-    * @return  错误码
+    * @brief  設定力道感測器參考座標系
+    * @param  [in] type  0-工具座標系，1-基坐標系, 2-自由座標系
+    * @param  [in] coord  自由座標系值
+    * @return  錯誤碼
     */
     int FT_SetRCS(int type, DescPose coord); 
 
-负载重量辨识记录
+負載重量辨識記錄
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  负载重量辨识记录
-    * @param  [in] id  传感器坐标系编号，范围[1~14]
-    * @return  错误码
+    * @brief  負載重量辨識記錄
+    * @param  [in] id  传感器座標系編號，範圍[1~14]
+    * @return  錯誤碼
     */
     int FT_PdIdenRecord(int id);
 
-负载重量辨识计算
+負載重量辨識計算
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  负载重量辨识计算
-    * @return  List[0]:错误码; List[1] : double weight  负载重量，单位kg
+    * @brief  負載重量辨識計算
+    * @return  List[0]:錯誤碼; List[1] : double weight  負載重量，單位kg
     */   
     List<Number> FT_PdIdenCompute();
 
-负载质心辨识记录
+負載質心辨識記錄
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  负载质心辨识记录
-    * @param  [in] id  传感器坐标系编号，范围[1~14]
-    * @param  [in] index 点编号，范围[1~3]
-    * @return  错误码
+    * @brief  負載質心辨識記錄
+    * @param  [in] id  传感器座標系編號，範圍[1~14]
+    * @param  [in] index 點編號，範圍[1~3]
+    * @return  錯誤碼
     */
     int FT_PdCogIdenRecord(int id, int index); 
 
-负载质心辨识计算
+負載質心辨識計算
 +++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  负载质心辨识计算
-    * @param  [out] cog  负载质心，单位mm
-    * @return  错误码
+    * @brief  負載質心辨識計算
+    * @param  [out] cog  負載質心，單位mm
+    * @return  錯誤碼
     */   
     int FT_PdCogIdenCompute(DescTran cog);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -171,16 +171,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         DeviceConfig config = new DeviceConfig();
@@ -226,51 +226,51 @@
     }
 
 
-获取参考坐标系下力/扭矩数据
+取得參考坐標系下力/扭力數據
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  获取参考坐标系下力/扭矩数据
+    * @brief  取得參考坐標系下力/扭力數據
     * @param  [in] flag 0-阻塞，1-非阻塞
     * @param  [out] ft  力/扭矩，fx,fy,fz,tx,ty,tz
-    * @return  错误码
+    * @return  錯誤碼
     */   
     int FT_GetForceTorqueRCS(int flag, ForceTorque ft); 
 
-获取力传感器原始力/扭矩数据
+取得力感測器原始力/扭力數據
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  获取力传感器原始力/扭矩数据
+    * @brief  取得力感測器原始力/扭力數據
     * @param  [in] flag 0-阻塞，1-非阻塞
     * @param  [out] ft  力/扭矩，fx,fy,fz,tx,ty,tz
-    * @return  错误码
+    * @return  錯誤碼
     */   
     int FT_GetForceTorqueOrigin(int flag, ForceTorque ft); 
 
-碰撞守护
+碰撞守護
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  碰撞守护
-    * @param  [in] flag 0-关闭碰撞守护，1-开启碰撞守护
-    * @param  [in] sensor_id 力传感器编号
-    * @param  [in] select  选择六个自由度是否检测碰撞，0-不检测，1-检测
+    * @brief  碰撞守護
+    * @param  [in] flag 0-關閉碰撞守護，1-開啟碰撞守護
+    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] select  選擇六個自由度是否偵測碰撞，0-不偵測，1-偵測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] max_threshold 最大阈值
-    * @param  [in] min_threshold 最小阈值
-    * @note   力/扭矩检测范围：(ft-min_threshold, ft+max_threshold)
-    * @return  错误码
+    * @param  [in] max_threshold 最大閾值
+    * @param  [in] min_threshold 最小閾值
+    * @note   力/扭力檢測範圍：(ft-min_threshold, ft+max_threshold)
+    * @return  錯誤碼
     */   
     int FT_Guard(int flag, int sensor_id, Object[] select, ForceTorque ft, Object[] max_threshold, Object[] min_threshold); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -278,21 +278,21 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         byte flag = 1;
         byte sensor_id = 8;
-        Object[] select = { 1, 0, 0, 0, 0, 0 };//只启用x轴碰撞守护
+        Object[] select = { 1, 0, 0, 0, 0, 0 };//只啟用x軸碰撞守護
         Object[] max_threshold = { 5.0, 0.01, 0.01, 0.01, 0.01, 0.01 };
         Object[] min_threshold = { 3.0, 0.01, 0.01, 0.01, 0.01, 0.01 };
 
@@ -309,30 +309,30 @@
         robot.MoveCart(desc_p3, 0, 0, 20, 100.0f, 100.0f, -1.0f, -1);
     }
 
-恒力控制
+恆力控制
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  恒力控制
-    * @param  [in] flag 0-关闭恒力控制，1-开启恒力控制
-    * @param  [in] sensor_id 力传感器编号
-    * @param  [in] select  选择六个自由度是否检测碰撞，0-不检测，1-检测
+    * @brief  恆力控制
+    * @param  [in] flag 0-關閉恆力控制，1-開啟恆力控制
+    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] select  選擇六個自由度是否偵測碰撞，0-不偵測，1-偵測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] ft_pid 力pid参数，力矩pid参数
-    * @param  [in] adj_sign 自适应启停控制，0-关闭，1-开启
-    * @param  [in] ILC_sign ILC启停控制， 0-停止，1-训练，2-实操
-    * @param  [in] max_dis 最大调整距离，单位mm
-    * @param  [in] max_ang 最大调整角度，单位deg
-    * @param  [in] filter_Sign 滤波开启标志 0-关；1-开，默认关闭
-    * @param  [in] posAdapt_sign 姿态顺应开启标志 0-关；1-开，默认关闭
+    * @param  [in] ft_pid 力pid參數，力矩pid參數
+    * @param  [in] adj_sign 自適應啟動停止控制，0-關閉，1-開啟
+    * @param  [in] ILC_sign ILC啟停控制， 0-停止，1-訓練，2-實操
+    * @param  [in] max_dis 最大調整距離，單位mm
+    * @param  [in] max_ang 最大調整角度，單位deg
+    * @param  [in] filter_Sign 濾波開啟標誌 0-關；1-開，默認關閉
+    * @param  [in] posAdapt_sign 姿態順應開啟標誌 0-關；1-開，默認關閉
     * @param  [in] isNoBlock 阻塞标志，0-阻塞；1-非阻塞
-    * @return  错误码
+    * @return  錯誤碼
     */   
     int FT_Control(int flag, int sensor_id, Object[] select, ForceTorque ft, Object[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang, int filter_Sign, int posAdapt_sign, int isNoBlock);   
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -340,16 +340,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         byte flag = 1;
@@ -371,7 +371,7 @@
         ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
         DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
 
-        //关节空间运动
+        //關節空間運動
         robot.MoveL(j1, desc_p1, 0, 0, 40.0f, 180.0f, 20.0f, -1.0f, epos, 0, 0, offset_pos, 0, 100);
         int rtn = robot.FT_Control(flag, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, 0, 0, 0);
         System.out.println("FT_Control start rtn " + rtn);
@@ -382,31 +382,31 @@
         System.out.println("FT_Control end rtn " + rtn);
     }
 
-柔顺控制开启
+柔順控制開啟
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  柔顺控制开启
-    * @param  [in] p 位置调节系数或柔顺系数
-    * @param  [in] force 柔顺开启力阈值，单位N
-    * @return  错误码
+    * @brief  柔順控制開啟
+    * @param  [in] p 位置調節係數或柔順係數
+    * @param  [in] force 柔順開啟力閾值，單位N
+    * @return  錯誤碼
     */   
     int FT_ComplianceStart(double p, double force);
 
-柔顺控制关闭
+柔順控制關閉
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  柔顺控制关闭
-    * @return  错误码
+    * @brief  柔順控制關閉
+    * @return  錯誤碼
     */   
     int FT_ComplianceStop(); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -414,16 +414,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         byte flag = 1;
@@ -461,86 +461,86 @@
         robot.FT_Control(flag, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang,0,0,0);
     }
 
-负载辨识初始化
+負載辨識初始化
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 负载辨识初始化
-    * @return 错误码
+    * @brief 負載辨識初始化
+    * @return 錯誤碼
     */
     int LoadIdentifyDynFilterInit();
 
-负载辨识变量初始化
+負載辨識變數初始化
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 负载辨识变量初始化
-    * @return 错误码
+    * @brief 負載辨識變數初始化
+    * @return 錯誤碼
     */
     int LoadIdentifyDynVarInit();
 
-负载辨识主程序
+負荷辨識主程序
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 负载辨识主程序
-    * @param [in] joint_torque 关节扭矩
-    * @param [in] joint_pos 关节位置
-    * @param [in] t 采样周期
-    * @return 错误码
+    * @brief 負荷辨識主程序
+    * @param [in] joint_torque 關節扭矩
+    * @param [in] joint_pos 關節位置
+    * @param [in] t 採樣週期
+    * @return 錯誤碼
     */
     int LoadIdentifyMain(Object[] joint_torque, Object[] joint_pos, double t);
 
-获取负载辨识结果
+獲取負荷辨識結果
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取负载辨识结果
+    * @brief 獲取負荷辨識結果
     * @param [in] gain
-    * @return List[0]:错误码; List[1] : double weight 负载重量; List[2]: x 负载质心X mm; List[3] : y 负载质心Y mm; List[2]: z 负载质心Z mm
+    * @return List[0]:錯誤碼; List[1] : double weight 負載重量; List[2]: x 負載質心X mm; List[3] : y 負載質心Y mm; List[2]: z 負載質心Z mm
     */
     List<Number> LoadIdentifyGetResult(Object[] gain);
 
-获取力传感器拖动开关状态
+取得力道感測器拖曳開關狀態
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取力传感器拖动开关状态
-    * @return List[0]:错误码; List[1] : dragState 力传感器辅助拖动控制状态，0-关闭；1-开启; List[1] : sixDimensionalDragState 六维力辅助拖动控制状态，0-关闭；1-开启
+    * @brief 取得力道感測器拖曳開關狀態
+    * @return List[0]:錯誤碼; List[1] : dragState 力道感測器輔助拖曳控制狀態，0-關閉；1-開啟; List[1] : sixDimensionalDragState 六維力輔助拖曳控制狀態，0-關閉；1-開啟
     */
     List<Integer> GetForceAndTorqueDragState();
 
-力传感器辅助拖动
+力道感測器輔助拖曳
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 力传感器辅助拖动
-    * @param [in] status 控制状态，0-关闭；1-开启
-    * @param [in] asaptiveFlag 自适应开启标志，0-关闭；1-开启
-    * @param [in] interfereDragFlag 干涉区拖动标志，0-关闭；1-开启
-    * @param [in] M 惯性系数
-    * @param [in] B 阻尼系数
-    * @param [in] K 刚度系数
-    * @param [in] F 拖动六维力阈值
-    * @param [in] Fmax 最大拖动力限制 Nm
-    * @param [in] Vmax 最大关节速度限制 °/s
-    * @return 错误码
+    * @brief 力道感測器輔助拖曳
+    * @param [in] status 控制狀態，0-關閉；1-開啟
+    * @param [in] asaptiveFlag 自適應開啟標誌，0-關閉；1-開啟
+    * @param [in] interfereDragFlag 干涉區拖曳標誌，0-關閉；1-開啟
+    * @param [in] M 慣性係數
+    * @param [in] B 阻尼係數
+    * @param [in] K 剛度係數
+    * @param [in] F 拖曳六維力閾值
+    * @param [in] Fmax 最大拖動力限制 Nm
+    * @param [in] Vmax 最大關節速度限制 °/s
+    * @return 錯誤碼
     */
     int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, Object[] M, Object[] B, Object[] K, Object[] F, double Fmax, double Vmax);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -548,16 +548,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         List<Integer> rtnArray = robot.GetForceAndTorqueDragState();
@@ -580,25 +580,25 @@
         System.out.println("the drag state is" + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));
     }
 
-设置六维力和关节阻抗混合拖动开关及参数
+設定六維力和關節阻抗混合拖曳開關及參數
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置六维力和关节阻抗混合拖动开关及参数
-    * @param [in] status 控制状态，0-关闭；1-开启
-    * @param [in] impedanceFlag 阻抗开启标志，0-关闭；1-开启
-    * @param [in] lamdeGain 拖动增益
-    * @param [in] KGain 刚度增益
+    * @brief 設定六維力和關節阻抗混合拖曳開關及參數
+    * @param [in] status 控制狀態，0-關閉；1-開啟
+    * @param [in] impedanceFlag 阻抗開啟標誌，0-關閉；1-開啟
+    * @param [in] lamdeGain 拖曳增益
+    * @param [in] KGain 剛度增益
     * @param [in] BGain 阻尼增益
-    * @param [in] dragMaxTcpVel 拖动末端最大线速度限制
-    * @param [in] dragMaxTcpOriVel 拖动末端最大角速度限制
-    * @return 错误码
+    * @param [in] dragMaxTcpVel 拖曳末端最大線速度限制
+    * @param [in] dragMaxTcpOriVel 拖曳末端最大角速度限制
+    * @return 錯誤碼
     */
     int ForceAndJointImpedanceStartStop(int status, int impedanceFlag, Object[] lamdeGain, Object[] KGain, Object[] BGain, double dragMaxTcpVel, double dragMaxTcpOriVel);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -606,16 +606,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.DragTeachSwitch(1);
@@ -628,54 +628,54 @@
         System.out.println("the drag state is  " + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));
     }
 
-设置力传感器下负载重量
+設定力道感測器下負載重量
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置力传感器下负载重量
-    * @param [in] weight 负载重量 kg
-    * @return 错误码
+    * @brief 設定力道感測器下負載重量
+    * @param [in] weight 負載重量 kg
+    * @return 錯誤碼
     */
     int SetForceSensorPayLoad(double weight);
 
-设置力传感器下负载质心
+設定力道感測器下負載質心
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 设置力传感器下负载质心
-    * @param [in] cog 负载质心 mm
-    * @return 错误码
+    * @brief 設定力道感測器下負載質心
+    * @param [in] cog 負載質心 mm
+    * @return 錯誤碼
     */
     int SetForceSensorPayLoadCog(DescTran cog);
 
-获取力传感器下负载重量
+取得力道感測器下負載重量
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取力传感器下负载重量
-    * @return List[0]:错误码; List[1] : weight 负载重量 kg
+    * @brief 取得力道感測器下負載重量
+    * @return List[0]:錯誤碼; List[1] : weight 負載重量 kg
     */
     List<Number> GetForceSensorPayLoad();
 
-获取力传感器下负载质心
+取得力感測器下負載質心
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 获取力传感器下负载质心
-    * @param [out] cog 负载质心 mm
-    * @return 错误码
+    * @brief 取得力感測器下負載質心
+    * @param [out] cog 負載質心 mm
+    * @return 錯誤碼
     */
     int GetForceSensorPayLoadCog(DescTran cog);
     
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -683,16 +683,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         robot.SetForceSensorPayLoad(1.34);
@@ -706,14 +706,14 @@
         System.out.println("the FT load is " +  rtnArrays.get(1) + "  cog is  " + getCog.x + "  " + getCog.y + "   " + getCog.z);
     }
 
-力传感器自动校零
+力傳感器自動校零
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 力传感器自动校零
-    * @param [in] massCenter 传感器质量(kg) 及 质心(mm)
-    * @return 错误码
+    * @brief 力傳感器自動校零
+    * @param [in] massCenter 感測器質量(kg) 及 質心(mm)
+    * @return 錯誤碼
     */
     int ForceSensorAutoComputeLoad(MassCenter massCenter);

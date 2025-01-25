@@ -1,160 +1,160 @@
-传送带
+傳送帶
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-传动带启动、停止
+傳動皮帶啟動、停止
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  传动带启动、停止
-    * @param  [in] status 状态，1-启动，0-停止
-    * @return  错误码
+    * @brief  傳動皮帶啟動、停止
+    * @param  [in] status 狀態，1-啟動，0-停止
+    * @return  錯誤碼
     */
     int ConveyorStartEnd(int status);
 
-记录IO检测点
+記錄IO檢測點
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  记录IO检测点
-    * @return  错误码
+    * @brief  記錄IO檢測點
+    * @return  錯誤碼
     */
     int ConveyorPointIORecord();
 
-记录A点
+記錄A點
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  记录A点
-    * @return  错误码
+    * @brief  記錄A點
+    * @return  錯誤碼
     */
     int ConveyorPointARecord(); 
 
-记录参考点
+記錄參考點
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  记录参考点
-    * @return  错误码
+    * @brief  記錄參考點
+    * @return  錯誤碼
     */
     int ConveyorRefPointRecord();
 
-记录B点
+記錄B點
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  记录B点
-    * @return 错误码
+    * @brief  記錄B點
+    * @return 錯誤碼
     */
     int ConveyorPointBRecord(); 
 
-传动带参数配置
+傳動帶參數配置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  传动带参数配置
-    * @param [in] encChannel 编码器通道 1~2
-    * @param [in] resolution 编码器转一圈的脉冲数
-    * @param [in] lead 编码器转一圈传送带行走距离
-    * @param [in] wpAxis 工件坐标系编号 针对跟踪运动功能选择工件坐标系编号，跟踪抓取、TPD跟踪设为0
-    * @param [in] vision 是否配视觉  0 不配  1 配
-    * @param [in] speedRadio 速度比  针对传送带跟踪抓取选项（1-100）  其他选项默认为1
-    * @return 错误码
+    * @brief  傳動帶參數配置
+    * @param [in] encChannel 編碼器通道 1~2
+    * @param [in] resolution 編碼器轉一圈的脈衝數
+    * @param [in] lead 編碼器轉一圈傳送帶行走距離
+    * @param [in] wpAxis 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
+    * @param [in] vision 是否配視覺 0 不配 1 配
+    * @param [in] speedRadio 速度比  针对傳送帶追蹤抓取選項（1-100）  其他選項默認為1
+    * @return 錯誤碼
     */
     int ConveyorSetParam(int encChannel, int resolution, double lead, int wpAxis, int vision, double speedRadio); 
 
-设置传动带抓取点补偿
+設定傳動皮帶抓取點補償
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 设置传动带抓取点补偿
-    * @param [in] cmp 补偿位置 double[3]{x, y, z}
-    * @return 错误码 
+    * @brief 設定傳動皮帶抓取點補償
+    * @param [in] cmp 補償位置 double[3]{x, y, z}
+    * @return 錯誤碼 
     */ 
     int ConveyorCatchPointComp(Object[] cmp);
 
-传送带工件IO检测
+傳送帶工件IO檢測
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 传送带工件IO检测
-    * @param [in] max_t 最大检测时间，单位ms
-    * @return 错误码 
+    * @brief 傳送帶工件IO檢測
+    * @param [in] max_t 最大檢測時間，單位ms
+    * @return 錯誤碼 
     */ 
     int ConveyorIODetect(int max_t);
 
-获取物体当前位置
+取得物體目前位置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 获取物体当前位置
-    * @param [in] mode 1-跟踪抓取，2-跟踪运动，3-TPD跟踪
-    * @return 错误码 
+    * @brief 取得物體目前位置
+    * @param [in] mode 1-跟踪抓取，2-跟踪運動，3-TPD跟踪
+    * @return 錯誤碼 
     */ 
     int ConveyorGetTrackData(int mode);
 
-传动带跟踪开始
+傳動皮帶追蹤開始
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 传动带跟踪开始
-    * @param [in] status 状态，1-启动，0-停止
-    * @return 错误码 
+    * @brief 傳動皮帶追蹤開始
+    * @param [in] status 狀態，1-啟動，0-停止
+    * @return 錯誤碼 
     */ 
     int ConveyorTrackStart(int status);
 
-传动带跟踪停止
+傳動皮帶追蹤停止
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 传动带跟踪停止
-    * @return 错误码 
+    * @brief 傳動皮帶追蹤停止
+    * @return 錯誤碼 
     */ 
     int ConveyorTrackEnd();
 
-直线运动
+直線運動
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 直线运动
-    * @param [in] name 运动点描述
-    * @param [in] tool 工具坐标号，范围[0~14]
-    * @param [in] wobj 工件坐标号，范围[0~14]
-    * @param [in] vel 速度百分比，范围[0~100]
-    * @param [in] acc 加速度百分比，范围[0~100],暂不开放
-    * @param [in] ovl 速度缩放因子，范围[0~100]
-    * @param [in] blendR [-1.0]-运动到位(阻塞)，[0~1000.0]-平滑半径(非阻塞)，单位mm
-    * @return 错误码 
+    * @brief 直線運動
+    * @param [in] name 運動點描述
+    * @param [in] tool 工具座標號，範圍[0~14]
+    * @param [in] wobj 工件座標號，範圍[0~14]
+    * @param [in] vel 速度百分比，範圍[0~100]
+    * @param [in] acc 加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl 速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @return 錯誤碼 
     */ 
     int ConveyorTrackMoveL(String name, int tool, int wobj, double vel, double acc, double ovl, double blendR);   
 
-代码示例
+代碼範例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -162,40 +162,40 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         int rtn = -1;
-        rtn = robot.ConveyorPointIORecord();//记录IO切入点
+        rtn = robot.ConveyorPointIORecord();//記錄IO切入點
         System.out.println("ConveyorPointIORecord: rtn " + rtn);
 
-        rtn = robot.ConveyorPointARecord();//记录A点
+        rtn = robot.ConveyorPointARecord();//記錄A點
         System.out.println("ConveyorPointARecord: rtn " + rtn);
 
-        rtn = robot.ConveyorRefPointRecord();//记录参考点
+        rtn = robot.ConveyorRefPointRecord();//記錄參考點
         System.out.println("ConveyorRefPointRecord: rtn  " + rtn);
 
-        rtn = robot.ConveyorPointBRecord();//记录B点
+        rtn = robot.ConveyorPointBRecord();//記錄B點
         System.out.println("ConveyorPointBRecord: rtn " + rtn);
 
-        //配置传送带
+        //配置傳送帶
         robot.ConveyorSetParam(1, 10000, 2.0, 1, 1, 20);
         System.out.println("ConveyorSetParam: rtn  " + rtn);
-        //传送带跟踪抓取
+        //傳送帶追蹤抓取
         DescPose pos1 = new DescPose(-351.549,87.914,354.176,-179.679,-0.134,2.468);
         DescPose pos2 = new DescPose(-351.203,-213.393,351.054,-179.932,-0.508,2.472);
 
         Object[] cmp = {0.0, 0.0, 0.0};
-        rtn = robot.ConveyorCatchPointComp(cmp);//设置传动带抓取点补偿
+        rtn = robot.ConveyorCatchPointComp(cmp);//設定傳動皮帶抓取點補償
         if(rtn != 0)
         {
             return;
@@ -205,11 +205,11 @@
         rtn = robot.MoveCart(pos1, 1, 0, 30.0, 180.0, 100.0, -1.0, -1);
         System.out.println("MoveCart: rtn  " + rtn);
 
-        rtn = robot.ConveyorIODetect(10000);//传送带工件IO检测
+        rtn = robot.ConveyorIODetect(10000);//傳送帶工件IO檢測
         System.out.println("ConveyorIODetect: rtn   " + rtn);
 
-        robot.ConveyorGetTrackData(1);//配置传送带跟踪抓取
-        rtn = robot.ConveyorTrackStart(1);//跟踪开始
+        robot.ConveyorGetTrackData(1);//配置傳送帶追蹤抓取
+        rtn = robot.ConveyorTrackStart(1);//追蹤開始
         System.out.println("ConveyorTrackStart: rtn  " + rtn);
 
         rtn = robot.ConveyorTrackMoveL("cvrCatchPoint", 1, 0, 100.0, 0.0, 100.0, -1.0);
@@ -221,7 +221,7 @@
         rtn = robot.ConveyorTrackMoveL("cvrRaisePoint", 1, 0, 100.0, 0.0, 100.0, -1.0);
         System.out.println("ConveyorTrackMoveL: rtn   " + rtn);
 
-        rtn = robot.ConveyorTrackEnd();//传送带跟踪停止
+        rtn = robot.ConveyorTrackEnd();//傳送帶追蹤停止
         System.out.println("ConveyorTrackEnd: rtn  " + rtn);
 
         rtn = robot.MoveCart(pos2, 1, 0, 30.0, 180.0, 100.0, -1.0, -1);

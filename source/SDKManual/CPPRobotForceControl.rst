@@ -1,64 +1,64 @@
-机器人力控
+機器人力控
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-力传感器配置
+力感測器配置
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  配置力传感器
-    * @param  [in] company  力传感器厂商，17-坤维科技
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
-    */
-    errno_t  FT_SetConfig(int company, int device, int softvesion, int bus);
+	 * @brief  配置力感測器
+	 * @param  [in] company  力傳感器廠商，17-坤維科技，19-航天十一院，20-ATI传感器，21-中科米點，22-伟航敏芯，23-NBIT，24-鑫精诚(XJC)，26-NSR
+	 * @param  [in] device  設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0 -WHC6L-YB-10A)，NBIT(0-XLH93003ACS)，鑫精誠XJC(0-XJC-6F-D82)，NSR(0-NSR-FTSensorA)
+	 * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+	 * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+	 * @return  錯誤碼
+	 */
+    errno_t FT_SetConfig(int company, int device, int softvesion, int bus);
 
-获取力传感器配置
+取得力傳感器配置
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取力传感器配置
-    * @param  [in] company  力传感器厂商，待定
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  取得力傳感器配置
+    * @param  [in] company  力传感器廠商，待定
+    * @param  [in] device  設備號，暫不使用，預設為0
+    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     errno_t  FT_GetConfig(int *company, int *device, int *softvesion, int *bus);
 
-力传感器激活
+力傳感器激活
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  力传感器激活
-    * @param  [in] act  0-复位，1-激活
-    * @return  错误码
+    * @brief  力傳感器激活
+    * @param  [in] act  0-復位，1-激活
+    * @return  錯誤碼
     */
     errno_t  FT_Activate(uint8_t act);
 
-力传感器校零
+力傳感器校零
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  力传感器校零
-    * @param  [in] act  0-去除零点，1-零点矫正
-    * @return  错误码
+    * @brief  力傳感器校零
+    * @param  [in] act  0-去除零點，1-零點矯正
+    * @return  錯誤碼
     */
     errno_t  FT_SetZero(uint8_t act);   
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -76,8 +76,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         int company = 17;
         int device = 0;
@@ -119,68 +119,68 @@
         return 0;
     }
 
-设置力传感器参考坐标系
-+++++++++++++++++++++++
+設定力道感測器參考座標系
++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  设置力传感器参考坐标系
-    * @param  [in] ref  0-工具坐标系，1-基坐标系
-    * @return  错误码
+    * @brief  設定力道感測器參考座標系
+    * @param  [in] ref  0-工具座標系，1-基坐標系
+    * @return  錯誤碼
     */
     errno_t  FT_SetRCS(uint8_t ref); 
 
-负载重量辨识记录
+負載重量辨識記錄
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  负载重量辨识记录
-    * @param  [in] id  传感器坐标系编号，范围[1~14]
-    * @return  错误码
+    * @brief  負載重量辨識記錄
+    * @param  [in] id  传感器座標系編號，範圍[1~14]
+    * @return  錯誤碼
     */
     errno_t  FT_PdIdenRecord(int id);   
 
-负载重量辨识计算
+負載重量辨識計算
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  负载重量辨识计算
-    * @param  [out] weight  负载重量，单位kg
-    * @return  错误码
+    * @brief  負載重量辨識計算
+    * @param  [out] weight  負載重量，單位kg
+    * @return  錯誤碼
     */   
     errno_t  FT_PdIdenCompute(float *weight);
 
-负载质心辨识记录
+負載質心辨識記錄
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  负载质心辨识记录
-    * @param  [in] id  传感器坐标系编号，范围[1~14]
-    * @param  [in] index 点编号，范围[1~3]
-    * @return  错误码
+    * @brief  負載質心辨識記錄
+    * @param  [in] id  传感器座標系編號，範圍[1~14]
+    * @param  [in] index 點編號，範圍[1~3]
+    * @return  錯誤碼
     */
     errno_t  FT_PdCogIdenRecord(int id, int index);    
 
-负载质心辨识计算
+負載質心辨識計算
 +++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  负载质心辨识计算
-    * @param  [out] cog  负载质心，单位mm
-    * @return  错误码
+    * @brief  負載質心辨識計算
+    * @param  [out] cog  負載質心，單位mm
+    * @return  錯誤碼
     */   
     errno_t  FT_PdCogIdenCompute(DescTran *cog); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -197,8 +197,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         float weight;
 
@@ -258,49 +258,49 @@
         return 0;
     }
 
-获取参考坐标系下力/扭矩数据
+取得參考坐標系下力/扭力數據
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取参考坐标系下力/扭矩数据
+    * @brief  取得參考坐標系下力/扭力數據
     * @param  [out] ft  力/扭矩，fx,fy,fz,tx,ty,tz
-    * @return  错误码
+    * @return  錯誤碼
     */   
     errno_t  FT_GetForceTorqueRCS(ForceTorque *ft); 
 
-获取力传感器原始力/扭矩数据
+取得力感測器原始力/扭力數據
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  获取力传感器原始力/扭矩数据
+    * @brief  取得力感測器原始力/扭力數據
     * @param  [out] ft  力/扭矩，fx,fy,fz,tx,ty,tz
-    * @return  错误码
+    * @return  錯誤碼
     */   
     errno_t  FT_GetForceTorqueOrigin(ForceTorque *ft); 
 
-碰撞守护
+碰撞守護
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  碰撞守护
-    * @param  [in] flag 0-关闭碰撞守护，1-开启碰撞守护
-    * @param  [in] sensor_id 力传感器编号
-    * @param  [in] select  选择六个自由度是否检测碰撞，0-不检测，1-检测
+    * @brief  碰撞守護
+    * @param  [in] flag 0-關閉碰撞守護，1-開啟碰撞守護
+    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] select  選擇六個自由度是否偵測碰撞，0-不偵測，1-偵測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] max_threshold 最大阈值
-    * @param  [in] min_threshold 最小阈值
-    * @note   力/扭矩检测范围：(ft-min_threshold, ft+max_threshold)
-    * @return  错误码
+    * @param  [in] max_threshold 最大閾值
+    * @param  [in] min_threshold 最小閾值
+    * @note   力/扭力檢測範圍：(ft-min_threshold, ft+max_threshold)
+    * @return  錯誤碼
     */   
     errno_t  FT_Guard(uint8_t flag, int sensor_id, uint8_t select[6], ForceTorque *ft, float max_threshold[6], float min_threshold[6]); 
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -317,8 +317,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         uint8_t flag = 1;
         uint8_t sensor_id = 1;
@@ -364,27 +364,27 @@
         return 0;
     }
 
-恒力控制
+恆力控制
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  恒力控制
-    * @param  [in] flag 0-关闭恒力控制，1-开启恒力控制
-    * @param  [in] sensor_id 力传感器编号
-    * @param  [in] select  选择六个自由度是否检测碰撞，0-不检测，1-检测
+    * @brief  恆力控制
+    * @param  [in] flag 0-關閉恆力控制，1-開啟恆力控制
+    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] select  選擇六個自由度是否偵測碰撞，0-不偵測，1-偵測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] ft_pid 力pid参数，力矩pid参数
-    * @param  [in] adj_sign 自适应启停控制，0-关闭，1-开启
-    * @param  [in] ILC_sign ILC启停控制， 0-停止，1-训练，2-实操
-    * @param  [in] 最大调整距离，单位mm
-    * @param  [in] 最大调整角度，单位deg
-    * @return  错误码
+    * @param  [in] ft_pid 力pid參數，力矩pid參數
+    * @param  [in] adj_sign 自適應啟動停止控制，0-關閉，1-開啟
+    * @param  [in] ILC_sign ILC啟停控制， 0-停止，1-訓練，2-實操
+    * @param  [in] 最大調整距離，單位mm
+    * @param  [in] 最大調整角度，單位deg
+    * @return  錯誤碼
     */   
     errno_t  FT_Control(uint8_t flag, int sensor_id, uint8_t select[6], ForceTorque *ft, float ft_pid[6], uint8_t adj_sign, uint8_t ILC_sign, float max_dis, float max_ang);   
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -401,8 +401,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         uint8_t flag = 1;
         uint8_t sensor_id = 1;
@@ -453,58 +453,58 @@
         return 0;
     }
 
-螺旋线探索
+螺旋線探索
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  螺旋线探索
-    * @param  [in] rcs 参考坐标系，0-工具坐标系，1-基坐标系
-    * @param  [in] dr 每圈半径进给量
-    * @param  [in] ft 力/扭矩阈值，fx,fy,fz,tx,ty,tz，范围[0~100]
-    * @param  [in] max_t_ms 最大探索时间，单位ms
-    * @param  [in] max_vel 最大线速度，单位mm/s
-    * @return  错误码
+    * @brief  螺旋線探索
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基坐標系
+    * @param  [in] dr 每圈半徑進給量
+    * @param  [in] ft 力/扭力閾值，fx,fy,fz,tx,ty,tz，範圍[0~100]
+    * @param  [in] max_t_ms 最大探索時間，單位ms
+    * @param  [in] max_vel 最大線速度，單位mm/s
+    * @return  錯誤碼
     */   
     errno_t  FT_SpiralSearch(int rcs, float dr, float ft, float max_t_ms, float max_vel);  
 
-旋转插入
+旋轉插入
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  旋转插入
-    * @param  [in] rcs 参考坐标系，0-工具坐标系，1-基坐标系
-    * @param  [in] angVelRot 旋转角速度，单位deg/s
-    * @param  [in] ft  力/扭矩阈值，fx,fy,fz,tx,ty,tz，范围[0~100]
-    * @param  [in] max_angle 最大旋转角度，单位deg
-    * @param  [in] orn 力/扭矩方向，1-沿z轴方向，2-绕z轴方向
-    * @param  [in] max_angAcc 最大旋转加速度，单位deg/s^2，暂不使用，默认为0
-    * @param  [in] rotorn  旋转方向，1-顺时针，2-逆时针
-    * @return  错误码
+    * @brief  旋轉插入
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基坐標系
+    * @param  [in] angVelRot 旋轉角速度，單位deg/s
+    * @param  [in] ft  力/扭力閾值，fx,fy,fz,tx,ty,tz，範圍[0~100]
+    * @param  [in] max_angle 最大旋轉角度，單位deg
+    * @param  [in] orn 力/扭力方向，1-沿z軸方向，2-繞z軸方向
+    * @param  [in] max_angAcc 最大旋轉加速度，單位deg/s^2，暫不使用，預設為0
+    * @param  [in] rotorn  旋轉方向，1-順時針，2-逆時針
+    * @return  錯誤碼
     */   
     errno_t  FT_RotInsertion(int rcs, float angVelRot, float ft, float max_angle, uint8_t orn, float max_angAcc, uint8_t rotorn);    
 
-直线插入
+直線插入
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  直线插入
-    * @param  [in] rcs 参考坐标系，0-工具坐标系，1-基坐标系
-    * @param  [in] ft  力/扭矩阈值，fx,fy,fz,tx,ty,tz，范围[0~100]
-    * @param  [in] lin_v 直线速度，单位mm/s
-    * @param  [in] lin_a 直线加速度，单位mm/s^2，暂不使用
-    * @param  [in] max_dis 最大插入距离，单位mm
-    * @param  [in] linorn  插入方向，0-负方向，1-正方向
-    * @return  错误码
+    * @brief  直線插入
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基坐標系
+    * @param  [in] ft  力/扭力閾值，fx,fy,fz,tx,ty,tz，範圍[0~100]
+    * @param  [in] lin_v 直線速度，單位mm/s
+    * @param  [in] lin_a 直線加速度，單位mm/s^2，暫不使用
+    * @param  [in] max_dis 最大插入距離，單位mm
+    * @param  [in] linorn  插入方向，0-負方向，1-正方向
+    * @return  錯誤碼
     */   
     errno_t  FT_LinInsertion(int rcs, float ft, float lin_v, float lin_a, float max_dis, uint8_t linorn);    
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -521,51 +521,51 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
-        //恒力参数
-        uint8_t status = 1;  //恒力控制开启标志，0-关，1-开
-        int sensor_num = 1; //力传感器编号
-        float gain[6] = {0.0001,0.0,0.0,0.0,0.0,0.0};  //最大阈值
-        uint8_t adj_sign = 0;  //自适应启停状态，0-关闭，1-开启
-        uint8_t ILC_sign = 0;  //ILC控制启停状态，0-停止，1-训练，2-实操
-        float max_dis = 100.0;  //最大调整距离
-        float max_ang = 5.0;  //最大调整角度
+        //恒力參數
+        uint8_t status = 1;  //恆力控制開啟标志，0-關，1-開
+        int sensor_num = 1; //力傳感器編號
+        float gain[6] = {0.0001,0.0,0.0,0.0,0.0,0.0};  //最大閾值
+        uint8_t adj_sign = 0;  //自適應啟動停止狀態，0-關閉，1-開啟
+        uint8_t ILC_sign = 0;  //ILC控制啟動停止狀態，0-停止，1-訓練，2-實操
+        float max_dis = 100.0;  //最大調整距離
+        float max_ang = 5.0;  //最大調整角度
 
         ForceTorque ft;
         memset(&ft, 0, sizeof(ForceTorque));
 
-        //螺旋线探索参数
-        int rcs = 0;  //参考坐标系，0-工具坐标系，1-基坐标系
-        float dr = 0.7;  //每圈半径进给量，单位mm
-        float fFinish = 1.0; //力或力矩阈值（0~100），单位N或Nm
-        float t = 60000.0; //最大探索时间，单位ms
-        float vmax = 3.0; //线速度最大值，单位mm/s
+        //螺旋線探索參數
+        int rcs = 0;  //參考座標系，0-工具座標系，1-基坐標系
+        float dr = 0.7;  //每圈半徑進給量，單位mm
+        float fFinish = 1.0; //力或力矩閾值（0~100），單位N或Nm
+        float t = 60000.0; //最大探索時間，單位ms
+        float vmax = 3.0; //線速度最大值，單位mm/s
 
-        //直线插入参数
-        float force_goal = 20.0;  //力或力矩阈值（0~100），单位N或Nm
-        float lin_v = 0.0; //直线速度，单位mm/s
-        float lin_a = 0.0; //直线加速度，单位mm/s^2,暂不使用
-        float disMax = 100.0; //最大插入距离，单位mm
-        uint8_t linorn = 1; //插入方向，1-正方向，2-负方向
+        //直線插入參數
+        float force_goal = 20.0;  //力或力矩閾值（0~100），單位N或Nm
+        float lin_v = 0.0; //直線速度，單位mm/s
+        float lin_a = 0.0; //直線加速度，單位mm/s^2,暫不使用
+        float disMax = 100.0; //最大插入距離，單位mm
+        uint8_t linorn = 1; //插入方向，1-正方向，2-負方向
 
-        //旋转插入参数
-        float angVelRot = 2.0;  //旋转角速度，单位°/s
-        float forceInsertion = 1.0; //力或力矩阈值（0~100），单位N或Nm
-        int angleMax= 45; //最大旋转角度，单位°
+        //旋轉插入參數
+        float angVelRot = 2.0;  //旋轉角速度，單位°/s
+        float forceInsertion = 1.0; //力或力矩閾值（0~100），單位N或Nm
+        int angleMax= 45; //最大旋轉角度，單位°
         uint8_t orn = 1; //力的方向，1-fz,2-mz
-        float angAccmax = 0.0; //最大旋转角加速度，单位°/s^2,暂不使用
-        uint8_t rotorn = 1; //旋转方向，1-顺时针，2-逆时针
+        float angAccmax = 0.0; //最大旋轉角加速度，單位°/s^2,暫不使用
+        uint8_t rotorn = 1; //旋轉方向，1-順時針，2-逆時針
 
-        uint8_t select1[6] = {0,0,1,1,1,0}; //六个自由度选择[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
+        uint8_t select1[6] = {0,0,1,1,1,0}; //六個自由度選擇[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
         ft.fz = -10.0;
         robot.FT_Control(status,sensor_num,select1,&ft,gain,adj_sign,ILC_sign,max_dis,max_ang);
         robot.FT_SpiralSearch(rcs,dr,fFinish,t,vmax);
         status = 0;
         robot.FT_Control(status,sensor_num,select1,&ft,gain,adj_sign,ILC_sign,max_dis,max_ang);
 
-        uint8_t select2[6] = {1,1,1,0,0,0};  //六个自由度选择[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
+        uint8_t select2[6] = {1,1,1,0,0,0};  //六個自由度選擇[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
         gain[0] = 0.00005;
         ft.fz = -30.0;
         status = 1;
@@ -574,7 +574,7 @@
         status = 0;
         robot.FT_Control(status,sensor_num,select2,&ft,gain,adj_sign,ILC_sign,max_dis,max_ang);
 
-        uint8_t select3[6] = {0,0,1,1,1,0};  //六个自由度选择[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
+        uint8_t select3[6] = {0,0,1,1,1,0};  //六個自由度選擇[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
         ft.fz = -10.0;
         gain[0] = 0.0001;
         status = 1;
@@ -583,7 +583,7 @@
         status = 0;
         robot.FT_Control(status,sensor_num,select3,&ft,gain,adj_sign,ILC_sign,max_dis,max_ang);
 
-        uint8_t select4[6] = {1,1,1,0,0,0};  //六个自由度选择[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
+        uint8_t select4[6] = {1,1,1,0,0,0};  //六個自由度選擇[fx,fy,fz,mx,my,mz]，0-不生效，1-生效
         ft.fz = -30.0;
         status = 1;
         robot.FT_Control(status,sensor_num,select4,&ft,gain,adj_sign,ILC_sign,max_dis,max_ang);
@@ -601,41 +601,41 @@
 
     /**
     * @brief  表面定位
-    * @param  [in] rcs 参考坐标系，0-工具坐标系，1-基坐标系
-    * @param  [in] dir  移动方向，1-正方向，2-负方向 
-    * @param  [in] axis 移动轴，1-x轴，2-y轴，3-z轴
-    * @param  [in] lin_v 探索直线速度，单位mm/s
-    * @param  [in] lin_a 探索直线加速度，单位mm/s^2，暂不使用，默认为0
-    * @param  [in] max_dis 最大探索距离，单位mm
-    * @param  [in] ft  动作终止力/扭矩阈值，fx,fy,fz,tx,ty,tz  
-    * @return  错误码
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基坐標系
+    * @param  [in] dir  移動方向，1-正方向，2-負方向 
+    * @param  [in] axis 移動軸，1-x軸，2-y軸，3-z軸
+    * @param  [in] lin_v 探索直線速度，單位mm/s
+    * @param  [in] lin_a 探索直線加速度，單位mm/s^2，暫不使用，默認為0
+    * @param  [in] max_dis 最大探索距離，單位mm
+    * @param  [in] ft  動作终止力/扭力閾值，fx,fy,fz,tx,ty,tz  
+    * @return  錯誤碼
     */   
     errno_t  FT_FindSurface(int rcs, uint8_t dir, uint8_t axis, float lin_v, float lin_a, float max_dis, float ft);   
 
-计算中间平面位置开始
+計算中間平面位置開始
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  计算中间平面位置开始
-    * @return  错误码
+    * @brief  計算中間平面位置開始
+    * @return  錯誤碼
     */   
     errno_t  FT_CalCenterStart();
 
-计算中间平面位置结束
+計算中間平面位置結束
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  计算中间平面位置结束
-    * @param  [out] pos 中间平面位姿
-    * @return  错误码
+    * @brief  計算中間平面位置結束
+    * @param  [out] pos 中間平面位姿
+    * @return  錯誤碼
     */      
     errno_t  FT_CalCenterEnd(DescPose *pos);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -652,8 +652,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         int rcs = 0;
         uint8_t dir = 1;
@@ -710,184 +710,184 @@
         return 0;
     }
 
-柔顺控制开启
+柔順控制開啟
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  柔顺控制开启
-    * @param  [in] p 位置调节系数或柔顺系数
-    * @param  [in] force 柔顺开启力阈值，单位N
-    * @return  错误码
+    * @brief  柔順控制開啟
+    * @param  [in] p 位置調節係數或柔順係數
+    * @param  [in] force 柔順開啟力閾值，單位N
+    * @return  錯誤碼
     */   
     errno_t  FT_ComplianceStart(float p, float force); 
 
-柔顺控制关闭
+柔順控制關閉
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  柔顺控制关闭
-    * @return  错误码
+    * @brief  柔順控制關閉
+    * @return  錯誤碼
     */   
     errno_t  FT_ComplianceStop(); 
 
-负载辨识初始化
+負載辨識初始化
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 负载辨识初始化
-     * @return 错误码
+     * @brief 負載辨識初始化
+     * @return 錯誤碼
      */
     errno_t LoadIdentifyDynFilterInit();
 
-负载辨识初始化
+負載辨識初始化
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 负载辨识初始化
-     * @return 错误码
+     * @brief 負載辨識初始化
+     * @return 錯誤碼
      */
     errno_t LoadIdentifyDynVarInit();
 
-负载辨识主程序
+負荷辨識主程序
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 负载辨识主程序
-     * @param [in] joint_torque 关节扭矩
-     * @param [in] joint_pos 关节位置
-     * @param [in] t 采样周期
-     * @return 错误码
+     * @brief 負荷辨識主程序
+     * @param [in] joint_torque 關節扭矩
+     * @param [in] joint_pos 關節位置
+     * @param [in] t 採樣週期
+     * @return 錯誤碼
      */
     errno_t LoadIdentifyMain(double joint_torque[6], double joint_pos[6], double t);
 
-获取负载辨识结果
+獲取負荷辨識結果
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取负载辨识结果
+     * @brief 獲取負荷辨識結果
      * @param [in] gain  
-     * @param [out] weight 负载重量
-     * @param [out] cog 负载质心
-     * @return 错误码
+     * @param [out] weight 負載重量
+     * @param [out] cog 負載質心
+     * @return 錯誤碼
      */
     errno_t LoadIdentifyGetResult(double gain[12], double *weight, DescTran *cog);
 
-传动带启动、停止
+傳動皮帶啟動、停止
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 传动带启动、停止
-     * @param [in] status 状态，1-启动，0-停止 
-     * @return 错误码
+     * @brief 傳動皮帶啟動、停止
+     * @param [in] status 狀態，1-啟動，0-停止 
+     * @return 錯誤碼
      */
     errno_t ConveyorStartEnd(uint8_t status);
 
-记录IO检测点
+記錄IO檢測點
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 记录IO检测点
-     * @return 错误码
+     * @brief 記錄IO檢測點
+     * @return 錯誤碼
      */
     errno_t ConveyorPointIORecord();
 
-记录A点
+記錄A點
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 记录A点
-     * @return 错误码
+     * @brief 記錄A點
+     * @return 錯誤碼
      */
     errno_t ConveyorPointARecord();
 
-记录参考点
+記錄參考點
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 记录参考点
-     * @return 错误码
+     * @brief 記錄參考點
+     * @return 錯誤碼
      */
     errno_t ConveyorRefPointRecord();
 
-记录B点
+記錄B點
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 记录B点
-     * @return 错误码
+     * @brief 記錄B點
+     * @return 錯誤碼
      */
     errno_t ConveyorPointBRecord();
 
-传送带工件IO检测
+傳送帶工件IO檢測
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 传送带工件IO检测
-     * @param [in] max_t 最大检测时间，单位ms
-     * @return 错误码
+     * @brief 傳送帶工件IO檢測
+     * @param [in] max_t 最大檢測時間，單位ms
+     * @return 錯誤碼
      */
     errno_t ConveyorIODetect(int max_t);
 
-获取物体当前位置
+取得物體目前位置
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取物体当前位置
+     * @brief 取得物體目前位置
      * @param [in] mode 
-     * @return 错误码
+     * @return 錯誤碼
      */
     errno_t ConveyorGetTrackData(int mode);
 
-传动带跟踪开始
+傳動皮帶追蹤開始
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 传动带跟踪开始
-     * @param [in] status 状态，1-启动，0-停止 
-     * @return 错误码
+     * @brief 傳動皮帶追蹤開始
+     * @param [in] status 狀態，1-啟動，0-停止 
+     * @return 錯誤碼
      */
     errno_t ConveyorTrackStart(uint8_t status);
 
-传动带跟踪停止
+傳動皮帶追蹤停止
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 传动带跟踪停止
-     * @return 错误码
+     * @brief 傳動皮帶追蹤停止
+     * @return 錯誤碼
      */
     errno_t ConveyorTrackEnd();
 
-传动带参数配置
+傳動帶參數配置
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -895,18 +895,18 @@
     :linenos:
 
 	/**
-	 * @brief 传动带参数配置
-	 * @param [in] para[0] 编码器通道 1~2
-	 * @param [in] para[1] 编码器转一圈的脉冲数
-	 * @param [in] para[2] 编码器转一圈传送带行走距离
-	 * @param [in] para[3] 工件坐标系编号 针对跟踪运动功能选择工件坐标系编号，跟踪抓取、TPD跟踪设为0
-	 * @param [in] para[4] 是否配视觉  0 不配  1 配
-	 * @param [in] para[5] 速度比  针对传送带跟踪抓取选项（1-100）  其他选项默认为1 
-	 * @return 错误码
+	 * @brief 傳動帶參數配置
+	 * @param [in] para[0] 編碼器通道 1~2
+	 * @param [in] para[1] 編碼器轉一圈的脈衝數
+	 * @param [in] para[2] 編碼器轉一圈傳送帶行走距離
+	 * @param [in] para[3] 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
+	 * @param [in] para[4] 是否配視覺 0 不配 1 配
+	 * @param [in] para[5] 速度比  针对傳送帶追蹤抓取選項（1-100）  其他選項默認為1 
+	 * @return 錯誤碼
 	 */
     errno_t ConveyorSetParam(float param[5]);
 
-传动带抓取点补偿
+傳動帶抓取點補償
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.2.0
 
@@ -914,101 +914,101 @@
     :linenos:
 
 	/**
-	 * @brief 传动带抓取点补偿
-	 * @param [in] cmp 补偿位置 double[3]{x, y, z}
-	 * @return 错误码
+	 * @brief 傳動帶抓取點補償
+	 * @param [in] cmp 補償位置 double[3]{x, y, z}
+	 * @return 錯誤碼
 	 */
     errno_t ConveyorCatchPointComp(double cmp[3]);
 
-直线运动
+直線運動
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 直线运动
-     * @param [in] status 状态，1-启动，0-停止 
-     * @return 错误码
+     * @brief 直線運動
+     * @param [in] status 狀態，1-啟動，0-停止 
+     * @return 錯誤碼
      */
     errno_t TrackMoveL(char name[32], int tool, int wobj, float vel, float acc, float ovl, float blendR, uint8_t flag, uint8_t type);
 
-获取SSH公钥
+取得SSH公鑰
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取SSH公钥
-     * @param [out] keygen 公钥
-     * @return 错误码
+     * @brief 取得SSH公鑰
+     * @param [out] keygen 公鑰
+     * @return 錯誤碼
      */
     errno_t GetSSHKeygen(char keygen[1024]);
 
-下发SCP指令
+下發SCP指令
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 下发SCP指令
-     * @param [in] mode 0-上传（上位机->控制器），1-下载（控制器->上位机）
-     * @param [in] sshname 上位机用户名
-     * @param [in] sship 上位机ip地址
-     * @param [in] usr_file_url 上位机文件路径
-     * @param [in] robot_file_url 机器人控制器文件路径
-     * @return 错误码
+     * @brief 下發SCP指令
+     * @param [in] mode 0-上傳（上位機->控制器），1-下載（控制器->上位機）
+     * @param [in] sshname 上位機用戶名
+     * @param [in] sship 上位機ip位址
+     * @param [in] usr_file_url 上位機檔案路徑
+     * @param [in] robot_file_url 機器人控制器檔案路徑
+     * @return 錯誤碼
      */
     errno_t SetSSHScpCmd(int mode, char sshname[32], char sship[32], char usr_file_url[128], char robot_file_url[128]);
 
-计算指定路径下文件的MD5值
+計算指定路徑下檔案的MD5值
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 计算指定路径下文件的MD5值
-     * @param [in] file_path 文件路径包含文件名，默认Traj文件夹路径为:"/fruser/traj/",如"/fruser/traj/trajHelix_aima_1.txt"
+     * @brief 計算指定路徑下檔案的MD5值
+     * @param [in] file_path 檔案路徑包含檔名，預設Traj資料夾路徑為:"/fruser/traj/",如"/fruser/traj/trajHelix_aima_1.txt"
      * @param [out] md5 文件MD5值
-     * @return 错误码
+     * @return 錯誤碼
      */
     errno_t ComputeFileMD5(char file_path[256], char md5[256]);
 
-获取机器人急停状态
+取得機器人急停狀態
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取机器人急停状态
-     * @param [out] state 急停状态，0-非急停，1-急停
-     * @return 错误码  
+     * @brief 取得機器人急停狀態
+     * @param [out] state 急停狀態，0-非急停，1-急停
+     * @return 錯誤碼  
      */
     errno_t GetRobotEmergencyStopState(uint8_t *state);
 
-获取SDK与机器人的通讯状态
+取得SDK與機器人的通訊狀態
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取SDK与机器人的通讯状态
-     * @param [out]  state 通讯状态，0-通讯正常，1-通讯异常
+     * @brief 取得SDK與機器人的通訊狀態
+     * @param [out]  state 通訊狀態，0-通訊正常，1-通訊異常
      */
     errno_t GetSDKComState(int *state);
 
-获取安全停止信号
+取得安全停止訊號
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief 获取安全停止信号
-     * @param [out]  si0_state 安全停止信号SI0，0-无效，1-有效
-     * @param [out]  si1_state 安全停止信号SI1，0-无效，1-有效
+     * @brief 取得安全停止訊號
+     * @param [out]  si0_state 安全停止訊號SI0，0-無效，1-有效
+     * @param [out]  si1_state 安全停止訊號SI1，0-無效，1-有效
      */
     errno_t GetSafetyStopState(uint8_t *si0_state, uint8_t *si1_state);
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:
@@ -1025,8 +1025,8 @@
 
     int main(void)
     {
-        FRRobot robot;                 //实例化机器人对象
-        robot.RPC("192.168.58.2");     //与机器人控制器建立通信连接
+        FRRobot robot;                 //實例化機器人對象
+        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
 
         uint8_t flag = 1;
         int sensor_id = 1;
@@ -1087,7 +1087,7 @@
         return 0;
     }
 
-代码示例
+代碼範例
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
 
@@ -1096,10 +1096,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -1143,7 +1143,7 @@
         printf("WaitMs retval is: %d \n", retval);
     }
 
-代码示例
+代碼範例
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
 
@@ -1152,10 +1152,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -1208,7 +1208,7 @@
         uint8_t block = 0;
         retval = 0;
         
-        /* 下面是一个传送带抓取流程 */
+        /* 下面是一個传送带抓取流程 */
         DescPose desc_p1;
         desc_p1.tran.x = -351.553;
         desc_p1.tran.y = 87.913;
@@ -1261,7 +1261,7 @@
         return 0;
     }
 
-代码示例
+代碼範例
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.2.0
 
@@ -1270,10 +1270,10 @@
 
     #include "libfairino/robot.h"
 
-    //如果使用Windows，包含下面的头文件
+    //如果使用Windows，包含下面的頭文件
     #include <string.h>
     #include <windows.h>
-    //如果使用linux，包含下面的头文件
+    //如果使用linux，包含下面的頭文件
     /*
     #include <cstdlib>
     #include <iostream>
@@ -1326,7 +1326,7 @@
         return 0;
     }
 
-焊丝寻位开始
+焊絲尋位開始
 +++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -1334,19 +1334,19 @@
     :linenos:
 
     /**
-    * @brief  焊丝寻位开始
-    * @param  [in] refPos  1-基准点 2-接触点
-    * @param  [in] searchVel   寻位速度 %
-    * @param  [in] searchDis  寻位距离 mm
-    * @param  [in] autoBackFlag 自动返回标志，0-不自动；-自动
-    * @param  [in] autoBackVel  自动返回速度 %
-    * @param  [in] autoBackDis  自动返回距离 mm
-    * @param  [in] offectFlag  1-带偏移量寻位；2-示教点寻位
-    * @return  错误码
+    * @brief  焊絲尋位開始
+    * @param  [in] refPos  1-基準點 2-接觸點
+    * @param  [in] searchVel   尋位速度 %
+    * @param  [in] searchDis 尋位距離 mm
+    * @param  [in] autoBackFlag 自動返回標誌，0-不自動；-自動
+    * @param  [in] autoBackVel 自動返回速度 %
+    * @param  [in] autoBackDis 自動返回距離 mm
+    * @param  [in] offectFlag  1-帶偏移量尋位；2-示教點尋位
+    * @return  錯誤碼
     */
      errno_t WireSearchStart(int refPos, float searchVel, int searchDis, int autoBackFlag, float autoBackVel, int autoBackDis, int offectFlag);
 
-焊丝寻位结束
+焊絲尋位結束
 +++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -1354,19 +1354,19 @@
     :linenos:
 
      /**
-      * @brief  焊丝寻位结束
-      * @param  [in] refPos  1-基准点 2-接触点
-      * @param  [in] searchVel   寻位速度 %
-      * @param  [in] searchDis  寻位距离 mm
-      * @param  [in] autoBackFlag 自动返回标志，0-不自动；-自动
-      * @param  [in] autoBackVel  自动返回速度 %
-      * @param  [in] autoBackDis  自动返回距离 mm
-      * @param  [in] offectFlag  1-带偏移量寻位；2-示教点寻位
-      * @return  错误码
+      * @brief  焊絲尋位結束
+      * @param  [in] refPos  1-基準點 2-接觸點
+      * @param  [in] searchVel   尋位速度 %
+      * @param  [in] searchDis 尋位距離 mm
+      * @param  [in] autoBackFlag 自動返回標誌，0-不自動；-自動
+      * @param  [in] autoBackVel 自動返回速度 %
+      * @param  [in] autoBackDis 自動返回距離 mm
+      * @param  [in] offectFlag  1-帶偏移量尋位；2-示教點尋位
+      * @return  錯誤碼
       */
      errno_t WireSearchEnd(int refPos, float searchVel, int searchDis, int autoBackFlag, float autoBackVel, int autoBackDis, int offectFlag);
 
-计算焊丝寻位偏移量
+計算焊絲尋位偏移量
 +++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -1374,18 +1374,18 @@
     :linenos:
 
      /**
-      * @brief  计算焊丝寻位偏移量
-      * @param  [in] seamType  焊缝类型
-      * @param  [in] method   计算方法
-      * @param  [in] varNameRef 基准点1-6，“#”表示无点变量
-      * @param  [in] varNameRes 接触点1-6，“#”表示无点变量
-      * @param  [out] offectFlag 0-偏移量直接叠加到指令点；1-偏移量需要对指令点进行坐标变换
+      * @brief  計算焊絲尋位偏移量
+      * @param  [in] seamType 焊縫類型
+      * @param  [in] method   計算方法
+      * @param  [in] varNameRef 基準點1-6，「#」表示無點變數
+      * @param  [in] varNameRes 接觸點1-6，「#」表示無點變數
+      * @param  [out] offectFlag 0-偏移量直接疊加到指令點；1-偏移量需要對指令點進行座標變換
       * @param  [out] offect 偏移位姿[x, y, z, a, b, c]
-      * @return  错误码
+      * @return  錯誤碼
       */
      errno_t GetWireSearchOffset(int seamType, int method, std::vector<std::string> varNameRef, std::vector<std::string> varNameRes, int& offectFlag, DescPose& offect);
 
-等待焊丝寻位完成
+等待焊絲尋位完成
 +++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -1393,12 +1393,12 @@
     :linenos:
 
      /**
-      * @brief  等待焊丝寻位完成
-      * @return  错误码
+      * @brief  等待焊絲尋位完成
+      * @return  錯誤碼
       */
      errno_t WireSearchWait(std::string varName);
 
-焊丝寻位接触点写入数据库
+焊絲尋位接觸點寫入資料庫
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1406,14 +1406,14 @@
     :linenos:
 
      /**
-      * @brief  焊丝寻位接触点写入数据库
-      * @param  [in] varName  接触点名称 “RES0” ~ “RES99”
-      * @param  [in] pos  接触点数据[x, y, x, a, b, c]
-      * @return  错误码
+      * @brief  焊絲尋位接觸點寫入資料庫
+      * @param  [in] varName  接觸點名稱 “RES0” ~ “RES99”
+      * @param  [in] pos 接觸點數據[x, y, x, a, b, c]
+      * @return  錯誤碼
       */
      errno_t SetPointToDatabase(std::string varName, DescPose pos);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1448,26 +1448,26 @@
     JointPos jointREF1B = { -133.133, -119.029, -83.326, -70.976, 89.069, 91.401 };
 
     rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF0A, &descREF0A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-    robot->MoveL(&jointREF0B, &descREF0B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+    robot->MoveL(&jointREF0A, &descREF0A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+    robot->MoveL(&jointREF0B, &descREF0B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
     rtn1 = robot->WireSearchWait("REF0");
     rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
     rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF1A, &descREF1A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-    robot->MoveL(&jointREF1B, &descREF1B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+    robot->MoveL(&jointREF1A, &descREF1A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+    robot->MoveL(&jointREF1B, &descREF1B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
     rtn1 = robot->WireSearchWait("REF1");
     rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
     rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF0A, &descREF0A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-    robot->MoveL(&jointREF0B, &descREF0B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+    robot->MoveL(&jointREF0A, &descREF0A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+    robot->MoveL(&jointREF0B, &descREF0B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
     rtn1 = robot->WireSearchWait("RES0");
     rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
     rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF1A, &descREF1A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-    robot->MoveL(&jointREF1B, &descREF1B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+    robot->MoveL(&jointREF1A, &descREF1A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+    robot->MoveL(&jointREF1B, &descREF1B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
     rtn1 = robot->WireSearchWait("RES1");
     rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
@@ -1482,7 +1482,7 @@
     robot->PointsOffsetDisable();
     }
 
-电弧跟踪控制
+電弧追蹤控制
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1490,29 +1490,29 @@
     :linenos:
 
      /**
-      * @brief  电弧跟踪控制
-      * @param  [in] flag 开关，0-关；1-开
-      * @param  [in] dalayTime 滞后时间，单位ms
-      * @param  [in] isLeftRight 左右偏差补偿
-      * @param  [in] klr 左右调节系数(灵敏度);
-      * @param  [in] tStartLr 左右开始补偿时间cyc
-      * @param  [in] stepMaxLr 左右每次最大补偿量 mm
-      * @param  [in] sumMaxLr 左右总计最大补偿量 mm
-      * @param  [in] isUpLow 上下偏差补偿
-      * @param  [in] kud 上下调节系数(灵敏度);
-      * @param  [in] tStartUd 上下开始补偿时间cyc
-      * @param  [in] stepMaxUd 上下每次最大补偿量 mm
+      * @brief  電弧追蹤控制
+      * @param  [in] flag 開關，0-關；1-開
+      * @param  [in] dalayTime 滯後時間，單位ms
+      * @param  [in] isLeftRight 左右偏差補償
+      * @param  [in] klr 左右調節係數(靈敏度);
+      * @param  [in] tStartLr 左右開始補償時間cyc
+      * @param  [in] stepMaxLr 左右每次最大補償量 mm
+      * @param  [in] sumMaxLr 左右總計最大補償量 mm
+      * @param  [in] isUpLow 上下偏差補償
+      * @param  [in] kud 上下調節係數(靈敏度);
+      * @param  [in] tStartUd 上下開始補償時間cyc
+      * @param  [in] stepMaxUd 上下每次最大補償量 mm
       * @param  [in] sumMaxUd 上下总计最大补偿量
-      * @param  [in] axisSelect 上下坐标系选择，0-摆动；1-工具；2-基座
-      * @param  [in] referenceType 上下基准电流设定方式，0-反馈；1-常数
-      * @param  [in] referSampleStartUd 上下基准电流采样开始计数(反馈);，cyc
-      * @param  [in] referSampleCountUd 上下基准电流采样循环计数(反馈);，cyc
-      * @param  [in] referenceCurrent 上下基准电流mA
-      * @return  错误码
+      * @param  [in] axisSelect 上下座標系選擇，0-擺動；1-工具；2-基座
+      * @param  [in] referenceType 上下基準電流設定方式，0-回饋；1-常數
+      * @param  [in] referSampleStartUd 上下基準電流取樣開始計數(回饋);，cyc
+      * @param  [in] referSampleCountUd 上下基準電流取樣循環計數(回饋);，cyc
+      * @param  [in] referenceCurrent 上下基準電流mA
+      * @return  錯誤碼
       */
      errno_t ArcWeldTraceControl(int flag, double delaytime, int isLeftRight, double klr, double tStartLr, double stepMaxLr, double sumMaxLr, int isUpLow, double kud, double tStartUd, double stepMaxUd, double sumMaxUd, int axisSelect, int referenceType, double referSampleStartUd, double referSampleCountUd, double referenceCurrent);
 
-设置电弧跟踪输入信号端口
+設定電弧追蹤輸入訊號端口
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1520,13 +1520,13 @@
     :linenos:
 
      /**
-      * @brief  设置电弧跟踪输入信号端口
-      * @param  [in] channel 电弧跟踪AI通带选择,[0-3]
-      * @return  错误码
+      * @brief  設定電弧追蹤輸入訊號端口
+      * @param  [in] channel 電弧追蹤AI通帶選擇,[0-3]
+      * @return  錯誤碼
       */
      errno_t ArcWeldTraceExtAIChannelConfig(int channel);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1557,7 +1557,7 @@
     return 0;
     }
 
-力传感器辅助拖动
+力道感測器輔助拖曳
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1565,21 +1565,21 @@
     :linenos:
 
      /**
-      * @brief  力传感器辅助拖动
-      * @param  [in] status 控制状态，0-关闭；1-开启
-      * @param  [in] asaptiveFlag 自适应开启标志，0-关闭；1-开启
-      * @param  [in] interfereDragFlag 干涉区拖动标志，0-关闭；1-开启
-      * @param  [in] M 惯性系数
-      * @param  [in] B 阻尼系数
-      * @param  [in] K 刚度系数
-      * @param  [in] F 拖动六维力阈值
-      * @param  [in] Fmax 最大拖动力限制
-      * @param  [in] Vmax 最大关节速度限制
-      * @return  错误码
+      * @brief  力道感測器輔助拖曳
+      * @param  [in] status 控制狀態，0-關閉；1-開啟
+      * @param  [in] asaptiveFlag 自適應開啟標誌，0-關閉；1-開啟
+      * @param  [in] interfereDragFlag 干涉區拖曳標誌，0-關閉；1-開啟
+      * @param  [in] M 慣性係數
+      * @param  [in] B 阻尼係數
+      * @param  [in] K 剛度係數
+      * @param  [in] F 拖曳六維力閾值
+      * @param  [in] Fmax 最大拖動力限制
+      * @param  [in] Vmax 最大關節速度限制
+      * @return  錯誤碼
       */
      errno_t EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, std::vector<double> M, std::vector<double> B, std::vector<double> K, std::vector<double> F, double Fmax, double Vmax);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1599,7 +1599,7 @@
     robot->EndForceDragControl(0, 0, 0, M, B, K, F, 50, 100);
     }
 
-报错清除后力传感器自动开启
+報錯清除後力感知器自動開啟
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1607,13 +1607,13 @@
     :linenos:
 
      /**
-      * @brief  报错清除后力传感器自动开启
-      * @param  [in] status 控制状态，0-关闭；1-开启
-      * @return  错误码
+      * @brief  報錯清除後力感知器自動開啟
+      * @param  [in] status 控制狀態，0-關閉；1-開啟
+      * @return  錯誤碼
       */
      errno_t SetForceSensorDragAutoFlag(int status);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1631,7 +1631,7 @@
     return 0;
     }
 
-设置六维力和关节阻抗混合拖动开关及参数
+設定六維力和關節阻抗混合拖曳開關及參數
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1639,19 +1639,19 @@
     :linenos:
 
      /**
-      * @brief  设置六维力和关节阻抗混合拖动开关及参数
-      * @param  [in] status 控制状态，0-关闭；1-开启
-      * @param  [in] impedanceFlag 阻抗开启标志，0-关闭；1-开启
-      * @param  [in] lamdeDain 拖动增益
-      * @param  [in] KGain 刚度增益
+      * @brief  設定六維力和關節阻抗混合拖曳開關及參數
+      * @param  [in] status 控制狀態，0-關閉；1-開啟
+      * @param  [in] impedanceFlag 阻抗開啟標誌，0-關閉；1-開啟
+      * @param  [in] lamdeDain 拖曳增益
+      * @param  [in] KGain 剛度增益
       * @param  [in] BGain 阻尼增益
-      * @param  [in] dragMaxTcpVel 拖动末端最大线速度限制
-      * @param  [in] dragMaxTcpOriVel 拖动末端最大角速度限制
-      * @return  错误码
+      * @param  [in] dragMaxTcpVel 拖曳末端最大線速度限制
+      * @param  [in] dragMaxTcpOriVel 拖曳末端最大角速度限制
+      * @return  錯誤碼
       */
      errno_t ForceAndJointImpedanceStartStop(int status, int impedanceFlag, std::vector<double> lamdeDain, std::vector<double> KGain, std::vector<double> BGain, double dragMaxTcpVel, double dragMaxTcpOriVel);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1674,7 +1674,7 @@
     return 0;
     }
 
-获取力传感器拖动开关状态
+取得力道感測器拖曳開關狀態
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1682,14 +1682,14 @@
     :linenos:
 
      /**
-      * @brief  获取力传感器拖动开关状态
-      * @param  [out] dragState 力传感器辅助拖动控制状态，0-关闭；1-开启
-      * @param  [out] sixDimensionalDragState 六维力辅助拖动控制状态，0-关闭；1-开启
-      * @return  错误码
+      * @brief  取得力道感測器拖曳開關狀態
+      * @param  [out] dragState 力道感測器輔助拖曳控制狀態，0-關閉；1-開啟
+      * @param  [out] sixDimensionalDragState 六維力輔助拖曳控制狀態，0-關閉；1-開啟
+      * @return  錯誤碼
       */
      errno_t GetForceAndTorqueDragState(int& dragState, int& sixDimensionalDragState);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1733,7 +1733,7 @@
     return 0;
     }
 
-设置力传感器下负载重量
+設定力道感測器下負載重量
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1741,13 +1741,13 @@
     :linenos:
 
      /**
-      * @brief  设置力传感器下负载重量
-      * @param  [in] weight 负载重量 kg
-      * @return  错误码
+      * @brief  設定力道感測器下負載重量
+      * @param  [in] weight 負載重量 kg
+      * @return  錯誤碼
       */
      errno_t SetForceSensorPayload(double weight);
 
-设置力传感器下负载质心
+設定力道感測器下負載質心
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1755,15 +1755,15 @@
     :linenos:
 
      /**
-      * @brief  设置力传感器下负载质心
-      * @param  [in] x 负载质心x mm
-      * @param  [in] y 负载质心y mm
-      * @param  [in] z 负载质心z mm
-      * @return  错误码
+      * @brief  設定力道感測器下負載質心
+      * @param  [in] x 負載質心x mm
+      * @param  [in] y 負載質心y mm
+      * @param  [in] z 負載質心z mm
+      * @return  錯誤碼
       */
      errno_t SetForceSensorPayloadCog(double x, double y, double z);
 
-获取力传感器下负载重量
+取得力道感測器下負載重量
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1771,13 +1771,13 @@
     :linenos:
     
      /**
-      * @brief  获取力传感器下负载重量
-      * @param  [in] weight 负载重量 kg
-      * @return  错误码
+      * @brief  取得力道感測器下負載重量
+      * @param  [in] weight 負載重量 kg
+      * @return  錯誤碼
       */
      errno_t GetForceSensorPayload(double& weight);
 
-获取力传感器下负载质心
+取得力感測器下負載質心
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1785,15 +1785,15 @@
     :linenos:
 
      /**
-      * @brief  获取力传感器下负载质心
-      * @param  [out] x 负载质心x mm
-      * @param  [out] y 负载质心y mm
-      * @param  [out] z 负载质心z mm
-      * @return  错误码
+      * @brief  取得力感測器下負載質心
+      * @param  [out] x 負載質心x mm
+      * @param  [out] y 負載質心y mm
+      * @param  [out] z 負載質心z mm
+      * @return  錯誤碼
       */
      errno_t GetForceSensorPayloadCog(double& x, double& y, double& z);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1813,7 +1813,7 @@
     return 0;
     }
 
-力传感器自动校零
+力傳感器自動校零
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1821,14 +1821,14 @@
     :linenos:
 
      /**
-      * @brief  力传感器自动校零
+      * @brief  力傳感器自動校零
       * @param  [out] weight 传感器质量 kg
       * @param  [out] pos 传感器质心 mm
-      * @return  错误码
+      * @return  錯誤碼
       */
      errno_t ForceSensorAutoComputeLoad(double& weight, DescTran& pos);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1846,7 +1846,7 @@
     return 0;
     }
 
-设置焊接工艺曲线参数
+設定焊接製程曲線參數
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1854,21 +1854,21 @@
     :linenos:
 
      /**
-      * @brief  设置焊接工艺曲线参数
-      * @param  [in] id 焊接工艺编号(1-99)
-      * @param  [in] startCurrent 起弧电流(A)
-      * @param  [in] startVoltage 起弧电压(V)
-      * @param  [in] startTime 起弧时间(ms)
-      * @param  [in] weldCurrent 焊接电流(A)
-      * @param  [in] weldVoltage 焊接电压(V)
-      * @param  [in] endCurrent 收弧电流(A)
-      * @param  [in] endVoltage 收弧电压(V)
-      * @param  [in] endTime 收弧时间(ms)
-      * @return  错误码
+      * @brief  設定焊接製程曲線參數
+      * @param  [in] id 焊接工藝編號(1-99)
+      * @param  [in] startCurrent 起弧電流(A)
+      * @param  [in] startVoltage 起弧電壓(V)
+      * @param  [in] startTime 起弧時間(ms)
+      * @param  [in] weldCurrent 焊接電流(A)
+      * @param  [in] weldVoltage 焊接電壓(V)
+      * @param  [in] endCurrent 收弧電流(A)
+      * @param  [in] endVoltage 收弧電壓(V)
+      * @param  [in] endTime 收弧時間(ms)
+      * @return  錯誤碼
       */
      errno_t WeldingSetProcessParam(int id, double startCurrent, double startVoltage, double startTime, double weldCurrent, double weldVoltage, double endCurrent, double endVoltage, double endTime);
 
-获取焊接工艺曲线参数
+取得焊接製程曲線參數
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1876,21 +1876,21 @@
     :linenos:
 
      /**
-      * @brief  获取焊接工艺曲线参数
-      * @param  [in] id 焊接工艺编号(1-99)
-      * @param  [out] startCurrent 起弧电流(A)
-      * @param  [out] startVoltage 起弧电压(V)
-      * @param  [out] startTime 起弧时间(ms)
-      * @param  [out] weldCurrent 焊接电流(A)
-      * @param  [out] weldVoltage 焊接电压(V)
-      * @param  [out] endCurrent 收弧电流(A)
-      * @param  [out] endVoltage 收弧电压(V)
-      * @param  [out] endTime 收弧时间(ms)
-      * @return  错误码
+      * @brief  取得焊接製程曲線參數
+      * @param  [in] id 焊接工藝編號(1-99)
+      * @param  [out] startCurrent 起弧電流(A)
+      * @param  [out] startVoltage 起弧電壓(V)
+      * @param  [out] startTime 起弧時間(ms)
+      * @param  [out] weldCurrent 焊接電流(A)
+      * @param  [out] weldVoltage 焊接電壓(V)
+      * @param  [out] endCurrent 收弧電流(A)
+      * @param  [out] endVoltage 收弧電壓(V)
+      * @param  [out] endTime 收弧時間(ms)
+      * @return  錯誤碼
       */
      errno_t WeldingGetProcessParam(int id, double& startCurrent, double& startVoltage, double& startTime, double& weldCurrent, double& weldVoltage, double& endCurrent, double& endVoltage, double& endTime);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1919,7 +1919,7 @@
     return 0;
     }
 
-末端传感器配置
+末端感測器配置
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1927,16 +1927,16 @@
     :linenos:
 
     /**
-    * @brief  末端传感器配置
-    * @param  [in] idCompany 厂商，18-JUNKONG；25-HUIDE
-    * @param  [in] idDevice 类型，0-JUNKONG/RYR6T.V1.0
-    * @param  [in] idSoftware 软件版本，0-J1.0/HuiDe1.0(暂未开放)
-    * @param  [in] idBus 挂载位置，1-末端1号口；2-末端2号口...8-末端8号口(暂未开放)
-    * @return  错误码
+    * @brief  末端感測器配置
+    * @param  [in] idCompany 廠商，18-JUNKONG；25-HUIDE
+    * @param  [in] idDevice 類型，0-JUNKONG/RYR6T.V1.0
+    * @param  [in] idSoftware 軟體版本，0-J1.0/HuiDe1.0(暫未開放)
+    * @param  [in] idBus 掛載位置，1-末端1號口；2-末端2號口...8-末端8號口(暫未開放)
+    * @return  錯誤碼
     */
     errno_t AxleSensorConfig(int idCompany, int idDevice, int idSoftware, int idBus);
 
-获取末端传感器配置
+取得末端傳感器配置
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1944,14 +1944,14 @@
     :linenos:
 
      /**
-      * @brief  获取末端传感器配置
-      * @param  [out] idCompany 厂商，18-JUNKONG；25-HUIDE
-      * @param  [out] idDevice 类型，0-JUNKONG/RYR6T.V1.0
-      * @return  错误码
+      * @brief  取得末端傳感器配置
+      * @param  [out] idCompany 廠商，18-JUNKONG；25-HUIDE
+      * @param  [out] idDevice 類型，0-JUNKONG/RYR6T.V1.0
+      * @return  錯誤碼
       */
     errno_t AxleSensorConfigGet(int& idCompany, int& idDevice);
 
-末端传感器激活
+末端感測器激活
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1959,13 +1959,13 @@
     :linenos:
 
      /**
-      * @brief  末端传感器激活
-      * @param  [in] actFlag 0-复位；1-激活
-      * @return  错误码
+      * @brief  末端感測器激活
+      * @param  [in] actFlag 0-復位；1-激活
+      * @return  錯誤碼
       */
     errno_t AxleSensorActivate(int actFlag);
 
-末端传感器寄存器写入
+末端感測器暫存器寫入
 +++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -1973,19 +1973,19 @@
     :linenos:
 
      /**
-      * @brief  末端传感器寄存器写入
-      * @param  [in] devAddr  设备地址编号 0-255
-      * @param  [in] regHAddr 寄存器地址高8位
-      * @param  [in] regLAddr 寄存器地址低8位
-      * @param  [in] regNum  寄存器个数 0-255
-      * @param  [in] data1 写入寄存器数值1
-      * @param  [in] data2 写入寄存器数值2
+      * @brief  末端感測器暫存器寫入
+      * @param  [in] devAddr 設備地址編號 0-255
+      * @param  [in] regHAddr 暫存器位址高8位
+      * @param  [in] regLAddr 暫存器地址低8位
+      * @param  [in] regNum 暫存器數 0-255
+      * @param  [in] data1 写入暫存器数值1
+      * @param  [in] data2 写入暫存器数值2
       * @param  [in] isNoBlock 0-阻塞；1-非阻塞
-      * @return  错误码
+      * @return  錯誤碼
       */
     errno_t AxleSensorRegWrite(int devAddr, int regHAddr, int regLAddr, int regNum, int data1, int data2, int isNoBlock);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2011,7 +2011,7 @@
 
     }
 
-设置控制箱DO停止/暂停后输出是否复位
+設定控制箱DO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2019,13 +2019,13 @@
     :linenos:
 
     /**
-     * @brief  设置控制箱DO停止/暂停后输出是否复位
-     * @param  [in] resetFlag  0-不复位；1-复位
-     * @return  错误码
+     * @brief  設定控制箱DO停止/暫停後輸出是否重設
+     * @param  [in] resetFlag  0-不復位；1-復位
+     * @return  錯誤碼
      */
     errno_t SetOutputResetCtlBoxDO(int resetFlag);
 
-设置控制箱AO停止/暂停后输出是否复位
+設定控制箱AO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2033,13 +2033,13 @@
     :linenos:
 
      /**
-      * @brief  设置控制箱AO停止/暂停后输出是否复位
-      * @param  [in] resetFlag  0-不复位；1-复位
-      * @return  错误码
+      * @brief  設定控制箱AO停止/暫停後輸出是否重設
+      * @param  [in] resetFlag  0-不復位；1-復位
+      * @return  錯誤碼
       */
     errno_t SetOutputResetCtlBoxAO(int resetFlag);
 
-设置末端工具DO停止/暂停后输出是否复位
+設定末端工具DO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2047,13 +2047,13 @@
     :linenos:
 
      /**
-      * @brief  设置末端工具DO停止/暂停后输出是否复位
-      * @param  [in] resetFlag  0-不复位；1-复位
-      * @return  错误码
+      * @brief  設定末端工具DO停止/暫停後輸出是否重設
+      * @param  [in] resetFlag  0-不復位；1-復位
+      * @return  錯誤碼
       */
     errno_t SetOutputResetAxleDO(int resetFlag);
  
-设置末端工具AO停止/暂停后输出是否复位
+設定末端工具AO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2061,13 +2061,13 @@
     :linenos:
 
      /**
-      * @brief  设置末端工具AO停止/暂停后输出是否复位
-      * @param  [in] resetFlag  0-不复位；1-复位
-      * @return  错误码
+      * @brief  設定末端工具AO停止/暫停後輸出是否重設
+      * @param  [in] resetFlag  0-不復位；1-復位
+      * @return  錯誤碼
       */
     errno_t SetOutputResetAxleAO(int resetFlag);
  
-设置扩展DO停止/暂停后输出是否复位
+設定擴充DO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2075,13 +2075,13 @@
     :linenos:
 
      /**
-      * @brief  设置扩展DO停止/暂停后输出是否复位
-      * @param  [in] resetFlag  0-不复位；1-复位
-      * @return  错误码
+      * @brief  設定擴充DO停止/暫停後輸出是否重設
+      * @param  [in] resetFlag  0-不復位；1-復位
+      * @return  錯誤碼
       */
     errno_t SetOutputResetExtDO(int resetFlag);
  
-设置扩展AO停止/暂停后输出是否复位
+設定擴充AO停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2089,13 +2089,13 @@
     :linenos:
 
      /**
-      * @brief  设置扩展AO停止/暂停后输出是否复位
-      * @param  [in] resetFlag  0-不复位；1-复位
-      * @return  错误码
+      * @brief  設定擴充AO停止/暫停後輸出是否重設
+      * @param  [in] resetFlag  0-不復位；1-復位
+      * @return  錯誤碼
       */
     errno_t SetOutputResetExtAO(int resetFlag);
  
-设置SmartTool停止/暂停后输出是否复位
+設定SmartTool停止/暫停後輸出是否重設
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2103,13 +2103,13 @@
     :linenos:
 
      /**
-      * @brief  设置SmartTool停止/暂停后输出是否复位
-      * @param  [in] resetFlag  0-不复位；1-复位
-      * @return  错误码
+      * @brief  設定SmartTool停止/暫停後輸出是否重設
+      * @param  [in] resetFlag  0-不復位；1-復位
+      * @return  錯誤碼
       */
     errno_t SetOutputResetSmartToolDO(int resetFlag);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2129,7 +2129,7 @@
     return 0;
     }
  
-仿真摆动开始
+仿真擺盪開始
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2137,13 +2137,13 @@
     :linenos:
 
      /**
-      * @brief  仿真摆动开始
-      * @param  [in] weaveNum  摆动参数编号
-      * @return  错误码
+      * @brief  仿真擺盪開始
+      * @param  [in] weaveNum  擺動參數編號
+      * @return  錯誤碼
       */
     errno_t WeaveStartSim(int weaveNum);
  
-仿真摆动结束
+仿真擺盪結束
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2151,13 +2151,13 @@
     :linenos:
 
      /**
-      * @brief  仿真摆动结束
-      * @param  [in] weaveNum  摆动参数编号
-      * @return  错误码
+      * @brief  仿真擺盪結束
+      * @param  [in] weaveNum  擺動參數編號
+      * @return  錯誤碼
       */
     errno_t WeaveEndSim(int weaveNum);
  
-开始轨迹检测预警(不运动)
+開始軌跡偵測預警(不運動)
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2165,13 +2165,13 @@
     :linenos:
 
      /**
-      * @brief  开始轨迹检测预警(不运动)
-      * @param  [in] weaveNum   摆动参数编号
-      * @return  错误码
+      * @brief  開始軌跡偵測預警(不運動)
+      * @param  [in] weaveNum   擺動參數編號
+      * @return  錯誤碼
       */
     errno_t WeaveInspectStart(int weaveNum);
  
-结束轨迹检测预警(不运动)
+結束軌跡偵測預警(不運動)
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2179,13 +2179,13 @@
     :linenos:
 
      /**
-      * @brief 结束轨迹检测预警(不运动)
-      * @param  [in] weaveNum   摆动参数编号
-      * @return  错误码
+      * @brief 結束軌跡偵測預警(不運動)
+      * @param  [in] weaveNum   擺動參數編號
+      * @return  錯誤碼
       */
     errno_t WeaveInspectEnd(int weaveNum);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2226,7 +2226,7 @@
     return 0;
     }
  
-扩展IO-配置焊机气体检测信号
+擴展IO-配置焊機氣體偵測訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2234,13 +2234,13 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊机气体检测信号
-      * @param  [in] DONum  气体检测信号扩展DO编号
-      * @return  错误码
+      * @brief 擴展IO-配置焊機氣體偵測訊號
+      * @param  [in] DONum  氣體偵測訊號擴展DO編號
+      * @return  錯誤碼
       */
     errno_t SetAirControlExtDoNum(int DONum);
  
-扩展IO-配置焊机起弧信号
+擴充IO-配置焊接機起弧訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2248,13 +2248,13 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊机起弧信号
-      * @param  [in] DONum  焊机起弧信号扩展DO编号
-      * @return  错误码
+      * @brief 擴充IO-配置焊接機起弧訊號
+      * @param  [in] DONum  焊机起弧信号扩展DO編號
+      * @return  錯誤碼
       */
     errno_t SetArcStartExtDoNum(int DONum);
  
-扩展IO-配置焊机反向送丝信号
+擴充IO-配置焊接機反向送絲訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2262,13 +2262,13 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊机反向送丝信号
-      * @param  [in] DONum  反向送丝信号扩展DO编号
-      * @return  错误码
+      * @brief 擴充IO-配置焊接機反向送絲訊號
+      * @param  [in] DONum  反向送絲信号扩展DO編號
+      * @return  錯誤碼
       */
     errno_t SetWireReverseFeedExtDoNum(int DONum);
  
-扩展IO-配置焊机正向送丝信号
+擴充IO-配置焊接機正向送絲訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2276,13 +2276,13 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊机正向送丝信号
-      * @param  [in] DONum  正向送丝信号扩展DO编号
-      * @return  错误码
+      * @brief 擴充IO-配置焊接機正向送絲訊號
+      * @param  [in] DONum  正向送絲信号扩展DO編號
+      * @return  錯誤碼
       */
     errno_t SetWireForwardFeedExtDoNum(int DONum);
  
-扩展IO-配置焊机起弧成功信号
+擴充IO-配置焊接機起弧成功訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2290,13 +2290,13 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊机起弧成功信号
-      * @param  [in] DINum  起弧成功信号扩展DI编号
-      * @return  错误码
+      * @brief 擴充IO-配置焊接機起弧成功訊號
+      * @param  [in] DINum  起弧成功訊號擴展DI編號
+      * @return  錯誤碼
       */
     errno_t SetArcDoneExtDiNum(int DINum);
  
-扩展IO-配置焊机准备信号
+擴充IO-配置焊接機準備訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2304,13 +2304,13 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊机准备信号
-      * @param  [in] DINum  焊机准备信号扩展DI编号
-      * @return  错误码
+      * @brief 擴充IO-配置焊接機準備訊號
+      * @param  [in] DINum  焊接機準備訊號擴展DI編號
+      * @return  錯誤碼
       */
     errno_t SetWeldReadyExtDiNum(int DINum);
  
-扩展IO-配置焊接中断恢复信号
+擴展IO-配置焊接中斷恢復訊號
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2318,14 +2318,14 @@
     :linenos:
 
      /**
-      * @brief 扩展IO-配置焊接中断恢复信号
-      * @param  [in] reWeldDINum  焊接中断后恢复焊接信号扩展DI编号
-      * @param  [in] abortWeldDINum  焊接中断后退出焊接信号扩展DI编号
-      * @return  错误码
+      * @brief 擴展IO-配置焊接中斷恢復訊號
+      * @param  [in] reWeldDINum  焊接中斷後恢復焊接訊號擴展DI編號
+      * @param  [in] abortWeldDINum  焊接中斷後退出焊接訊號擴展DI編號
+      * @return  錯誤碼
       */
     errno_t SetExtDIWeldBreakOffRecover(int reWeldDINum, int abortWeldDINum);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2345,7 +2345,7 @@
     return 0;
     }
  
-设置机器人碰撞检测方法
+設定機器人碰撞偵測方法
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2353,13 +2353,13 @@
     :linenos:
 
      /**
-      * @brief 设置机器人碰撞检测方法
-      * @param  [in] method 碰撞检测方法：0-电流模式；1-双编码器；2-电流和双编码器同时开启
-      * @return  错误码
+      * @brief 設定機器人碰撞偵測方法
+      * @param  [in] method 碰撞偵測方法：0-電流模式；1-雙編碼器；2-電流和雙編碼器同時開啟
+      * @return  錯誤碼
       */
     errno_t SetCollisionDetectionMethod(int method);
  
-设置静态下碰撞检测开始关闭
+設定靜態下碰撞偵測開始關閉
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2367,13 +2367,13 @@
     :linenos:
 
      /**
-      * @brief 设置静态下碰撞检测开始关闭
-      * @param  [in] status 0-关闭；1-开启
-      * @return  错误码
+      * @brief 設定靜態下碰撞偵測開始關閉
+      * @param  [in] status 0-關閉；1-開啟
+      * @return  錯誤碼
       */
     errno_t SetStaticCollisionOnOff(int status);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2389,7 +2389,7 @@
     return 0;
     }
  
-关节扭矩功率检测
+關節扭力功率檢測
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2397,14 +2397,14 @@
     :linenos:
 
      /**
-      * @brief 关节扭矩功率检测
-      * @param  [in] status 0-关闭；1-开启
-      * @param  [in] power 设定最大功率(W);
-      * @return  错误码
+      * @brief 關節扭力功率檢測
+      * @param  [in] status 0-關閉；1-開啟
+      * @param  [in] power 設定最大功率(W);
+      * @return  錯誤碼
       */
      errno_t SetPowerLimit(int status, double power);
  
-关节扭矩控制开始
+關節扭矩控制開始
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2412,12 +2412,12 @@
     :linenos:
 
     /**
-    * @brief 关节扭矩控制开始
-    * @return  错误码
+    * @brief 關節扭矩控制開始
+    * @return  錯誤碼
     */
     errno_t ServoJTStart();
  
-关节扭矩控制
+關節扭矩控制
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2425,14 +2425,14 @@
     :linenos:
 
     /**
-    * @brief 关节扭矩控制
-    * @param  [in] torque j1~j6关节扭矩，单位Nm
-    * @param  [in] interval 指令周期，单位s，范围[0.001~0.008]
-    * @return  错误码
+    * @brief 關節扭矩控制
+    * @param  [in] torque j1~j6關節扭矩，單位Nm
+    * @param  [in] interval 指令週期，單位s，範圍[0.001~0.008]
+    * @return  錯誤碼
     */
     errno_t ServoJT(float torque[], double interval);
  
-关节扭矩控制结束
+關節扭矩控制结束
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2440,12 +2440,12 @@
     :linenos:
 
     /**
-    * @brief 关节扭矩控制结束
-    * @return  错误码
+    * @brief 關節扭矩控制结束
+    * @return  錯誤碼
     */
     errno_t ServoJTEnd();
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2460,21 +2460,21 @@
     robot->GetJointTorques(1, torques);
 
     int count = 100;
-    robot->ServoJTStart(); //   #servoJT开始
+    robot->ServoJTStart(); //   #servoJT開始
     int error = 0;
     while (count > 0)
     {
-    torques[0] = torques[0] + 0.1;//  #每次1轴增加0.1NM，运动100次
-    error = robot->ServoJT(torques, 0.001);  //# 关节空间伺服模式运动
+    torques[0] = torques[0] + 0.1;//  #每次1軸增加0.1NM，運動100次
+    error = robot->ServoJT(torques, 0.001);  //# 關節空間伺服模式運動
     count = count - 1;
     robot->Sleep(1);
     }
 
-    error = robot->ServoJTEnd();  //#伺服运动结束
+    error = robot->ServoJTEnd();  //#伺服運動結束
     return 0;
     }
  
-设置机器人 20004 端口反馈周期
+設定機器人 20004 連接埠回饋週期
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2482,13 +2482,13 @@
     :linenos:
 
     /**
-     * @brief 设置机器人 20004 端口反馈周期
-     * @param [in] period 机器人 20004 端口反馈周期(ms)
-     * @return  错误码
+     * @brief 設定機器人 20004 連接埠回饋週期
+     * @param [in] period 機器人 20004 連接埠回饋週期(ms)
+     * @return  錯誤碼
      */
     errno_t SetRobotRealtimeStateSamplePeriod(int period);
  
-获取机器人 20004 端口反馈周期
+取得機器人 20004 連接埠回饋週期
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2496,13 +2496,13 @@
     :linenos:
 
     /**
-     * @brief  获取机器人 20004 端口反馈周期
-     * @param [out] period 机器人 20004 端口反馈周期(ms)
-     * @return  错误码
+     * @brief  取得機器人 20004 連接埠回饋週期
+     * @param [out] period 機器人 20004 連接埠回饋週期(ms)
+     * @return  錯誤碼
      */
     errno_t GetRobotRealtimeStateSamplePeriod(int& period);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2518,7 +2518,7 @@
      robot->Sleep(1000);
      }
  
-获取机器人关节驱动器温度(℃)
+取得機器人關節驅動器溫度(℃)
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2526,12 +2526,12 @@
     :linenos:
 
     /**
-    * @brief 获取机器人关节驱动器温度(℃)
-    * @return 错误码
+    * @brief 取得機器人關節驅動器溫度(℃)
+    * @return 錯誤碼
     */
     errno_t GetJointDriverTemperature(double temperature[]);
  
-获取机器人关节驱动器扭矩(Nm)
+取得機器人關節驅動器扭矩(Nm)
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2539,12 +2539,12 @@
     :linenos:
 
     /**
-     * @brief 获取机器人关节驱动器扭矩(Nm)
-     * @return 错误码
+     * @brief 取得機器人關節驅動器扭矩(Nm)
+     * @return 錯誤碼
      */
     errno_t GetJointDriverTorque(double torque[]);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2567,7 +2567,7 @@
      }
      }
  
-电弧追踪 + 多层多道补偿开启
+電弧追蹤 + 多層多道補償開啟
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2575,12 +2575,12 @@
     :linenos:
 
     /**
-     * @brief 电弧追踪 + 多层多道补偿开启
-     * @return 错误码
+     * @brief 電弧追蹤 + 多層多道補償開啟
+     * @return 錯誤碼
      */
     errno_t ArcWeldTraceReplayStart();
  
-电弧追踪 + 多层多道补偿关闭
+電弧追蹤 + 多層多道補償關閉
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2588,12 +2588,12 @@
     :linenos:
 
     /**
-     * @brief 电弧追踪 + 多层多道补偿关闭
-     * @return 错误码
+     * @brief 電弧追蹤 + 多層多道補償關閉
+     * @return 錯誤碼
      */
     errno_t ArcWeldTraceReplayEnd();
  
-偏移量坐标变化-多层多道焊
+偏移量座標變化-多層多道焊
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2601,12 +2601,12 @@
     :linenos:
 
     /**
-     * @brief 偏移量坐标变化-多层多道焊
-     * @return 错误码
+     * @brief 偏移量座標變化-多層多道焊
+     * @return 錯誤碼
      */
     errno_t MultilayerOffsetTrsfToBase(DescTran pointO, DescTran pointX, DescTran pointZ, double dx, double dy, double db, DescPose& offset);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2794,7 +2794,7 @@
      printf("MoveJ return:  %d\n", error);
      }
  
-指定姿态速度开启
+指定姿態速度開啟
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2802,13 +2802,13 @@
     :linenos:
 
     /**
-    * @brief 指定姿态速度开启
-    * @param [in] ratio 姿态速度百分比[0-300]
-    * @return  错误码
+    * @brief 指定姿態速度開啟
+    * @param [in] ratio 姿態速度百分比[0-300]
+    * @return  錯誤碼
     */
     errno_t AngularSpeedStart(int ratio);
  
-指定姿态速度关闭
+指定姿態速度關閉
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2816,12 +2816,12 @@
     :linenos:
 
     /**
-     * @brief 指定姿态速度关闭
-     * @return  错误码
+     * @brief 指定姿態速度關閉
+     * @return  錯誤碼
      */
     errno_t AngularSpeedEnd();
  
-代码示例
+代碼範例
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2880,7 +2880,7 @@
      error = robot->MoveL(&JP8, &DP8, tool, user, vel, acc, ovl * 0.1, blend, &epos, 0, offsetFlag, &offset, 0, 100);
      }
  
-机器人软件升级
+機器人軟體升級
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2888,14 +2888,14 @@
     :linenos:
 
     /**
-     * @brief 机器人软件升级
-     * @param [in] filePath 软件升级包全路径
-     * @param [in] block 是否阻塞至升级完成 true:阻塞；false:非阻塞
-     * @return  错误码
+     * @brief 機器人軟體升級
+     * @param [in] filePath 軟體升級包全路徑
+     * @param [in] block是否阻塞至升級完成 true:阻塞；false:非阻塞
+     * @return  錯誤碼
      */
     errno_t SoftwareUpgrade(std::string filePath, bool block);
  
-获取机器人软件升级状态
+取得機器人軟體升級狀態
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2903,13 +2903,13 @@
     :linenos:
 
     /**
-    * @brief  获取机器人软件升级状态
-    * @param [out] state 机器人软件包升级状态(0-空闲中或上传升级包中；1~100：升级完成百分比；-1:升级软件失败；-2：校验失败；-3：版本校验失败；-4：解压失败；-5：用户配置升级失败；-6：外设配置升级失败；-7：扩展轴配置升级失败；-8：机器人配置升级失败；-9：DH参数配置升级失败)
-    * @return  错误码
+    * @brief  取得機器人軟體升級狀態
+    * @param [out] state 機器人軟體包升級狀態(0-空閒或上傳升級包中；1~100：升級完成百分比；-1:升級軟體失敗；-2：校驗失敗；-3：版本校驗失敗；-4：解壓縮失敗；-5：使用者配置升級失敗；-6：週邊配置升級失敗；-7：擴展軸配置升級失敗；-8：機器人配置升級失敗；-9：DH參數配置升級失敗)
+    * @return  錯誤碼
     */
     errno_t GetSoftwareUpgradeState(int &state);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2928,7 +2928,7 @@
      }
      }
  
-设置485扩展轴运动加减速度
+設定485擴展軸運動加減速度
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2936,14 +2936,14 @@
     :linenos:
 
     /**
-     * @brief 设置485扩展轴运动加减速度
-     * @param [in] acc 485扩展轴运动加速度
-     * @param [in] dec 485扩展轴运动减速度
-     * @return  错误码
+     * @brief 設定485擴展軸運動加減速度
+     * @param [in] acc 485擴展軸運動加速度
+     * @param [in] dec 485擴展軸運動减速度
+     * @return  錯誤碼
      */
     errno_t AuxServoSetAcc(double acc, double dec);
  
-设置485扩展轴急停加减速度
+設定485擴展軸急停加減速度
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2951,14 +2951,14 @@
     :linenos:
 
     /**
-     * @brief 设置485扩展轴急停加减速度
-     * @param [in] acc 485扩展轴急停加速度
-     * @param [in] dec 485扩展轴急停减速度
-     * @return  错误码
+     * @brief 設定485擴展軸急停加減速度
+     * @param [in] acc 485擴展軸急停加速度
+     * @param [in] dec 485擴展軸急停减速度
+     * @return  錯誤碼
      */
     errno_t AuxServoSetEmergencyStopAcc(double acc, double dec);
  
-获取485扩展轴运动加减速度
+取得485擴展軸運動加減速度
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2966,14 +2966,14 @@
     :linenos:
 
     /**
-     * @brief 获取485扩展轴运动加减速度
-     * @param [out] acc 485扩展轴运动加速度
-     * @param [out] dec 485扩展轴运动减速度
-     * @return  错误码
+     * @brief 取得485擴展軸運動加減速度
+     * @param [out] acc 485擴展軸運動加速度
+     * @param [out] dec 485擴展軸運動减速度
+     * @return  錯誤碼
      */
     errno_t AuxServoGetAcc(double& acc, double& dec);
  
-获取485扩展轴急停加减速度
+取得485擴展軸急停加減速度
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -2981,14 +2981,14 @@
     :linenos:
 
     /**
-     * @brief 获取485扩展轴急停加减速度
-     * @param [out] acc 485扩展轴急停加速度
-     * @param [out] dec 485扩展轴急停减速度
-     * @return  错误码
+     * @brief 取得485擴展軸急停加減速度
+     * @param [out] acc 485擴展軸急停加速度
+     * @param [out] dec 485擴展軸急停减速度
+     * @return  錯誤碼
      */
     errno_t AuxServoGetEmergencyStopAcc(double& acc, double& dec);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3064,7 +3064,7 @@
      }
      }
  
-可移动装置使能
+可移動裝置使能
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3072,13 +3072,13 @@
     :linenos:
 
     /**
-     * @brief 可移动装置使能
+     * @brief 可移動裝置使能
      * @param enable false-去使能；true-使能
-     * @return 错误码
+     * @return 錯誤碼
      */
     errno_t TractorEnable(bool enable);
  
-可移动装置回零
+可移動裝置回零
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3086,12 +3086,12 @@
     :linenos:
 
     /**
-     * @brief 可移动装置回零
-     * @return 错误码
+     * @brief 可移動裝置回零
+     * @return 錯誤碼
      */
     errno_t TractorHoming();
  
-可移动装置直线运动
+可移動裝置直線運動
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3099,14 +3099,14 @@
     :linenos:
     
     /**
-     * @brief 可移动装置直线运动
-     * @param distance 直线运动距离（mm）
-     * @param vel 直线运动速度百分比（0-100）
-     * @return 错误码
+     * @brief 可移動裝置直線運動
+     * @param distance 直線運動距離（mm）
+     * @param vel 直線運動速度百分比（0-100）
+     * @return 錯誤碼
      */
     errno_t TractorMoveL(double distance, double vel);
  
-可移动装置圆弧运动
+可移動裝置圓弧運動
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3114,15 +3114,15 @@
     :linenos:
 
     /**
-     * @brief 可移动装置圆弧运动
-     * @param radio 圆弧运动半径（mm）
-     * @param angle 圆弧运动角度（°）
-     * @param vel 直线运动速度百分比（0-100）
-     * @return 错误码
+     * @brief 可移動裝置圓弧運動
+     * @param radio 圓弧運動半徑（mm）
+     * @param angle 圓弧運動角度（°）
+     * @param vel 直線運動速度百分比（0-100）
+     * @return 錯誤碼
      */
     errno_t TractorMoveC(double radio, double angle, double vel);
  
-可移动装置停止运动
+可移動裝置停止運動
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3130,12 +3130,12 @@
     :linenos:
 
     /**
-     * @brief 可移动装置停止运动
-     * @return 错误码
+     * @brief 可移動裝置停止運動
+     * @return 錯誤碼
      */
     errno_t TractorStop();
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3167,7 +3167,7 @@
      robot->Sleep(1);
      }
  
-设置焊丝寻位扩展IO端口
+設定焊絲尋位擴充IO端口
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3175,14 +3175,14 @@
     :linenos:
 
     /**
-     * @brief 设置焊丝寻位扩展IO端口
-     * @param searchDoneDINum 焊丝寻位成功DO端口(0-127)
-     * @param searchStartDONum 焊丝寻位启停控制DO端口(0-127)
-     * @return 错误码
+     * @brief 設定焊絲尋位擴充IO端口
+     * @param searchDoneDINum 焊絲尋位成功DO端口(0-127)
+     * @param searchStartDONum 焊絲尋位啟動停止控制DO端口(0-127)
+     * @return 錯誤碼
      */
     errno_t SetWireSearchExtDIONum(int searchDoneDINum, int searchStartDONum);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3222,26 +3222,26 @@
      JointPos jointREF1B = { 82.117, -87.146, 116.470, -117.737, -93.145, -61.090 };
 
      rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-     robot->MoveL(&jointREF0A, &descREF0A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-     robot->MoveL(&jointREF0B, &descREF0B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+     robot->MoveL(&jointREF0A, &descREF0A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+     robot->MoveL(&jointREF0B, &descREF0B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
      rtn1 = robot->WireSearchWait("REF0");
      rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
      rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-     robot->MoveL(&jointREF1A, &descREF1A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-     robot->MoveL(&jointREF1B, &descREF1B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+     robot->MoveL(&jointREF1A, &descREF1A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+     robot->MoveL(&jointREF1B, &descREF1B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
      rtn1 = robot->WireSearchWait("REF1");
      rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
      rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-     robot->MoveL(&jointREF0A, &descREF0A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-     robot->MoveL(&jointREF0B, &descREF0B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+     robot->MoveL(&jointREF0A, &descREF0A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+     robot->MoveL(&jointREF0B, &descREF0B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
      rtn1 = robot->WireSearchWait("RES0");
      rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
      rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-     robot->MoveL(&jointREF1A, &descREF1A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起点
-     robot->MoveL(&jointREF1B, &descREF1B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向点
+     robot->MoveL(&jointREF1A, &descREF1A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
+     robot->MoveL(&jointREF1B, &descREF1B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
      rtn1 = robot->WireSearchWait("RES1");
      rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
 
@@ -3256,7 +3256,7 @@
      robot->PointsOffsetDisable();
      }
  
-设置焊机控制模式扩展DO端口
+設定焊機控制模式擴展DO端口
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3264,13 +3264,13 @@
     :linenos:
 
     /**
-     * @brief 设置焊机控制模式扩展DO端口
-     * @param DONum 焊机控制模式DO端口(0-127)
-     * @return 错误码
+     * @brief 設定焊機控制模式擴展DO端口
+     * @param DONum 焊機控制模式DO端口(0-127)
+     * @return 錯誤碼
      */
     errno_t SetWeldMachineCtrlModeExtDoNum(int DONum);
  
-设置焊机控制模式
+設定焊機控制模式
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3278,13 +3278,13 @@
     :linenos:
 
     /**
-     * @brief 设置焊机控制模式
-     * @param mode 焊机控制模式;0-一元化
-     * @return 错误码
+     * @brief 設定焊機控制模式
+     * @param mode 焊接機控制模式;0-一元化
+     * @return 錯誤碼
      */
     errno_t SetWeldMachineCtrlMode(int mode);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3324,7 +3324,7 @@
      }
      }
  
-设置与机器人通讯重连参数
+設定與機器人通訊重連參數
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3332,15 +3332,15 @@
     :linenos:
 
     /**
-    * @brief  设置与机器人通讯重连参数
-    * @param  [in] enable  网络故障时使能重连 true-使能 false-不使能
-    * @param  [in] reconnectTime 重连时间，单位ms
-    * @param  [in] period 重连周期，单位ms
-    * @return  错误码
+    * @brief  設定與機器人通訊重連參數
+    * @param  [in] enable  網路故障時使能重連 true-使能 false-不使能
+    * @param  [in] reconnectTime 重連時間，單位ms
+    * @param  [in] period 重連週期，單位ms
+    * @return  錯誤碼
     */
     errno_t SetReConnectParam(bool enable, int reconnectTime = 30000, int period = 50);
 
-示例程序
+範例程式
 +++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3366,7 +3366,7 @@
      return 0;
      }
  
-开始奇异位姿保护
+開始奇異位姿保護
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3374,16 +3374,16 @@
     :linenos:
 
 	/**
-	* @brief 开始奇异位姿保护
-	* @param [in] protectMode 奇异保护模式，0：关节模式；1-笛卡尔模式
-	* @param [in] minShoulderPos 肩奇异调整范围(mm), 默认100
-	* @param [in] minElbowPos 肘奇异调整范围(mm), 默认50
-	* @param [in] minWristPos 腕奇异调整范围(°), 默认10
-	* @return 错误码
+	* @brief 開始奇異位姿保護
+	* @param [in] protectMode 奇異保護模式，0：關節模式；1-笛卡爾模式
+	* @param [in] minShoulderPos 肩奇異調整範圍(mm), 默認100
+	* @param [in] minElbowPos 肘奇異調整範圍(mm), 默認50
+	* @param [in] minWristPos 腕奇異調整範圍(°), 預設10
+	* @return 錯誤碼
 	*/
 	errno_t SingularAvoidStart(int protectMode, double minShoulderPos, double minElbowPos, double minWristPos);
  
-停止奇异位姿保护
+停止奇異位姿保護
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
     
@@ -3391,12 +3391,12 @@
     :linenos:
 
 	/**
-	* @brief 停止奇异位姿保护
-	* @return 错误码
+	* @brief 停止奇異位姿保護
+	* @return 錯誤碼
 	*/
 	errno_t SingularAvoidEnd();
 
-代码示例
+代碼範例
 +++++++++++++++
 .. code-block:: c++
     :linenos:

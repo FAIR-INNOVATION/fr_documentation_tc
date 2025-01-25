@@ -1,134 +1,134 @@
-机器人安全设置
+機器人安全設定
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-设置碰撞等级
+設定碰撞等級
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 设置碰撞等级
-    * @param  [in]  mode  0-等级，1-百分比
-    * @param  [in]  level 碰撞阈值，等级对应范围[],百分比对应范围[0~1]
-    * @param  [in]  config 0-不更新配置文件，1-更新配置文件
-    * @return  错误码
+    * @brief 設定碰撞等級
+    * @param  [in]  mode  0-等級，1-百分比
+    * @param  [in]  level 碰撞閾值，等級對應範圍[],百分比對應範圍[0~1]
+    * @param  [in]  config 0-不更新設定文件，1-更新設定文件
+    * @return  錯誤碼
     */
     int SetAnticollision(int mode, double[] level, int config); 
 
-设置碰撞后策略
+設定碰撞後策略
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置碰撞后策略
-    * @param  [in] strategy  0-报错停止，1-继续运行
-    * @param  [in] safeTime  安全停止时间[1000 - 2000]ms
-    * @param  [in] safeDistance  安全停止距离[1-150]mm
-    * @param  [in] safetyMargin  j1-j6安全系数[1-10]
-    * @return  错误码
+    * @brief  設定碰撞後策略
+    * @param  [in] strategy  0-報錯停止，1-繼續運行
+    * @param  [in] safeTime  安全停止時間[1000 - 2000]ms
+    * @param  [in] safeDistance  安全停止距離[1-150]mm
+    * @param  [in] safetyMargin  j1-j6安全係數[1-10]
+    * @return  錯誤碼
     */
     int SetCollisionStrategy(int strategy, int safeTime, int safeDistance, int[] safetyMargin); 
 
-设置正限位
+設定正限位
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置正限位
-    * @param  [in] limit 六个关节位置，单位deg
-    * @return  错误码
+    * @brief  設定正限位
+    * @param  [in] limit 六個關節位置，單位deg
+    * @return  錯誤碼
     */
     int SetLimitPositive(double[] limit); 
 
-设置负限位
+設定負限位
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置负限位
-    * @param  [in] limit 六个关节位置，单位deg
-    * @return  错误码
+    * @brief  設定負限位
+    * @param  [in] limit 六個關節位置，單位deg
+    * @return  錯誤碼
     */
     int SetLimitNegative(double[] limit); 
 
-错误状态清除
+錯誤狀態清除
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  错误状态清除
-    * @return  错误码
+    * @brief  錯誤狀態清除
+    * @return  錯誤碼
     */
     int ResetAllError(); 
 
-关节摩擦力补偿开关
+關節摩擦力補償開關
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 关节摩擦力补偿开关 
-    * @param [in] state 0-关，1-开 
-    * @return 错误码 
+    * @brief 關節摩擦力補償開關 
+    * @param [in] state 0-關，1-開 
+    * @return 錯誤碼 
     */ 
     int FrictionCompensationOnOff(byte state); 
 
-设置关节摩擦力补偿系数-正装
+設定關節摩擦力補償係數-正裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-正装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-正裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_level(double[] coeff);
 
-设置关节摩擦力补偿系数-侧装
+設定關節摩擦力補償係數-側裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-侧装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-側裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_wall(double[] coeff); 
 
-设置关节摩擦力补偿系数-倒装
+設定關節摩擦力補償係數-倒裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-倒装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-倒裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_ceiling(double[] coeff);
 
-设置关节摩擦力补偿系数-自由安装
+設定關節摩擦力補償係數-自由安裝
 ++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  设置关节摩擦力补偿系数-自由安装
-    * @param  [in]  coeff 六个关节补偿系数，范围[0~1]
-    * @return  错误码
+    * @brief  設定關節摩擦力補償係數-自由安裝
+    * @param  [in]  coeff 六個關節補償係數，範圍[0~1]
+    * @return  錯誤碼
     */
     int SetFrictionValue_freedom(double[] coeff);
 
-代码示例
+代碼範例
 ++++++++++++++
 .. code-block:: c#
     :linenos:

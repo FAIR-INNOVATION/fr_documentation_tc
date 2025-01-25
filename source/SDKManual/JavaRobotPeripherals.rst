@@ -1,85 +1,85 @@
-机器人外设
+機器人週邊
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-配置夹爪
+配置夾爪
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  配置夹爪
-    * @param  [in] config .company  夹爪厂商，1-Robotiq，2-慧灵，3-天机，4-大寰，5-知行
-    * @param  [in] config .device  设备号，Robotiq(0-2F-85系列)，慧灵(0-NK系列,1-Z-EFG-100)，天机(0-TEG-110)，大寰(0-PGI-140)，知行(0-CTPM2F20)
-    * @param  [in] config .softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] config .bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  配置夾爪
+    * @param  [in] config .company  夹爪廠商，1-Robotiq，2-慧灵，3-天机，4-大寰，5-知行
+    * @param  [in] config .device  設備號，Robotiq(0-2F-85系列)，慧靈(0-NK系列,1-Z-EFG-100)，天機(0-TEG-110)，大寰(0-PGI-140)，知行(0-CTPM2F20)
+    * @param  [in] config .softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] config .bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     int SetGripperConfig(DeviceConfig config);
 
-获取夹爪配置
+取得夾爪配置
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  获取夹爪配置
-    * @param  [out] config .company  夹爪厂商，1-Robotiq，2-慧灵，3-天机，4-大寰，5-知行
-    * @param  [out] config .device  设备号，Robotiq(0-2F-85系列)，慧灵(0-NK系列,1-Z-EFG-100)，天机(0-TEG-110)，大寰(0-PGI-140)，知行(0-CTPM2F20)
-    * @param  [out] config .softvesion  软件版本号，暂不使用，默认为0
-    * @param  [out] config .bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  取得夾爪配置
+    * @param  [out] config .company  夹爪廠商，1-Robotiq，2-慧灵，3-天机，4-大寰，5-知行
+    * @param  [out] config .device  設備號，Robotiq(0-2F-85系列)，慧靈(0-NK系列,1-Z-EFG-100)，天機(0-TEG-110)，大寰(0-PGI-140)，知行(0-CTPM2F20)
+    * @param  [out] config .softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [out] config .bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     int GetGripperConfig(DeviceConfig config);
 
-激活夹爪
+啟動夾爪
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  激活夹爪
-    * @param  [in] index  夹爪编号
-    * @param  [in] act  0-复位，1-激活
-    * @return  错误码
+    * @brief  啟動夾爪
+    * @param  [in] index  夾爪編號
+    * @param  [in] act  0-復位，1-激活
+    * @return  錯誤碼
     */
     int ActGripper(int index, int act); 
 
-控制夹爪
+控制夾爪
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  控制夹爪
-    * @param  [in] index  夹爪编号
-    * @param  [in] pos  位置百分比，范围[0~100]
-    * @param  [in] vel  速度百分比，范围[0~100]
-    * @param  [in] force  力矩百分比，范围[0~100]
-    * @param  [in] max_time  最大等待时间，范围[0~30000]，单位ms
+    * @brief  控制夾爪
+    * @param  [in] index  夾爪編號
+    * @param  [in] pos  位置百分比，範圍[0~100]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] force  力矩百分比，範圍[0~100]
+    * @param  [in] max_time  最大等待時間，範圍[0~30000]，單位ms
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @param  [in] type 夹爪类型，0-平行夹爪；1-旋转夹爪
-    * @param  [in] rotNum 旋转圈数
-    * @param  [in] rotVel 旋转速度百分比[0-100]
-    * @param  [in] rotTorque 旋转力矩百分比[0-100]
-    * @return 错误码
+    * @param  [in] type 夾爪類型，0-平行夾爪；1-旋轉夾爪
+    * @param  [in] rotNum 旋轉圈數
+    * @param  [in] rotVel 旋轉速度百分比[0-100]
+    * @param  [in] rotTorque 旋轉力矩百分比[0-100]
+    * @return 錯誤碼
     */
     int MoveGripper(int index, int pos, int vel, int force, int max_time, int block, int type, double rotNum, int rotVel, int rotTorque); 
 
-获取夹爪运动状态
+取得夾爪運動狀態
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  获取夹爪运动状态
-    * @return List[0]:错误码; List[1] : fault  0-无错误，1-有错误; List[2]: staus  0-运动未完成，1-运动完成
+    * @brief  取得夾爪運動狀態
+    * @return List[0]:錯誤碼; List[1] : fault  0-無錯誤，1-有錯誤; List[2]: staus  0-運動未完成，1-運動完成
     */
     List<Integer> GetGripperMotionDone(); 
 
-代码示例
+代碼範例
 ++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -87,16 +87,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         int company = 3;
@@ -112,7 +112,7 @@
 
         DeviceConfig getConfig = new DeviceConfig();
         robot.GetGripperConfig(getConfig);
-        System.out.println("gripper 厂商:" + getConfig.company + " , 类型: " + getConfig.device + " , 软件版本: " + getConfig.softwareVersion);
+        System.out.println("gripper 廠商:" + getConfig.company + " , 類型: " + getConfig.device + " , 軟體版本: " + getConfig.softwareVersion);
 
         int index = 1;
         byte act = 0;
@@ -121,16 +121,16 @@
         int status = -1, fault = -1;
         int rtn = -1;
 
-        rtn = robot.ActGripper(index, act);//激活夹爪
+        rtn = robot.ActGripper(index, act);//啟動夾爪
         System.out.println("ActGripper rtn : " + rtn);
         act = 1;
         rtn = robot.ActGripper(index, act);
         System.out.println("ActGripper rtn : " + rtn);
 
-        rtn = robot.MoveGripper(index, 80, 20, 50, max_time,0,0,0,0);//移动夹爪
+        rtn = robot.MoveGripper(index, 80, 20, 50, max_time,0,0,0,0);//移動夹爪
         System.out.println("MoveGripper rtn : " + rtn);
         robot.Sleep(2000);
-        robot.MoveGripper(index, 20, 20, 50, max_time, block,0,0,0,0);//移动夹爪
+        robot.MoveGripper(index, 20, 20, 50, max_time, block,0,0,0,0);//移動夹爪
 
         robot.Sleep(4000);
         List<Integer> rtnArray = new ArrayList<Integer>() {};
@@ -138,37 +138,37 @@
         System.out.println("gripper motion done : " + rtnArray.get(2) +", " + rtnArray.get(1));
     }
 
-计算预抓取点-视觉
+計算預抓取點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 计算预抓取点-视觉 
-    * @param [in] desc_pos  抓取点笛卡尔位姿
-    * @param [in] zlength   z轴偏移量
-    * @param [in] zangle    绕z轴旋转偏移量
-    * @param [out] pre_pos  获取点
-    * @return 错误码 
+    * @brief 計算預抓取點-視覺 
+    * @param [in] desc_pos  抓取點笛卡爾位姿
+    * @param [in] zlength   z軸偏移量
+    * @param [in] zangle    繞z軸旋轉偏移量
+    * @param [out] pre_pos  獲取點
+    * @return 錯誤碼 
     */ 
     int ComputePrePick(DescPose desc_pos, double zlength, double zangle, DescPose pre_pos);
 
-计算撤退点-视觉
+計算撤退點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 计算撤退点-视觉 
-    * @param [in] desc_pos  抓取点笛卡尔位姿
-    * @param [in] zlength   z轴偏移量 
-    * @param [in] zangle    绕z轴旋转偏移量
-    * @param [out] post_poss 撤退点
-    * @return 错误码 
+    * @brief 計算撤退點-視覺 
+    * @param [in] desc_pos  抓取點笛卡爾位姿
+    * @param [in] zlength   z軸偏移量 
+    * @param [in] zangle    繞z軸旋轉偏移量
+    * @param [out] post_poss 撤退點
+    * @return 錯誤碼 
     */ 
     int ComputePostPick(DescPose desc_pos, double zlength, double zangle, DescPose post_pos);
 
-代码示例
+代碼範例
 ++++++++++++++++
 .. code-block:: Java
     :linenos:
@@ -176,16 +176,16 @@
     public static void main(String[] args)
     {
         Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//设置重连次数、间隔
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
         robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
         int rtn = robot.RPC("192.168.58.2");
         if(rtn == 0)
         {
-            System.out.println("rpc连接 success");
+            System.out.println("rpc連接 success");
         }
         else
         {
-            System.out.println("rpc连接 fail");
+            System.out.println("rpc連接 fail");
             return ;
         }
         int company = 3;

@@ -1,36 +1,36 @@
 概述
 ++++++++++
-frcobot_ros简要架构如下图所示，协作机器人端提供了XMLRPC服务器和TCP服务器。
+frcobot_ros簡要架構如下圖所示，協作機器人端提供了XMLRPC伺服器和TCP伺服器。
 
-- XMLRPC服务器主要提供机器人指令API完成机器人运动和状态值获取功能
-- 状态反馈的TCP服务器提供了机器人状态的实时反馈，反馈周期8ms。
+- XMLRPC伺服器主要提供機器人指令API完成機器人運動和狀態值取得功能
+- 狀態回饋的TCP伺服器提供了機器人狀態的即時回饋，回饋週期8ms。
 
-用户PC端中已安装了ROS和Moveit!，编译完成frcobot_ros。在frcobot_ros中每个功能包都包含了机器人API的lib库，以及在frcobot_hw建立与机器人状态反馈服务器通讯的TCP客户端，获取机器人状态反馈数据。
+用戶PC端中已安裝了ROS和Moveit!，編譯完成frcobot_ros。在frcobot_ros中每個功能包都包含了機器人API的lib庫，以及在frcobot_hw建立與機器人狀態回饋伺服器通訊的TCP客戶端，取得機器人狀態回饋資料。
 
 .. figure:: img/frcobot_ros.png
     :width: 6in
     :align: center
 
-安装
+安裝
 ++++++++++
-本章介绍如何构建frcobot_ros以及所需的安装环境。
+本章介紹如何建置frcobot_ros以及所需的安裝環境。
 
-环境要求
+環境要求
 -----------
 
-frcobot_ros推荐环境如下：
+frcobot_ros推薦環境如下：
 
-.. note:: 
-    -	Ubuntu 18.04 LTS Bionic Beaver和ROS Melodic Morenia
-    -	Ubuntu 20.04 LTS Focal Fossa和ROS Noetic Ninjemys
+.. note::
+ - Ubuntu 18.04 LTS Bionic Beaver和ROS Melodic Morenia
+ - Ubuntu 20.04 LTS Focal Fossa和ROS Noetic Ninjemys
 
-以下说明适用于 Ubuntu 20.04 LTS 系统和 ROS Noetic Ninjemys。如果使用的是Melodic，则将下发命令行中的 ``noetic`` 替换成 ``melodic``.
+以下說明適用於 Ubuntu 20.04 LTS 系統和 ROS Noetic Ninjemys。如果使用的是Melodic，則將下發命令列中的 ``noetic`` 替換成 ``melodic``.
 
-ROS安装要求
+ROS安裝要求
 --------------
-在安装好Ubuntu系统后，`安装和配置好ROS Noetic环境 <https://wiki.ros.org/noetic/Installation/Ubuntu>`__。
+安裝Ubuntu系統後，`安裝並設定ROS Noetic環境 <https://wiki.ros.org/noetic/Installation/Ubuntu>`__。
 
-在配置好ROS Noetic后，安装如下所需环境：
+配置ROS Noetic後，安裝如下所需環境：
 
 .. code-block:: shell
     :linenos:
@@ -44,9 +44,9 @@ ROS安装要求
         ros-noetic-moveit \
         libxmlrpcpp-dev
 
-编译ROS包
+編譯ROS包
 -------------
-在正确安装和配置好ROS Noetic后，在您选择的目录中创建一个Catkin工作区。
+在正確安裝和設定好ROS Noetic後，在您選擇的目錄中建立一個Catkin工作區。
 
 .. code-block:: shell
     :linenos:
@@ -55,7 +55,7 @@ ROS安装要求
     cd ~/catkin_ws
     catkin_init_workspace src
 
-然后从Gitee克隆frcobot_ros库。
+然後從Gitee克隆frcobot_ros庫。
 
 .. code-block:: shell
     :linenos:
@@ -63,7 +63,7 @@ ROS安装要求
     cd ~/catkin_ws/src
     git clone https://gitee.com/fair-innovation/frcobot_ros.git
 
-构建frcobot_ros包
+建置frcobot_ros包
 
 .. code-block::  shell
     :linenos:
@@ -73,28 +73,28 @@ ROS安装要求
     echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
     source ~/.bashrc
 
-如果出现报错请检查ROS安装要求中的包是否都已安装成功，编译完成后，将lib库拷贝到ROS的lib环境下(路径为：/opt/ros/noetic/lib)，以便程序可以正常运行。
+如果發生報錯請檢查ROS安裝需求中的套件是否都已安裝成功，編譯完成後，將lib庫拷貝到ROS的lib環境下(路徑為：/opt/ros/noetic/lib)，以便程式可以正常執行。
 
 .. code-block:: shell
     :linenos:
 
-    # 此处catkin_ws默认路径为“~”，如有不同，将“~”改为实际路径即可
+    # 此處catkin_ws預設路徑為“~”，如有不同，將“~”改為實際路徑即可
     sudo cp ~/catkin_ws/src/frcobot_ros/frcobot_hw/lib/* /opt/ros/noetic/lib
 
-快速开始
+快速開始
 ++++++++++
 
 frcobot_hw
 -----------------
-frcobot_hw主要提供了和协作机器人通讯的基本功能。
+frcobot_hw主要提供了和協作機器人通訊的基本功能。
 
-.. note:: 
-    - 包含协作机器人状态反馈msg
-    - 提供控制协作机器人的指令demo
-    - 提供协作机器人状态反馈节点和Topic
-    - 可通过launch文件快速启动状态节点和指令demo
+.. note::
+ - 包含協作機器人狀態回饋msg
+ - 提供控制協作機器人的指令demo
+ - 提供協作機器人狀態回饋節點和Topic
+ - 可透過launch檔案快速啟動狀態節點和指令demo
 
-frcobot_hw.launch内容如下：
+frcobot_hw.launch內容如下：
 
 .. code-block:: xml
     :linenos:
@@ -115,17 +115,17 @@ frcobot_hw.launch内容如下：
 
 .. important:: 
 
-    - ``robot_ip`` 和 ``robot_port`` 需要注意与被控制的协作机器人IP和端口一致
-    - 出厂机器人默认IP为192.168.58.2，用户状态反馈端口为8083
+ - ``robot_ip`` 和 ``robot_port`` 需要注意與被控制的協作機器人IP和連接埠一致
+ - 出廠機器人預設IP為192.168.58.2，用戶狀態回饋埠為8083
 
-通过以下指令可快速启动机器人状态反馈节点和指令demo功能。
+透過以下指令可快速啟動機器人狀態回饋節點和指令demo功能。
 
 .. code-block:: shell
     :linenos:
 
     roslaunch frcobot_hw frcobot_hw.launch
 
-新开一个terminal，通过以下指令可打印并查看实时的状态反馈数据。
+新開一個terminal，透過以下指令可列印並查看即時的狀態回饋資料。
 
 .. code-block:: shell
     :linenos:
@@ -134,7 +134,7 @@ frcobot_hw.launch内容如下：
 
 .. frcobot_camera
 .. -----------------
-.. frcobot_camera提供与图漾RVS和相机的手眼标定功能和无序抓取（Bin-Picking）功能。
+.. frcobot_camera提供与图漾RVS和相机的手眼标定功能和無序抓取（Bin-Picking）功能。
 
 
 

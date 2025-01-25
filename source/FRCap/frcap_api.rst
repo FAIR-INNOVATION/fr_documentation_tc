@@ -1,4 +1,4 @@
-API说明
+API說明
 =========================
 
 .. toctree:: 
@@ -7,26 +7,26 @@ API说明
 act 指令
 -------------
 
-以下所有act指令使用POST，URL为/action/act。
+以下所有act指令使用POST，URL為/action/act。
 
-保存示教点
+保存示教點
 +++++++++++++
 
-指令名称：save_point。 
+指令名稱：save_point。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /** 
-    * @param  string name记录的示教点名称
+    * @param  string name記錄的示教點名稱
     * @param  string speed 速度
     * @param  string elbow_speed 肘速度
     * @param  string acc加速度
     * @param  string elbow_acc 肘加速度
-    * @param  string toolnum 工具号
-    * @param  string workpiecenum 工件号
+    * @param  string toolnum 工具號
+    * @param  string workpiecenum 工件號
     */ 
 
 指令案例：
@@ -47,7 +47,7 @@ act 指令
         }
     }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
     :linenos:
@@ -60,14 +60,14 @@ act 指令
 sta 指令
 -------------
 
-以下所有sta指令使用POST，URL为/action/sta。
+以下所有sta指令使用POST，URL為/action/sta。
 
-获取机器人状态数据
+取得機器人狀態數據
 ++++++++++++++++++++
 
-指令名称：basic。 
+指示名稱：basic。
 
-指令参数：无。
+指令參數：無。
 
 指令案例：
 
@@ -78,16 +78,16 @@ sta 指令
         cmd: "basic",
     }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
     :linenos:
 
     /** 
     * @return status:200 
-    * @param  object joints 关节位置
-    * @param  object tcp 笛卡尔位姿
-    * @param  array exAxisPos 外部轴位置
+    * @param  object joints 關節位置
+    * @param  object tcp 笛卡兒位姿
+    * @param  array exAxisPos 外部軸位置
     * @return status:404 "fail"
     */
     {
@@ -113,14 +113,14 @@ sta 指令
 get 指令
 -------------
 
-以下所有get指令使用POST，URL为/action/get。 
+以下所有get指令使用POST，URL為/action/get。
 
-获取示教点
+取得示教點
 +++++++++++++
 
-指令名称：get_points()。
+指令名稱：get_points()。
 
-指令参数：无。
+指令參數：無。
 
 指令案例：
 
@@ -131,18 +131,18 @@ get 指令
         cmd: "get_points"
     }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
     :linenos:
 
     /** 
     * @return status:200 "success"
-    * @param  ${point_name}: object 示教点相关信息
+    * @param  ${point_name}: object 示教點相關資訊
     * @return status:404 "fail"
     */ 
 
-指令反馈案例：
+指令回饋案例：
 
 .. code-block:: c++
     :linenos:
@@ -175,13 +175,12 @@ get 指令
         }
     }
 
-
-获取系统配置
+取得系統配置
 +++++++++++++
 
-指令名称：get_syscfg()。
+指令名稱：get_syscfg()。
 
-指令参数：无。
+指令參數：無。
 
 指令案例：
 
@@ -192,20 +191,20 @@ get 指令
         cmd: "get_syscfg"
     }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
     :linenos:
 
     /** 
     * @return status:200 "success"
-    * @param  string log_count 记录最大日志天数
-    * @param  string language 当前使用语言包
-    * @param  string lifespan 超时时间
+    * @param  string log_count 記錄最大日誌天數
+    * @param  string language 目前使用語言包
+    * @param  string lifespan 超時時間
     * * @return status:404 "fail"
     */ 
 
-指令反馈案例：
+指令回饋案例：
 
 .. code-block:: c++
     :linenos:
@@ -219,21 +218,21 @@ get 指令
 set 指令
 -------------
 
-以下所有set指令使用POST，URL为/action/set。
+以下所有set指令使用POST，URL為/action/set。
 
-下发系统变量指令
+下發系統變數指令
 ++++++++++++++++++
 
-指令名称：511。
+指令名稱：511。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /** 
-    * @param int index系统变量序号:1-20 
-    * @param int value系统变量值 
+    * @param int index系統變數序號:1-20 
+    * @param int value系統變數值 
     */ 
 
 指令案例：
@@ -248,35 +247,35 @@ set 指令
         }
     }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
     :linenos:
 
     /** 
-    * @return status:200 1：代表成功，0：代表失败
+    * @return status:2001：代表成功，0：代表失敗
     * @return status:404 "fail"
     */
 
-指令反馈案例：
+指令回饋案例：
 
 .. code-block:: c++
     :linenos:
 
     1
 
-获取系统变量指令
+取得系統變數指令
 +++++++++++++++++++
 
-指令名称：512。
+指令名稱：512。
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /** 
-    * @param int index系统变量序号:1-20 
+    * @param int index系統變數序號:1-20 
     * /
 
 指令案例：
@@ -291,18 +290,18 @@ set 指令
         }
     }
 
-指令反馈：
+指令回饋：
 
 .. code-block:: c++
     :linenos:
 
     /** 
     * @return status:200
-    * @param int value系统变量值 
+    * @param int value系統變數值 
     * @return status:404 "fail"
     * /
 
-指令反馈案例：
+指令回饋案例：
 
 .. code-block:: c++
     :linenos:
@@ -312,18 +311,18 @@ set 指令
 better-sqlite3指令
 -----------------------
 
-查询数据库中第一行记录
+查詢資料庫中第一行記錄
 ++++++++++++++++++++++
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @param string db_name 数据库名称(包含绝对路径) 
-    * @param string sql sql语句
-    * @return string result 查询到的第一行记录
+    * @param string db_name 資料庫名稱(包含絕對路徑)
+    * @param string sql sql語句
+    * @return string result 查詢到的第一行記錄
     */
 
 指令内容：
@@ -333,18 +332,18 @@ better-sqlite3指令
 
     queryget(string db_name, string sql);
 
-查询数据库中所有记录
+查詢資料庫中所有記錄
 +++++++++++++++++++++
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @param string db_name 数据库名称(包含绝对路径)
-    * @param string sql sql语句
-    * @return string result 查询到的所有记录
+    * @param string db_name 資料庫名稱(包含絕對路徑)
+    * @param string sql sql語句
+    * @return string result 查詢到的所有記錄
     */
 
 指令内容：
@@ -354,20 +353,20 @@ better-sqlite3指令
 
     queryall(string db_name, string sql);
 
-执行数据库语句
+執行資料庫語句
 +++++++++++++++++++++
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @param string db_name 数据库名称(包含绝对路径)
-    * @param string sql sql语句
-    * @param object obj sql 语句执行所需的参数
+    * @param string db_name 資料庫名稱(包含絕對路徑)
+    * @param string sql sql語句
+    * @param object obj sql 語句執行所需的參數
     * @return \
     */
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
@@ -382,13 +381,13 @@ socket指令
 socket send
 ++++++++++++++++++++++
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @param string send_content socket 通信指令发送内容
+    * @param string send_content socket 通訊指令發送內容
     * @return \
     */
 
@@ -403,13 +402,13 @@ socket send
 socket recv
 +++++++++++++++++++++
 
-指令参数：
+指令參數：
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @return string recv_content socket 通信指令回复内容
+    * @return string recv_content socket 通訊指令回覆內容
     */
 
 指令内容：

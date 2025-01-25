@@ -1,123 +1,123 @@
-数据结构说明
+資料結構說明
 ================
 
 .. toctree:: 
     :maxdepth: 5
 
-接口调用返回值类型
+介面呼叫傳回值類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     typedef  int errno_t;
 
-关节位置数据类型
+關節位置資料類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 关节位置数据类型
+    * @brief 關節位置資料類型
     */
     typedef  struct
     {
-        double jPos[6];   /* 六个关节位置，单位deg */
+        double jPos[6];   /* 六個關節位置，單位deg */
     }JointPos;
 
-笛卡尔空间位置数据类型
+笛卡爾空間位置資料類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 笛卡尔空间位置数据类型
+    * @brief 笛卡爾空間位置資料類型
     */
     typedef struct
     {
-        double x;    /* x轴坐标，单位mm  */
-        double y;    /* y轴坐标，单位mm  */
-        double z;    /* z轴坐标，单位mm  */
+        double x;    /* x軸座標，單位mm  */
+        double y;    /* y軸座標，單位mm  */
+        double z;    /* z軸座標，單位mm  */
     } DescTran;
 
-欧拉角姿态数据类型
+歐拉角姿態資料型態
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 欧拉角姿态数据类型
+    * @brief 歐拉角姿態資料型態
     */
     typedef struct
     {
-        double rx;   /* 绕固定轴X旋转角度，单位：deg  */
-        double ry;   /* 绕固定轴Y旋转角度，单位：deg  */
-        double rz;   /* 绕固定轴Z旋转角度，单位：deg  */
+        double rx;   /* 繞固定軸X旋轉角度，單位：deg  */
+        double ry;   /* 繞固定軸Y旋轉角度，單位：deg  */
+        double rz;   /* 繞固定軸Z旋轉角度，單位：deg  */
     } Rpy;
 
-笛卡尔空间位姿数据类型
+笛卡爾空間位姿資料類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    *@brief 笛卡尔空间位姿类型
+    *@brief 笛卡兒空間位姿類型
     */
     typedef struct
     {
-        DescTran tran;      /* 笛卡尔空间位置  */
-        Rpy rpy;            /* 笛卡尔空间姿态  */
+        DescTran tran;      /* 笛卡兒空間位置  */
+        Rpy rpy;            /* 笛卡兒空間姿態  */
     } DescPose;
 
-扩展轴位置数据类型
+擴展軸位置資料類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 扩展轴位置数据类型
+    * @brief 擴展軸位置資料類型
     */
     typedef  struct
     {
-        double ePos[4];   /* 四个扩展轴位置，单位mm */
+        double ePos[4];   /* 四個擴展軸位置，單位mm */
     }ExaxisPos;
 
-力矩传感器数据类型
+力矩感測器資料類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief 力传感器的受力分量和力矩分量
+    * @brief 力感測器的受力分量和力矩分量
     */
     typedef struct
     {
-        double fx;  /* 沿x轴受力分量，单位N  */
-        double fy;  /* 沿y轴受力分量，单位N  */
-        double fz;  /* 沿z轴受力分量，单位N  */
-        double tx;  /* 绕x轴力矩分量，单位Nm */
-        double ty;  /* 绕y轴力矩分量，单位Nm */
-        double tz;  /* 绕z轴力矩分量，单位Nm */
+        double fx;  /* 沿x軸受力分量，單位N  */
+        double fy;  /* 沿y軸受力分量，單位N  */
+        double fz;  /* 沿z軸受力分量，單位N  */
+        double tx;  /* 绕x軸力矩分量，單位Nm */
+        double ty;  /* 绕y軸力矩分量，單位Nm */
+        double tz;  /* 绕z軸力矩分量，單位Nm */
     } ForceTorque;
 
-螺旋参数数据类型
+螺旋參數資料類型
 +++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  螺旋参数数据类型
+    * @brief  螺旋參數資料類型
     */
     typedef  struct
     {
-        int    circle_num;           /* 螺旋圈数  */
-        float  circle_angle;         /* 螺旋倾角  */
-        float  rad_init;             /* 螺旋初始半径，单位mm  */
-        float  rad_add;              /* 半径增量  */
-        float  rotaxis_add;          /* 转轴方向增量  */
-        unsigned int rot_direction;  /* 旋转方向，0-顺时针，1-逆时针  */
+        int    circle_num;           /* 螺旋圈數  */
+        float  circle_angle;         /* 螺旋傾角  */
+        float  rad_init;             /* 螺旋初始半徑，單位mm  */
+        float  rad_add;              /* 半徑增量  */
+        float  rotaxis_add;          /* 轉軸方向增量  */
+        unsigned int rot_direction;  /* 旋轉方向，0-順時針，1-逆時針  */
     }SpiralParam;
 
-控制器状态反馈数据包
+控制器狀態回饋資料包
 +++++++++++++++++++++++++++
 .. versionchanged:: C++SDK-v2.1.4.0
 
@@ -125,106 +125,106 @@
     :linenos:
 
     /**
-     * @brief  控制器状态反馈数据包
+     * @brief  控制器狀態回饋資料包
      */
     typedef struct _ROBOT_STATE_PKG
     {
-        uint16_t frame_head;                /* 帧头，约定为0x5A5A */
-        uint8_t  frame_cnt;                 /* 帧计数，循环计数0-255 */
-        uint16_t data_len;                  /* 数据内容的长度 */
-        uint8_t  program_state;             /* 程序运行状态，1-停止；2-运行；3-暂停；*/
-        uint8_t  robot_state;               /* 机器人运动状态，1-停止；2-运行；3-暂停；4-拖动 */
-        int      main_code;                 /* 主故障码 */
-        int      sub_code;                  /* 子故障码 */
-        uint8_t  robot_mode;                /* 机器人模式，1-手动模式；0-自动模式； */
-        double   jt_cur_pos[6];             /* 6个轴当前关节位置，单位deg */
-        double   tl_cur_pos[6];             /* 工具当前位置
-                                               tl_cur_pos[0]，沿x轴位置，单位mm，
-                                               tl_cur_pos[1]，沿y轴位置，单位mm，
-                                               tl_cur_pos[2]，沿z轴位置，单位mm，
-                                               tl_cur_pos[3]，绕固定轴X旋转角度，单位deg
-                                               tl_cur_pos[4]，绕固定轴y旋转角度，单位deg
-                                               tl_cur_pos[5]，绕固定轴z旋转角度，单位deg */
-        double   flange_cur_pos[6];         /* 末端法兰当前位置
-                                               flange_cur_pos[0]，沿x轴位置，单位mm，
-                                               flange_cur_pos[1]，沿y轴位置，单位mm，
-                                               flange_cur_pos[2]，沿z轴位置，单位mm，
-                                               flange_cur_pos[3]，绕固定轴X旋转角度，单位deg
-                                               flange_cur_pos[4]，绕固定轴y旋转角度，单位deg
-                                               flange_cur_pos[5]，绕固定轴z旋转角度，单位deg */
-        double   actual_qd[6];              /* 当前6个关节速度，单位deg/s */
-        double   actual_qdd[6];             /* 当前6个关节加速度，单位deg/s^2 */
-        double   target_TCP_CmpSpeed[2];    /* target_TCP_CmpSpeed[0]，TCP合成指令速度(位置)，单位mm/s
-                                               target_TCP_CmpSpeed[1]，TCP合成指令速度(姿态)，单位deg/s  */
+        uint16_t frame_head;                /* 幀頭，約定為0x5A5A */
+        uint8_t  frame_cnt;                 /* 幀計數，循環計數0-255 */
+        uint16_t data_len;                  /* 資料內容的長度 */
+        uint8_t  program_state;             /* 程序運作狀態，1-停止；2-運轉；3-暫停；*/
+        uint8_t  robot_state;               /* 機器人運動狀態，1-停止；2-運轉；3-暫停；4-拖動 */
+        int      main_code;                 /* 主故障碼 */
+        int      sub_code;                  /* 子故障碼 */
+        uint8_t  robot_mode;                /* 機器人模式，1-手動模式；0-自動模式； */
+        double   jt_cur_pos[6];             /* 6個軸當前關節位置，單位deg */
+        double   tl_cur_pos[6];             /* 工具目前位置
+                                               tl_cur_pos[0]，沿x軸位置，單位mm，
+                                               tl_cur_pos[1]，沿y軸位置，單位mm，
+                                               tl_cur_pos[2]，沿z軸位置，單位mm，
+                                               tl_cur_pos[3]，繞固定軸X旋轉角度，單位deg
+                                               tl_cur_pos[4]，繞固定軸y旋轉角度，單位deg
+                                               tl_cur_pos[5]，繞固定軸z旋轉角度，單位deg */
+        double   flange_cur_pos[6];         /* 末端法蘭目前位置
+                                               flange_cur_pos[0]，沿x軸位置，單位mm，
+                                               flange_cur_pos[1]，沿y軸位置，單位mm，
+                                               flange_cur_pos[2]，沿z軸位置，單位mm，
+                                               flange_cur_pos[3]，繞固定軸X旋轉角度，單位deg
+                                               flange_cur_pos[4]，繞固定軸y旋轉角度，單位deg
+                                               flange_cur_pos[5]，繞固定軸z旋轉角度，單位deg */
+        double   actual_qd[6];              /* 目前6個關節速度，單位deg/s */
+        double   actual_qdd[6];             /* 目前6個關節加速度，單位deg/s^2 */
+        double   target_TCP_CmpSpeed[2];    /* target_TCP_CmpSpeed[0]，TCP合成指令速度(位置)，單位mm/s
+                                               target_TCP_CmpSpeed[1]，TCP合成指令速度(姿態)，單位deg/s  */
         double   target_TCP_Speed[6];       /* TCP指令速度 
-                                               target_TCP_Speed[0]，沿x轴速度，单位mm/s，
-                                               target_TCP_Speed[1]，沿y轴速度，单位mm/s，
-                                               target_TCP_Speed[2]，沿z轴速度，单位mm/s，
-                                               target_TCP_Speed[3]，绕固定轴X旋转角速度，单位deg/s
-                                               target_TCP_Speed[4]，绕固定轴y旋转角速度，单位deg/s
-                                               target_TCP_Speed[5]，绕固定轴z旋转角速度，单位deg/s */
-        double   actual_TCP_CmpSpeed[2];    /* actual_TCP_CmpSpeed[0]，TCP合成实际速度(位置)，单位mm/s
-                                               actual_TCP_CmpSpeed[1]，TCP合成实际速度(姿态)，单位deg/s */
+                                               target_TCP_Speed[0]，沿x軸速度，單位mm/s，
+                                               target_TCP_Speed[1]，沿y軸速度，單位mm/s，
+                                               target_TCP_Speed[2]，沿z軸速度，單位mm/s，
+                                               target_TCP_Speed[3]，繞固定軸X旋轉角速度，單位deg/s
+                                               target_TCP_Speed[4]，繞固定軸y旋轉角速度，單位deg/s
+                                               target_TCP_Speed[5]，繞固定軸z旋轉角速度，單位deg/s */
+        double   actual_TCP_CmpSpeed[2];    /* actual_TCP_CmpSpeed[0]，TCP合成實際速度(位置)，單位mm/s
+                                               actual_TCP_CmpSpeed[1]，TCP合成實際速度(姿態)，單位deg/s */
         double   actual_TCP_Speed[6];       /* TCP实际速度 
-                                               actual_TCP_Speed[0]，沿x轴速度，单位mm/s，
-                                               actual_TCP_Speed[1]，沿y轴速度，单位mm/s，
-                                               actual_TCP_Speed[2]，沿z轴速度，单位mm/s，
-                                               actual_TCP_Speed[3]，绕固定轴X旋转角速度，单位deg/s
-                                               actual_TCP_Speed[4]，绕固定轴y旋转角速度，单位deg/s
-                                               actual_TCP_Speed[5]，绕固定轴z旋转角速度，单位deg/s */
-        double   jt_cur_tor[6];             /* 6个轴当前扭矩，单位N·m */
-        int      tool;                      /* 应用的工具坐标系编号 */
-        int      user;                      /* 应用的工件坐标系编号 */
-        uint8_t  cl_dgt_output_h;           /* 控制箱数字量IO输出15-8 */
-        uint8_t  cl_dgt_output_l;           /* 控制箱数字量IO输出7-0 */
-        uint8_t  tl_dgt_output_l;           /* 工具数字量IO输出7-0，仅bit0-bit1有效 */
-        uint8_t  cl_dgt_input_h;            /* 控制箱数字量IO输入15-8 */
-        uint8_t  cl_dgt_input_l;            /* 控制箱数字量IO输入7-0 */
-        uint8_t  tl_dgt_input_l;            /* 工具数字量IO输入7-0，仅bit0-bit1有效 */
-        uint16_t cl_analog_input[2];        /* cl_analog_input[0]，控制箱模拟量输入0 
-                                               cl_analog_input[1]，控制箱模拟量输入1 */
-        uint16_t tl_anglog_input;           /* 工具模拟量输入 */
-        double   ft_sensor_raw_data[6];     /* 力矩传感器原始数据
-                                               ft_sensor_raw_data[0]，沿x轴力，单位N
-                                               ft_sensor_raw_data[1]，沿y轴力，单位N
-                                               ft_sensor_raw_data[2]，沿z轴力，单位N
-                                               ft_sensor_raw_data[3]，沿x轴力矩，单位Nm
-                                               ft_sensor_raw_data[4]，沿y轴力矩，单位Nm
-                                               ft_sensor_raw_data[5]，沿z轴力矩，单位Nm */
-        double   ft_sensor_data[6];         /* 力矩传感器数据，
-                                               ft_sensor_data[0]，沿x轴力，单位N
-                                               ft_sensor_data[1]，沿y轴力，单位N
-                                               ft_sensor_data[2]，沿z轴力，单位N
-                                               ft_sensor_data[3]，沿x轴力矩，单位Nm
-                                               ft_sensor_data[4]，沿y轴力矩，单位Nm
-                                               ft_sensor_data[5]，沿z轴力矩，单位Nm */
-        uint8_t  ft_sensor_active;          /* 力矩传感器激活状态，0-复位，1-激活 */
-        uint8_t  EmergencyStop;             /* 急停标志，0-急停未按下，1-急停按下 */
-        int      motion_done;               /* 运动到位信号，1-到位，0-未到位 */
-        uint8_t  gripper_motiondone;        /* 夹爪运动完成信号，1-完成，0-未完成 */
-        int      mc_queue_len;              /* 运动指令队列长度 */
-        uint8_t  collisionState;            /* 碰撞检测，1-碰撞，0-无碰撞 */
-        int      trajectory_pnum;           /* 轨迹点编号 */
-        uint8_t  safety_stop0_state;        /* 安全停止信号SI0 */
-        uint8_t  safety_stop1_state;        /* 安全停止信号SI1 */
-        uint8_t  gripper_fault_id;          /* 错误夹爪号 */
-        uint16_t gripper_fault;             /* 夹爪故障 */
-        uint16_t gripper_active;            /* 夹爪激活状态 */
-        uint8_t  gripper_position;          /* 夹爪位置 */
-        int8_t   gripper_speed;             /* 夹爪速度 */
-        int8_t   gripper_current;           /* 夹爪电流 */
-        int      gripper_temp;              /* 夹爪温度 */
-        int      gripper_voltage;           /* 夹爪电压 */
+                                               actual_TCP_Speed[0]，沿x軸速度，單位mm/s，
+                                               actual_TCP_Speed[1]，沿y軸速度，單位mm/s，
+                                               actual_TCP_Speed[2]，沿z軸速度，單位mm/s，
+                                               actual_TCP_Speed[3]，繞固定軸X旋轉角速度，單位deg/s
+                                               actual_TCP_Speed[4]，繞固定軸y旋轉角速度，單位deg/s
+                                               actual_TCP_Speed[5]，繞固定軸z旋轉角速度，單位deg/s */
+        double   jt_cur_tor[6];             /* 6個軸當前扭矩，單位N·m */
+        int      tool;                      /* 應用的工具坐標系編號 */
+        int      user;                      /* 應用的工件坐標系編號 */
+        uint8_t  cl_dgt_output_h;           /* 控制箱數位量IO輸出15-8 */
+        uint8_t  cl_dgt_output_l;           /* 控制箱數位量IO輸出7-0 */
+        uint8_t  tl_dgt_output_l;           /* 工具數位量IO輸出7-0，僅bit0-bit1有效 */
+        uint8_t  cl_dgt_input_h;            /* 控制箱數位量IO輸入15-8 */
+        uint8_t  cl_dgt_input_l;            /* 控制箱數位量IO輸入7-0 */
+        uint8_t  tl_dgt_input_l;            /* 工具數位量IO輸入7-0，僅bit0-bit1有效 */
+        uint16_t cl_analog_input[2];        /* cl_analog_input[0]，控制箱類比輸入0 
+                                               cl_analog_input[1]，控制箱類比輸入1 */
+        uint16_t tl_anglog_input;           /* 工具類比輸入 */
+        double   ft_sensor_raw_data[6];     /* 力矩感測器原始數據
+                                               ft_sensor_raw_data[0]，沿x軸力，單位N
+                                               ft_sensor_raw_data[1]，沿y軸力，單位N
+                                               ft_sensor_raw_data[2]，沿z軸力，單位N
+                                               ft_sensor_raw_data[3]，沿x軸力矩，單位Nm
+                                               ft_sensor_raw_data[4]，沿y軸力矩，單位Nm
+                                               ft_sensor_raw_data[5]，沿z軸力矩，單位Nm */
+        double   ft_sensor_data[6];         /* 力矩感測器數據，
+                                               ft_sensor_data[0]，沿x軸力，單位N
+                                               ft_sensor_data[1]，沿y軸力，單位N
+                                               ft_sensor_data[2]，沿z軸力，單位N
+                                               ft_sensor_data[3]，沿x軸力矩，單位Nm
+                                               ft_sensor_data[4]，沿y軸力矩，單位Nm
+                                               ft_sensor_data[5]，沿z軸力矩，單位Nm */
+        uint8_t  ft_sensor_active;          /* 力矩感測器啟動狀態，0-復位，1-激活 */
+        uint8_t  EmergencyStop;             /* 急停標誌，0-急停未按下，1-急停按下 */
+        int      motion_done;               /* 運動到位訊號，1-到位，0-未到位 */
+        uint8_t  gripper_motiondone;        /* 夾爪運動完成訊號，1-完成，0-未完成 */
+        int      mc_queue_len;              /* 運動指令隊列長度 */
+        uint8_t  collisionState;            /* 碰撞偵測，1-碰撞，0-無碰撞 */
+        int      trajectory_pnum;           /* 軌跡點編號 */
+        uint8_t  safety_stop0_state;        /* 安全停止訊號SI0 */
+        uint8_t  safety_stop1_state;        /* 安全停止訊號SI1 */
+        uint8_t  gripper_fault_id;          /* 錯誤夾爪號 */
+        uint16_t gripper_fault;             /* 夾爪故障 */
+        uint16_t gripper_active;            /* 夾爪激活狀態 */
+        uint8_t  gripper_position;          /* 夾爪位置 */
+        int8_t   gripper_speed;             /* 夾爪速度 */
+        int8_t   gripper_current;           /* 夾爪電流 */
+        int      gripper_temp;              /* 夾爪溫度 */
+        int      gripper_voltage;           /* 夾爪電壓 */
         robot_aux_state aux_state;
-        EXT_AXIS_STATUS extAxisStatus[4];  /* UDP扩展轴状态 */
-        uint16_t extDIState[8];        //扩展DI输入
-        uint16_t extDOState[8];        //扩展DO输出
-        uint16_t extAIState[4];        //扩展AI输入
-        uint16_t extAOState[4];        //扩展AO输出
-        uint16_t check_sum;            /* 和校验 */
+        EXT_AXIS_STATUS extAxisStatus[4];  /* UDP擴展軸狀態 */
+        uint16_t extDIState[8];        //擴充DI輸入
+        uint16_t extDOState[8];        //擴展DO輸出
+        uint16_t extAIState[4];        //擴展AI輸入
+        uint16_t extAOState[4];        //擴展AO輸出
+        uint16_t check_sum;            /* 和校驗 */
     }ROBOT_STATE_PKG;
 
-伺服控制器状态
+伺服控制器狀態
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.3.0
 
@@ -232,14 +232,14 @@
     :linenos:
 
     /**
-    * @brief  伺服控制器状态
+    * @brief  伺服控制器狀態
     */
     typedef struct ROBOT_AUX_STATE
     {
-        uint8_t servoId;	// servoId 伺服驱动器ID，范围[1-15],对应从站ID
-        int servoErrCode;	//伺服驱动器故障码
-        int servoState;	//伺服驱动器状态 bit0:0-未使能；1-使能;  bit1:0-未运动；1-正在运动;  bit2 0-正限位未触发；1-正限位触发；bit3 0-负限位未触发；1-负限位触发；bit4 0-未定位完成；1-定位完成；  bit5：0-未回零；1-回零完成
-        double servoPos;	//伺服当前位置 mm或°
-        float servoVel;	//伺服当前速度 mm/s或°/s
-        float servoTorque;	//伺服当前转矩Nm
+        uint8_t servoId;	// servoId 伺服驅動器ID，範圍[1-15],對應從站ID
+        int servoErrCode;	//伺服驅動器故障碼
+        int servoState;	//伺服驅動器狀態 bit0:0-未使能；1-使能;  bit1:0-未運動；1-正在運動;  bit2 0-正限位未触发；1-正限位触发；bit3 0-负限位未触发；1-负限位触发；bit4 0-未定位完成；1-定位完成；  bit5：0-未回零；1-回零完成
+        double servoPos;	//伺服當前位置 mm或°
+        float servoVel;	//伺服當前速度 mm/s或°/s
+        float servoTorque;	//伺服當前轉矩Nm
     } robot_aux_state;

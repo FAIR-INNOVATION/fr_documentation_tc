@@ -1,165 +1,165 @@
-机器人外设
+機器人週邊
 ============
 
 .. toctree:: 
     :maxdepth: 5
 
-配置夹爪
+配置夾爪
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  配置夹爪
-    * @param  [in] company  夹爪厂商，待定
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  配置夾爪
+    * @param  [in] company  夾爪廠商，待定
+    * @param  [in] device  設備號，暫不使用，預設為0
+    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     int SetGripperConfig(int company, int device, int softvesion, int bus);
 
-获取夹爪配置
+取得夾爪配置
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪配置
-    * @param  [in] company  夹爪厂商，待定
-    * @param  [in] device  设备号，暂不使用，默认为0
-    * @param  [in] softvesion  软件版本号，暂不使用，默认为0
-    * @param  [in] bus 设备挂在末端总线位置，暂不使用，默认为0
-    * @return  错误码
+    * @brief  取得夾爪配置
+    * @param  [in] company  夾爪廠商，待定
+    * @param  [in] device  設備號，暫不使用，預設為0
+    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @return  錯誤碼
     */
     int GetGripperConfig(int *company, int *device, int *softvesion, int *bus);
 
-激活夹爪
+啟動夾爪
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  激活夹爪
-    * @param  [in] index  夹爪编号
-    * @param  [in] act  0-复位，1-激活
-    * @return  错误码
+    * @brief  啟動夾爪
+    * @param  [in] index  夾爪編號
+    * @param  [in] act  0-復位，1-激活
+    * @return  錯誤碼
     */
     int ActGripper(int index, byte act); 
 
-控制夹爪
+控制夾爪
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  控制夹爪
-    * @param  [in] index  夹爪编号
-    * @param  [in] pos  位置百分比，范围[0~100]
-    * @param  [in] vel  速度百分比，范围[0~100]
-    * @param  [in] force  力矩百分比，范围[0~100]
-    * @param  [in] max_time  最大等待时间，范围[0~30000]，单位ms
+    * @brief  控制夾爪
+    * @param  [in] index  夾爪編號
+    * @param  [in] pos  位置百分比，範圍[0~100]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] force  力矩百分比，範圍[0~100]
+    * @param  [in] max_time  最大等待時間，範圍[0~30000]，單位ms
     * @param  [in] block  0-阻塞，1-非阻塞
-    * @param  [in] type 夹爪类型，0-平行夹爪；1-旋转夹爪
-    * @param  [in] rotNum 旋转圈数
-    * @param  [in] rotVel 旋转速度百分比[0-100]
-    * @param  [in] rotTorque 旋转力矩百分比[0-100]
-    * @return  错误码
+    * @param  [in] type 夾爪類型，0-平行夾爪；1-旋轉夾爪
+    * @param  [in] rotNum 旋轉圈數
+    * @param  [in] rotVel 旋轉速度百分比[0-100]
+    * @param  [in] rotTorque 旋轉力矩百分比[0-100]
+    * @return  錯誤碼
     */
     int MoveGripper(int index, int pos, int vel, int force, int max_time, byte block, int type, double rotNum, int rotVel, int rotTorque);
 
-获取夹爪运动状态
+取得夾爪運動狀態
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪运动状态
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] staus  0-运动未完成，1-运动完成
-    * @return  错误码
+    * @brief  取得夾爪運動狀態
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] staus  0-運動未完成，1-運動完成
+    * @return  錯誤碼
     */
     int GetGripperMotionDone(ref int fault, ref int status); 
 
-获取夹爪激活状态
+取得夾爪啟動狀態
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪激活状态
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] status  bit0~bit15对应夹爪编号0~15，bit=0为未激活，bit=1为激活
-    * @return  错误码
+    * @brief  取得夾爪啟動狀態
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] status  bit0~bit15对应夾爪編號0~15，bit=0為未激活，bit=1為激活
+    * @return  錯誤碼
     */
     int GetGripperActivateStatus(ref int fault, ref int status);
 
-获取夹爪位置
+取得夾爪位置
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪位置
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] position  位置百分比，范围0~100%
-    * @return  错误码
+    * @brief  取得夾爪位置
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] position  位置百分比，範圍0~100%
+    * @return  錯誤碼
     */
     int GetGripperCurPosition(ref int fault, ref int position);
 
-获取夹爪速度
+取得夾爪速度
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪速度
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] speed  速度百分比，范围0~100%
-    * @return  错误码
+    * @brief  取得夾爪速度
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] speed  速度百分比，範圍0~100%
+    * @return  錯誤碼
     */
     int GetGripperCurSpeed(ref int fault, ref int speed);
      
-获取夹爪电流
+取得夾爪電流
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪电流
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] current  电流百分比，范围0~100%
-    * @return  错误码
+    * @brief  取得夾爪電流
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] current  電流百分比，範圍0~100%
+    * @return  錯誤碼
     */
     int GetGripperCurCurrent(ref int fault, ref int current);
 
-获取夹爪电压
+取得夾爪電壓
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪电压
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] voltage  电压,单位0.1V
-    * @return  错误码
+    * @brief  取得夾爪電壓
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] voltage  電壓,單位0.1V
+    * @return  錯誤碼
     */
     int GetGripperVoltage(ref int fault, ref int voltage);
 
-获取夹爪温度
+取得夾爪溫度
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  获取夹爪温度
-    * @param  [out] fault  0-无错误，1-有错误
-    * @param  [out] temp  温度，单位℃
-    * @return  错误码
+    * @brief  取得夾爪溫度
+    * @param  [out] fault  0-無錯誤，1-有錯誤
+    * @param  [out] temp  溫度，單位℃
+    * @return  錯誤碼
     */
     int GetGripperTemp(ref int fault, ref int temp);
 
-代码示例
+代碼範例
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
@@ -222,32 +222,32 @@
         Console.WriteLine($"voltage {tempture}  rtn {rtn} fault {fault} ");
     }
 
-计算预抓取点-视觉
+計算預抓取點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 计算预抓取点-视觉 
-    * @param [in] desc_pos 抓取点笛卡尔位姿 
-    * @param [in] zlength z轴偏移量 
-    * @param [in] zangle 绕z轴旋转偏移量
-    * @param [out] pre_pos 预抓取点
-    * @return 错误码 
+    * @brief 計算預抓取點-視覺 
+    * @param [in] desc_pos 抓取點笛卡爾位姿 
+    * @param [in] zlength z軸偏移量 
+    * @param [in] zangle 繞z軸旋轉偏移量
+    * @param [out] pre_pos 预抓取點
+    * @return 錯誤碼 
     */ 
     int ComputePrePick(DescPose desc_pos, double zlength, double zangle, ref DescPose pre_pos);
 
-计算撤退点-视觉
+計算撤退點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /** 
-    * @brief 计算撤退点-视觉 
-    * @param [in] desc_pos 撤退点笛卡尔位姿 
-    * @param [in] zlength z轴偏移量 
-    * @param [in] zangle 绕z轴旋转偏移量
-    * @param [out] post_pos 撤退点
-    * @return 错误码 
+    * @brief 計算撤退點-視覺 
+    * @param [in] desc_pos 撤退點笛卡兒位姿 
+    * @param [in] zlength z軸偏移量 
+    * @param [in] zangle 繞z軸旋轉偏移量
+    * @param [out] post_pos 撤退點
+    * @return 錯誤碼 
     */ 
     int ComputePostPick(DescPose desc_pos, double zlength, double zangle, ref DescPose post_pos);

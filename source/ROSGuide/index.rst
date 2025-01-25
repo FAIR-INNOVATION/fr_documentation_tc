@@ -16,7 +16,7 @@ frcobot_ros2
 
     ros2guide
 
-moveIt2插件应用
+moveIt2插件應用
 ================
 
 .. toctree:: 

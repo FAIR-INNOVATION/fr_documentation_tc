@@ -2,7 +2,7 @@
     :maxdepth: 6
     :numbered: 5
 
-宣传册
+宣傳冊
 --------------
     :download:`法奧意威公司簡介 <_static/_doc/法奥意威公司简介.pdf>`
 
@@ -20,6 +20,8 @@
 ---------------------------------
     :download:`法奧意威ISO9001品質認證證書 <_static/_doc/法奥意威ISO9001质量认证证书.pdf>`
 
+機器人認證證書：
+
 .. list-table::
    :widths: 24 4 4 4 4 4 4 4 20
    :header-rows: 0
@@ -35,7 +37,7 @@
      - **FR3MT**
      - **證書下載**
 
-   * - **高防護IP65測試認證證書**
+   * - **高防護IP65測試證書**
      - ✅
      - ✅
      - ✅
@@ -45,7 +47,7 @@
      - --
      - :download:`下載 <_static/_doc/高防护IP65测试认证.zip>`
 
-   * - **NSF認證證書**
+   * - **NSF證書**
      - ✅
      - ✅
      - ✅
@@ -55,7 +57,7 @@
      - ✅
      - :download:`下載<_static/_doc/NSF认证.zip>`
 
-   * - **碰撞力測試認證證書**
+   * - **碰撞力測試證書**
      - ✅
      - ✅
      - ✅
@@ -65,57 +67,17 @@
      - --
      - :download:`下載<_static/_doc/碰撞力测试认证证书.zip>`
 
-   * - **ROHS測試認證證書**
+   * - **ROHS測試證書**
      - ✅
      - ✅
      - ✅
      - ✅
      - ✅
-     - --
+     - ✅
      - --
      - :download:`下載<_static/_doc/ROHS测试认证.zip>`
 
-   * - **零件-馬達認證證書**
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - :download:`下載<_static/_doc/零部件-电机认证.pdf>`
-
-   * - **零件-驅動器認證證書**
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - :download:`下載<_static/_doc/零部件-驱动器认证.pdf>`
-
-   * - **零件-核心板認證證書**
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - :download:`下載<_static/_doc/零部件-核心板认证.pdf>`
-
-   * - **零件-電源認證證書**
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - :download:`下載<_static/_doc/零部件-电源认证.pdf>`
-
-   * - **防爆認證證書**
+   * - **防爆證書**
      - ✅
      - ✅
      - ✅
@@ -125,7 +87,7 @@
      - ✅
      - :download:`下載<_static/_doc/防爆认证.zip>`
 
-   * - **CE-EMC認證證書**
+   * - **CE-EMC證書**
      - ✅
      - ✅
      - ✅
@@ -135,7 +97,7 @@
      - --
      - :download:`下載<_static/_doc/CE-EMC认证.pdf>`
 
-   * - **CE-MD認證證書**
+   * - **CE-MD證書**
      - ✅
      - ✅
      - ✅
@@ -145,17 +107,7 @@
      - --
      - :download:`下載<_static/_doc/CE-MD认证证书.zip>`
 
-   * - **控制箱CE認證證書**
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - :download:`下載<_static/_doc/FRC100-AC-x000-A版本控制箱CE(MD+EMC)证书.pdf>`
-
-   * - **功能安全認證證書**
+   * - **功能安全證書**
      - ✅
      - ✅
      - ✅
@@ -165,17 +117,17 @@
      - --
      - :download:`下載<_static/_doc/功能安全认证证书.zip>`
 
-   * - **KCs認證證書**
+   * - **KCs證書**
+     - ✅
      - ✅
      - ✅
      - ✅
      - ✅
      - ✅
      - --
-     - --
-     - :download:`下載<_static/_doc/KCs证书(FR3-FR20).pdf>`
+     - :download:`下載<_static/_doc/KCs证书.zip>`
 
-   * - **SEMI認證證書**
+   * - **SEMI證書**
      - ✅
      - ✅
      - ✅
@@ -185,7 +137,7 @@
      - --
      - :download:`下載<_static/_doc/SEMI认证证书.pdf>`
 
-   * - **NRTL工業機器人認證證書**
+   * - **NRTL工業機器人證書**
      - ✅
      - ✅
      - ✅
@@ -195,7 +147,7 @@
      - --
      - :download:`下載<_static/_doc/FR3-30工业机器人NRTL认证证书.pdf>`
 
-   * - **NRTL協作機器人認證證書**
+   * - **NRTL協作機器人證書**
      - ✅
      - ✅
      - ✅
@@ -205,7 +157,7 @@
      - --
      - :download:`下載<_static/_doc/NRTL协作机器人认证证书.pdf>`
     
-   * - **CR認證證書**
+   * - **CR證書**
      - --
      - ✅
      - --
@@ -215,6 +167,43 @@
      - --
      - :download:`下載<_static/_doc/法奥意威CR证书.pdf>`
 
+控制箱認證證書：
+
+.. list-table::
+   :widths: 45 125 35
+   :header-rows: 0
+   :class: sheet-center
+
+   * - **認證證書**
+     - **產品型號**
+     - **下載**
+   * - **控制箱CE(MD+EMC)證書**
+     - FRC100-AC-2000-A, FRC100-AC-5000-A
+     - :download:`下載 <_static/_doc/FRC100-AC-x000-A版本控制箱CE(MD+EMC)证书.pdf>`
+
+零件認證證書：
+
+.. list-table::
+   :widths: 30 50 20
+   :header-rows: 0
+   :class: sheet-center
+
+   * - **認證證書**
+     - **產品型號**
+     - **下載**
+   * - **電機證書**
+     - FR60-100, FR60-200, FR80-470, FR130-960, FR130-1500
+     - :download:`下載 <_static/_doc/零部件-电机认证.pdf>`
+   * - **驅動器證書**
+     - FR01-SD6-14, FR01-SD6-17, FR01-SD8-25, FR01-SD13-32, FR01-SD13-40
+     - :download:`下載 <_static/_doc/零部件-驱动器认证.pdf>`
+   * - **電源證書**
+     - FRP-800-4824
+     - :download:`下載 <_static/_doc/零部件-电源认证.pdf>`
+   * - **核心板證書**
+     - PETREL
+     - :download:`下載 <_static/_doc/零部件-核心板认证.pdf>`
+  
 二次開發
 ---------------------------------
     :download:`FAIRINO ROS1 <https://gitee.com/fair-innovation/frcobot_ros/repository/archive/master.zip>`
@@ -295,6 +284,8 @@ Java SDK
 
     \ `歷史版本 <https://gitee.com/fair-innovation/fairino-java-sdk/tags>`__\
 
-机器人软件下载
+機器人軟體下載
 ---------------------------------
     :download:`FAIRINO-CobotSoftware-QNX-V3.7.7-Release-241230 <https://pan.baidu.com/s/1rgovEmjCuDJDrWPdoQgAPA?pwd=pryj>`
+
+    :download:`FAIRINO-CobotSoftware-Linux-V3.7.7-Release-250114 <https://pan.baidu.com/s/12KrK9lOG6NLC6ejvkLl5tA?pwd=bn3n>`
