@@ -19,7 +19,7 @@ extensions = ['recommonmark']
 templates_path = ['_templates']
 exclude_patterns = []
 
-language = 'zh_TW'
+language = 'zh-Hant'
 locale_dirs = ['locale/']  # 設定本地化資料目錄
 
 # 註：在生成html的時候這句話要註釋
