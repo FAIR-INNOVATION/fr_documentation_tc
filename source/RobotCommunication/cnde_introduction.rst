@@ -33,11 +33,11 @@ CNDE簡介
      - UINT8
      - 控制箱標準DI輸入(bit0 ~ bit7表示DI0 ~ DI7)
 
-   * - std_DI_box
+   * - cfg_DI_box
      - UINT8
      - 控制箱可設定CI輸入(bit0 ~ bit7表示CI0 ~ CI7)
 
-   * - std_DI_box
+   * - cfg_DI_tool
      - UINT8
      - 控制箱可配置工具DI輸入(bit0 ~ bit2表示toolDI0 ~ toolDI1)
 
@@ -161,7 +161,7 @@ CNDE簡介
      - DOUBLE
      - 負載質量(kg)
 
-   * - payload_cog
+   * - pay_cog
      - DOUBLE_3
      - 負載質心(x,y,z)(mm)
 
@@ -181,6 +181,10 @@ CNDE簡介
      - DOUBLE_X
      - DOUBLE型機器人輸出暫存器(X表示暫存器個數，若您需要16個DOUBLE型輸出暫存器，則實際名稱為：“output_DOUBLE_reg_16”，機器人最多支援64個DOUBLE型輸出暫存器)
 
+   * - ft_sensor_data
+     - DOUBLE_6
+     - 力傳感器數據
+  
 .. centered:: 表1-2 機器人輸入控製配置功能
 
 .. list-table::

@@ -896,3 +896,156 @@
             robot.Sleep(500);
         }
     }
+
+設定機器人焊接電弧意外中斷偵測參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接電弧意外中斷偵測參數
+ * @param [in] checkEnable 是否使能偵測；0-不使能；1-使能
+ * @param [in] arcInterruptTimeLength 電弧中斷確認時長(ms)
+ * @return 錯誤碼
+ */
+ int WeldingSetCheckArcInterruptionParam(int checkEnable, int arcInterruptTimeLength);
+
+取得機器人焊接電弧意外中斷偵測參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 取得機器人焊接電弧意外中斷偵測參數
+ * @return List[0]:錯誤碼; List[1]:double 是否使能檢測；0-不使能；1-使能; List[2]:電弧中斷確認時長(ms)
+ */
+ List<Integer> WeldingGetCheckArcInterruptionParam();
+
+設定機器人焊接中斷恢復參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接中斷恢復參數
+ * @param [in] enable 是否使能焊接中斷恢復
+ * @param [in] length 焊縫重疊距離(mm)
+ * @param [in] velocity 機器人回到再起弧點速度百分比(0-100)
+ * @param [in] moveType 機器人運動到再起弧點方式；0-LIN；1-PTP
+ * @return 錯誤碼
+ */
+ int WeldingSetReWeldAfterBreakOffParam(int enable, double length, double velocity, int moveType);
+
+取得機器人焊接中斷恢復參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 取得機器人焊接中斷恢復參數
+ * @return List[0]:錯誤碼; List[1]:int 是否使能焊接中斷恢復; List[2]:double 焊縫重疊距離(mm);
+ * @return List[3]:double 機器人回到再起弧點速度百分比(0-100);List[4]:int 機器人移動到再起弧點方式；0-LIN；1-PTP
+ */
+ List<Number> WeldingGetReWeldAfterBreakOffParam();
+
+設定機器人焊接中斷後恢復焊接
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接中斷後恢復焊接
+ * @return 錯誤碼
+ */
+ int WeldingStartReWeldAfterBreakOff();
+
+設定機器人焊接中斷後退出焊接
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接中斷後退出焊接
+ * @return 錯誤碼
+ */
+ int WeldingAbortWeldAfterBreakOff();
+
+程式碼範例
+++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ public static void main(String[] args)
+ {
+ Robot robot = new Robot();
+ robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+ robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+ int rtn = robot.RPC("192.168.58.2");
+ if(rtn == 0)
+ {
+ System.out.println("rpc連線 success");
+ }
+ else
+ {
+ System.out.println("rpc連線 fail");
+ return ;
+ }
+ int rtn = -1;
+ rtn = robot.WeldingSetCheckArcInterruptionParam(1, 200);
+ System.out.println("WeldingSetCheckArcInterruptionParam: "+rtn);
+ rtn = robot.WeldingSetReWeldAfterBreakOffParam(1, 5.7, 98.2, 0);
+ System.out.println("WeldingSetReWeldAfterBreakOffParam: "+rtn);
+ int enable = 0;
+ double length = 0;
+ double velocity = 0;
+ int moveType = 0;
+ int checkEnable = 0;
+ int arcInterruptTimeLength = 0;
+ List<Integer> rtnArray = new ArrayList<Integer>() {};
+ List<Number> rtnArrayWeld = new ArrayList<Number>() {};
+ rtnArray = robot.WeldingGetCheckArcInterruptionParam();
+ checkEnable=rtnArray.get(1);
+ arcInterruptTimeLength=rtnArray.get(2);
+ System.out.println("WeldingGetCheckArcInterruptionParam checkEnable:"+checkEnable +", arcInterruptTimeLength : "+ arcInterruptTimeLength);
+ rtnArrayWeld = robot.WeldingGetReWeldAfterBreakOffParam();
+ enable=(int) rtnArrayWeld.get(1);
+ length=(double) rtnArrayWeld.get(2);
+ velocity=(double) rtnArrayWeld.get(3);
+ moveType=(int) rtnArrayWeld.get(4);
+ System.out.println("WeldingGetReWeldAfterBreakOffParam :"+ enable +",length: "+length+",velocity :"+velocity+",moveType :"+moveType);
+ //焊接中斷恢復
+ robot.ProgramLoad("/fruser/test.lua");
+ robot.ProgramRun();
+
+ robot.Sleep(5000);
+
+ while (true)
+ {
+ ROBOT_STATE_PKG pkg=new ROBOT_STATE_PKG();
+ pkg=robot.GetRobotRealTimeState();
+ System.out.println("welding breakoff state is "+pkg.weldingBreakOffstate.breakOffState);
+ if (pkg.weldingBreakOffstate.breakOffState == 1)
+ {
+ System.out.println("welding breakoff !");
+ robot.Sleep(2000);
+ rtn = robot.WeldingStartReWeldAfterBreakOff();
+ System.out.println("WeldingStartReWeldAfterBreakOff: "+rtn);
+ break;
+ }
+ robot.Sleep(100);
+ }
+ }

@@ -467,7 +467,7 @@ UDP擴充軸參數配置
     * @param [in] axisAcc 加速度mm/s2
     * @param [in] axisLead 導程mm
     * @param [in] encResolution 編碼器分辨率
-    * @param [in] axisOffect焊接起始點擴展軸偏移量
+    * @param [in] axisOffect 焊接起始點擴展軸偏移量
     * @param [in] axisCompany 驅動器廠商 1-禾川；2-匯川；3-松下
     * @param [in] axisModel 驅動器型號 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-匯川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
     * @param [in] axisEncType 編碼器類型 0-增量；1-絕對值
@@ -503,7 +503,7 @@ UDP擴充軸參數配置
     * @param [in]  axisDHd2 外部軸DH參數d2 mm
     * @param [in]  axisDHd3 外部軸DH參數d3 mm
     * @param [in]  axisDHd4 外部軸DH參數d4 mm
-    * @param [in]  axisDHa1 外部軸DH參數11 mm
+    * @param [in]  axisDHa1 外部軸DH參數a1 mm
     * @param [in]  axisDHa2 外部軸DH參數a2 mm
     * @param [in]  axisDHa3 外部軸DH參數a3 mm
     * @param [in]  axisDHa4 外部軸DH參數a4 mm

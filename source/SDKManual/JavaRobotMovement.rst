@@ -799,3 +799,140 @@ jog點動立即停止
         robot.MoveToolAOStop();
         //robot.MoveAOStop();
     }
+
+開始Ptp運動FIR濾波
++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 開始Ptp運動FIR濾波
+ * @param [in] maxAcc 最大加速度極值(deg/s2)
+ * @return 錯誤碼
+ */
+ int PtpFIRPlanningStart(double maxAcc);
+
+關閉Ptp運動FIR濾波
++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 關閉Ptp運動FIR濾波
+ * @return 錯誤碼
+ */
+ int PtpFIRPlanningEnd();
+
+程式碼範例
++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ public static void main(String[] args)
+ {
+ Robot robot = new Robot();
+ robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+ robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+ int rtn = robot.RPC("192.168.58.2");
+ if(rtn == 0)
+ {
+ System.out.println("rpc連線 success");
+ }
+ else
+ {
+ System.out.println("rpc連線 fail");
+ return ;
+ }
+ DescPose startdescPose=new DescPose(-569.710, -132.595, 395.147, 178.418, -1.893, 171.051);
+ JointPos startjointPos=new JointPos(-2.334, -79.300, 108.196, -120.594, -91.790, -83.386);
+
+ DescPose enddescPose=new DescPose(-366.397, -572.427, 418.339, -178.972, 1.829, -142.970);
+ JointPos endjointPos=new JointPos(43.651, -70.284, 91.057, -109.075, -88.768, -83.382);
+
+ ExaxisPos exaxisPos=new ExaxisPos(0, 0, 0, 0);
+ DescPose offdese=new DescPose(0, 0, 0, 0, 0, 0);
+
+ robot.PtpFIRPlanningStart(1000);
+ robot.MoveJ(startjointPos, startdescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+ robot.MoveJ(endjointPos, enddescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+ robot.PtpFIRPlanningEnd();
+
+ robot.MoveJ(startjointPos, startdescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+ robot.MoveJ(endjointPos, enddescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+ }
+
+開始LIN、ARC運動FIR濾波
++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 開始LIN、ARC運動FIR濾波
+ * @param [in] maxAccLin 線加速度極值(mm/s2)
+ * @param [in] maxAccDeg 角加速度極值(deg/s2)
+ * @param [in] maxJerkLin 線加加速度極值(mm/s3)
+ * @param [in] maxJerkDeg 角加加速度極值(deg/s3)
+ * @return 錯誤碼
+ */
+ int LinArcFIRPlanningStart(double maxAccLin, double maxAccDeg, double maxJerkLin, double maxJerkDeg);
+
+關閉LIN、ARC運動FIR濾波
++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 關閉LIN、ARC運動FIR濾波
+ * @return 錯誤碼
+ */
+ int LinArcFIRPlanningEnd();
+
+程式碼範例
++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ public static void main(String[] args)
+ {
+ Robot robot = new Robot();
+ robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+ robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+ int rtn = robot.RPC("192.168.58.2");
+ if(rtn == 0)
+ {
+ System.out.println("rpc連線 success");
+ }
+ else
+ {
+ System.out.println("rpc連線 fail");
+ return ;
+ }
+ DescPose startdescPose=new DescPose(-366.397, -572.427, 418.339, -178.972, 1.829, -142.970);
+ JointPos startjointPos=new JointPos(43.651, -70.284, 91.057, -109.075, -88.768, -83.382);
+
+ DescPose middescPose=new DescPose(-569.710, -132.595, 395.147, 178.418, -1.893, 171.051);
+ JointPos midjointPos=new JointPos(-2.334, -79.300, 108.196, -120.594, -91.790, -83.386);
+
+ DescPose enddescPose=new DescPose(-608.420, 610.692, 314.930, -176.438, -1.756, 117.333);
+ JointPos endjointPos=new JointPos(-56.153, -46.964, 68.015, -113.200, -86.661, -83.479);
+
+ ExaxisPos exaxisPos=new ExaxisPos(0, 0, 0, 0);
+ DescPose offdese=new DescPose(0, 0, 0, 0, 0, 0);
+
+ robot.LinArcFIRPlanningStart(1000, 1000, 1000, 1000);
+ robot.MoveL(startjointPos, startdescPose, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
+ robot.MoveC(midjointPos, middescPose, 0, 0, 100, 100, exaxisPos, 0, offdese, endjointPos, enddescPose, 0, 0, 100, 100, exaxisPos, 0, offdese, 100, -1);
+ robot.LinArcFIRPlanningEnd();
+ }

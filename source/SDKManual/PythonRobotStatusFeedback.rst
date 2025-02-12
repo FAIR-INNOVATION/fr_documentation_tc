@@ -6,7 +6,7 @@
 
 狀態回饋訊息對照表
 ~~~~~~~~~~~~~~~~~~~~~~~~
-.. versionadded:: python SDK-v2.0.4
+.. versionchanged:: Python SDK-v2.0.8-3.7.8
     
 .. csv-table:: 
     :header-rows: 1
@@ -91,6 +91,11 @@
     "second","秒"
     "millisecond","毫秒"
     "softwareUpgradeState","機器人軟體升級狀態"
+    "cl_analog_output[i]","控制箱類比輸出,i:0~1"
+    "tl_analog_output","工具類比量輸出"
+    "gripperRotNum","旋轉夾爪目前旋轉圈數"
+    "gripperRotSpeed","旋轉夾爪目前旋轉速度百分比"
+    "gripperRotTorque","旋轉夾爪目前旋轉力矩百分比"
     "endLuaErrCode","末端LUA運行狀態"
     
 代碼範例
@@ -245,4 +250,10 @@
     print("second:", robot.robot_state_pkg.second)
     print("millisecond:", robot.robot_state_pkg.millisecond)
     print("softwareUpgradeState:", robot.robot_state_pkg.softwareUpgradeState)
+    print("cl_analog_output[0]:",robot.robot_state_pkg.cl_analog_output[0])
+    print("cl_analog_output[1]:",robot.robot_state_pkg.cl_analog_output[1])
+    print("tl_analog_output:",robot.robot_state_pkg.tl_analog_output)
+    print("gripperRotNum:",robot.robot_state_pkg.gripperRotNum)
+    print("gripperRotSpeed:",robot.robot_state_pkg.gripperRotSpeed)
+    print("gripperRotTorque:",robot.robot_state_pkg.gripperRotTorque)
     print("endLuaErrCode:", robot.robot_state_pkg.endLuaErrCode)

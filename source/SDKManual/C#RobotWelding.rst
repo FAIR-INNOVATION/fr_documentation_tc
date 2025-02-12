@@ -361,5 +361,472 @@
         robot.WeaveEnd(0);
     }
 
+焊絲尋位開始
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
 
+.. code-block:: c#
+ :linenos:
 
+ /**
+ * @brief 焊絲尋位開始
+ * @param [in] refPos 1-基準點 2-接觸點
+ * @param [in] searchVel 尋位速度 %
+ * @param [in] searchDis 尋位距離 mm
+ * @param [in] autoBackFlag 自動返回標誌，0-不自動；-自動
+ * @param [in] autoBackVel 自動回傳速度 %
+ * @param [in] autoBackDis 自動返回距離 mm
+ * @param [in] offectFlag 1-帶偏移量尋位；2-示教點尋位
+ * @return 錯誤碼
+ */
+ int WireSearchStart(int refPos, double searchVel, int searchDis, int autoBackFlag, double autoBackVel, int autoBackDis, int offectFlag);
+
+焊絲尋位結束
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 焊絲尋位結束
+ * @param [in] refPos 1-基準點 2-接觸點
+ * @param [in] searchVel 尋位速度 %
+ * @param [in] searchDis 尋位距離 mm
+ * @param [in] autoBackFlag 自動返回標誌，0-不自動；-自動
+ * @param [in] autoBackVel 自動回傳速度 %
+ * @param [in] autoBackDis 自動返回距離 mm
+ * @param [in] offectFlag 1-帶偏移量尋位；2-示教點尋位
+ * @return 錯誤碼
+ */
+ int WireSearchEnd(int refPos, double searchVel, int searchDis, int autoBackFlag, double autoBackVel, int autoBackDis, int offectFlag);
+
+計算焊絲尋位偏移量
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 計算焊絲尋位偏移量
+ * @param [in] seamType 焊縫類型
+ * @param [in] method 計算方法
+ * @param [in] varNameRef 基準點1-6，「#」表示無點變數
+ * @param [in] varNameRes 接觸點1-6，「#」表示無點變數
+ * @param [out] offectFlag 0-偏移量直接疊加到指令點；1-偏移量需要對指令點進行座標變換
+ * @param [out] offect 偏移位姿[x, y, z, a, b, c]
+ * @return 錯誤碼
+ */
+ int GetWireSearchOffset(int seamType, int method, string[] varNameRef, string[] varNameRes, ref int offsetFlag, ref DescPose offset);
+
+等待焊絲尋位完成
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 等待焊絲尋位完成
+ * @return 錯誤碼
+ */
+ int WireSearchWait(string name);
+
+焊絲尋位接觸點寫入資料庫
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 焊絲尋位接觸點寫入資料庫
+ * @param [in] varName 接觸點名稱 “RES0” ~ “RES99”
+ * @param [in] pos 接觸點資料[x, y, x, a, b, c]
+ * @return 錯誤碼
+ */
+ int SetPointToDatabase(string varName, DescPose pos);
+
+電弧追蹤控制
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 電弧追蹤控制
+ * @param [in] flag 開關，0-關；1-開
+ * @param [in] dalayTime 滯後時間，單位ms
+ * @param [in] isLeftRight 左右偏誤補償
+ * @param [in] klr 左右調節係數(靈敏度)
+ * @param [in] tStartLr 左右開始補償時間cyc
+ * @param [in] stepMaxLr 左右每次最大補償量 mm
+ * @param [in] sumMaxLr 左右總計最大補償量 mm
+ * @param [in] isUpLow 上下偏差補償
+ * @param [in] kud 上下調節係數(靈敏度)
+ * @param [in] tStartUd 上下開始補償時間cyc
+ * @param [in] stepMaxUd 上下每次最大補償量 mm
+ * @param [in] sumMaxUd 上下總計最大補償量
+ * @param [in] axisSelect 上下座標系選擇，0-擺動；1-工具；2-基座
+ * @param [in] referenceType 上下基準電流設定方式，0-回饋；1-常數
+ * @param [in] referSampleStartUd 上下基準電流採樣開始計數(反饋)，cyc
+ * @param [in] referSampleCountUd 上下基準電流採樣循環計數(反饋)，cyc
+ * @param [in] referenceCurrent 上下基準電流mA
+ * @return 錯誤碼
+ */
+ int ArcWeldTraceControl(int flag, double delaytime, int isLeftRight, double klr, double tStartLr, double stepMaxLr, double sumMaxLr, int isUpLow, double kud, double tStartUd, double stepMaxUd, double sumMaxUd, int axisSelect, int referenceType, double referSampleStartUd, double referSampleCountUd, double referenceCurrent);
+
+電弧追蹤AI通帶選擇
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 電弧追蹤AI通帶選擇
+ * @param [in] channel 電弧追蹤AI通帶選擇,[0-3]
+ * @return 錯誤碼
+ */
+ int ArcWeldTraceExtAIChannelConfig(int channel);
+
+仿真擺動開始
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 仿真擺動開始
+ * @param [in] weaveNum 擺動參數編號
+ * @return 錯誤碼
+ */
+ int WeaveStartSim(int weaveNum);
+
+仿真擺動結束
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 仿真擺動結束
+ * @param [in] weaveNum 擺動參數編號
+ * @return 錯誤碼
+ */
+ int WeaveEndSim(int weaveNum);
+
+開始軌跡偵測預警(不運動)
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 開始軌跡偵測預警(不動作)
+ * @param [in] weaveNum 擺動參數編號
+ * @return 錯誤碼
+ */
+ int WeaveInspectStart(int weaveNum);
+
+結束軌跡偵測預警(不運動)
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 結束軌跡偵測預警(不動作)
+ * @param [in] weaveNum 擺動參數編號
+ * @return 錯誤碼
+ */
+ int WeaveInspectEnd(int weaveNum);
+
+擴展IO-配置焊機氣體偵測訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴充IO-配置焊接機氣體偵測訊號
+ * @param [in] DONum 氣體偵測訊號擴展DO編號
+ * @return 錯誤碼
+ */
+ int SetAirControlExtDoNum(int DONum);
+
+擴充IO-配置焊接機起弧訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴充IO-配置焊接機起弧訊號
+ * @param [in] DONum 焊機起弧訊號擴展DO編號
+ * @return 錯誤碼
+ */
+ int SetArcStartExtDoNum(int DONum);
+
+擴充IO-配置焊接機反向送絲訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴充IO-配置焊接機反向送絲訊號
+ * @param [in] DONum 反向送絲訊號擴充DO編號
+ * @return 錯誤碼
+ */
+ int SetWireReverseFeedExtDoNum(int DONum);
+
+擴充IO-配置焊接機正向送絲訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴充IO-配置焊接機正向送線訊號
+ * @param [in] DONum 正向送絲訊號擴展DO編號
+ * @return 錯誤碼
+ */
+ int SetWireForwardFeedExtDoNum(int DONum);
+
+擴充IO-配置焊接機起弧成功訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴充IO-配置焊接機起弧成功訊號
+ * @param [in] DINum 起弧成功訊號擴展DI編號
+ * @return 錯誤碼
+ */
+ int SetArcDoneExtDiNum(int DINum);
+
+擴充IO-配置焊接機準備訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴充IO-配置焊接機準備訊號
+ * @param [in] DINum 焊接機準備訊號擴充DI編號
+ * @return 錯誤碼
+ */
+ int SetWeldReadyExtDiNum(int DINum);
+
+擴展IO-配置焊接中斷恢復訊號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 擴展IO-配置焊接中斷恢復訊號
+ * @param [in] reWeldDINum 焊接中斷後恢復焊接訊號擴展DI編號
+ * @param [in] abortWeldDINum 焊接中斷後退出焊接訊號擴展DI編號
+ * @return 錯誤碼
+ */
+ nt SetExtDIWeldBreakOffRecover(int reWeldDINum, int abortWeldDINum);
+
+電弧追蹤 + 多層多道補償開啟
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 電弧追蹤 + 多層多道補償開啟
+ * @return 錯誤碼
+ */
+ int ArcWeldTraceReplayStart();
+
+電弧追蹤 + 多層多道補償關閉
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 電弧追蹤 + 多層多道補償關閉
+ * @return 錯誤碼
+ */
+ int ArcWeldTraceReplayEnd();
+
+偏移量座標變化-多層多道焊
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 偏移量座標變化-多層多道焊
+ * @param [in] pointO 基準點笛卡爾位姿
+ * @param [in] pointX 基準點X向偏移方向點笛卡爾位姿
+ * @param [in] pointZ 基準點Z向偏移方向點笛卡爾位姿
+ * @param [in] dx x方向偏移量(mm)
+ * @param [in] dz z方向偏移量(mm)
+ * @param [in] dry 繞y軸偏移量(°)
+ * @param [out] offset 計算結果偏移量
+ * @return 錯誤碼
+ */
+ int MultilayerOffsetTrsfToBase(DescTran pointO, DescTran pointX, DescTran pointZ, double dx, double dz, double dry, ref DescPose offset);
+
+設定機器人焊接電弧意外中斷偵測參數
+++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接電弧意外中斷偵測參數
+ * @param [in] checkEnable 是否使能偵測；0-不使能；1-使能
+ * @param [in] arcInterruptTimeLength 電弧中斷確認時長(ms)
+ * @return 錯誤碼
+ */
+ int WeldingSetCheckArcInterruptionParam(int checkEnable, int arcInterruptTimeLength)
+
+取得機器人焊接電弧意外中斷偵測參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 取得機器人焊接電弧意外中斷偵測參數
+ * @param [out] checkEnable 是否啟用偵測；0-不使能；1-使能
+ * @param [out] arcInterruptTimeLength 電弧中斷確認時長(ms)
+ * @return 錯誤碼
+ */
+ int WeldingGetCheckArcInterruptionParam(ref int checkEnable, ref int arcInterruptTimeLength)
+
+設定機器人焊接中斷恢復參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接中斷恢復參數
+ * @param[in] enable 是否啟用焊接中斷恢復
+ * @param[in] length 焊縫重疊距離(mm)
+ * @param[in] velocity 機器人回到再起弧點速度百分比(0-100)
+ * @param[in] moveType 機器人運動到再起弧點方式；0-LIN；1-PTP
+ * @return 錯誤碼
+ */
+ int WeldingSetReWeldAfterBreakOffParam(int enable, double length, double velocity, int moveType)
+
+取得機器人焊接中斷恢復參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 取得機器人焊接中斷恢復參數
+ * @param [out] enable 是否使能焊接中斷恢復
+ * @param [out] length 焊縫重疊距離(mm)
+ * @param [out] velocity 機器人回到再起弧點速度百分比(0-100)
+ * @param [out] moveType 機器人運動到再起弧點方式；0-LIN；1-PTP
+ * @return 錯誤碼
+ */
+ int WeldingGetReWeldAfterBreakOffParam(ref int enable, ref double length, ref double velocity, ref int moveType)
+
+設定機器人焊接中斷後恢復焊接
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接中斷後恢復焊接
+ * @return 錯誤碼
+ */
+ int WeldingStartReWeldAfterBreakOff()
+
+設定機器人焊接中斷後退出焊接
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定機器人焊接中斷後退出焊接
+ * @return 錯誤碼
+ */
+ int WeldingAbortWeldAfterBreakOff()
+
+程式範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+    :linenos:
+
+    private void button7_Click(object sender, EventArgs e)
+    {
+        int rtn = -1;
+        rtn = robot.WeldingSetCheckArcInterruptionParam(1, 200);
+        Console.WriteLine("WeldingSetCheckArcInterruptionParam  {0}", rtn);
+        rtn = robot.WeldingSetReWeldAfterBreakOffParam(1, 5.7, 98.2, 0);
+        Console.WriteLine("WeldingSetReWeldAfterBreakOffParam {0}", rtn);
+        int enable = 0;
+        double length = 0;
+        double velocity = 0;
+        int moveType = 0;
+        int checkEnable = 0;
+        int arcInterruptTimeLength = 0;
+        rtn = robot.WeldingGetCheckArcInterruptionParam(ref checkEnable, ref arcInterruptTimeLength);
+        Console.WriteLine($"WeldingGetCheckArcInterruptionParam  checkEnable {checkEnable} - arcInterruptTimeLength {arcInterruptTimeLength}");
+
+        rtn = robot.WeldingGetReWeldAfterBreakOffParam(ref enable, ref length, ref velocity,ref moveType);
+        Console.WriteLine("WeldingGetReWeldAfterBreakOffParam  enable = {0}, length = {1}, velocity = {2}, moveType = {3}", enable, length, velocity, moveType);
+
+        robot.ProgramLoad("/fruser/test.lua");
+        robot.ProgramRun();
+
+        Thread.Sleep(5000);
+
+        while (true)
+        {
+            ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG { };
+            robot.GetRobotRealTimeState(ref pkg);
+            Console.WriteLine("welding breakoff state is     {0}", pkg.weldingBreakOffState.breakOffState);
+            if (pkg.weldingBreakOffState.breakOffState == 1)
+            {
+                Console.WriteLine("welding breakoff ! \n");
+                Thread.Sleep(2000);
+                rtn = robot.WeldingStartReWeldAfterBreakOff();
+                Console.WriteLine("WeldingStartReWeldAfterBreakOff    %d\n", rtn);
+                break;
+            }
+            Thread.Sleep(100);
+        }
+    }

@@ -568,3 +568,136 @@
     * @return 錯誤碼
     */
     int LoadIdentifyGetResult(double[] gain, ref double weight, ref DescTran cog);
+
+力道感測器輔助拖曳
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 力道感應器輔助拖曳
+ * @param [in] status 控制狀態，0-關閉；1-開啟
+ * @param [in] asaptiveFlag 自適應開啟標誌，0-關閉；1-開啟
+ * @param [in] interfereDragFlag 干涉區拖曳標誌，0-關閉；1-開啟
+ * @param [in] M 慣性係數
+ * @param [in] B 阻尼係數
+ * @param [in] K 剛度係數
+ * @param [in] F 拖曳六維力閾值
+ * @param [in] Fmax 最大拖曳限制 Nm
+ * @param [in] Vmax 最大關節速度限制 °/s
+ * @return 錯誤碼
+ */
+ int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, double[] M, double[] B, double[] K, double[] F, double Fmax, double Vmax);
+
+取得力道感測器拖曳開關狀態
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 取得力感應器拖曳開關狀態
+ * @param [out] dragState 力傳感器輔助拖曳控制狀態，0-關閉；1-開啟
+ * @param [out] sixDimensionalDragState 六維力輔助拖曳控制狀態，0-關閉；1-開啟
+ * @return 錯誤碼
+ */
+ int GetForceAndTorqueDragState(ref int dragState, ref int sixDimensionalDragState);
+
+力傳感器自動校零
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 力傳感器自動校零
+ * @param [out] weight 感測器質量 kg
+ * @param [out] pos 感測器質心 mm
+ * @return 錯誤碼
+ */
+ int ForceSensorAutoComputeLoad(ref double weight, ref DescTran pos);
+
+設定六維力和關節阻抗混合拖曳開關及參數
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定六維力和關節阻抗混合拖曳開關及參數
+ * @param [in] status 控制狀態，0-關閉；1-開啟
+ * @param [in] impedanceFlag 阻抗開啟標誌，0-關閉；1-開啟
+ * @param [in] lamdeDain 拖曳增益
+ * @param [in] KGain 剛度增益
+ * @param [in] BGain 阻尼增益
+ * @param [in] dragMaxTcpVel 拖曳末端最大線速度限制
+ * @param [in] dragMaxTcpOriVel 拖曳末端最大角速度限制
+ * @return 錯誤碼
+ */
+ int ForceAndJointImpedanceStartStop(int status, int impedanceFlag, double[] lamdeDain, double[] KGain, double[] BGain, double dragMaxTcpVel, double dragMaxTcpOriVel);
+
+
+設定力道感測器下負載重量
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定力道感測器下負載重量
+ * @param [in] weight 負載重量 kg
+ * @return 錯誤碼
+ */
+ int SetForceSensorPayLoad(double weight);
+
+設定力道感測器下負載質心
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 設定力道感測器下負載質心
+ * @param [in] x 負載質心x mm
+ * @param [in] y 負載質心y mm
+ * @param [in] z 負載質心z mm
+ * @return 錯誤碼
+ */
+ int SetForceSensorPayLoadCog(double x, double y, double z);
+
+取得力道感測器下負載重量
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 取得力傳感器下負載重量
+ * @param [in] weight 負載重量 kg
+ * @return 錯誤碼
+ */
+ int GetForceSensorPayLoad(ref double weight);
+
+取得力道感測器下負載質心
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 取得力感測器下負載質心
+ * @param [out] x 負載質心x mm
+ * @param [out] y 負載質心y mm
+ * @param [out] z 負載質心z mm
+ * @return 錯誤碼
+ */
+ int GetForceSensorPayLoadCog(ref double x, ref double y, ref double z);

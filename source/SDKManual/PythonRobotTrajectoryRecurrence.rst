@@ -287,13 +287,15 @@
 
 設定軌跡運轉中的繞z軸的扭矩
 +++++++++++++++++++++++++++
+.. versionchanged:: Python SDK-v2.0.8-3.7.8
+
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetTrajectoryJTorqueTx(tz)``"
     "描述", "設定軌跡運轉中的繞z軸的扭矩"
-    "必選參數", "``tz``:繞z軸的扭矩，單位Nm"
+    "必选参数", "- ``tz``:繞z軸的扭矩，單位Nm"
     "默認參數", "無"
     "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
@@ -346,3 +348,67 @@
     ret = robot.SetTrajectoryJTorqueTz(0) #設定軌跡運轉中的繞z軸的扭矩
     print("設定軌跡運轉中的繞z軸的扭矩錯誤碼",ret)
     time.sleep(1)
+
+上傳軌跡J文件
++++++++++++++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``TrajectoryJUpLoad(filePath)``"
+    "描述", "上傳軌跡J文件"
+    "必選參數", "- ``filePath``:上傳軌跡檔案的全路徑名，C://test/testJ.txt"
+    "預設參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+刪除軌跡J文件
++++++++++++++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``TrajectoryJDelete(filePath)``"
+    "描述", "刪除軌跡J文件"
+    "必選參數", "- ``filePath``:刪除軌跡檔案的全路徑名，C://test/testJ.txt"
+    "預設參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+代碼範例
+------------
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.LoggerInit()
+    robot.SetLoggerLevel(lvl=1)
+    
+    retval = robot.TrajectoryJDelete("testA.txt")
+    print("TrajectoryJDelete return ", retval)
+    robot.TrajectoryJUpLoad("D://zUP/testA.txt")
+
+    traj_file_name = "/fruser/traj/testA.txt"
+    retval = robot.LoadTrajectoryJ(traj_file_name, 100, 1)
+    print("LoadTrajectoryJ return ", retval)
+
+    retval,traj_start_pose = robot.GetTrajectoryStartPose(traj_file_name)
+    print("GetTrajectoryStartPose return ", retval)
+    print("軌跡起始位姿:", traj_start_pose[0], traj_start_pose[1], traj_start_pose[2], traj_start_pose[3], traj_start_pose[4], traj_start_pose[5])
+
+    robot.SetSpeed(20)
+    robot.MoveCart(traj_start_pose, 1, 0)
+
+    time.sleep(5)
+
+    retval,traj_num = robot.GetTrajectoryPointNum()
+    print("GetTrajectoryPointNum return ", retval)
+    print("軌跡點編號: ", traj_num)
+
+    retval = robot.MoveTrajectoryJ()
+    print("MoveTrajectoryJ return ", retval)

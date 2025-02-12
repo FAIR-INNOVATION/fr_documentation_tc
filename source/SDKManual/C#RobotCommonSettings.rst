@@ -383,3 +383,89 @@
     * @return 錯誤碼
     */
     int SetOaccScale(double acc)
+
+根據點位資訊計算工具座標系
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 根據點位資訊計算工具座標系
+    * @param [in] method 計算方法；0-四點法；1-六點法
+    * @param [in] pos 關節位置組，四點法時數組長度為4個，六點法時數組長度為6個
+    * @return 錯誤碼
+    */
+
+    int ComputeToolCoordWithPoints(int method, JointPos[] pos, ref DescPose coordRtn)
+
+根據點位資訊計算工件座標系
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 根據點位資訊計算工件座標系
+    * @param [in] method 計算方法；0：原點-x軸-z軸 1：原點-x軸-xy平面
+    * @param [in] pos 三個TCP位置組
+    * @param [in] refFrame 參考座標系
+    * @return 錯誤碼
+    */
+    int ComputeWObjCoordWithPoints(int method, DescPose[] pos, int refFrame, ref DescPose coordRtn)
+
+代碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+    :linenos:
+
+    private void TestTCP_Click(object sender, EventArgs e)
+    {
+      DescPose p1Desc = new DescPose(-394.073, -276.405, 399.451, -133.692, 7.657, -139.047);
+      JointPos p1Joint = new JointPos(15.234, -88.178, 96.583, -68.314, -52.303, -122.926);
+
+      DescPose p2Desc = new DescPose( -187.141, -444.908, 432.425, 148.662, 15.483, -90.637);
+      JointPos p2Joint = new JointPos(61.796, -91.959, 101.693, -102.417, -124.511, -122.767);
+
+      DescPose p3Desc = new DescPose(-368.695, -485.023, 426.640, -162.588, 31.433, -97.036);
+      JointPos p3Joint = new JointPos(43.896, -64.590, 60.087, -50.269, -94.663, -122.652);
+
+      DescPose p4Desc = new DescPose(-291.069, -376.976, 467.560, -179.272, -2.326, -107.757);
+      JointPos p4Joint = new JointPos(39.559, -94.731, 96.307, -93.141, -88.131, -122.673);
+
+      DescPose p5Desc = new DescPose(-284.140, -488.041, 478.579, 179.785, -1.396, -98.030);
+      JointPos p5Joint = new JointPos(49.283, -82.423, 81.993, -90.861, -89.427, -122.678);
+
+      DescPose p6Desc = new DescPose(-296.307, -385.991, 484.492, -178.637, -0.057, -107.059);
+      JointPos p6Joint = new JointPos(40.141, -92.742, 91.410, -87.978, -88.824, -122.808);
+
+      ExaxisPos exaxisPos=new ExaxisPos(0, 0, 0, 0);
+      DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+
+      JointPos[] posJ = new JointPos[6]{ p1Joint, p2Joint, p3Joint, p4Joint, p5Joint, p6Joint };
+      DescPose coordRtn = new DescPose(0, 0, 0, 0, 0, 0); 
+      int rtn = robot.ComputeToolCoordWithPoints(0, posJ,ref coordRtn);
+      Console.WriteLine("ComputeToolCoordWithPoints {0}  coord is {1} {2} {3} {4} {5} {6}", rtn, coordRtn.tran.x, coordRtn.tran.y, coordRtn.tran.z, coordRtn.rpy.rx, coordRtn.rpy.ry, coordRtn.rpy.rz);
+
+
+      robot.MoveJ(p1Joint, p1Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+      robot.SetTcp4RefPoint(1);
+      robot.MoveJ(p2Joint, p2Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+      robot.SetTcp4RefPoint(2);
+      robot.MoveJ(p3Joint, p3Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+      robot.SetTcp4RefPoint(3);
+      robot.MoveJ(p4Joint, p4Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+      robot.SetTcp4RefPoint(4);
+      robot.ComputeTcp4(ref coordRtn);
+      Console.WriteLine("ComputeTcp4 {0}  coord is {1} {2} {3} {4} {5} {6}", rtn, coordRtn.tran.x, coordRtn.tran.y, coordRtn.tran.z, coordRtn.rpy.rx, coordRtn.rpy.ry, coordRtn.rpy.rz);
+      //robot.MoveJ(p5Joint, p5Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+      //robot.MoveJ(p6Joint, p6Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+    }
+
+
+
+

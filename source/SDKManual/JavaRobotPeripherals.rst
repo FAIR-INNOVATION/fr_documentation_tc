@@ -138,6 +138,97 @@
         System.out.println("gripper motion done : " + rtnArray.get(2) +", " + rtnArray.get(1));
     }
 
+取得旋轉夾爪的旋轉圈數
+++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 取得旋轉夾爪的旋轉圈數
+ * @return List[0]:錯誤碼 List[1]: 0-無錯誤，1-有錯誤 List[2]:旋轉圈數
+ */
+ List<Number> GetGripperRotNum();
+
+取得旋轉夾爪的旋轉速度百分比
+++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 取得旋轉夾爪的旋轉速度百分比
+ * @return List[0]:錯誤碼 List[1]: 0-無錯誤，1-有錯誤 List[2]:旋轉速度百分比
+ */
+ List<Number> GetGripperRotSpeed();
+
+取得旋轉夾爪的旋轉力矩百分比
+++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ /**
+ * @brief 取得旋轉夾爪的旋轉力矩百分比
+ * @return List[0]:錯誤碼 List[1]: 0-無錯誤，1-有錯誤 List[2]:旋轉力矩百分比
+ */
+ List<Number> GetGripperRotTorque();
+
+程式碼範例
+++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.1-3.7.8
+
+.. code-block:: Java
+ :linenos:
+
+ public static void main(String[] args)
+ {
+ Robot robot = new Robot();
+ robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+ robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+ int rtn = robot.RPC("192.168.58.2");
+ if(rtn == 0)
+ {
+ System.out.println("rpc連線 success");
+ }
+ else
+ {
+ System.out.println("rpc連線 fail");
+ return ;
+ }
+
+ robot.ResetAllError();
+ robot.ActGripper(1, 1);
+ robot.Sleep(1000);
+ int rtn = robot.MoveGripper(1, pos, 50, 50, 5000, 1, 1, rotPos, 50, 100);
+ System.out.println("move gripper rtn is:"+rtn);
+ while (true)
+ {
+ ROBOT_STATE_PKG pkg=robot.GetRobotRealTimeState();
+ if (Math.abs(pkg.gripper_position - pos) < 1.5)
+ {
+ break;
+ }
+ else
+ {
+ System.out.println("cur gripper pos is:"+pkg.gripper_position);
+ robot.Sleep(10);
+ }
+ }
+ System.out.println("Gripper Motion Done:"+pos);
+
+ while (true){
+ ROBOT_STATE_PKG pkg = robot.GetRobotRealTimeState();
+ System.out.println("the robot AO0 "+pkg.cl_analog_output[0]/40.96+", AO1 "+pkg.cl_analog_output[1]/40.96+", tool AO0: "+pkg.tl_analog_output/40.96);
+ System.out.println("gripper pos "+pkg.gripper_position+"- vel "+pkg.gripper_speed+" - torque "+pkg.gripper_current+" - rotPos "+pkg.gripperRotNum+" - rotvel "+pkg.gr.
+ robot.Sleep(200);
+ }
+
+ }
+
 計算預抓取點-視覺
 ++++++++++++++++++++++++++
 .. code-block:: Java

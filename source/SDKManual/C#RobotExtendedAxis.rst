@@ -419,7 +419,7 @@ UDP擴充軸參數配置
     * @param [in] axisAcc 加速度mm/s2
     * @param [in] axisLead 導程mm
     * @param [in] encResolution 編碼器分辨率
-    * @param [in] axisOffect焊接起始點擴展軸偏移量
+    * @param [in] axisOffect 焊接起始點擴展軸偏移量
     * @param [in] axisCompany 驅動器廠商 1-禾川；2-匯川；3-松下
     * @param [in] axisModel 驅動器型號 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-匯川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
     * @param [in] axisEncType 編碼器類型 0-增量；1-絕對值
@@ -455,7 +455,7 @@ UDP擴充軸參數配置
     * @param [in]  axisDHd2 外部軸DH參數d2 mm
     * @param [in]  axisDHd3 外部軸DH參數d3 mm
     * @param [in]  axisDHd4 外部軸DH參數d4 mm
-    * @param [in]  axisDHa1 外部軸DH參數11 mm
+    * @param [in]  axisDHa1 外部軸DH參數a1 mm
     * @param [in]  axisDHa2 外部軸DH參數a2 mm
     * @param [in]  axisDHa3 外部軸DH參數a3 mm
     * @param [in]  axisDHa4 外部軸DH參數a4 mm
@@ -1009,159 +1009,6 @@ UDP擴展軸與機器人圓弧運動同步運動
         robot.ExtAxisSyncMoveC(midjointPos, middescPose, 1, 1, 100, 100, midexaxisPos, 0, offdese, endjointPos, enddescPose, 1, 1, 100, 100, endexaxisPos, 0, offdese, 100, 0);
     }
 
-設定焊絲尋位擴充IO端口
-+++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-v1.0.9
-
-.. code-block:: c#
-    :linenos:
-
-    /**
-    * @brief 設定焊絲尋位擴充IO端口
-    * @param searchDoneDINum 焊絲尋位成功DO端口(0-127)
-    * @param searchStartDONum 焊絲尋位啟動停止控制DO端口(0-127)
-    * @return 錯誤碼
-    */
-    int  SetWireSearchExtDIONum(int searchDoneDINum, int searchStartDONum);
-
-代碼範例
-************
-.. versionadded:: C#SDK-v1.0.9
-    
-.. code-block:: c#
-    :linenos:
-
-    private void button7_Click(object sender, EventArgs e)
-    {
-        //UDP焊絲尋位
-        robot.ExtDevSetUDPComParam("192.168.58.2", 2021, 2, 50, 5, 50, 1, 50, 10);
-        robot.ExtDevLoadUDPDriver();
-        robot.SetWireSearchExtDIONum(0, 0);
-
-        int rtn0, rtn1, rtn2 = 0;
-        ExaxisPos exaxisPos = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
-        DescPose offdese = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-        DescPose descStart = new DescPose(-158.767, -510.596, 271.709, -179.427, -0.745, -137.349);
-        JointPos jointStart = new JointPos(61.667, -79.848, 108.639, -119.682, -89.700, -70.985);
-
-        DescPose descEnd = new DescPose(0.332, -516.427, 270.688, 178.165, 0.017, -119.989);
-        JointPos jointEnd = new JointPos(79.021, -81.839, 110.752, -118.298, -91.729, -70.981);
-
-        robot.MoveL(jointStart, descStart, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);
-        robot.MoveL(jointEnd, descEnd, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);
-
-        DescPose descREF0A = new DescPose(-66.106, -560.746, 270.381, 176.479, -0.126, -126.745);
-        JointPos jointREF0A = new JointPos(73.531, -75.588, 102.941, -116.250, -93.347, -69.689);
-
-        DescPose descREF0B = new DescPose(-66.109, -528.440, 270.407, 176.479, -0.129, -126.744);
-        JointPos jointREF0B = new JointPos(72.534, -79.625, 108.046, -117.379, -93.366, -70.687);
-
-        DescPose descREF1A = new DescPose(72.975, -473.242, 270.399, 176.479, -0.129, -126.744);
-        JointPos jointREF1A = new JointPos(87.169, -86.509, 115.710, -117.341, -92.993, -56.034);
-        DescPose descREF1B = new DescPose(31.355, -473.238, 270.405, 176.480, -0.130, -126.745);
-        JointPos jointREF1B = new JointPos(82.117, -87.146, 116.470, -117.737, -93.145, -61.090);
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF0A, descREF0A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);  //起點
-        robot.MoveL(jointREF0B, descREF0B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese);  //方向點
-        rtn1 = robot.WireSearchWait("REF0");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF1A, descREF1A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);  //起點
-        robot.MoveL(jointREF1B, descREF1B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese);  //方向點
-        rtn1 = robot.WireSearchWait("REF1");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF0A, descREF0A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);  //起點
-        robot.MoveL(jointREF0B, descREF0B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese);  //方向點
-        rtn1 = robot.WireSearchWait("RES0");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF1A, descREF1A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);  //起點
-        robot.MoveL(jointREF1B, descREF1B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese);  //方向點
-        rtn1 = robot.WireSearchWait("RES1");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-        List<string> varNameRef1 = new List<string> { "REF0", "REF1", "#", "#", "#", "#" };
-        List<string> varNameRes1 = new List<string> { "RES0", "RES1", "#", "#", "#", "#" };
-        string[] varNameRef = varNameRef1.ToArray();
-        string[] varNameRes = varNameRes1.ToArray();
-        int offectFlag = 0;
-        DescPose offectPos = new DescPose(0, 0, 0, 0, 0, 0);
-        rtn0 = robot.GetWireSearchOffset(0, 0, varNameRef, varNameRes, ref offectFlag, ref offectPos);
-        robot.PointsOffsetEnable(0, offectPos);
-        robot.MoveL(jointStart, descStart, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese);
-        robot.MoveL(jointEnd, descEnd, 1, 0, 100, 100, 100, -1, exaxisPos, 1, 0, offdese);
-        robot.PointsOffsetDisable();
-    }
-
-設定焊機控制模式擴展DO端口
-+++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-v1.0.9
-
-.. code-block:: c#
-    :linenos:
-
-    /**
-    * @brief 設定焊機控制模式擴展DO端口
-    * @param DONum 焊機控制模式DO端口(0-127)
-    * @return 錯誤碼
-    */
-    int  SetWeldMachineCtrlModeExtDoNum(int DONum);
-
-設定焊機控制模式
-+++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-v1.0.9
-
-.. code-block:: c#
-    :linenos:
-
-    /**
-    * @brief 設定焊機控制模式
-    * @param mode 焊接機控制模式;0-一元化
-    * @return 錯誤碼
-    */
-    int SetWeldMachineCtrlMode(int mode);
-
-代碼範例
-************
-.. versionadded:: C#SDK-v1.0.9
-    
-.. code-block:: c#
-    :linenos:
-
-    private void button8_Click(object sender, EventArgs e)
-    {
-        robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 50, 5, 50, 1, 50, 10);
-        robot.ExtDevLoadUDPDriver();
-
-        robot.SetWeldMachineCtrlModeExtDoNum(17);
-        for (int i = 0; i < 5; i++)
-        {
-            robot.SetWeldMachineCtrlMode(1);
-            Thread.Sleep(500);
-            robot.SetWeldMachineCtrlMode(0);
-            Thread.Sleep(500);
-        }
-
-        robot.SetWeldMachineCtrlModeExtDoNum(18);
-        for (int i = 0; i < 5; i++)
-        {
-            robot.SetWeldMachineCtrlMode(1);
-            Thread.Sleep(500);
-            robot.SetWeldMachineCtrlMode(0);
-            Thread.Sleep(500);
-        }
-        robot.SetWeldMachineCtrlModeExtDoNum(19);
-        for (int i = 0; i < 5; i++)
-        {
-            robot.SetWeldMachineCtrlMode(1);
-            Thread.Sleep(500);
-            robot.SetWeldMachineCtrlMode(0);
-            Thread.Sleep(500);
-        }
-    }
 
 可移動裝置使能
 +++++++++++++++++++++++++++++
@@ -1455,5 +1302,66 @@ UDP擴展軸與機器人圓弧運動同步運動
     robot.WaitAuxDI(1, true, 1000, false);
     robot.WaitAuxAI(1, 1, 132, 1000, false);
     }
+
+設定485擴展軸運動加減速度
+++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: C#
+ :linenos:
+
+ /**
+ * @brief 設定485擴充軸運動加減速度
+ * @param [in] acc 485擴展軸運動加速度
+ * @param [in] dec 485擴展軸運動減速度
+ * @return 錯誤碼
+ */
+ int AuxServoSetAcc(double acc, double dec);
+
+設定485擴展軸急停加減速度
+++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: C#
+ :linenos:
+
+ /**
+ * @brief 設定485擴充軸急停加減速度
+ * @param [in] acc 485擴展軸急停加速度
+ * @param [in] dec 485擴展軸急停減速度
+ * @return 錯誤碼
+ */
+ int AuxServoSetEmergencyStopAcc(double acc, double dec);
+
+取得485擴展軸運動加減速度
+++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: C#
+ :linenos:
+
+ /**
+ * @brief 取得485擴充軸運動加減速度
+ * @param [out] acc 485擴展軸運動加速度
+ * @param [out] dec 485擴展軸運動減速度
+ * @return 錯誤碼
+ */
+ int AuxServoGetAcc(ref double acc, ref double dec);
+
+取得485擴展軸急停加減速度
+++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: C#
+ :linenos:
+
+ /**
+ * @brief 取得485擴充軸急停加減速度
+ * @param [out] acc 485擴展軸急停加速度
+ * @param [out] dec 485擴展軸急停減速度
+ * @return 錯誤碼
+ */
+ int AuxServoGetEmergencyStopAcc(ref double acc, ref double dec);
+
 
 

@@ -133,9 +133,23 @@
         public float servoTorque;      //伺服當前轉矩
     }
 
+焊接中斷狀態
++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+    :linenos:
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct WELDING_BREAKOFF_STATE
+    {
+        public byte breakOffState;  // 焊接中斷狀態
+        public byte weldArcState;   // 焊接電弧中斷狀態
+    }
+
 機器人狀態回饋結構體類型
 +++++++++++++++++++++++++++
-.. versionchanged:: C#SDK-v1.0.7
+.. versionchanged:: C# SDK-v1.1.0-3.7.8
 
 .. code-block:: c#
     :linenos:
@@ -218,5 +232,20 @@
     public UInt16[] extAIState;//擴充AI輸入
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
     public UInt16[] extAOState;//擴充AO輸入           
-    public UInt16 check_sum;         /* 和校驗 */                  
+    public int rbtEnableState; //機器人啟用狀態--robot enable state
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+    public double[] jointDriverTorque; //關節驅動扭矩
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+    public double[] jointDriverTemperature; //關節驅動器溫度
+    public ROBOT_TIME robotTime; //機器人系統時間
+    public int softwareUpgradeState; //軟體升級狀態 0-空閒中或上傳升級包中；1~100：升級完成百分比；-1:升級軟體失敗；-2：校驗失敗；-3：版本校驗失敗；-4：解壓縮失敗；-5：用戶升級失敗；-6：外設升級失敗；
+    public UInt16 endLuaErrCode; //末端LUA運行狀態
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+    public UInt16[] cl_analog_output; //控制箱模擬量輸出 Control box analog output
+    public UInt16 tl_analog_output; //工具類比量輸出 Tool analog output
+    public float gripperRotNum; //旋轉夾爪目前旋轉圈數 The current number of turns of the rotating clamp
+    public byte gripperRotSpeed; //旋轉夾爪當前旋轉速度百分比 Percentage of the current rotation speed of the rotary clamp
+    public byte gripperRotTorque; //旋轉夾爪當前旋轉力矩百分比 Percentage of the current rotating torque of the rotating clamp
+    public WELDING_BREAKOFF_STATE weldingBreakOffState;//焊接中斷狀態
+    public UInt16 check_sum; /* 與校驗 */                // + 2 = 609                 
     }

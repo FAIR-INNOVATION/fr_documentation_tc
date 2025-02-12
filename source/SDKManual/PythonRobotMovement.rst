@@ -708,6 +708,34 @@ jog點動立即停止
     robot.MoveL(desc_pos2, tool, user, vel=40, acc=100)
     print("笛卡兒空間直線運動點2:錯誤碼", ret)
 
+機器人暫停運動
+++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+    
+    "原型", "``PauseMotion()``"
+    "描述", "暫停運動，使用暫停運動需運動指令為非阻塞狀態"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+機器人恢復運動
+++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+    
+    "原型", "``ResumeMotion()``"
+    "描述", "恢復運動，使用恢復運動需運動指令為非阻塞狀態"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
 機器人點位整体偏移
 +++++++++++++++++++
 點位整體偏移開始
@@ -858,7 +886,7 @@ jog點動立即停止
     print("MoveToolAOStop",error)
     
 末端運動AO結束
---------------------
++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.4
 
 .. csv-table:: 
@@ -870,3 +898,108 @@ jog點動立即停止
     "必選參數", "無"
     "默認參數", "無"
     "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+開始Ptp運動FIR測量
++++++++++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+    
+    "原型", "``PtpFIRPlanningStart(maxAcc)``"
+    "描述", "開始Ptp運動FIR測量"
+    "必選參數", "- ``maxAcc``:最大加速度極值(deg/s2)"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+關閉Ptp運動FIR測量
++++++++++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+    
+    "原型", "``PtpFIRPlanningEnd()``"
+    "描述", "關閉Ptp運動FIR測量"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+代碼範例
+---------------
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，並連接到一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    startdescPose = [-569.710, -132.595, 395.147, 178.418, -1.893, 171.051]
+    startjointPos = [-2.334, -79.300, 108.196, -120.594, -91.790, -83.386]
+    enddescPose = [-366.397, -572.427, 418.339, -178.972, 1.829, -142.970]
+    endjointPos = [43.651, -70.284, 91.057, -109.075, -88.768, -83.382]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+
+    # Ptp运动FIR滤波开启
+    robot.PtpFIRPlanningStart(maxAcc=1000)
+    robot.MoveJ(startjointPos, 0, 0,vel=50)
+    robot.MoveJ(endjointPos, 0, 0,vel=50)
+    robot.PtpFIRPlanningEnd()
+
+开始LIN、ARC运动FIR滤波
++++++++++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+    
+    "原型", "``LinArcFIRPlanningStart(maxAccLin,maxAccDeg,maxJerkLin,maxJerkDeg)``"
+    "描述", "开始LIN、ARC运动FIR滤波"
+    "必選參數", "- ``maxAccLin``:线加速度极值(mm/s2)
+    - ``maxAccDeg``:角加速度极值(deg/s2)
+    - ``maxJerkLin``:线加加速度极值(mm/s3)
+    - ``maxJerkDeg``:角加加速度极值(deg/s3)"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+
+关闭LIN、ARC运动FIR滤波
++++++++++++++++++++++++
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+    
+    "原型", "``LinArcFIRPlanningEnd()``"
+    "描述", "关闭LIN、ARC运动FIR滤波"
+    "必選參數", "無"
+    "默認參數", "無"
+    "傳回值", "錯誤碼 成功-0 失敗- errcode"   
+
+代碼範例
+---------------
+.. versionadded:: Python SDK-v2.0.8-3.7.8
+    
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，並連接到一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    startdescPose = [-569.710, -132.595, 395.147, 178.418, -1.893, 171.051]
+    startjointPos = [-2.334, -79.300, 108.196, -120.594, -91.790, -83.386]
+    enddescPose = [-366.397, -572.427, 418.339, -178.972, 1.829, -142.970]
+    endjointPos = [43.651, -70.284, 91.057, -109.075, -88.768, -83.382]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+
+    # LIN、ARC運動FIR探測開啟
+    robot.LinArcFIRPlanningStart(5000, 5000, 5000, 5000)
+    robot.MoveL(startdescPose, 0, 0,vel=100)
+    robot.MoveL(enddescPose, 0, 0,vel=100)
+    robot.LinArcFIRPlanningEnd()

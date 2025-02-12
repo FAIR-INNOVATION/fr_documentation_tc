@@ -363,4 +363,71 @@
         Console.WriteLine($"SetTrajectoryJForceFx: rtn  {rtn}");
     }
 
+上傳軌跡J文件
+++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 上傳軌跡J文件
+ * @param [in] filePath 上傳軌跡檔案的全路徑名稱 C://test/testJ.txt
+ * @return 錯誤碼
+ */
+ int TrajectoryJUpLoad(string filePath);
+
+刪除軌跡J文件
+++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 刪除軌跡J文件
+ * @param [in] fileName 檔名 testJ.txt
+ * @return 錯誤碼
+ */
+ int TrajectoryJDelete(string fileName);
+
+程式範例
+++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ int UploadTrajectoryB()
+ {
+ robot.TrajectoryJDelete("testB.txt");
+ robot.TrajectoryJUpLoad("D://zUP/testB.txt");
+
+ int retval = 0;
+ string traj_file_name = "/fruser/traj/testB.txt";
+ retval = robot.LoadTrajectoryJ(traj_file_name, 100, 1);
+ Console.WriteLine($"LoadTrajectoryJ {traj_file_name}, retval is: { retval}");
+
+ DescPose traj_start_pose = new DescPose(0, 0, 0, 0, 0, 0);
+ retval = robot.GetTrajectoryStartPose(traj_file_name, ref traj_start_pose);
+ Console.WriteLine($"GetTrajectoryStartPose is: {retval}");
+ Console.WriteLine(string.Format("desc_pos:{0},{1},{2},{3},{4},{5}",
+ traj_start_pose.tran.x,
+ traj_start_pose.tran.y,
+ traj_start_pose.tran.z,
+ traj_start_pose.rpy.rx,
+ traj_start_pose.rpy.ry,
+ traj_start_pose.rpy.rz));
+
+ robot.SetSpeed(20);
+ robot.MoveCart(traj_start_pose, 1, 0, 100, 100, 100, -1, -1);
+ Thread.Sleep(5000);
+ int traj_num = 0;
+ retval = robot.GetTrajectoryPointNum(ref traj_num);
+ Console.WriteLine($"GetTrajectoryStartPose retval is: {retval}, traj num is:{traj_num}");
+ retval = robot.MoveTrajectoryJ();
+ Console.WriteLine($"MoveTrajectoryJ retval is: {retval}");
+ return 0;
+ }
+
 

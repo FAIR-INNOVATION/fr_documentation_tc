@@ -4,17 +4,19 @@
 .. toctree:: 
     :maxdepth: 5
 
-力感測器配置
+配置力感測器
 +++++++++++++++++++++++
+.. versionchanged:: Java SDK-v1.0.1-3.7.8
+
 .. code-block:: Java
     :linenos:
 
     /**
     * @brief  配置力感測器
-    * @param  [in] config company:力傳感器廠商，17-坤維科技，19-航天十一院，20-ATI传感器，21-中科米點，22-伟航敏芯
-    * @param  [in] config device:設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0 -WHC6L-YB-10A)
-    * @param  [in] config softvesion:軟體版本號，暫不使用，預設為0
-    * @param  [in] config bus:設備掛在末端總線位置，暫不使用，預設為0
+    * @param config company:力感測器廠商，17-坤維科技，19-航太十一院，20-ATI感測器，21-中科米點，22-偉航敏芯，23-NBIT，24-鑫精誠(XJC)，26-NSR
+    * @param config device: 設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0-WHC6L-YB-10-MST2010)，偉航敏芯(0-WHC6L-YB-10A)， C-6F-D82)，NSR(0-NSR-FTSensorA)
+    * @param config softvesion:軟體版本號，暫不使用，預設為0
+    * @param config bus:設備掛在末端匯流排位置，暫不使用，預設為0
     * @return  錯誤碼
     */
     int FT_SetConfig(DeviceConfig config); 

@@ -58,14 +58,16 @@
 
 力感測器配置
 +++++++++++++++++++++++++
+.. versionchanged:: Python SDK-v2.0.8-3.7.8
+
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``FT_SetConfig(company,device,softversion=0,bus=0)``"
     "描述", "力感測器配置"
-    "必選參數", "- ``company``：感測器廠商，17-坤維科技，19-航天十一院，20-ATI传感器，21-中科米點，22-伟航敏芯；
-    - ``device``：設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0 -WHC6L-YB-10A)；"
+    "必選參數", "- ``company``：感測器廠商，17-坤維科技，19-航太十一院，20-ATI感測器，21-中科米點，22-偉航敏芯，23-NBIT，24-鑫精誠(XJC)，26-NSR；
+    - ``device``：設備號，坤維(0-KWR75B)，航太十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0-WHC6L-YB-10A)，偉航敏芯(0-WHC6L-YB-10 6F-D82)，NSR(0-NSR-FTSensorA)；"
     "默認參數", "- ``softversion``：軟體版本號，暫不使用，預設為0；
     - ``bus``：設備掛載末端匯流排位置，暫不使用，預設為 0；"
     "傳回值", "錯誤碼 成功-0 失敗- errcode"

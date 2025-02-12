@@ -156,7 +156,17 @@
      - ✅
      - --
      - :download:`下載<_static/_doc/NRTL协作机器人认证证书.pdf>`
-    
+
+   * - **潔淨機器人CLASS3證書**
+     - ✅
+     - ✅
+     - ✅
+     - ✅
+     - --
+     - --
+     - --
+     - :download:`下载 <_static/_doc/洁净机器人CLASS3证书（FR3-FR16）.pdf>`    
+   
    * - **CR證書**
      - --
      - ✅

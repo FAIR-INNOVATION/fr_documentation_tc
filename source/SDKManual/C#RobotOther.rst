@@ -484,3 +484,86 @@
         Console.Writeline("protocol is" + protocol);
     }
 
+末端感測器配置
++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 末端感應器配置
+ * @param [in] idCompany 廠商，18-JUNKONG；25-HUIDE
+ * @param [in] idDevice 類型，0-JUNKONG/RYR6T.V1.0
+ * @param [in] idSoftware 軟體版本，0-J1.0/HuiDe1.0(暫未開放)
+ * @param [in] idBus 掛載位置，1-末端1號口；2-末端2號口...8-末端8號口(暫未開放)
+ * @return 錯誤碼
+ */
+ int AxleSensorConfig(int idCompany, int idDevice, int idSoftware, int idBus);
+
+取得末端感測器配置
++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 取得末端感測器配置
+ * @param [out] idCompany 廠商，18-JUNKONG；25-HUIDE
+ * @param [out] idDevice 類型，0-JUNKONG/RYR6T.V1.0
+ * @return 錯誤碼
+ */
+ int AxleSensorConfigGet(ref int idCompany, ref int idDevice);
+
+末端感測器激活
++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 末端感應器激活
+ * @param [in] actFlag 0-重設；1-激活
+ * @return 錯誤碼
+ */
+ int AxleSensorActivate(int actFlag);
+
+末端感測器暫存器寫入
++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ /**
+ * @brief 末端感測器暫存器寫入
+ * @param [in] devAddr 裝置位址編號 0-255
+ * @param [in] regHAddr 暫存器位址高8位
+ * @param [in] regLAddr 暫存器位址低8位
+ * @param [in] regNum 暫存器個數 0-255
+ * @param [in] data1 寫入暫存器數值1
+ * @param [in] data2 寫入暫存器數值2
+ * @param [in] isNoBlock 0-阻塞；1-非阻塞
+ * @return 錯誤碼
+ */
+ int AxleSensorRegWrite(int devAddr, int regHAddr, int regLAddr, int regNum, int data1, int data2, int isNoBlock);
+
+程式範例
++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+ :linenos:
+
+ private void button2_Click_1(object sender, EventArgs e)
+ {
+ robot.AxleSensorConfig(18, 0, 0, 1);
+ int company = -1;
+ int type = -1;
+ robot.AxleSensorConfigGet(ref company, ref type);
+ Console.WriteLine($"company is {company}, type is {type}");
+ robot.AxleSensorActivate(1);
+ robot.AxleSensorRegWrite(1, 4, 6, 1, 0, 0, 0);
+ }

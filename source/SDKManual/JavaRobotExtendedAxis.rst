@@ -391,7 +391,7 @@ UDP擴充軸參數配置
     * @param [in]  axisDHd2 外部軸DH參數d2 mm
     * @param [in]  axisDHd3 外部軸DH參數d3 mm
     * @param [in]  axisDHd4 外部軸DH參數d4 mm
-    * @param [in]  axisDHa1 外部軸DH參數11 mm
+    * @param [in]  axisDHa1 外部軸DH參數a1 mm
     * @param [in]  axisDHa2 外部軸DH參數a2 mm
     * @param [in]  axisDHa3 外部軸DH參數a3 mm
     * @param [in]  axisDHa4 外部軸DH參數a4 mm

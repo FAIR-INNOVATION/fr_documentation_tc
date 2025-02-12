@@ -109,14 +109,32 @@
     */
     int Mode(int mode);
 
+斷線重連
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C# SDK-v1.1.0-3.7.8
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 斷線重連
+    * @param [in] enable 是否開啟 true-使能，false-不使能
+    * @param [in] times 重連次數
+    * @param [in] period 重連時間間隔（毫秒）
+    */
+    void SetReconnectParam(bool enable, int times, int period);
+
 代碼範例
 +++++++++++++
+.. versionchanged:: C# SDK-v1.1.0-3.7.8
+
 .. code-block:: c#
     :linenos:
 
     private void btnStandard_Click(object sender, EventArgs e)
     {
         Robot robot = new Robot();
+        robot.SetReconnectParam(true, 100, 200);//斷線重連參數
         robot.RPC("192.168.58.2"); 
 
         string ip = "";
