@@ -264,27 +264,3 @@
     ret,num,name  = robot.GetLuaList()
     print(num)
     print(name)
-    
-記錄示教點
-+++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SavePoint(name, update_allprogramfile=0)``"
-    "描述", "記錄示教點"
-    "必選參數", "- ``name``：示教點名稱"
-    "默認參數", "- ``update_allprogramfile``：是否覆蓋，0-不覆蓋，1-覆蓋，默認0"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    robot.SavePoint("test1")
