@@ -12,6 +12,14 @@
     :align: center
     :figclass: align-center
 
+語言切換
+
+    \ `簡體中文 <https://fairino-doc-zhs.readthedocs.io/latest/>`__\
+
+    \ `英文 <https://fairino-doc-en.readthedocs.io/latest/>`__\ 
+
+    \ `日文 <https://fairino-doc-ja.readthedocs.io/latest/>`__\ 
+
 .. toctree::
    :maxdepth: 6
    :caption: 使用者手冊
