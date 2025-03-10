@@ -119,3 +119,6 @@ figure a.reference img,
 a.reference img {
     border: 1px solid #221714;
 }
+.wy-breadcrumbs-aside > a{
+    display: none;
+}
