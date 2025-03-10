@@ -642,7 +642,7 @@ Ubuntu安裝好後，Ubuntu系統預設root使用者是不能登入的，密碼�
    systemctl status docker
    --如果是在執行中輸入指令後會看到綠色的active
 
-7. docker映像相關 :
+7. docker 容器:
 
 .. code-block:: console
    :linenos:
@@ -658,7 +658,7 @@ Ubuntu安裝好後，Ubuntu系統預設root使用者是不能登入的，密碼�
    docker rmi -f 映像id或name: 刪除映像
    docker build：建置映像
 
-8. docker鏡像相關 :
+8. docker 容器:
 
 .. code-block:: console
    :linenos:

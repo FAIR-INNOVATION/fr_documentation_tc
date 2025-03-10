@@ -91,14 +91,23 @@ C. 100-240VAC~50-60HZ
 按鈕盒
 ~~~~~~~~~
 
-V1.0版本
-********************
+60按鈕盒(POE)(BX01)
+++++++++++++++++++++++++++++++
+
+.. figure:: installation/058.png
+	:align: center
+	:width: 6in
+
+.. centered:: 图表 1.3-1 60按鈕盒(POE)(BX01)
+
+60按鈕盒(POE)(BX02)-V1.0
+++++++++++++++++++++++++++++++
 
 .. image:: installation/059.png
    :width: 6in
    :align: center
 
-.. centered:: 圖表 1.3-1 控制箱接線面板
+.. centered:: 圖表 1.3-2 控制箱接線面板
 
 .. centered:: 表格 1.3-1 控制箱接線面板按鍵說明
 
@@ -134,14 +143,14 @@ V1.0版本
    * - 拖曳模式
      - 進入/退出拖曳模式
 
-V2.0版本
-********************
+60按鈕盒(POE)(BX02)-V2.0
+++++++++++++++++++++++++++++++
 
 .. image:: installation/079.png
  :width: 6in
  :align: center
 
-.. centered:: 圖表 1.3-2 控制箱接線面板
+.. centered:: 圖表 1.3-3 控制箱接線面板
 
 .. centered:: 表格 1.3-2 控制箱接線面板按鍵說明
 
@@ -180,7 +189,7 @@ V2.0版本
 末端LED
 ~~~~~~~~~
 
-.. centered:: 表格 1.3-3 末端LED定義
+.. centered:: 表格 1.3-4 末端LED定義
 
 .. list-table::
    :widths: 120 100
