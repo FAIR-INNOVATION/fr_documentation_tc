@@ -295,6 +295,11 @@ Java SDK
     最新版本：:download:`FAIRINO Java SDK-v1 <https://gitee.com/fair-innovation/fairino-java-sdk/repository/archive/master.zip>`
 
     \ `歷史版本 <https://gitee.com/fair-innovation/fairino-java-sdk/tags>`__\
+    
+通訊指令協議
+---------------------------------
+
+    :download:`機器人控制器通訊指令協議 <_static/_doc/协作机器人控制器通讯指令协议用户手册.pdf>`
 
 機器人軟體下載
 ---------------------------------

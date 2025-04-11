@@ -478,3 +478,57 @@ TPD軌跡復現
         rtn = robot->TrajectoryJDelete("testB.txt");
         printf("Delete TrajectoryJ B %d\n", rtn);
     }
+
+軌跡預處理(軌跡前瞻)、軌跡復現(軌跡前瞻)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.0-3.8.0
+
+介面描述
+************************
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+     * @brief  軌跡預處理(軌跡前瞻)
+     * @param  [in] name  軌跡文件名
+     * @param  [in] mode 採樣模式，0-不進行採樣；1-等數據間隔採樣；2-等誤差限制採樣
+     * @param  [in] errorLim 誤差限制，使用直線擬合生效
+     * @param  [in] type 平滑方式，0-貝塞爾平滑
+     * @param  [in] precision 平滑精度，使用貝塞爾平滑時生效
+     * @param  [in] vamx 設定的最大速度，mm/s
+     * @param  [in] amax 設定的最大加速度，mm/s2
+     * @param  [in] jmax 設定的最大加加速度，mm/s3
+     * @return  錯誤碼
+     */
+    errno_t LoadTrajectoryLA(char name[30], int mode, double errorLim, int type, double precision, double vamx, double amax, double jmax);
+
+    /**
+    * @brief  軌跡復現(軌跡前瞻)
+    * @return  錯誤碼
+    */
+    errno_t MoveTrajectoryLA();
+
+程式碼範例
+""""""""""""""""""""""""
+
+.. code-block:: c++
+    :linenos:
+
+    void TestTrajectoryLA(FRRobot* robot)
+    {
+    int rtn = 0;
+    rtn = robot->TrajectoryJUpLoad("D://zUP/A.txt");
+    cout << "TrajectoryJUpLoad A.txt rtn is " << rtn << endl;
+    rtn = robot->TrajectoryJUpLoad("D://zUP/B.txt");
+    cout << "TrajectoryJUpLoad B.txt rtn is " << rtn << endl;
+    char nameA[30] = "/fruser/traj/A.txt";
+    char nameB[30] = "/fruser/traj/B.txt";
+
+    robot->LoadTrajectoryLA(nameA, 1, 2, 0, 2, 100, 200, 1000);   
+    DescPose startPos(0, 0, 0, 0, 0, 0);
+    robot->GetTrajectoryStartPose(nameA, &startPos);
+    robot->MoveCart(&startPos, 1, 0, 100, 100, 100, -1, -1);
+    rtn = robot->MoveTrajectoryLA();
+    cout << "MoveTrajectoryLA rtn is " << rtn << endl;
+    }

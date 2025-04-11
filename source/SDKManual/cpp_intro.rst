@@ -34,4 +34,5 @@ C++
     CPPRobotPeripherals
     CPPRobotForceControl
     CPPRobotExtendedAxis
+    CPPRobotWelding
     CPPRobotOthers

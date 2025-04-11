@@ -1326,240 +1326,9 @@
         return 0;
     }
 
-焊絲尋位開始
-+++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  焊絲尋位開始
-    * @param  [in] refPos  1-基準點 2-接觸點
-    * @param  [in] searchVel   尋位速度 %
-    * @param  [in] searchDis 尋位距離 mm
-    * @param  [in] autoBackFlag 自動返回標誌，0-不自動；-自動
-    * @param  [in] autoBackVel 自動返回速度 %
-    * @param  [in] autoBackDis 自動返回距離 mm
-    * @param  [in] offectFlag  1-帶偏移量尋位；2-示教點尋位
-    * @return  錯誤碼
-    */
-     errno_t WireSearchStart(int refPos, float searchVel, int searchDis, int autoBackFlag, float autoBackVel, int autoBackDis, int offectFlag);
-
-焊絲尋位結束
-+++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-
-.. code-block:: c++
-    :linenos:
-
-     /**
-      * @brief  焊絲尋位結束
-      * @param  [in] refPos  1-基準點 2-接觸點
-      * @param  [in] searchVel   尋位速度 %
-      * @param  [in] searchDis 尋位距離 mm
-      * @param  [in] autoBackFlag 自動返回標誌，0-不自動；-自動
-      * @param  [in] autoBackVel 自動返回速度 %
-      * @param  [in] autoBackDis 自動返回距離 mm
-      * @param  [in] offectFlag  1-帶偏移量尋位；2-示教點尋位
-      * @return  錯誤碼
-      */
-     errno_t WireSearchEnd(int refPos, float searchVel, int searchDis, int autoBackFlag, float autoBackVel, int autoBackDis, int offectFlag);
-
-計算焊絲尋位偏移量
-+++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-
-.. code-block:: c++
-    :linenos:
-
-     /**
-      * @brief  計算焊絲尋位偏移量
-      * @param  [in] seamType 焊縫類型
-      * @param  [in] method   計算方法
-      * @param  [in] varNameRef 基準點1-6，「#」表示無點變數
-      * @param  [in] varNameRes 接觸點1-6，「#」表示無點變數
-      * @param  [out] offectFlag 0-偏移量直接疊加到指令點；1-偏移量需要對指令點進行座標變換
-      * @param  [out] offect 偏移位姿[x, y, z, a, b, c]
-      * @return  錯誤碼
-      */
-     errno_t GetWireSearchOffset(int seamType, int method, std::vector<std::string> varNameRef, std::vector<std::string> varNameRes, int& offectFlag, DescPose& offect);
-
-等待焊絲尋位完成
-+++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-
-.. code-block:: c++
-    :linenos:
-
-     /**
-      * @brief  等待焊絲尋位完成
-      * @return  錯誤碼
-      */
-     errno_t WireSearchWait(std::string varName);
-
-焊絲尋位接觸點寫入資料庫
-+++++++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-     /**
-      * @brief  焊絲尋位接觸點寫入資料庫
-      * @param  [in] varName  接觸點名稱 “RES0” ~ “RES99”
-      * @param  [in] pos 接觸點數據[x, y, x, a, b, c]
-      * @return  錯誤碼
-      */
-     errno_t SetPointToDatabase(std::string varName, DescPose pos);
-
-範例程式
-+++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-    void Wiresearch(FRRobot* robot)
-    {
-    int rtn0, rtn1, rtn2 = 0;
-    ExaxisPos exaxisPos = { 0, 0, 0, 0 };
-    DescPose offdese = { 0, 0, 0, 0, 0, 0 };
-
-    DescPose descStart = { 203.061, 56.768, 62.719, -177.249, 1.456, -83.597 };
-    JointPos jointStart = { -127.012, -112.931, -94.078, -62.014, 87.186, 91.326 };
-
-    DescPose descEnd = { 122.471, 55.718, 62.209, -177.207, 1.375, -76.310 };
-    JointPos jointEnd = { -119.728, -113.017, -94.027, -62.061, 87.199, 91.326 };
-
-    robot->MoveL(&jointStart, &descStart, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese );
-    robot->MoveL(&jointEnd, &descEnd, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-
-    DescPose descREF0A = { 147.139, -21.436, 60.717, -179.633, -3.051, -83.170 };
-    JointPos jointREF0A = { -121.731, -106.193, -102.561, -64.734, 89.972, 96.171 };
-
-    DescPose descREF0B = { 139.247, 43.721, 65.361, -179.634, -3.043, -83.170 };
-    JointPos jointREF0B = { -122.364, -113.991, -90.860, -68.630, 89.933, 95.540 };
-
-    DescPose descREF1A = { 289.747, 77.395, 58.390, -179.074, -2.901, -89.790 };
-    JointPos jointREF1A = { -135.719, -119.588, -83.454, -70.245, 88.921, 88.819 };
-
-    DescPose descREF1B = { 259.310, 79.998, 64.774, -179.073, -2.900, -89.790 };
-    JointPos jointREF1B = { -133.133, -119.029, -83.326, -70.976, 89.069, 91.401 };
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF0A, &descREF0A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
-    robot->MoveL(&jointREF0B, &descREF0B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
-    rtn1 = robot->WireSearchWait("REF0");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF1A, &descREF1A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
-    robot->MoveL(&jointREF1B, &descREF1B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
-    rtn1 = robot->WireSearchWait("REF1");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF0A, &descREF0A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
-    robot->MoveL(&jointREF0B, &descREF0B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
-    rtn1 = robot->WireSearchWait("RES0");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF1A, &descREF1A, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);  //起點
-    robot->MoveL(&jointREF1B, &descREF1B, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);  //方向點
-    rtn1 = robot->WireSearchWait("RES1");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    vector <string> varNameRef = { "REF0", "REF1", "#", "#", "#", "#" };
-    vector <string> varNameRes = { "RES0", "RES1", "#", "#", "#", "#" };
-    int offectFlag = 0;
-    DescPose offectPos = {0, 0, 0, 0, 0, 0};
-    rtn0 = robot->GetWireSearchOffset(0, 0, varNameRef, varNameRes, offectFlag, offectPos);
-    robot->PointsOffsetEnable(0, &offectPos);
-    robot->MoveL(&jointStart, &descStart, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-    robot->MoveL(&jointEnd, &descEnd, 1, 1, 100, 100, 100, -1, &exaxisPos, 1, 0, &offdese);
-    robot->PointsOffsetDisable();
-    }
-
-電弧追蹤控制
-+++++++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-     /**
-      * @brief  電弧追蹤控制
-      * @param  [in] flag 開關，0-關；1-開
-      * @param  [in] dalayTime 滯後時間，單位ms
-      * @param  [in] isLeftRight 左右偏差補償
-      * @param  [in] klr 左右調節係數(靈敏度);
-      * @param  [in] tStartLr 左右開始補償時間cyc
-      * @param  [in] stepMaxLr 左右每次最大補償量 mm
-      * @param  [in] sumMaxLr 左右總計最大補償量 mm
-      * @param  [in] isUpLow 上下偏差補償
-      * @param  [in] kud 上下調節係數(靈敏度);
-      * @param  [in] tStartUd 上下開始補償時間cyc
-      * @param  [in] stepMaxUd 上下每次最大補償量 mm
-      * @param  [in] sumMaxUd 上下总计最大补偿量
-      * @param  [in] axisSelect 上下座標系選擇，0-擺動；1-工具；2-基座
-      * @param  [in] referenceType 上下基準電流設定方式，0-回饋；1-常數
-      * @param  [in] referSampleStartUd 上下基準電流取樣開始計數(回饋);，cyc
-      * @param  [in] referSampleCountUd 上下基準電流取樣循環計數(回饋);，cyc
-      * @param  [in] referenceCurrent 上下基準電流mA
-      * @return  錯誤碼
-      */
-     errno_t ArcWeldTraceControl(int flag, double delaytime, int isLeftRight, double klr, double tStartLr, double stepMaxLr, double sumMaxLr, int isUpLow, double kud, double tStartUd, double stepMaxUd, double sumMaxUd, int axisSelect, int referenceType, double referSampleStartUd, double referSampleCountUd, double referenceCurrent);
-
-設定電弧追蹤輸入訊號端口
-+++++++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-     /**
-      * @brief  設定電弧追蹤輸入訊號端口
-      * @param  [in] channel 電弧追蹤AI通帶選擇,[0-3]
-      * @return  錯誤碼
-      */
-     errno_t ArcWeldTraceExtAIChannelConfig(int channel);
-
-範例程式
-+++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-    int WeldTraceControl(FRRobot* robot)
-    {
-    DescPose startdescPose = { -583.168, 325.637, 1.176, 75.262, 0.978, -3.571 };
-    JointPos startjointPos = { -49.049, -77.203, 136.826, -189.074, -79.407, -11.811 };
-
-    DescPose enddescPose = { -559.439, 420.491, 32.252, 77.745, 1.460, -10.130 };
-    JointPos endjointPos = { -54.986, -77.639, 131.865, -185.707, -80.916, -12.218 };
-
-    ExaxisPos exaxisPos = { 0, 0, 0, 0 };
-    DescPose offdese = { 0, 0, 0, 0, 0, 0 };
-
-    robot->WeldingSetCurrent(1, 230, 0, 0);
-    robot->WeldingSetVoltage(1, 24, 0, 1);
-
-    robot->MoveJ(&startjointPos, &startdescPose, 13, 0, 5, 100, 100, &exaxisPos, -1, 0, &offdese);
-    robot->ArcWeldTraceControl(1, 0, 0, 0.06, 5, 5, 300, 1, -0.06, 5, 5, 300, 1, 0, 4, 1, 10);
-    robot->ARCStart(1, 0, 10000);
-    robot->MoveL(&endjointPos, &enddescPose, 13, 0, 5, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-    robot->ARCEnd(1, 0, 10000);
-
-    robot->ArcWeldTraceControl(0, 0, 0, 0.06, 5, 5, 300, 1, -0.06, 5, 5, 300, 1, 0, 4, 1, 10);
-    return 0;
-    }
-
 力道感測器輔助拖曳
 +++++++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
+.. versionchanged:: C++SDK-v2.2.0-3.8.0
     
 .. code-block:: c++
     :linenos:
@@ -1569,6 +1338,7 @@
       * @param  [in] status 控制狀態，0-關閉；1-開啟
       * @param  [in] asaptiveFlag 自適應開啟標誌，0-關閉；1-開啟
       * @param  [in] interfereDragFlag 干涉區拖曳標誌，0-關閉；1-開啟
+      * @param  [in] singularityConstraintsFlag 奇異點策略，0-規避；1-穿越
       * @param  [in] M 慣性係數
       * @param  [in] B 阻尼係數
       * @param  [in] K 剛度係數
@@ -1577,11 +1347,11 @@
       * @param  [in] Vmax 最大關節速度限制
       * @return  錯誤碼
       */
-     errno_t EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, std::vector<double> M, std::vector<double> B, std::vector<double> K, std::vector<double> F, double Fmax, double Vmax);
+     errno_t EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, int ingularityConstraintsFlag, std::vector<double> M, std::vector<double> B, std::vector<double> K, std::vector<double> F, double Fmax, double Vmax);
 
 範例程式
 +++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
+.. versionchanged:: C++SDK-v2.2.0-3.8.0
     
 .. code-block:: c++
     :linenos:
