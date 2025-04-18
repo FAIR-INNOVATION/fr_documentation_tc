@@ -463,7 +463,7 @@ jog點動立即停止
     error = robot.ServoMoveStart()  #伺服運動開始
     print("伺服運動開始錯誤碼",error)
     while(count):
-        error = robot.ServoJ(joint_pos=joint_pos,axisPos=[0,0,0,0])   #關節空間伺服模式運動
+        error = robot.ServoJ(joint_pos=joint_pos,axisPos=[0,0,0,0,0,0])   #關節空間伺服模式運動
         if error!=0:
             error_joint =error
         joint_pos[0] = joint_pos[0] + 0.1  #每次1軸運動0.1度，運動100次

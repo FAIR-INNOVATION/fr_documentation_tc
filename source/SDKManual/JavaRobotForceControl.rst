@@ -524,6 +524,8 @@
 
 力道感測器輔助拖曳
 +++++++++++++++++++++++++++++++++++++++++++++
+.. versionchanged:: Java SDK-v1.0.2-3.8.0
+
 .. code-block:: Java
     :linenos:
 
@@ -532,6 +534,7 @@
     * @param [in] status 控制狀態，0-關閉；1-開啟
     * @param [in] asaptiveFlag 自適應開啟標誌，0-關閉；1-開啟
     * @param [in] interfereDragFlag 干涉區拖曳標誌，0-關閉；1-開啟
+    * @param [in] ingularityConstraintsFlag 奇異點策略：0-規避；1-穿越
     * @param [in] M 慣性係數
     * @param [in] B 阻尼係數
     * @param [in] K 剛度係數
@@ -540,7 +543,7 @@
     * @param [in] Vmax 最大關節速度限制 °/s
     * @return 錯誤碼
     */
-    int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, Object[] M, Object[] B, Object[] K, Object[] F, double Fmax, double Vmax);
+    int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag,int ingularityConstraintsFlag, double[] M, double[] B, double[] K, double[] F, double Fmax, double Vmax);
 
 代碼範例
 +++++++++++++++
@@ -570,13 +573,13 @@
         Object[] B = { 150.0, 150.0, 150.0, 5.0, 5.0, 1.0 };
         Object[] K = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         Object[] F = { 10.0, 10.0, 10.0, 1.0, 1.0, 1.0 };
-        robot.EndForceDragControl(1, 0, 0, M, B, K, F, 50, 100);
+        robot.EndForceDragControl(1, 0, 0, 0, M, B, K, F, 50, 100);
 
         rtnArray = robot.GetForceAndTorqueDragState();
         System.out.println("the drag state is" + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));
 
         robot.Sleep(1000 * 10);
-        robot.EndForceDragControl(0, 0, 0, M, B, K, F, 50, 100);
+        robot.EndForceDragControl(0, 0, 0, 0, M, B, K, F, 50, 100);
 
         rtnArray = robot.GetForceAndTorqueDragState();
         System.out.println("the drag state is" + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));

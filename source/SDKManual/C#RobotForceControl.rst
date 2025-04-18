@@ -581,6 +581,7 @@
  * @param [in] status 控制狀態，0-關閉；1-開啟
  * @param [in] asaptiveFlag 自適應開啟標誌，0-關閉；1-開啟
  * @param [in] interfereDragFlag 干涉區拖曳標誌，0-關閉；1-開啟
+ * @param [in] ingularityConstraintsFlag 奇異點策略：0-規避；1-穿越
  * @param [in] M 慣性係數
  * @param [in] B 阻尼係數
  * @param [in] K 剛度係數
@@ -589,7 +590,7 @@
  * @param [in] Vmax 最大關節速度限制 °/s
  * @return 錯誤碼
  */
- int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag, double[] M, double[] B, double[] K, double[] F, double Fmax, double Vmax);
+ int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag,int ingularityConstraintsFlag, double[] M, double[] B, double[] K, double[] F, double Fmax, double Vmax);
 
 取得力道感測器拖曳開關狀態
 +++++++++++++++++++++++++++++++++++++++++++++++++

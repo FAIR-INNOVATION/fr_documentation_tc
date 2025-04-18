@@ -213,6 +213,82 @@
     */
     int MoveTrajectoryJ();
 
+軌跡預處理(軌跡前瞻)
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.3-3.8.0
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 軌跡預處理(軌跡前瞻) 
+    * @param [in] name  軌跡檔案名
+    * @param [in] mode 採樣模式，0-不進行採樣；1-等資料間隔採樣；2-等誤差限制採樣
+    * @param [in] errorLim 誤差限制，使用直線擬合生效
+    * @param [in] type 平滑方式，0-貝茲平滑
+    * @param [in] precision 平滑精度，使用貝茲平滑時生效
+    * @param [in] vamx 設定的最大速度，mm/s
+    * @param [in] amax 設定的最大加速度，mm/s2
+    * @param [in] jmax 設定的最大加加速度，mm/s3
+    * @return 錯誤碼 
+    */ 
+    int LoadTrajectoryLA(String name, int mode, double errorLim, int type, double precision, double vamx, double amax, double jmax); 
+
+軌跡復現(軌跡前瞻)
++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.3-3.8.0
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 軌跡復現(軌跡前瞻)  
+    * @return 錯誤碼 
+    */
+    int MoveTrajectoryLA();
+
+程式碼範例
+++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void main(String[] args)
+    {
+        Robot robot = new Robot();
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+        int rtn = robot.RPC("192.168.58.2");
+        if(rtn == 0)
+        {
+            System.out.println("rpc連接 success");
+        }
+        else
+        {
+            System.out.println("rpc連接 fail");
+            return ;
+        }
+
+        int rtn = 0;
+
+        String nameA = "/fruser/traj/A.txt";
+        String nameB = "/fruser/traj/B.txt";
+
+        rtn = robot.LoadTrajectoryLA(nameA, 2, 0.0, 0, 1.0, 100.0, 200.0, 1000.0);//B樣條
+        //rtn = robot.LoadTrajectoryLA(nameA, 1, 2, 0, 2, 100.0, 200.0, 1000.0);
+
+        //rtn = robot.LoadTrajectoryLA(nameB, 0, 0, 0, 1, 100.0, 100.0, 1000.0);    // 直線擬合
+        System.out.println("LoadTrajectoryLA rtn is :"+ rtn);
+
+        DescPose startPos = new DescPose(0, 0, 0, 0, 0, 0);
+        robot.GetTrajectoryStartPose(nameA, startPos);
+
+        // MoveCart方法呼叫
+        robot.MoveCart(startPos, 1, 0, (float)100.0, (float)100.0, (float)100.0, -1, -1);
+
+        rtn = robot.MoveTrajectoryLA();
+        System.out.println("MoveTrajectoryLA rtn is: "+ rtn);
+    }
+
 取得軌跡檔案軌跡起始位姿
 ++++++++++++++++++++++++++++
 .. code-block:: Java

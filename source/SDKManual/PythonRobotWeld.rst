@@ -730,7 +730,7 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd, sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent)``"
+    "原型", "``ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd, sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent, offsetType, offsetParameter)``"
     "描述", "電弧追蹤控制"
     "必選參數", "- ``flag``： 開關，0-關；1-開
     - ``delayTime``：滯後時間，單位ms
@@ -748,7 +748,9 @@
     - ``referenceType``：上下基準電流設定方式，0-回饋；1-常數
     - ``referSampleStartUd``：上下基準電流取樣開始計數(回饋)，cyc
     - ``referSampleCountUd``：上下基準電流取樣循環計數(回饋)，cyc
-    - ``referenceCurrent``：上下基準電流mA"
+    - ``referenceCurrent``：上下基準電流mA
+    - ``offsetType``：偏移追蹤類型，0-不偏移；1-採樣；2-百分比
+    - ``offsetParameter``：偏移參數；採樣(偏移採樣開始時間，默認採一周期)；百分比(偏移百分比(-100 ~ 100))"
     "默認參數", "無"
     "傳回值", "錯誤碼 成功-0 失敗- errcode" 
 
@@ -798,7 +800,7 @@
     print("MoveJ return:",error)
 
     error = robot.ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd,
-                                sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent)
+                                sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent,0,0)
     print("WireSearchStart return:",error)
 
     robot.ARCStart(1, 0, 10000)
@@ -812,7 +814,7 @@
 
     flag = 0
     error = robot.ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd,
-                                sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent)
+                                sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent,0,0)
     print("WireSearchStart return:",error)
 
 電弧追蹤AI通帶選擇
@@ -1453,3 +1455,61 @@
  print("WeldingStartReWeldAfterBreakOff return", rtn)
  break
  time.sleep(0.1)
+
+擺動漸變開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.9-3.8.0
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveChangeStart(weaveNum)``"
+    "描述", "擺動漸變開始"
+    "必選參數", "- ``weaveNum``：擺動編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+擺動漸變結束
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.9-3.8.0
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveChangeEnd()``"
+    "描述", "擺動漸變結束"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+代碼示例
+------------
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+
+    p1Joint = [74.620, -80.903, 94.608, -109.882, -90.436, -13.432]
+    p1Desc = [-72.912, -587.664, 31.849, 43.283, -6.731, 15.068]
+    p2Joint = [66.431, -92.875, 116.362, -120.516, -88.627, -24.731]
+    p2Desc = [-104.915, -483.712, -25.231, 42.228, -6.572, 18.433]
+    p3Joint = [56.457, -84.796, 104.618, -114.497, -92.422, -25.430]
+    p3Desc = [-240.651, -483.840, -7.161, 46.577, -5.286, 8.318]
+    
+    robot.WeldingSetVoltage(1, 19, 0, 0)
+    robot.WeldingSetCurrent(1, 190, 0, 0)
+    robot.MoveJ(joint_pos=p1Joint, tool=1, user=1, vel=100.0, acc=100.0, ovl=100.0)
+    robot.MoveL(desc_pos=p2Desc, tool=1, user=1, vel=100.0, acc=100.0, ovl=50.0)
+    robot.ARCStart(1, 0, 10000)
+    robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
+    robot.WeaveStart(0)
+    robot.WeaveChangeStart(1)
+    robot.MoveL(desc_pos=p3Desc, tool=1, user=1, vel=100.0, acc=100.0, ovl=1.0)
+    robot.WeaveChangeEnd()
+    robot.WeaveEnd(0)
+    robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
+    robot.ARCEnd(1, 0, 10000)

@@ -840,6 +840,7 @@
     status = 1 #控制狀態，0-關閉；1-開啟
     asaptiveFlag = 1 #自適應開啟標誌，0-關閉；1-開啟
     interfereDragFlag = 1 #干涉區拖曳標誌，0-關閉；1-開啟
+    ingularityConstraintsFlag = 0 #奇異點策略：0-規避；1-穿越
     M = [15, 15, 15, 0.5, 0.5, 0.1] #慣性係數
     B = [150, 150, 150, 5, 5, 1] #阻尼係數
     K = [0, 0, 0, 0, 0, 0] #剛度係數
@@ -847,12 +848,12 @@
     Fmax = 50 #最大拖動力限制
     Vmax = 1810 #最大關節速度限制
 
-    error = robot.EndForceDragControl(status, asaptiveFlag, interfereDragFlag, M, B, K, F, Fmax, Vmax)
+    error = robot.EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax)
     print("EndForceDragControl return:",error)
 
     time.sleep(10)
     status=0
-    error = robot.EndForceDragControl(status, asaptiveFlag, interfereDragFlag, M, B, K, F, Fmax, Vmax)
+    error = robot.EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax)
     print("EndForceDragControl return:",error)
 
 報錯清除後力感知器自動開啟
@@ -890,11 +891,12 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``EndForceDragControl(status, asaptiveFlag, interfereDragFlag, M, B, K, F, Fmax, Vmax)``"
+    "原型", "``EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax)``"
     "描述", "設定六維力和關節阻抗混合拖曳開關及參數"
     "必選參數", "- ``status``：控制狀態，0-關閉；1-開啟
     - ``asaptiveFlag``：自適應開啟標誌，0-關閉；1-開啟
     - ``interfereDragFlag``：干涉區拖曳標誌，0-關閉；1-開啟
+    - ``ingularityConstraintsFlag``：奇異點策略：0-規避；1-穿越
     - ``M=[m1,m2,m3,m4,m5,m6]``：慣性係數
     - ``B=[b1,b2,b3,b4,b5,b6]``：阻尼係數
     - ``K=[k1,k2,k3,k4,k5,k6]``：剛度係數

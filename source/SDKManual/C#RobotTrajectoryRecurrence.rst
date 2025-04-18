@@ -431,3 +431,58 @@
  }
 
 
+軌跡預處理(軌跡前瞻)
+++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  軌跡預處理(軌跡前瞻)
+    * @param  [in] name  軌跡檔案名
+    * @param  [in] mode 取樣模式，0-不進行取樣；1-等資料間隔取樣；2-等誤差限制取樣
+    * @param  [in] errorLim 誤差限制，使用直線擬合生效
+    * @param  [in] type 平滑方式，0-貝茲曲線平滑
+    * @param  [in] precision 平滑精度，使用貝茲曲線平滑時生效
+    * @param  [in] vamx 設定的最大速度，mm/s
+    * @param  [in] amax 設定的最大加速度，mm/s2
+    * @param  [in] jmax 設定的最大加加速度，mm/s3
+    * @return  錯誤碼   
+    */
+    int LoadTrajectoryLA(string name, int mode, double errorLim, int type, double precision, double vamx, double amax, double jmax);
+
+軌跡重現(軌跡前瞻)
+++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  軌跡重現(軌跡前瞻)
+    * @return  錯誤碼   
+    */
+    int MoveTrajectoryLA();
+
+程式碼範例
+++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    private void button8_Click(object sender, EventArgs e)
+    {
+        int rtn = 0;
+
+        string nameA = "/fruser/traj/A.txt";
+        string nameB = "/fruser/traj/B.txt";
+
+        rtn = robot.LoadTrajectoryLA(nameB, 0, 0, 0, 1, 100.0, 100.0, 1000.0);    // 直線擬合
+        Console.WriteLine($"LoadTrajectoryLA 返回值為 {rtn}");
+
+        DescPose startPos = new DescPose(0, 0, 0, 0, 0, 0);
+        robot.GetTrajectoryStartPose(nameA, ref startPos);
+
+        //
+        robot.MoveCart(startPos, 1, 0, (float)100.0, (float)100.0, (float)100.0, -1, -1);
+
+        rtn = robot.MoveTrajectoryLA();
+        Console.WriteLine($"MoveTrajectoryLA 返回值為 {rtn}");
+    }
+

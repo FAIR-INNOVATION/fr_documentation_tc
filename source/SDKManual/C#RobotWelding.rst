@@ -474,9 +474,46 @@
  * @param [in] referSampleStartUd 上下基準電流採樣開始計數(反饋)，cyc
  * @param [in] referSampleCountUd 上下基準電流採樣循環計數(反饋)，cyc
  * @param [in] referenceCurrent 上下基準電流mA
- * @return 錯誤碼
+ * @param  [in] offsetType 偏移追蹤類型，0-不偏移；1-取樣；2-百分比  /version 3.8.0
+ * @param  [in] offsetParameter 偏移參數；取樣(偏移取樣開始時間，預設取一週期)；百分比(偏移百分比(-100 ~ 100))
+ * @return  錯誤碼
  */
- int ArcWeldTraceControl(int flag, double delaytime, int isLeftRight, double klr, double tStartLr, double stepMaxLr, double sumMaxLr, int isUpLow, double kud, double tStartUd, double stepMaxUd, double sumMaxUd, int axisSelect, int referenceType, double referSampleStartUd, double referSampleCountUd, double referenceCurrent);
+ int ArcWeldTraceControl(int flag, double delaytime, int isLeftRight, double klr, double tStartLr, double stepMaxLr, double sumMaxLr, int isUpLow, double kud, double tStartUd, double stepMaxUd, double sumMaxUd, int axisSelect, int referenceType, double referSampleStartUd, double referSampleCountUd, double referenceCurrent, int offsetType, int offsetParameter);
+
+程式碼範例
+++++++++++++++++++++++++++++++++++
+
+.. versionadded:: C#SDK-v1.1.0
+
+.. code-block:: c#
+    :linenos:
+
+    private void btnweld_Click(object sender, EventArgs e)
+    {
+
+        //電弧追蹤
+        DescPose p1Desc = new DescPose(-72.912, -587.664, 31.849, 43.283, -6.731, 15.068);
+        JointPos p1Joint = new JointPos(74.620, -80.903, 94.608, -109.882, -90.436, -13.432);
+
+        DescPose p2Desc = new DescPose(-104.915, -483.712, -25.231, 42.228, -6.572, 18.433);
+        JointPos p2Joint = new JointPos(66.431, -92.875, 116.362, -120.516, -88.627, -24.731);
+
+        DescPose p3Desc = new DescPose(-242.834, -498.697, -23.681, 46.576, -5.286, 8.318);
+        JointPos p3Joint = new JointPos(57.153, -82.046, 104.060, -116.659, -92.478, -24.735);
+        ExaxisPos exaxisPos = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
+        DescPose offdese = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        robot.WeldingSetVoltage(1, 19, 0, 0);
+        robot.WeldingSetCurrent(1, 190, 0, 0);
+        robot.MoveJ(p1Joint, p1Desc, 1, 1, 100, 100, 100, exaxisPos, -1, 0, offdese);
+        robot.MoveL(p2Joint, p2Desc, 1, 1, 100, 100, 50, -1, exaxisPos, 0, 0, offdese);
+        robot.ARCStart(1, 0, 10000);
+        robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 60, 0, 0, 4, 1, 10, 2, 2);
+        robot.WeaveStart(0);
+        robot.MoveL(p3Joint, p3Desc, 1, 1, 100, 100, 1, -1, exaxisPos, 0, 0, offdese);
+        robot.WeaveEnd(0);
+        robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 60, 0, 0, 4, 1, 10, 2, 2);
+        robot.ARCEnd(1, 0, 10000);
+    }
 
 電弧追蹤AI通帶選擇
 ++++++++++++++++++++++++++++++++++
@@ -829,4 +866,61 @@
             }
             Thread.Sleep(100);
         }
+    }
+
+擺動漸變開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  擺動漸變開始
+    * @param  [in] weaveNum 擺動編號
+    * @return  錯誤碼
+    */
+    int WeaveChangeStart(int weaveNum)
+
+擺動漸變結束
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  擺動漸變結束
+    * @return  錯誤碼
+    */
+    int WeaveChangeEnd()
+
+程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    private void btnweld_Click(object sender, EventArgs e)
+    {
+        //擺動漸變
+        DescPose p1Desc = new DescPose(-72.912, -587.664, 31.849, 43.283, -6.731, 15.068);
+        JointPos p1Joint = new JointPos(74.620, -80.903, 94.608, -109.882, -90.436, -13.432);
+
+        DescPose p2Desc = new DescPose(-104.915, -483.712, -25.231, 42.228, -6.572, 18.433);
+        JointPos p2Joint = new JointPos(66.431, -92.875, 116.362, -120.516, -88.627, -24.731);
+
+        DescPose p3Desc = new DescPose(-240.651, -483.840, -7.161, 46.577, -5.286, 8.318);
+        JointPos p3Joint = new JointPos(56.457, -84.796, 104.618, -114.497, -92.422, -25.430);
+
+        ExaxisPos exaxisPos = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
+        DescPose offdese = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        robot.WeldingSetVoltage(1, 19, 0, 0);
+        robot.WeldingSetCurrent(1, 190, 0, 0);
+        robot.MoveJ(p1Joint, p1Desc, 1, 1, 100, 100, 100, exaxisPos, -1, 0, offdese);
+        robot.MoveL(p2Joint, p2Desc, 1, 1, 100, 100, 50, -1, exaxisPos, 0, 0, offdese);
+        robot.ARCStart(1, 0, 10000);
+        robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0);
+        robot.WeaveStart(0);
+        robot.WeaveChangeStart(1);
+        robot.MoveL(p3Joint, p3Desc, 1, 1, 100, 100, 1, -1, exaxisPos, 0, 0, offdese);
+        robot.WeaveChangeEnd();
+        robot.WeaveEnd(0);
+        robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0);
+        robot.ARCEnd(1, 0, 10000);
     }

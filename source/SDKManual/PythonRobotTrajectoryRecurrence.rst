@@ -412,3 +412,68 @@
 
     retval = robot.MoveTrajectoryJ()
     print("MoveTrajectoryJ return ", retval)
+
+軌跡預處理(軌跡前瞻)
++++++++++++++++++++++++++++
+
+.. versionadded:: python SDK-v2.1.0
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LoadTrajectoryLA(name, mode, errorLim, type, precision, vamx, amax, jmax)``"
+    "描述", "軌跡預處理(軌跡前瞻)"
+    "必選參數", "- ``name``:軌跡文件名
+    - ``mode``：採樣模式，0-不進行採樣；1-等數據間隔採樣；2-等誤差限制採樣
+    - ``errorLim``:誤差限制，使用直線擬合生效
+    - ``type``:平滑方式，0-貝茲平滑
+    - ``precision``:平滑精度，使用貝茲平滑時生效
+    - ``vamx``:設定的最大速度，mm/s
+    - ``amax``:設定的最大加速度，mm/s2
+    - ``jmax``:設定的最大加加速度，mm/s3"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+軌跡復現(軌跡前瞻)
++++++++++++++++++++++++++++
+
+.. versionadded:: python SDK-v2.1.0
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MoveTrajectoryLA()``"
+    "描述", "軌跡復現(軌跡前瞻)"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+代碼示例
+------------
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+
+    rtn = 0
+    rtn = robot.TrajectoryJUpLoad("D://zUP/A.txt")
+    print("TrajectoryJUpLoad A.txt rtn is ",rtn)
+    rtn = robot.TrajectoryJUpLoad("D://zUP/B.txt")
+    print("TrajectoryJUpLoad B.txt rtn is ", rtn)
+    nameA = "/fruser/traj/A.txt"
+    nameB = "/fruser/traj/B.txt"
+
+    # rtn = robot.LoadTrajectoryLA(nameA, 2, 0.0, 0, 1.0, 100.0, 200.0, 1000.0) #B樣條
+    # print("LoadTrajectoryLA rtn is ", rtn)
+    robot.LoadTrajectoryLA(nameB, 0, 0, 0, 1, 100, 100, 1000) #直線連接
+    # robot.LoadTrajectoryLA(nameA, 1, 2, 0, 2, 100, 200, 1000) #直線擬合
+    # error,startPos = robot.GetTrajectoryStartPose(nameA)
+    error,startPos = robot.GetTrajectoryStartPose(nameB)
+    robot.MoveCart(startPos, 1, 0, 100, 100, 100, -1, -1)
+    rtn = robot.MoveTrajectoryLA()
+    print("MoveTrajectoryLA rtn is ", rtn)
