@@ -588,6 +588,153 @@ FR對應的類型為「SmartTool 」與力傳感器組合使用，協作機器�
 
 .. centered:: 圖表 14.13‑5 立方體干涉配置
 
+力感測器輔助拖動下進入軸干涉安全回調功能
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+概述
++++++++++++++++++++++++++
+
+當機器人在力感測器輔助拖動中進入干涉區時，會自動切換為拖動模式並產生阻抗回調效果；退出干涉區後則恢復力感測器輔助拖動。此功能可滿足多種操作場景需求。
+
+操作流程
+++++++++++++++++++++++++
+
+關節限位環
+********************************
+**Step1**：登入web介面，點擊「關節限位環」開關後，機器人關節處將顯示限位環。
+
+.. image:: application/065.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑6 web介面關節限位環
+
+**Step2**：白色標記指針顯示實際關節角度，缺口表示軟限位位置（缺口大小隨限位值變化），關節運動時限位環保持相對靜止。
+
+軸干涉配置
+********************************
+**Step1**：依序點擊「輔助應用」→「工具應用」→「干涉區」→「單個」，選擇「軸干涉」並啟用。
+
+**Step2**：設定「運動策略」為「繼續運動」，「拖動策略」為「阻抗回調」，參數值越大回彈力越強（建議值「5」）。
+
+.. image:: application/066.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑7 軸干涉設定介面
+
+**Step3**：設定「檢測模式」為「回饋位置」，選擇「範圍內干涉」或「範圍外干涉」模式，啟用各軸干涉範圍。
+
+.. image:: application/067.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑8 干涉範圍設定
+
+**Step4**：「範圍內干涉」模式下，綠色表示自由運動區，黃色為干涉區。
+
+.. image:: application/068.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑9 範圍內干涉顯示
+
+**Step5**：「範圍外干涉」模式下，顏色標示相反。
+
+.. image:: application/069.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑10 範圍外干涉顯示
+
+力感測器輔助拖動進入干涉區
+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+**Step1**：啟用力感測器輔助鎖定功能，並開啟干涉區選項。
+
+.. image:: application/070.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑11 力感測器設定
+
+**Step2**：進入干涉區時自動切換為電流環拖動模式，退出後恢復原模式。
+
+立方體干涉區設定
+++++++++++++++++++++++++++++++++++
+
+**Step1**：在干涉區設定頁面啟用「立方體干涉」。
+
+**Step2**：設定「不限制拖動」策略。
+
+.. image:: application/071.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑12 立方體設定
+
+**Step3**：採用「兩點法」或「中心點+邊長」設定範圍。
+
+.. image:: application/072.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑13 兩點設定法
+
+.. image:: application/073.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑14 立方體顯示
+
+**Step5**：中心點設定需指定X/Y/Z軸邊長。
+
+.. image:: application/074.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑15 中心點設定
+
+**Step6**：「範圍內干涉」時，外部顯示40%黃色，內部顯示90%黃色。
+
+.. image:: application/075.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑16 範圍內警告
+
+**Step7**：「範圍外干涉」時，顏色標示相反。
+
+.. image:: application/076.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑17 範圍外警告
+
+安全牆設定
+++++++++++++++++++++++++++++++++++++++++++
+**Step1**：在「初始設定→安全→安全牆」中最多可設定8面虛擬牆。
+
+.. image:: application/077.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑18 安全牆設定
+
+.. image:: application/078.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑19 牆體顯示
+
+**Step2**：侵入時牆體變為90%不透明橙色並顯示警告。
+
+.. image:: application/079.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 14.13‑20 安全牆警告
+
 焊接專家庫
 ----------------
 
