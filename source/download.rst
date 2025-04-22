@@ -236,6 +236,18 @@
 
     :download:`FR30圖紙 <_static/_doc/FR30图纸.zip>`
 
+2D CAD檔案
+---------------------------------
+    :download:`FRCobots-V6.0 DWG格式 <_static/_doc/FRCobots-V6.0 DWG Models.zip>`
+
+    :download:`mini控制箱2kw(直流+交流) DWG格式 <_static/_doc/mini控制箱2kw(直流+交流) DWG.zip>`
+
+    :download:`控制箱5kw(直流+交流) DWG格式 <_static/_doc/控制箱5kw(直流+交流) DWG.zip>`
+
+    :download:`示教器 DWG格式 <_static/_doc/示教器DWG.zip>`
+
+    :download:`按鈕盒 DWG格式 <_static/_doc/按钮盒DWG.zip>`
+
 3D 模型
 ---------------------------------
     :download:`FRCobots-V5.0 STEP模型 <_static/_doc/FRCobots-V5.0 STEP Models.zip>`
