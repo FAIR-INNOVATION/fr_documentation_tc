@@ -307,7 +307,12 @@ Java SDK
     最新版本：:download:`FAIRINO Java SDK-v1 <https://gitee.com/fair-innovation/fairino-java-sdk/repository/archive/master.zip>`
 
     \ `歷史版本 <https://gitee.com/fair-innovation/fairino-java-sdk/tags>`__\
-    
+
+狀態回饋協議
+---------------------------------
+
+    :download:`機器人控制器8083端口狀態回饋 <_static/_doc/机器人控制器8083端口状态反馈用户手册.pdf>`
+
 通訊指令協議
 ---------------------------------
 
@@ -316,4 +321,6 @@ Java SDK
 機器人軟體下載
 ---------------------------------
     :download:`FAIRINO-CobotSoftware-V3.8.1-QX-Release-250414 <https://drive.google.com/file/d/1icU94xSADErYb4mAv60a3Piv5jtbW4Sk/view?usp=sharing>`
+
+    :download:`FAIRINO-CobotSoftware-v3.8.1-LA-Release-250424 <https://drive.google.com/file/d/127eoNKnaGqUBCeM7b4pSjgPSH6VGFPHg/view?usp=sharing>`
         
