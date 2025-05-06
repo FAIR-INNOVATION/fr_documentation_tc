@@ -89,6 +89,10 @@ CNDE簡介
      - DOUBLE_6
      - 關節1-6當前電流(A)
 
+   * - actual_joint_torque
+     - DOUBLE_6
+     - 關節1-6目標扭矩(Nm)
+
    * - actual_TCP_pos
      - DOUBLE_6
      - 工具當前位置DKR(mm)
@@ -168,6 +172,30 @@ CNDE簡介
    * - motion_queue_len
      - INT32
      - 當前運動隊列長度
+
+   * - ft_sensor_data
+     - DOUBLE_6
+     - 力感測器原始數據
+
+   * - main_code
+     - INT32
+     - 主故障碼
+
+   * - sub_code
+     - INT32
+     - 子故障碼
+
+   * - emergency_stop
+     - UINT8
+     - 急停狀態
+
+   * - motion_done
+     - INT32
+     - 運動完成狀態
+
+   * - timestamp_us
+     - UINT64
+     - 機器人系統時間(us)
 
    * - output_BIT_reg_8xX
      - UINT8_X
