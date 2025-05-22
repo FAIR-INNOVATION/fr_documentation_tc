@@ -276,3 +276,134 @@
 
         robot.AxleSensorRegWrite(1, 4, 6, 1, 0, 0, 0);
     }
+
+
+獲取控制箱SN碼
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱SN碼
+    * @param [out] SNCode 控制箱SN碼
+    * @return 錯誤碼
+    */
+    int GetRobotSN(String[] SNCode);
+
+關閉機器人操作系統
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關閉機器人操作系統
+    * @return 錯誤碼
+    */
+    int ShutDownRobotOS();
+
+程式碼範例
+++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void main(String[] args)
+    {
+        Robot robot = new Robot();
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+        int rtn = robot.RPC("192.168.58.2");
+        if(rtn == 0)
+        {
+            System.out.println("rpc連接 success");
+        }
+        else
+        {
+            System.out.println("rpc連接 fail");
+            return ;
+        }
+
+        String[] SN = new String[1];
+        robot.GetRobotSN(SN);
+        System.out.println("robot SN is :"+SN[0]);
+        robot.ShutDownRobotOS();
+    }
+
+控制器日誌下載
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 控制器日誌下載
+    * @param [in] savePath 保存檔案路徑"D://zDown/"
+    * @return 錯誤碼
+    */
+    int RbLogDownload(String savePath);
+
+所有數據源下載
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 所有數據源下載
+    * @param [in] savePath 保存檔案路徑"D://zDown/"
+    * @return 錯誤碼
+    */
+    int AllDataSourceDownload(String savePath);
+
+數據備份包下載
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 數據備份包下載
+    * @param [in] savePath 保存檔案路徑"D://zDown/"
+    * @return 錯誤碼
+    */
+    int DataPackageDownload(String savePath);
+
+程式碼範例
++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void main(String[] args)
+    {
+        Robot robot = new Robot();
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+        int rtn = robot.RPC("192.168.58.2");
+        if(rtn == 0)
+        {
+            System.out.println("rpc連接 success");
+        }
+        else
+        {
+            System.out.println("rpc連接 fail");
+            return ;
+        }
+        int rtn=0;
+
+        rtn = robot.DataPackageDownload("D://zDOWN/");
+        System.out.println("DataPackageDownload rtn is: "+rtn);
+
+        System.out.println("AllDataSourceDownload start");
+        rtn = robot.AllDataSourceDownload("D://zDOWN/");
+        System.out.println("AllDataSourceDownload rtn is: "+rtn);
+
+        System.out.println("RbLogDownload start");
+        rtn = robot.RbLogDownload("D://zDOWN/");
+        System.out.println("RbLogDownload rtn is: "+rtn);
+    }

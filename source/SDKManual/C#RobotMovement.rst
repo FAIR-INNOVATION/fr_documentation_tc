@@ -1093,3 +1093,72 @@ jog點動立即停止
  //FIRLin(false);
  //FIRLin(true);
  }
+ 
+加速度平滑開啟
+++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 加速度平滑開啟
+    * @param  [in] saveFlag 是否斷電保存
+    * @return  錯誤碼
+    */
+    int AccSmoothStart(bool saveFlag);
+
+加速度平滑關閉
+++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 加速度平滑關閉
+    * @param  [in] saveFlag 是否斷電保存
+    * @return  錯誤碼
+    */
+    int AccSmoothEnd(bool saveFlag);
+
+代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            bool saveFlag = false;
+
+            int rtn = 0;
+            JointPos p1Joint = new JointPos(88.927, -85.834, 80.289, -85.561, -91.388, 108.718);
+            DescPose p1Desc = new DescPose(88.739, -527.617, 514.939, -179.039, 1.494, 70.209);
+
+            JointPos p2Joint = new JointPos(27.036, -83.909, 80.284, -85.579, -90.027, 108.604);
+            DescPose p2Desc = new DescPose(-433.125, -334.428, 497.139, -179.723, -0.745, 8.437);
+            JointPos p3Joint = new JointPos(60.219, -94.324, 62.906, -62.005, -87.159, 108.598);
+            DescPose p3Desc = new DescPose(-112.215, -409.323, 686.497, 176.217, 2.338, 41.625);
+            ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
+            DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+            robot.AccSmoothStart(saveFlag);
+            robot.MoveL(p1Joint, p1Desc, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 10);
+            robot.MoveL(p2Joint, p2Desc, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 10);
+            robot.MoveL(p1Joint, p1Desc, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 10);
+            robot.MoveL(p2Joint, p2Desc, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 10);
+
+            robot.AccSmoothEnd(saveFlag);
+        }
+
+    /**
+    * @brief 傳動帶參數配置
+    * @param [in] para[0] 編碼器通道 1~2
+    * @param [in] para[1] 編碼器轉一圈的脈衝數
+    * @param [in] para[2] 編碼器轉一圈傳送帶行走距離
+    * @param [in] para[3] 工件坐標系編號 針對跟蹤運動功能選擇工件坐標系編號，跟蹤抓取、TPD跟蹤設為0
+    * @param [in] para[4] 是否配視覺  0 不配  1 配
+    * @param [in] para[5] 速度比  針對傳送帶跟蹤抓取選項（1-100）  其他選項默認為1 
+    * @param [in] followType 跟蹤運動類型，0-跟蹤運動；1-追檢運動
+    * @param [in] startDis 追檢抓取需要設置， 跟蹤起始距離， -1：自動計算(工件到達機器人下方後自動追檢)，單位mm， 默認值0
+    * @param [in] endDis 追檢抓取需要設置，跟蹤終止距離， 單位mm， 默認值100
+    * @return 錯誤碼
+    */
+    int ConveyorSetParam(int encChannel, int resolution, double lead, int wpAxis, int vision, double speedRadio, int followType, int startDis=0, int endDis=100);

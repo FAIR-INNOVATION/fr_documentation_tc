@@ -702,3 +702,110 @@
  * @return 錯誤碼
  */
  int GetForceSensorPayLoadCog(ref double x, ref double y, ref double z);
+ 
+傳送帶通訊輸入檢測
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 傳送帶通訊輸入檢測
+    * @param [in] timeout 等待超時時間ms
+    * @return 錯誤碼
+    */
+    int ConveyorComDetect(int timeout);
+
+傳送帶通訊輸入檢測觸發
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 傳送帶通訊輸入檢測觸發
+    * @return 錯誤碼
+    */
+    int ConveyorComDetectTrigger();
+
+代碼示例
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+
+        // 禁用按鈕防止重複點擊
+        button3.Enabled = false;
+
+        // 在後台線程中執行耗時操作
+        Thread conveyorThread = new Thread(ConveyorTest);
+        conveyorThread.IsBackground = true;
+        conveyorThread.Start();
+    }
+
+    private void button4_Click(object sender, EventArgs e)
+    {
+        // 獲取用戶輸入
+        string input = texBox.Text;
+        Console.WriteLine($"please input a number to trigger:{input}");
+    
+        int rtn = robot.ConveyorComDetectTrigger();
+        Console.WriteLine($"ConveyorComDetectTrigger 返回值: {rtn}");
+        
+    }
+
+    private void ConveyorTest()
+    {
+        // 使用Invoke來更新UI線程上的控件
+        this.Invoke((MethodInvoker)delegate {
+            Console.WriteLine("開始傳送帶測試...");
+        });
+
+        int retval = 0;
+        int index = 1;
+        int max_time = 30000;
+        bool block = false;
+        retval = 0;
+
+        /* 傳送帶抓取流程 */
+        DescPose startdescPose = new DescPose(139.176f, 4.717f, 9.088f, -179.999f, -0.004f, -179.990f);
+        JointPos startjointPos = new JointPos(-34.129f, -88.062f, 97.839f, -99.780f, -90.003f, -34.140f);
+
+        DescPose homePose = new DescPose(139.177f, 4.717f, 69.084f, -180.000f, -0.004f, -179.989f);
+        JointPos homejointPos = new JointPos(-34.129f, -88.618f, 84.039f, -85.423f, -90.003f, -34.140f);
+
+        ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+
+        // 移動到安全位置
+        retval = robot.MoveL(homejointPos, homePose, 1, 1, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
+        Console.WriteLine($"MoveL 到安全位置返回值: {retval}");
+
+        // 傳送帶檢測
+        retval = robot.ConveryComDetect(1000 * 10);
+        Console.WriteLine($"ConveyorComDetect 返回值: {retval}");
+
+        // 獲取跟蹤數據
+        retval = robot.ConveyorGetTrackData(2);
+        Console.WriteLine($"ConveyorGetTrackData 返回值: {retval}");
+
+        // 開始跟蹤
+        retval = robot.ConveyorTrackStart(2);
+        Console.WriteLine($"ConveyorTrackStart 返回值: {retval}");
+
+        // 移動到起始位置
+        robot.MoveL(startjointPos, startdescPose, 1, 1, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
+        robot.MoveL(startjointPos, startdescPose, 1, 1, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
+
+        // 結束跟蹤
+        retval = robot.ConveyorTrackEnd();
+        Console.WriteLine($"ConveyorTrackEnd 返回值: {retval}");
+
+        // 返回安全位置
+        robot.MoveL(homejointPos, homePose, 1, 1, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
+
+        this.Invoke((MethodInvoker)delegate {
+            Console.WriteLine("傳送帶測試完成!");
+            button3.Enabled = true;
+        });
+    }

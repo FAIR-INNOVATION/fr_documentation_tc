@@ -887,24 +887,27 @@
      */
     errno_t ConveyorTrackEnd();
 
-傳動帶參數配置
+傳送帶參數配置
 +++++++++++++++++++++++++++++++++++++++++++++
-.. versionchanged:: C++SDK-v2.1.2.0
+.. versionchanged:: C++SDK-v2.2.1-3.8.1
 
 .. code-block:: c++
     :linenos:
 
-	/**
-	 * @brief 傳動帶參數配置
-	 * @param [in] para[0] 編碼器通道 1~2
-	 * @param [in] para[1] 編碼器轉一圈的脈衝數
-	 * @param [in] para[2] 編碼器轉一圈傳送帶行走距離
-	 * @param [in] para[3] 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
-	 * @param [in] para[4] 是否配視覺 0 不配 1 配
-	 * @param [in] para[5] 速度比  针对傳送帶追蹤抓取選項（1-100）  其他選項默認為1 
-	 * @return 錯誤碼
-	 */
-    errno_t ConveyorSetParam(float param[5]);
+    /**
+    * @brief 傳送帶參數配置
+    * @param [in] para[0] 編碼器通道 1~2
+    * @param [in] para[1] 編碼器轉一圈的脈衝數
+    * @param [in] para[2] 編碼器轉一圈傳送帶行走距離
+    * @param [in] para[3] 工件坐標系編號 針對跟蹤運動功能選擇工件坐標系編號，跟蹤抓取、TPD跟蹤設為0
+    * @param [in] para[4] 是否配視覺 0 不配 1 配
+    * @param [in] para[5] 速度比 針對傳送帶跟蹤抓取選項（1-100） 其他選項默認為1 
+    * @param [in] followType 跟蹤運動類型，0-跟蹤運動；1-追檢運動
+    * @param [in] startDis 追檢抓取需要設置， 跟蹤起始距離， -1：自動計算(工件到達機器人下方後自動追檢)，單位mm， 默認值0
+    * @param [in] endDis 追檢抓取需要設置，跟蹤終止距離， 單位mm， 默認值100
+    * @return 錯誤碼
+    */
+    errno_t ConveyorSetParam(float para[6], int followType = 0, int startDis = 0, int endDis = 100);
 
 傳動帶抓取點補償
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -3187,3 +3190,85 @@
         robot->MoveL(&endjointPos, &enddescPose, 0, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese, 1, 1);
         robot->SingularAvoidEnd();
     }
+
+傳送帶通訊輸入檢測
+++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳送帶通訊輸入檢測
+    * @param [in] timeout 等待超時時間ms
+    * @return 錯誤碼
+    */
+    errno_t ConveyorComDetect(int timeout);
+
+傳送帶通訊輸入檢測觸發
+++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳送帶通訊輸入檢測觸發
+    * @return 錯誤碼
+    */
+    errno_t ConveyorComDetectTrigger();
+
+代碼示例
+************************
+    
+.. code-block:: c++
+    :linenos:
+
+    void Trigger(FRRobot* robot)
+    {
+      int i;
+      cout << "請輸入數字觸發:" << endl;
+      std::cin >> i;
+      int rtn = robot->ConveyorComDetectTrigger();
+      printf("ConveyorComDetectTrigger retval is: %d\n", rtn);
+    }
+
+    int ConveyorTest(FRRobot * robot)
+    {
+      int retval = 0;
+      float param[6] = { 1,10000,200,0,0,20 };
+      retval = robot->ConveyorSetParam(param, 1, 0, 0);
+      printf("ConveyorSetParam retval is: %d\n", retval);
+      int index = 1;
+      int max_time = 30000;
+      uint8_t block = 0;
+      retval = 0;
+      DescPose startdescPose(139.176, 4.717, 9.088, -179.999, -0.004, -179.990);
+      JointPos startjointPos(-34.129, -88.062, 97.839, -99.780, -90.003, -34.140);
+        DescPose homePose(139.177, 4.717, 69.084, -180.000, -0.004, -179.989);
+      JointPos homejointPos(-34.129, -88.618, 84.039, -85.423, -90.003, -34.140);
+      ExaxisPos exaxisPos(0, 0, 0, 0);
+      DescPose offdese(0, 0, 0, 0, 0, 0);
+      retval = robot->MoveL(&homejointPos, &homePose, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese, 1, 1);
+      printf("MoveL to safety retval is: %d\n", retval);
+     std::thread textT(Trigger, robot);
+      textT.detach();
+
+      retval = robot->ConveyorComDetect(1000 * 10);
+      printf("ConveyorComDetect retval is: %d\n", retval);
+
+      retval = robot->ConveyorGetTrackData(2);
+      printf("ConveyorGetTrackData retval is: %d\n", retval);
+
+      retval = robot->ConveyorTrackStart(2);
+      printf("ConveyorTrackStart retval is: %d\n", retval);
+
+      robot->MoveL(&startjointPos, &startdescPose, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese, 1, 1);
+      robot->MoveL(&startjointPos, &startdescPose, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese, 1, 1);
+
+      retval = robot->ConveyorTrackEnd();
+      printf("ConveyorTrackEnd retval is: %d\n", retval);
+      robot->MoveL(&homejointPos, &homePose, 1, 1, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese, 1, 1);
+        return 0;
+    }
+

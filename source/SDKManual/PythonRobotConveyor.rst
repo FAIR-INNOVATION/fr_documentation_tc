@@ -135,7 +135,7 @@
     # 與機器人控制器建立連線。成功連結返回機器人對象
     robot = Robot.RPC('192.168.58.2')
     param=[1,10000,200,0,0,20]
-    ret = robot.ConveyorSetParam(param)
+    ret = robot.ConveyorSetParam(param,0,0,0)
     print("Set Conveyor Param",ret)
 
 傳動帶抓取點補償
@@ -256,10 +256,131 @@
     robot = Robot.RPC('192.168.58.2')
     #參數配置
     param=[1,10000,200,0,0,20]
-    ret = robot.ConveyorSetParam(param)
+    ret = robot.ConveyorSetParam(param,0,0,0)
     print("傳送帶參數配置錯誤碼",ret)
     time.sleep(1)
     #抓取點补偿
     comp = [0.00, 0.00, 0.00]
     ret1 = robot.ConveyorCatchPointComp(comp)
     print("傳動帶抓取點補償錯誤碼",ret1)
+
+傳送帶參數配置
+++++++++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ConveyorSetParam(param, followType, startDis, endDis)``"
+    "描述", "傳送帶參數配置"
+    "必選參數", "- ``param``: = [encChannel,resolution,lead,wpAxis,vision,speedRadio] 
+                    - ``encChannel``: 編碼器通道 1-2
+                    - ``resolution``: 編碼器分辨率 (每轉脈衝數)
+                    - ``lead``: 機械傳動比 (編碼器每轉傳送帶移動距離)
+                    - ``wpAxis``: 工件坐標系編號 (追蹤抓取、TPD追蹤設為0)
+                    - ``vision``: 是否配置視覺 0-否 1-是
+                    - ``speedRadio``: 速度比 (追蹤抓取速度範圍1-100，運動追蹤、TPD追蹤設為1)
+    - ``followType``: 追蹤運動類型，0-運動追蹤；1-追檢運動"
+    "默認參數", "- ``startDis``: 追檢抓取需要設置，追蹤起始距離 (-1:自動計算)，單位mm，默認值0
+    - ``endDis``: 追檢抓取需要設置，追蹤終止距離，單位mm，默認值100"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
+
+
+傳送帶通訊輸入檢測
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.1
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ConveyorComDetect(timeout)``"
+    "描述", "傳送帶通訊輸入檢測"
+    "必選參數", "- ``timeout``: 等待超時時間(ms)"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
+
+傳送帶通訊輸入檢測觸發
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.1
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ConveyorComDetectTrigger()``"
+    "描述", "傳送帶通訊輸入檢測觸發"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
+
+代碼示例
+------------
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def Trigger(robot):
+        i = int(input("請輸入一個數字以觸發: "))
+
+        rtn = robot.ConveyorComDetectTrigger()
+        print(f"ConveyorComDetectTrigger 返回值: {rtn}")
+
+    def ConveyorTest(robot):
+        retval = 0
+
+        # 如需使用請取消註釋
+        # param = [1, 10000, 200, 0, 0, 20]
+        # retval = robot.ConveyorSetParam(param, 0, 0, 0)
+        # print(f"ConveyorSetParam 返回值: {retval}")
+
+        index = 1
+        max_time = 30000
+        block = 0
+        retval = 0
+
+        # 定義位姿和關節位置
+        startdescPose = [139.176, 4.717, 9.088, -179.999, -0.004, -179.990]
+        startjointPos = [-34.129, -88.062, 97.839, -99.780, -90.003, -34.140]
+
+        homePose = [139.177, 4.717, 69.084, -180.000, -0.004, -179.989]
+        homejointPos = [-34.129, -88.618, 84.039, -85.423, -90.003, -34.140]
+
+        exaxisPos = [0, 0, 0, 0]
+        offdese = [0, 0, 0, 0, 0, 0]
+
+        # 移動到安全位置
+        retval = robot.MoveL(desc_pos=homePose, tool=1, user=1)
+        print(f"移動到安全位置 MoveL 返回值: {retval}")
+
+        # 啟動觸發線程
+        textT = threading.Thread(target=Trigger, args=(robot,))
+        textT.daemon = True
+        textT.start()
+
+        # 傳送帶操作
+        retval = robot.ConveyorComDetect(10000)
+        print(f"ConveyorComDetect 返回值: {retval}")
+
+        retval = robot.ConveyorGetTrackData(2)
+        print(f"ConveyorGetTrackData 返回值: {retval}")
+
+        retval = robot.ConveyorTrackStart(2)
+        print(f"ConveyorTrackStart 返回值: {retval}")
+
+        # 移動命令
+        robot.MoveL(desc_pos=startdescPose, tool=1, user=1)
+        robot.MoveL(desc_pos=startdescPose, tool=1, user=1)
+
+        # 結束傳送帶追蹤
+        retval = robot.ConveyorTrackEnd()
+        print(f"ConveyorTrackEnd 返回值: {retval}")
+
+        # 返回安全位置
+        robot.MoveL(desc_pos=homePose, tool=1, user=1)
+
+    ConveyorTest(robot)

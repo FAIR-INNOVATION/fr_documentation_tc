@@ -1216,3 +1216,55 @@ jog點動立即停止
 	* @return 錯誤碼
 	*/
 	errno_t LinArcFIRPlanningEnd();
+
+加速度平滑開啟
++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 加速度平滑開啟
+    * @param [in] saveFlag 是否斷電保存
+    * @return 錯誤碼
+    */
+    errno_t AccSmoothStart(bool saveFlag);
+
+加速度平滑關閉
++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 加速度平滑關閉
+    * @param [in] saveFlag 是否斷電保存
+    * @return 錯誤碼
+    */
+    errno_t AccSmoothEnd(bool saveFlag);
+
+代碼示例
+*****************************
+
+.. code-block:: c++
+    :linenos:
+
+    void TestAccSmoothJ(FRRobot* robot)
+    {
+      DescPose startdescPose(88.739, -527.617, 514.939, -179.039, 1.494, 70.209);
+      JointPos startjointPos(88.927, -85.834, 80.289, -85.561, -91.388, 108.718);
+
+      DescPose enddescPose(-433.125, -334.428, 497.139, -179.723, -0.745, 8.437);
+      JointPos endjointPos(27.036, -83.909, 80.284, -85.579, -90.027, 108.604);
+
+      ExaxisPos exaxisPos(0, 0, 0, 0);
+      DescPose offdese(0, 0, 0, 0, 0, 0);
+      int rtn = robot->AccSmoothStart(0);
+      cout << "AccSmoothStart rtn is " << rtn << endl;
+      robot->MoveJ(&startjointPos, &startdescPose, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+      robot->MoveJ(&endjointPos, &enddescPose, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+      rtn = robot->AccSmoothEnd(0);
+      cout << "AccSmoothEnd rtn is " << rtn << endl;
+    }

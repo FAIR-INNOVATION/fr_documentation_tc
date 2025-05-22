@@ -60,22 +60,27 @@
     */
     int ConveyorPointBRecord(); 
 
-傳動帶參數配置
-+++++++++++++++++++++++++++++++++++++++++
+傳送帶參數配置
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionchanged:: Java SDK-v1.0.4-3.8.1
+
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  傳動帶參數配置
+    * @brief  傳送帶參數配置
     * @param [in] encChannel 編碼器通道 1~2
     * @param [in] resolution 編碼器轉一圈的脈衝數
     * @param [in] lead 編碼器轉一圈傳送帶行走距離
     * @param [in] wpAxis 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
-    * @param [in] vision 是否配視覺 0 不配 1 配
-    * @param [in] speedRadio 速度比  针对傳送帶追蹤抓取選項（1-100）  其他選項默認為1
+    * @param [in] vision 是否配視覺  0 不配  1 配
+    * @param [in] speedRadio 速度比  針對傳送帶追蹤抓取選項（1-100）  其他選項預設為1
+    * @param [in] followType 追蹤運動類型，0-追蹤運動；1-追檢運動
+    * @param [in] startDis 追檢抓取需要設置， 追蹤起始距離， -1：自動計算(工件到達機器人下方後自動追檢)，單位mm， 預設值0
+    * @param [in] endDis 追檢抓取需要設置，追蹤終止距離， 單位mm， 預設值100
     * @return 錯誤碼
     */
-    int ConveyorSetParam(int encChannel, int resolution, double lead, int wpAxis, int vision, double speedRadio); 
+    int ConveyorSetParam(int encChannel, int resolution, double lead, int wpAxis, int vision, double speedRadio, int followType, int startDis, int endDis); 
 
 設定傳動皮帶抓取點補償
 +++++++++++++++++++++++++++++++++++++++++
@@ -230,3 +235,31 @@
         rtn = robot.MoveGripper(1, 100, 60, 30, 30000, 0);
         System.out.println("MoveGripper: rtn  " + rtn);
     } 
+
+傳送帶通訊輸入檢測
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 傳送帶通訊輸入檢測
+    * @param [in] timeout 等待超時時間ms
+    * @return 錯誤碼
+    */
+    int ConveyorComDetect(int timeout);
+
+傳送帶通訊輸入檢測觸發
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 傳送帶通訊輸入檢測觸發
+    * @param [in] timeout 等待超時時間ms
+    * @return 錯誤碼
+    */
+    int ConveyorComDetectTrigger();
