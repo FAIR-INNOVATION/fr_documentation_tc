@@ -7,15 +7,6 @@ FRCap案例
 FAIRINO Palletizer（碼垛機）
 -----------------------------
 
-請造訪以下位址以取得原始碼和碼垛FRCap包：\ `FAIR-INNOVATION/frcap_palletizer <https://gitee.com/fair-innovation/frcap_palletizer>`__\。
-
-或直接在本地克隆：
-
-.. code-block:: c++
-   :linenos:
-
-   git clone https://gitee.com/fair-innovation/frcap_palletizer.git
-
 將專案中的build資料夾下的「碼垛機Palletizer.frcap」在WebApp中上傳註冊啟用後即可使用。
 
 .. image:: frcap_pictures/011.png
