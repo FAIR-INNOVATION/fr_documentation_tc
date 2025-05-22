@@ -543,6 +543,10 @@ WEB介面上鎖
      - FRCustom(9)-V1-001(FR10YD)
      - FR10YD
      
+   * - 904
+     - FRCustom(9)-V1-001(FR3C)
+     - FR3C
+
    * - ...
      - 預留
      - /

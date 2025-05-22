@@ -13,6 +13,10 @@
 	:align: center
 	:width: 8in
 
+.. figure:: installation/102.png
+	:align: center
+	:width: 8in
+
 .. important::
   FR系列機器人在做姿態或座標系變換時齊次變換矩陣計算的角度旋轉順序為浮動座標系的「ZYX」。
 
@@ -40,35 +44,53 @@
 
 .. centered:: 圖表 2.2-1 FR3型號協作機器人運動範圍
 
+.. figure:: installation/103.png
+	:align: center
+	:width: 6in
+
+.. centered:: 圖表 2.2-2 FR3WML型號協作機器人運動範圍
+
+.. figure:: installation/104.png
+	:align: center
+	:width: 6in
+
+.. centered:: 圖表 2.2-3 FR3WMS型號協作機器人運動範圍
+
+.. figure:: installation/105.png
+	:align: center
+	:width: 6in
+
+.. centered:: 圖表 2.2-4 FR3C型號協作機器人運動範圍
+
 .. figure:: installation/019.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 2.2-2 FR5型號協作機器人運動範圍
+.. centered:: 圖表 2.2-5 FR5型號協作機器人運動範圍
 
 .. figure:: installation/020.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 2.2-3 FR10型號協作機器人運動範圍
+.. centered:: 圖表 2.2-6 FR10型號協作機器人運動範圍
 
 .. figure:: installation/021.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 2.2-4 FR16型號協作機器人運動範圍
+.. centered:: 圖表 2.2-7 FR16型號協作機器人運動範圍
 
 .. figure:: installation/022.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 2.2-5 FR20型號協作機器人運動範圍
+.. centered:: 圖表 2.2-8 FR20型號協作機器人運動範圍
 
 .. figure:: installation/068.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 2.2-6 FR30型號協作機器人運動範圍
+.. centered:: 圖表 2.2-9 FR30型號協作機器人運動範圍
 
 機器人座標系
 ---------------
@@ -169,7 +191,220 @@ FR系列協作機器人DH參數顯示如下：
      - 0.261
      - [-0.05, -1.11, -20.05]
 
-.. centered:: 表格 2.4-2 FR5 協作機器人DH參數表
+.. centered:: 表格 2.4-2 FR3WMS 協作機器人DH參數表
+
+.. list-table::
+   :widths: 70 50 50 50 50 70 50 120
+   :header-rows: 0
+   :align: center
+   :class: no-padding sheet-center
+
+   * - **運動學**
+     - **theta[rad]**
+     - **a[m]**
+     - **d[m]**
+     - **alpha[rad]**
+     - **動力學**
+     - **Mass[kg]**
+     - **Center of Mass[m]**
+
+   * - Joint1
+     - 0
+     - 140
+     - 0
+     - π/2
+     - Link1
+     - 1.66
+     - [-0.06，-13.58，1.68]
+
+   * - Joint2
+     - 0
+     - 0
+     - -280
+     - 0
+     - Link2
+     - 3.68
+     - [140.11，0，101.71]
+
+   * - Joint3
+     - 0
+     - 0
+     - -240
+     - 0
+     - Link3
+     - 1.81
+     - [63.49，0.1，10.94]
+
+   * - Joint4
+     - 0
+     - 102
+     - 0
+     - π/2
+     - Link4
+     - 1.18
+     - [0.07，-2.18，12.48]
+
+   * - Joint5
+     - 0
+     - 102
+     - 0
+     - -π/2
+     - Link5
+     - 1.18
+     - [-0.07，2.18，12.48]
+
+   * - Joint6
+     - 0
+     - 100
+     - 0
+     - 0
+     - Link6
+     - 0.28
+     - [1.81，1.33，-20.41]
+
+.. centered:: 表格 2.4-3 FR3WMSL 協作機器人DH參數表
+
+.. list-table::
+   :widths: 70 50 50 50 50 70 50 120
+   :header-rows: 0
+   :align: center
+   :class: no-padding sheet-center
+
+   * - **運動學**
+     - **theta[rad]**
+     - **a[m]**
+     - **d[m]**
+     - **alpha[rad]**
+     - **動力學**
+     - **Mass[kg]**
+     - **Center of Mass[m]**
+
+   * - Joint1
+     - 0
+     - 140
+     - 0
+     - π/2
+     - Link1
+     - 1.54
+     - [-0.01，-14.27，1.37]
+
+   * - Joint2
+     - 0
+     - 0
+     - -425
+     - 0
+     - Link2
+     - 3.49
+     - [212.5，0，101.43]
+
+   * - Joint3
+     - 0
+     - 0
+     - -395
+     - 0
+     - Link3
+     - 2
+     - [114.17，0.08，9.92]
+
+   * - Joint4
+     - 0
+     - 102
+     - 0
+     - π/2
+     - Link4
+     - 1.17
+     - [0.07，-2.18，12.48]
+
+   * - Joint5
+     - 0
+     - 102
+     - 0
+     - -π/2
+     - Link5
+     - 1.17
+     - [-0.07，2.18，12.48]
+
+   * - Joint6
+     - 0
+     - 100
+     - 0
+     - 0
+     - Link6
+     - 0.28
+     - [1.9，1.6，-20.08]
+
+.. centered:: 表格 2.4-4 FR3C 協作機器人DH參數表
+
+.. list-table::
+   :widths: 70 50 50 50 50 70 50 120
+   :header-rows: 0
+   :align: center
+   :class: no-padding sheet-center
+
+   * - **運動學**
+     - **theta[rad]**
+     - **a[m]**
+     - **d[m]**
+     - **alpha[rad]**
+     - **動力學**
+     - **Mass[kg]**
+     - **Center of Mass[m]**
+
+   * - Joint1
+     - 0
+     - 140
+     - 0
+     - π/2
+     - Link1
+     - 1.69
+     - [-0.16，-13.99，1.53]
+
+   * - Joint2
+     - 0
+     - 0
+     - -280
+     - 0
+     - Link2
+     - 3.73
+     - [140，0，101.34]
+
+   * - Joint3
+     - 0
+     - 0
+     - -240
+     - 0
+     - Link3
+     - 1.84
+     - [63.24，0.08，11.04]
+
+   * - Joint4
+     - 0
+     - 102
+     - 0
+     - π/2
+     - Link4
+     - 1.2
+     - [0.1，-2.03，12.55]
+
+   * - Joint5
+     - 0
+     - 102
+     - 0
+     - -π/2
+     - Link5
+     - 1.2
+     - [-0.1，2.03，12.55]
+
+   * - Joint6
+     - 0
+     - 100
+     - 0
+     - 0
+     - Link6
+     - 0.53
+     - [1.48，1.54，-17.9]
+
+.. centered:: 表格 2.4-5 FR5 協作機器人DH參數表
 
 .. list-table::
    :widths: 70 50 50 50 50 70 50 120
@@ -240,7 +475,7 @@ FR系列協作機器人DH參數顯示如下：
      - 0.36
      - [0.93, 0.81, -20.05]
 
-.. centered:: 表格 2.4-3 FR10 協作機器人DH參數表
+.. centered:: 表格 2.4-6 FR10 協作機器人DH參數表
 
 .. list-table::
    :widths: 70 50 50 50 50 70 50 120
@@ -311,7 +546,7 @@ FR系列協作機器人DH參數顯示如下：
      - 0.35
      - [1.24, 0.85, -20.34]
 
-.. centered:: 表格 2.4-4 FR16 協作機器人DH參數表
+.. centered:: 表格 2.4-7 FR16 協作機器人DH參數表
 
 .. list-table::
    :widths: 70 50 50 50 50 70 50 120
@@ -382,7 +617,7 @@ FR系列協作機器人DH參數顯示如下：
      - 0.35
      - [1.24, 0.85, -20.34]
 
-.. centered:: 表格 2.4-5 FR20 協作機器人DH參數表
+.. centered:: 表格 2.4-8 FR20 協作機器人DH參數表
 
 .. list-table::
    :widths: 70 50 50 50 50 70 50 120
@@ -453,7 +688,7 @@ FR系列協作機器人DH參數顯示如下：
      - 0.6
      - [-2.11, -1.96, -20.38]
 
-.. centered:: 表格 2.4-6 FR30 協作機器人DH參數表
+.. centered:: 表格 2.4-9 FR30 協作機器人DH參數表
 
 .. list-table::
    :widths: 70 50 50 50 50 70 50 120
