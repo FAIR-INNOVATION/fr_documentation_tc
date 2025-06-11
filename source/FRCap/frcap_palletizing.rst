@@ -455,8 +455,18 @@
 
 1) 碼垛設備尺寸：碼垛工作台的尺寸。
 
+.. image:: frcap_pictures/074.png
+   :width: 6in
+   :align: center
+
+.. image:: frcap_pictures/075.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 10-3-24 碼垛工作臺
+
 .. important::
- X、Y、Z為做托盤右上角或是右托盤左上角點相對於機器人基底座標系座標值的絕對值，Angle為機器人安裝時的旋轉角度，建議安裝時為0。
+ X、Y、Z為左托盤右上角或者右托盤左上角點相對於機器人基座標系座標值的絕對值，Angle為機器人安裝時的旋轉角度，推薦安裝時為0。
 
 2) 取料抬升高度：使用者自訂取料成功後，從抓取點取料成功後抬升的高度。
 
@@ -476,13 +486,13 @@
    :width: 6in
    :align: center
 
-.. centered:: 圖表 10-3-24 隔板配置
+.. centered:: 圖表 10-3-25 隔板配置
 
 .. image:: frcap_pictures/071.png
    :width: 6in
    :align: center
 
-.. centered:: 圖表 10-3-25 配方管理－進階配置顯示隔板配置
+.. centered:: 圖表 10-3-26 配方管理－進階配置顯示隔板配置
 
 接著設置隔板過渡點，隔板過渡點為三個，設定目的是抓取隔板後大致規劃一個運動路徑，避免碰撞而無法完成放置隔板的動作。
 
@@ -492,19 +502,19 @@
    :width: 3in
    :align: center
 
-.. centered:: 圖表 10-3-26 隔板過渡點1（以右工位為例）
+.. centered:: 圖表 10-3-27 隔板過渡點1（以右工位為例）
 
 .. image:: frcap_pictures/036.png
    :width: 3in
    :align: center
 
-.. centered:: 圖表 10-3-27 隔板過渡點2（以右工位為例）
+.. centered:: 圖表 10-3-28 隔板過渡點2（以右工位為例）
 
 .. image:: frcap_pictures/037.png
    :width: 3in
    :align: center
 
-.. centered:: 圖表 10-3-28 隔板過渡點3（以右工位為例）
+.. centered:: 圖表 10-3-29 隔板過渡點3（以右工位為例）
 
 接著設定抓取點（保持抓取點在隔板的中心，吸盤底部與隔板接觸時呈現擠壓狀態）和放置點，點選「確認」完成隔板資訊設定。
 
@@ -512,13 +522,13 @@
    :width: 3in
    :align: center
 
-.. centered:: 圖表 10-3-29 隔板抓取點（以右工位為例）
+.. centered:: 圖表 10-3-30 隔板抓取點（以右工位為例）
 
 .. image:: frcap_pictures/039.png
    :width: 3in
    :align: center
 
-.. centered:: 圖表 10-3-30 隔板放置點（以右工位為例）
+.. centered:: 圖表 10-3-31 隔板放置點（以右工位為例）
 
 6) 升降軸：使用者自訂配置升降軸啟動/停止、通訊參數（IP位址、連接埠號和通訊週期）、開始升降的層級以及選擇升降軸的啟動停止。
 
@@ -530,19 +540,19 @@
    :width: 6in
    :align: center
 
-.. centered:: 圖表 10-3-31 升降軸配置
+.. centered:: 圖表 10-3-32 升降軸配置
 
 .. image:: frcap_pictures/072.png
    :width: 6in
    :align: center
 
-.. centered:: 圖表 10-3-32 配方管理－進階配置顯示升降軸
+.. centered:: 圖表 10-3-33 配方管理－進階配置顯示升降軸
 
 .. image:: frcap_pictures/073.png
    :width: 4in
    :align: center
 
-.. centered:: 圖表 10-3-33 升降軸測試
+.. centered:: 圖表 10-3-34 升降軸測試
 
 程式生成
 ------------
@@ -561,12 +571,12 @@
 
 .. centered:: 圖表 10-4-1 程序生成
 
-碼垛狀態頁啟停
------------------
-在「狀態頁」欄中啟用此功能，進入碼垛工作狀態頁，可以對「生產資訊」、「警報訊息」和「碼垛程式」檢視。
+.. 碼垛狀態頁啟停
+.. -----------------
+.. 在「狀態頁」欄中啟用此功能，進入碼垛工作狀態頁，可以對「生產資訊」、「警報訊息」和「碼垛程式」檢視。
 
-.. image:: frcap_pictures/044.png
-   :width: 6in
-   :align: center
+.. .. image:: frcap_pictures/044.png
+..    :width: 6in
+..    :align: center
 
-.. centered:: 圖表 10-5-1 碼垛狀態頁
+.. .. centered:: 圖表 10-5-1 碼垛狀態頁
