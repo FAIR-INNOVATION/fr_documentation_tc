@@ -13,6 +13,7 @@
 - RAM：>=1 GB（建議2 GB以上）；
 - ROM：>=128GB；
 - OS：需要 Windows 10或更高版本、macOS 10.15或更高版本、Linux（x64）系統（Ubuntu、Debian等）。
+- 控制器版本：在WebApp《系統設置-關於》中查看，開發環境注意區分QX與LA，指令示例QX環境下避免使用ES6+語法等現代JavaScript特性。
 
 我們已經封裝了一些介面和模組，但想要達到一個較好的開發效果，建議對Web開發有一定的了解，最好熟悉以下技術：
 
@@ -178,13 +179,13 @@ Frcap-api的使用與frcap-ui類似，具體如下：
         console.error(err);
     });
 
-後端自訂指令開發
+後端自定義指令開發
 ----------------------------
 
-資料庫操作範例
+數據庫操作示例(LA)
 +++++++++++++++++++++++++
 
-1. 引入資料庫模組
+1. 引入數據庫模塊
 
 .. code-block:: javascript
    :linenos:
@@ -193,30 +194,77 @@ Frcap-api的使用與frcap-ui類似，具體如下：
     var Sqlite3_Action = require(node + '/better-sqlite3/better-sqlite3.js');
     var sqlite = new Sqlite3_Action();
 
-2. 取得點位資料庫中內容
+2. 獲取點位數據庫中內容
    
 .. code-block:: javascript
    :linenos:
 
     // 匹配 cmd
     case 'get_points':
-    // 寫sql語句，依照數字升序 + 首字母開頭升序 + 中文開頭升序 的方式，回饋資料給前端頁面顯示
+    // 編寫sql語句，按照數字升序 + 首字母開頭升序 + 中文開頭升序 的方式，反饋數據給前端頁面進行顯示
     var sql = "select * from points order by name ASC"; 
     var sql_data = sqlite.queryall(DB_POINTS, sql); 
-    // json數據格式
+    // json數據格式化
     for (var i = 0; i < sql_data.length; i++) {
         response_data[sql_data[i].name] = sql_data[i];
     }
-    //json數據回饋給前端
+    //json數據反饋給前端
     event_socket.emit('response', res, response_status, response_data);
     break;  
 
-3. socket通訊操作範例
-
-socket通訊操作範例
+數據庫操作示例(QX)
 +++++++++++++++++++++++++
 
-- 引入socket通訊模組
+.. note:: QX版本使用JSON格式文件存儲數據。
+
+1. 引入數據庫模塊
+
+.. code-block:: javascript
+   :linenos:
+
+   var node = "/usr/local/etc/node/sys"
+   var sqlite_adapter = require(node + '/jsdb/sqlite_adapter');
+   var db = new sqlite_adapter.Database(palletizing_db);
+
+2. 數據庫使用示例
+   
+.. code-block:: javascript
+   :linenos:
+
+   // 執行SELECT查詢並獲取所有行
+   var rows = db.queryall('SELECT * FROM box_cfg');
+   console.log('result:', rows);
+
+   //執行SELECT查詢並獲取單行
+   var row = db.queryget('SELECT * FROM box_cfg WHERE flag=1');
+   console.log('result:', row);
+
+   // 執行UPDATE語句
+   db.run('UPDATE box_cfg SET height=100 WHERE flag=1', function(err) {
+      if (err) {
+         console.error('Update failed:', err);
+      } else {
+         console.log('Update success');
+      }
+   });
+
+   // 執行參數化查詢
+   var params = [100, 200, 300, 1];
+   db.run('UPDATE box_cfg SET height=?, width=?, length=? WHERE flag=?', params, function(err) {
+      if (err) {
+         console.error('update failed:', err);
+      } else {
+         console.log('update success');
+      }
+   });
+
+   // 關閉數據庫連接
+   db.close();
+
+socket通信操作示例
++++++++++++++++++++++++++
+
+- 引入socket通信模塊
    
 .. code-block:: javascript
    :linenos:
@@ -225,26 +273,34 @@ socket通訊操作範例
     var Socket_Cmd = require(node + '/socket/socket_cmd');
     var socket_cmd = new Socket_Cmd();
 
-- 下發設定係統變數指令
+- 下發設置系統變量指令
   
 .. code-block:: javascript
    :linenos:
 
    // 匹配 cmd
-    case 511:
-    //取得發送數據內容
-    content = data_json.content;
-    //取得發送資料長度
-    len = data_json.content.length;
-    //群組發送數據
-    send_content = '/f/bIII1III511III' + len + 'III' + content + 'III/b/f'
-    //socket send
-    socket_cmd.send(send_content);
-    //socket recv
-    socket_cmd.recv().then((recv_data)=>{
-        response_data = recv_data;
-    event_socket.emit('response', res, response_status, response_data);
-    }).catch((err)=>{
-        console.log(err);
-    })
-    break;
+   case 511:
+   //獲取發送數據內容
+   content = data_json.content;
+   //獲取發送數據長度
+   len = data_json.content.length;
+   //組發送數據
+   send_content = '/f/bIII1III511III' + len + 'III' + content + 'III/b/f'
+   //socket send
+   socket_cmd.send(send_content);
+   //socket recv(注意區分LA/QX)
+   // LA Version:
+   socket_cmd.recv().then((recv_data)=>{
+      response_data = recv_data;
+   event_socket.emit('response', res, response_status, response_data);
+   }).catch((err)=>{
+      console.log(err);
+   })
+   // QX Version 
+   // socket_cmd.recv().then(function(recv_data){
+   //     response_data = recv_data;
+   // event_socket.emit('response', res, response_status, response_data);
+   // }).catch (function(err){
+   //     console.log(err);
+   // })
+   break;

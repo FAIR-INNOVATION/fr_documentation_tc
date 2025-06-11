@@ -418,3 +418,125 @@ socket recv
 
     socket_cmd.recv();//8065
     socket_file.recv();//8067
+
+文件操作指令
+---------------------------
+
+寫入文件內容
+++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @param String filename文件路徑
+    * @param string content要寫入的內容
+    * @param Function callback 回調函數，參數為(error) ( LA版本無需此參數)
+    * @return true/false
+    */
+
+    write(filename, content, callback);
+
+讀取文件內容
+++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @param String filename文件路徑
+    * @param string content要寫入的內容
+    * @param Function callback 回調函數，參數為(error) ( LA版本無需此參數)
+    * @return String 文件內容
+    */
+
+    read(filename, callback);
+
+修改文件權限
+++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+    
+    /**
+    * @param String filename文件路徑
+    * @param Number mode權限模式（如0644）
+    * @param Function callback 回調函數，參數為(error) ( LA版本無需此參數)
+    * @return true/false
+    */
+
+    chmod(filename, mode, callback);
+
+讀取目錄內容，包括子目錄
+++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+    
+    /**
+    * @param String path文件路徑
+    * @param Function callback 回調函數，參數為(error) ( LA版本無需此參數)
+    * @return Array 文件名數組
+    */
+
+    readdir(path, callback);
+
+壓縮解壓指令
+---------------------------
+
+.. note:: 
+    區分LA與QX版本, (LA版本無需callback回調參數)。
+
+    LA模塊導入：var execSync = require('child_process').execSync;
+
+    QX模塊導入：var tar_utils = require('/usr/local/etc/node/sys/tools/tar_utils');
+
+創建tar.gz壓縮文件
++++++++++++++++++++++++++++++++++
+
+創建tar.gz壓縮文件示例(LA)：
+
+.. code-block:: javascript
+    :linenos:
+    
+    var cmd = 'cd / && tar -zcvf ' + FILENAME + '-C ' + DIR;
+    execSync(cmd);
+    
+創建tar.gz壓縮文件指令描述(QX)：
+
+.. code-block:: c++
+    :linenos:
+    
+    /**
+    * @param {Array|String} sourcePaths 源文件/目錄路徑數組或單個路徑
+    * @param String targetFile目標壓縮文件路徑
+    * @param Function callback 回調函數，參數為(error) ( LA版本無需此參數)
+    * @param String basePath基礎路徑，默認為'/'
+    * @return \
+    */
+
+    createTarGz(sourcePaths, targetFile, callback, basePath);
+
+解壓tar.gz文件
++++++++++++++++++++++++++++++++++
+
+解壓tar.gz文件示例(LA)：
+
+.. code-block:: javascript
+    :linenos:
+
+    var cmd = 'cd / && tar -zxvf ' + FILENAME;
+    execSync(cmd);
+
+解壓tar.gz文件指令描述(QX)：
+
+.. code-block:: c++
+    :linenos:
+    
+    /**
+    * @param String sourceFile源壓縮文件路徑
+    * @param String targetDir目標解壓目錄
+    * @param Function callback 回調函數，參數為(error) ( LA版本無需此參數)
+    * @return \
+    */
+    extractTarGz(sourceFile, targetDir, callback);

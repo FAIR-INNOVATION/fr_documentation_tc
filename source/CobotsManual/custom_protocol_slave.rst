@@ -12,12 +12,12 @@
 1) CC-Link slave 協定支援；
 2) Profinet slave 協定支援；
 3) Ethernet/IP slave 協定支援；
-4) EtherCAT slave 協定支援；
+4) EtherCAT slave 協定支援(EnTalk板卡不支援)；
 
 環境配置
 --------------------------
 
-硬體環境搭建
+赫優訊闆卡硬體環境搭建
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. 將赫優訊闆卡安裝到整合式mini控制箱，如圖所示。
@@ -71,6 +71,96 @@
 
 .. important:: 當協定切換為EtherCAT匯流排時，闆卡的網口需要區分為EtherCAT_IN和EtherCAT_OUT，此時，歐姆龍PLC的EtherCAT網口需要與卡的EtherCAT_IN網口透過一條網線直連。
 
+EnTalk板卡硬件環境搭建
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. 將板卡安裝到集成式mini控制箱，如圖所示。
+
+.. image:: custom_protocol_slave/044.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-7 EnTalk板卡網口
+
+2. 機器人控制箱和PLC接線如下圖所示。
+
+.. image:: custom_protocol_slave/003.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-8 控制箱&三菱PLC接線圖
+
+.. image:: custom_protocol_slave/004.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-9 控制箱&西門子PLC接線圖
+
+.. image:: custom_protocol_slave/005.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 17.2-10 控制箱&匯川PLC接線圖
+
+.. note:: 
+    1：機器人控制箱（板卡網口）；
+    2：交換機；
+    3：筆記本PC；
+    4：三菱PLC（CC-link網口）；
+    5：西門子PLC（Profinet網口）；
+    6：匯川PLC（Ethernet/IP網口）；
+
+3. EnTalk板卡進行協議切換時，需進行固件升級。升級步驟：
+   - 將連接板卡的PC IP修改為「192.168.0.xxx」
+   - 打開「網關工具集」軟件
+   - 選擇需要連接的PC網卡設備
+   - 點擊右下角「開始」按鈕
+   - 點擊右上角「搜索」按鈕搜索板卡設備
+
+.. image:: custom_protocol_slave/045.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 17.2-11 連接板卡設備
+
+4. 點擊左下角「升級」按鈕
+   - 選中板卡設備
+   - 點擊右上角「...」按鈕選擇需要的協議固件
+   - 點擊「升級」按鈕等待完成
+
+.. image:: custom_protocol_slave/046.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 17.2-12 板卡協議切換
+
+.. note:: 板卡協議切換後IP地址變更如下表。
+
+.. centered:: 表格 17.2-1 板卡IP地址
+
+.. list-table:: 
+   :widths: 20 80
+   :header-rows: 1
+   :align: center
+
+   * - **協議**
+     - **IP地址**
+
+   * - CC-link
+     - 192.168.0.113
+
+   * - Ethernet/IP
+     - 192.168.0.112
+
+   * - Profinet
+     - 192.168.0.2
+
+配置為CC-link時，控制器會將板卡IP修改為「192.168.0.113」。
+
+配置為Ethernet/IP時，控制器會將板卡IP修改為「192.168.0.112」。
+
+切換為Profinet且從站設備名稱與主站一致時，主站會自動配置從站IP地址。
+
 軟體環境搭建
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -80,7 +170,7 @@
    :width: 6in
    :align: center
 
-.. centered:: 圖表 17.2-7 Web登入介面
+.. centered:: 圖表 17.2-13 Web登入介面
 
 2. 點選輔助應用->工具應用->系統升級介面，選擇software.tar.gz文件，上傳升級包。
 
@@ -88,9 +178,9 @@
    :width: 4in
    :align: center
 
-.. centered:: 圖表 17.2-8 軟體升級
+.. centered:: 圖表 17.2-14 軟體升級
 
-.. note:: qnx控制箱web版本需要3.7.6以上，linux控制箱web版本需要3.7.4以上。
+.. note:: QX控制箱web版本需要3.8.0以上，LA控制箱web版本需要3.8.0以上。
 
 3. 進入周邊->遠端控制， 控制模式選擇“Profinet控制”，廠商選擇“Hilscher”，循環週期選擇“4ms”，點選“設定”。
 
@@ -98,7 +188,7 @@
    :width: 4in
    :align: center
 
-.. centered:: 圖表 17.2-9 介面配置
+.. centered:: 圖表 17.2-15 介面配置
 
 4. 點選右上角「本地模式」->切換遠端模式。
 
@@ -106,7 +196,7 @@
    :width: 4in
    :align: center
 
-.. centered:: 圖表 17.2-10 切換遠端模式
+.. centered:: 圖表 17.2-16 切換遠端模式
 
 5. 選擇控制器從站協議，點選「設定」按鈕。
 
@@ -114,7 +204,7 @@
    :width: 6in
    :align: center
 
-.. centered:: 圖表 17.2-11 配置通訊協議
+.. centered:: 圖表 17.2-17 配置通訊協議
 
 .. note:: 切換不同的協議，需要重新啟動控制箱再進行協議的設定。
 
