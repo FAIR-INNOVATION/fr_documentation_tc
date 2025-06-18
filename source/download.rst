@@ -77,7 +77,7 @@
      - ✅
      - ✅
      - --
-     - :download:`下載<_static/_doc/ROHS测试认证.zip>`
+     - :download:`下載<_static/_doc/法奥RoHS 2.0声明.pdf>`
 
    * - **防爆證書**
      - ✅
