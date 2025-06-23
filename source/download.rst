@@ -278,7 +278,9 @@ FAIRINO SimMachine
 
 碼高機frcap
 ---------------------------------
-    :download:`碼高機Palletizer-v2.1.0 <_static/_doc/码垛机Palletizer-v2.1.0.zip>`
+    :download:`碼高機Palletizer-QX-v2.1.0 <_static/_doc/码垛机Palletizer-QX-v2.1.0.zip>`
+
+    :download:`碼高機Palletizer-LA-v2.1.0 <_static/_doc/码垛机Palletizer-LA-v2.1.0.zip>`
 
 CPP SDK
 ---------------------------------
