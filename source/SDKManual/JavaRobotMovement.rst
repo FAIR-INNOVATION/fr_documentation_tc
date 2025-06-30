@@ -202,19 +202,62 @@ jog點動立即停止
         ExaxisPos epos = new ExaxisPos();
         DescPose offset_pos = new DescPose();
 
-        JointPos JP1=new JointPos(117.408,-86.777,81.499,-87.788,-92.964,92.959);
-        DescPose DP1 =new DescPose(327.359,-420.973,518.377,-177.199,3.209,114.449);
-        JointPos JP2=new JointPos(72.515,-86.774,81.525,-87.724,-91.964,92.958);
-        DescPose DP2=new DescPose(-63.512,-529.698,517.946,-178.192,3.07,69.554);
-        JointPos JP3=new JointPos(89.281,-102.959,81.527,-69.955,-86.755,92.958);
-        DescPose DP3=new DescPose();
-        robot.GetForwardKin(JP3,DP3);
+        DescPose middescPoseCir1=new DescPose(-435.414,-342.926,309.205,-171.382,-4.513,171.520);
 
-        robot.MoveJ(JP1, DP1,0, 0, 30, 30, 100, epos, -1, 0, offset_pos);//關節空間運動
-        robot.MoveL(JP2, DP2,0, 0, 30, 100, 100, -1, epos, 0, 0, offset_pos, 0, 100);//直線運動
-        robot.MoveC(JP3, DP3, 0, 0, 30, 100, epos, 0, offset_pos, JP1, DP1, 0, 0, 100, 100, epos, 0, offset_pos, 100, -1);
-        robot.Circle(JP3, DP3, 0, 0, 10, 100.0, epos, JP2, DP2, 0, 0, 100.0, 100.0, epos, 100.0, 0, offset_pos);
+        JointPos midjointPosCir1=new JointPos(26.804,-79.866,106.642,-125.433,-85.562,-54.721);
 
+        DescPose enddescPoseCir1=new DescPose(-524.862,-217.402,308.459,-171.425,-4.810,156.088);
+
+        JointPos endjointPosCir1=new JointPos(11.399,-78.055,104.603,-125.421,-85.770,-54.721);
+
+        DescPose middescPoseCir2=new DescPose(-482.691,-587.899,318.594,-171.001,-4.999,-172.996);
+
+        JointPos midjointPosCir2=new JointPos(42.314,-53.600,67.296,-112.969,-85.533,-54.721);
+
+        DescPose enddescPoseCir2=new DescPose(-403.942,-489.061,317.038,-163.189,-10.425,-175.627);
+
+        JointPos endjointPosCir2=new JointPos(39.959,-70.616,96.679,-134.243,-82.276,-54.721);
+
+        DescPose middescPoseMoveC=new DescPose(-435.414,-342.926,309.205,-171.382,-4.513,171.520);
+
+        JointPos midjointPosMoveC=new JointPos(26.804,-79.866,106.642,-125.433,-85.562,-54.721);
+
+        DescPose enddescPoseMoveC=new DescPose(-524.862,-217.402,308.459,-171.425,-4.810,156.088);
+
+        JointPos endjointPosmoveC=new JointPos(11.399,-78.055,104.603,-125.421,-85.770,-54.721);
+
+        DescPose middescPoseCir3=new DescPose(-435.414,-342.926,309.205,-171.382,-4.513,171.520);
+
+        JointPos midjointPosCir3=new JointPos(26.804,-79.866,106.642,-125.433,-85.562,-54.721);
+
+        DescPose enddescPoseCir3=new DescPose(-569.505,-405.378,357.596,-172.862,-10.939,171.108);
+
+        JointPos endjointPosCir3=new JointPos(27.138,-63.750,78.586,-117.861,-90.588,-54.721);
+
+        DescPose middescPoseCir4=new DescPose(-482.691,-587.899,318.594,-171.001,-4.999,-172.996);
+
+        JointPos midjointPosCir4=new JointPos(42.314,-53.600,67.296,-112.969,-85.533,-54.721);
+
+        DescPose enddescPoseCir4=new DescPose(-569.505,-405.378,357.596,-172.862,-10.939,171.108);
+
+        JointPos endjointPosCir4=new JointPos(27.138,-63.750,78.586,-117.861,-90.588,-54.721);
+
+        DescPose startdescPose =new DescPose(-569.505, -405.378, 357.596, -172.862, -10.939, 171.108);
+        JointPos startjointPos = new JointPos(27.138, -63.750, 78.586, -117.861, -90.588, -54.721);
+
+        DescPose linedescPose =new DescPose(-403.942, -489.061, 317.038, -163.189, -10.425, -175.627);
+        JointPos linejointPos = new JointPos(39.959, -70.616, 96.679, -134.243, -82.276, -54.721);
+
+        ExaxisPos exaxisPos =new ExaxisPos(0, 0, 0, 0);
+        DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+
+        robot.MoveJ(startjointPos,startdescPose,3,0,100,100,100,exaxisPos,-1,0,offdese);
+        robot.Circle(midjointPosCir1,middescPoseCir1,3,0,100,100,exaxisPos,endjointPosCir1,enddescPoseCir1,3,0,100,100,exaxisPos,100,-1,offdese);
+        robot.Circle(midjointPosCir2,middescPoseCir2,3,0,100,100,exaxisPos,endjointPosCir2,enddescPoseCir2,3,0,100,100,exaxisPos,100,-1,offdese);
+        robot.MoveC(midjointPosMoveC,middescPoseMoveC,3,0,100,100,exaxisPos,0,offdese,endjointPosmoveC,enddescPoseMoveC,3,0,100,100,exaxisPos,0,offdese,100,20);
+        robot.Circle(midjointPosCir3,middescPoseCir3,3,0,100,100,exaxisPos,endjointPosCir3,enddescPoseCir3,3,0,100,100,exaxisPos,100,-1,offdese);
+        robot.MoveL(linejointPos,linedescPose,3,0,100,100,100,-1,0,exaxisPos,0,0,offdese,0,10);
+        robot.Circle(midjointPosCir4,middescPoseCir4,3,0,100,100,exaxisPos,endjointPosCir4,enddescPoseCir4,3,0,100,100,exaxisPos,100,-1,offdese);
     }    
 
 笛卡兒空間螺旋線運動
@@ -802,7 +845,7 @@ jog點動立即停止
 
 開始Ptp運動FIR濾波
 +++++++++++++++++++++++++++++
-.. versionadded:: Java SDK-v1.0.1-3.7.8
+.. versionchanged:: Java SDK-v1.0.5-3.8.2
 
 .. code-block:: Java
  :linenos:
@@ -810,9 +853,10 @@ jog點動立即停止
  /**
  * @brief 開始Ptp運動FIR濾波
  * @param [in] maxAcc 最大加速度極值(deg/s2)
+ * @param [in] maxJek 統一關節急動度極值(deg/s3)
  * @return 錯誤碼
  */
- int PtpFIRPlanningStart(double maxAcc);
+  int PtpFIRPlanningStart(double maxAcc,double maxJek);
 
 關閉Ptp運動FIR濾波
 +++++++++++++++++++++++++++++

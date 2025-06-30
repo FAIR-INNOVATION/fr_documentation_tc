@@ -388,7 +388,7 @@
 
 UDP擴展軸通訊參數配置
 ++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.4
+.. versionadded:: python SDK-v3.8.2
 
 .. csv-table:: 
     :stub-columns: 1
@@ -405,7 +405,8 @@ UDP擴展軸通訊參數配置
     - ``disconnectTime``：通訊斷開確認時長；
     - ``reconnectEnable``：通訊斷開自動重連啟用 0-不啟用 1-啟用；
     - ``reconnectPeriod``：重連週期間隔(ms)；
-    - ``reconnectNum``：重連次數"
+    - ``reconnectNum``：重連次數
+    - ``selfConnect``：斷電重啟是否自動建立連接; 0-不建立連接; 1-建立連接"
     "默認參數", "無"
     "傳回值", "錯誤碼 成功-0 失敗- errcode"
 
@@ -1371,7 +1372,7 @@ UDP擴展軸與機器人圓弧運動同步運動
     from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    robot.ExtDevSetUDPComParam("192.168.58.2", 2021, 2, 50, 5, 50, 1, 50, 10)
+    robot.ExtDevSetUDPComParam("192.168.58.2", 2021, 2, 50, 5, 50, 1, 50, 10, 0)
     robot.ExtDevLoadUDPDriver()
     robot.ExtAxisParamConfig(1, 0, 0, 50000, -50000, 1000, 1000, 6.280, 16384, 200, 0, 0, 0)
     robot.ExtAxisParamConfig(2, 0, 0, 50000, -50000, 1000, 1000, 6.280, 16384, 200, 0, 0, 0)
@@ -1391,3 +1392,18 @@ UDP擴展軸與機器人圓弧運動同步運動
     time.sleep(4)
     error = robot.TractorStop()
     print("TractorStop return ", error)
+
+獲取擴展軸座標系
++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v3.8.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ExtAxisGetCoord()``"
+    "描述", "獲取擴展軸座標系"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：擴展軸座標系"

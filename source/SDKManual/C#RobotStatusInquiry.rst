@@ -565,3 +565,53 @@
         robot.GetRobotRealTimeState(ref pKG);
         Console.WriteLine($"the state is {pKG.main_code}");
     }
+
+獲取SmartTool按鈕狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.3  Web-3.8.2
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取SmartTool按鈕狀態
+    * @param [out] state SmartTool手柄按鈕狀態; （bit0：0-通信正常; 1-通信掉線; bit1-撤銷操作; bit2-清空程式; bit3-A鍵; bit4-B鍵; bit5-C鍵; bit6-D鍵; bit7-E鍵; bit8-IO鍵; bit9-手自動; bit10開始）
+    * @return 錯誤碼
+    */
+    int GetSmarttoolBtnState(ref int state);
+
+代碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.3  Web-3.8.2
+    
+.. code-block:: c#
+    :linenos:
+
+    private void button11_Click(object sender, EventArgs e)
+    {
+
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+        int state = 0;
+        while (true)
+        {
+            int rtn = robot.GetSmarttoolBtnState(ref state);
+            string binaryString = Convert.ToString(state, 2).PadLeft(32, '0');
+            Console.WriteLine($"GetSmarttoolBtnState rtn (binary): {binaryString}");
+            Thread.Sleep(100);
+        }
+
+    }
+
+獲取擴展軸座標系
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.3  Web-3.8.2
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取擴展軸座標系
+    * @param [out] coord 擴展軸座標系
+    * @return 錯誤碼
+    */
+    int ExtAxisGetCoord(ref DescPose coord);

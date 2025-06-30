@@ -491,7 +491,7 @@
  DescPose traj_start_pose=new DescPose(0,0,0,0,0,0);
  retval = robot.GetTrajectoryStartPose(traj_file_name, traj_start_pose);
  System.out.println("GetTrajectoryStartPose is: %d"+retval);
- System.out.println("desc_pos:"+"("+traj_start_pose.tran.x+","+traj_start_pose.tran.y+","+traj_start_pose.tran.z+","+traj_start_pose.tran.y+","+traj_start_pose.tran.z+","+traj_start_pose.rpy.rx+" );
+ System.out.println("desc_pos:"+"("+traj_start_pose.tran.x+","+traj_start_pose.tran.y+","+traj_start_pose.tran.z+","+traj_start_pose.rpy.rx+","+traj_start_pose.rpy.ry+","+traj_start_pose.rpy.rz+")");
 
  robot.SetSpeed(30);
  robot.MoveCart(traj_start_pose, 1, 0, 100, 100, 100, -1, -1);

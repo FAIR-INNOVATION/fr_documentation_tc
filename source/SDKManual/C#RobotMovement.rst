@@ -976,17 +976,18 @@ jog點動立即停止
 
 開始Ptp運動FIR濾波
 ++++++++++++++++++++++++++++++
-.. versionadded:: C# SDK-v1.1.0-3.7.8
-
+.. versionadded:: C#SDK-V1.1.3  Web-3.8.2
+    
 .. code-block:: c#
  :linenos:
 
  /**
  * @brief 開始Ptp運動FIR濾波
  * @param [in] maxAcc 最大加速度極值(deg/s2)
+ * @param [in] maxJek 統一關節急動度極值(deg/s3)
  * @return 錯誤碼
  */
- int PtpFIRPlanningStart(double maxAcc);
+    int PtpFIRPlanningStart(double maxAcc, double maxJek=1000);
 
 關閉Ptp運動FIR濾波
 ++++++++++++++++++++++++++++++
@@ -1033,67 +1034,41 @@ jog點動立即停止
 
 程式範例
 +++++++++++++++++++++++++++++
-.. versionadded:: C# SDK-v1.1.0-3.7.8
-
+.. versionadded:: C#SDK-V1.1.3  Web-3.8.2
+    
 .. code-block:: c#
  :linenos:
 
- void FIRPTP( bool enable)
- {
- DescPose startdescPose = new DescPose(-569.710, -132.595, 395.147, 178.418, -1.893, 171.051);
- JointPos startjointPos = new JointPos(-2.334, -79.300, 108.196, -120.594, -91.790, -83.386);
 
- DescPose enddescPose = new DescPose(-366.397, -572.427, 418.339, -178.972, 1.829, -142.970);
- JointPos endjointPos = new JointPos(43.651, -70.284, 91.057, -109.075, -88.768, -83.382);
+    private void button69_Click(object sender, EventArgs e)
+    {
+        int rtn;
+        JointPos startjointPos = new JointPos(-11.904f, -99.669f, 117.473f, -108.616f, -91.726f, 74.256f);
+        JointPos midjointPos = new JointPos(-45.615f, -106.172f, 124.296f, -107.151f, -91.282f, 74.255f);
+        JointPos endjointPos = new JointPos(-29.777f, -84.536f, 109.275f, -114.075f, -86.655f, 74.257f);
 
- ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
- DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+        DescPose startdescPose = new DescPose(-419.524f, -13.000f, 351.569f, -178.118f, 0.314f, 3.833f);
+        DescPose middescPose = new DescPose(-321.222f, 185.189f, 335.520f, -179.030f, -1.284f, -29.869f);
+        DescPose enddescPose = new DescPose(-487.434f, 154.362f, 308.576f, 176.600f, 0.268f, -14.061f);
 
- if (enable)
- {
- robot.PtpFIRPlanningStart(1000);
- robot.MoveJ(startjointPos, startdescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
- robot.MoveJ(endjointPos, enddescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
- robot.PtpFIRPlanningEnd();
- }
- else
- {
- robot.MoveJ(startjointPos, startdescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
- robot.MoveJ(endjointPos, enddescPose, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
- }
- }
- void FIRLin( bool enable)
- {
- DescPose startdescPose = new DescPose(-569.710, -132.595, 395.147, 178.418, -1.893, 171.051);
- JointPos startjointPos = new JointPos(-2.334, -79.300, 108.196, -120.594, -91.790, -83.386);
+        ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
 
- DescPose enddescPose = new DescPose(-366.397, -572.427, 418.339, -178.972, 1.829, -142.970);
- JointPos endjointPos = new JointPos(43.651, -70.284, 91.057, -109.075, -88.768, -83.382);
+        rtn = robot.PtpFIRPlanningStart(1000,1000);
+        Console.WriteLine("PtpFIRPlanningStart rtn is " + rtn);
+        robot.MoveJ( startjointPos,  startdescPose, 0, 0, 100, 100, 100,  exaxisPos, -1, 0,  offdese);
+        robot.MoveJ( endjointPos,  enddescPose, 0, 0, 100, 100, 100,  exaxisPos, -1, 0,  offdese);
+        robot.PtpFIRPlanningEnd();
+        Console.WriteLine("PtpFIRPlanningEnd rtn is " + rtn);
 
- ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
- DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+        robot.LinArcFIRPlanningStart(1000, 1000, 1000, 1000);
+        Console.WriteLine("LinArcFIRPlanningStart rtn is " + rtn);
+        robot.MoveL( startjointPos,  startdescPose, 0, 0, 100, 100, 100, -1,  exaxisPos, 0, 0,  offdese, 1, 1);
+        robot.MoveC( midjointPos,  middescPose, 0, 0, 100, 100,  exaxisPos, 0,  offdese,  endjointPos,  enddescPose, 0, 0, 100, 100,  exaxisPos, 0,  offdese, 100, -1);
+        robot.LinArcFIRPlanningEnd();
+        Console.WriteLine("LinArcFIRPlanningEnd rtn is " + rtn);
+    }
 
- if (enable)
- {
- robot.LinArcFIRPlanningStart(5000, 5000, 5000, 5000);
- robot.MoveL(startjointPos, startdescPose, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
- robot.MoveL(endjointPos, enddescPose, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
- robot.LinArcFIRPlanningEnd();
- }
- else
- {
- robot.MoveL(startjointPos, startdescPose, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
- robot.MoveL(endjointPos, enddescPose, 0, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 1, 1);
- }
- }
- private void button4_Click(object sender, EventArgs e)
- {
- FIRPTP(false);
- FIRPTP(true);
- //FIRLin(false);
- //FIRLin(true);
- }
- 
 加速度平滑開啟
 ++++++++++++++++++++++++++++++
 
@@ -1147,18 +1122,3 @@ jog點動立即停止
 
             robot.AccSmoothEnd(saveFlag);
         }
-
-    /**
-    * @brief 傳動帶參數配置
-    * @param [in] para[0] 編碼器通道 1~2
-    * @param [in] para[1] 編碼器轉一圈的脈衝數
-    * @param [in] para[2] 編碼器轉一圈傳送帶行走距離
-    * @param [in] para[3] 工件坐標系編號 針對跟蹤運動功能選擇工件坐標系編號，跟蹤抓取、TPD跟蹤設為0
-    * @param [in] para[4] 是否配視覺  0 不配  1 配
-    * @param [in] para[5] 速度比  針對傳送帶跟蹤抓取選項（1-100）  其他選項默認為1 
-    * @param [in] followType 跟蹤運動類型，0-跟蹤運動；1-追檢運動
-    * @param [in] startDis 追檢抓取需要設置， 跟蹤起始距離， -1：自動計算(工件到達機器人下方後自動追檢)，單位mm， 默認值0
-    * @param [in] endDis 追檢抓取需要設置，跟蹤終止距離， 單位mm， 默認值100
-    * @return 錯誤碼
-    */
-    int ConveyorSetParam(int encChannel, int resolution, double lead, int wpAxis, int vision, double speedRadio, int followType, int startDis=0, int endDis=100);

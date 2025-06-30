@@ -140,3 +140,71 @@
            System.out.println("非拖曳模式");
         }
     }
+    
+獲取控制箱SN碼
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱SN碼
+    * @param [out] SNCode 控制箱SN碼
+    * @return 錯誤碼
+    */
+    int GetRobotSN(String[] SNCode);
+
+關閉機器人操作系統
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關閉機器人操作系統
+    * @return 錯誤碼
+    */
+    int ShutDownRobotOS();
+
+程式碼範例
+++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void main(String[] args)
+    {
+        Robot robot = new Robot();
+        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
+        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+        int rtn = robot.RPC("192.168.58.2");
+        if(rtn == 0)
+        {
+            System.out.println("rpc連接 success");
+        }
+        else
+        {
+            System.out.println("rpc連接 fail");
+            return ;
+        }
+
+        String[] SN = new String[1];
+        robot.GetRobotSN(SN);
+        System.out.println("robot SN is :"+SN[0]);
+        robot.ShutDownRobotOS();
+    }
+
+關閉機器人操作系統
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取SmartTool按鈕狀態
+    * @param [out] state SmartTool手柄按鈕狀態;(bit0:0-通信正常；1-通信掉線；bit1-撤銷操作；bit2-清空程序；bit3-A鍵；bit4-B鍵；bit5-C鍵；bit6-D鍵；bit7-E鍵；bit8-IO鍵；bit9-手自動；bit10-開始)
+    * @return 錯誤碼
+    */
+    int GetSmarttoolBtnState(int[] state);

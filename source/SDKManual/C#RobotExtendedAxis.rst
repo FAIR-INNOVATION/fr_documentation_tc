@@ -278,7 +278,7 @@
 
 UDP擴充軸通訊參數配置
 ++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-v1.0.7
+.. versionadded:: C#SDK-V1.1.3  Web-3.8.2
 
 .. code-block:: C#
     :linenos:
@@ -294,9 +294,10 @@ UDP擴充軸通訊參數配置
     * @param [in] reconnectEnable	通訊斷開自動重連啟用 0-不啟用 1-啟用
     * @param [in] reconnectPeriod	重連週期間隔(ms)
     * @param [in] reconnectNum	重連次數
+    * @param [in] selfConnect 斷電重啟是否自動建立連接; 0-不建立連接; 1-建立連接
     * @return 錯誤碼
     */
-    int ExtDevSetUDPComParam(std::string ip, int port, int period, int lossPkgTime, int lossPkgNum, int disconnectTime, int reconnectEnable, int reconnectPeriod, int reconnectNum);
+    int ExtDevSetUDPComParam(std::string ip, int port, int period, int lossPkgTime, int lossPkgNum, int disconnectTime, int reconnectEnable, int reconnectPeriod, int reconnectNum, int selfConnect);
         
 取得UDP擴充軸通訊參數配置
 ++++++++++++++++++++++++++++++++++

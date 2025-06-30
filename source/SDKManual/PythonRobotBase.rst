@@ -317,4 +317,76 @@
     "傳回值", "- 錯誤碼 成功-0 失敗- errcode 
     - ``state``：機器人軟體包升級狀態，0：空閒或上傳升級包中，1~100：升級完成百分比，-1：升級軟體失敗，-2：校驗失敗，-3：版本校驗失敗，-4：解壓失敗，-5：使用者配置升級失敗，-6：週邊配置升級失敗，-7：擴展軸配置升級失敗，-8：機器人配置升級失敗，-9：DH參數配置升級失敗"
 
+獲取機器人狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.1
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetRobotRealTimeState()``"
+    "描述", "獲取機器人狀態"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
+    - ``robot_state_pkg``：機器人狀態結構體"
+
+獲取控制箱SN碼
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.1
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetRobotSN()``"
+    "描述", "獲取控制箱SN碼"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``SNCode``：控制箱SN碼"
+
+關閉機器人操作系統
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.1
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ShutDownRobotOS()``"
+    "描述", "關閉機器人操作系統"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
     
+獲取SmartTool按鈕狀態
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetSmarttoolBtnState()``"
+    "描述", "獲取SmartTool按鈕狀態"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``state``：SmartTool手柄按鈕狀態;(bit0:0-通信正常；1-通信掉線；bit1-撤銷操作；bit2-清空程序；bit3-A鍵；bit4-B鍵；bit5-C鍵；bit6-D鍵；bit7-E鍵；bit8-IO鍵；bit9-手自動；bit10開始)"
+
+程式碼範例
+----------
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+        while True:
+        error,state = robot.GetSmarttoolBtnState()
+        print(f"{state:016b}")
+        time.sleep(0.1)

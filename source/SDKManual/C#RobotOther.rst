@@ -369,6 +369,19 @@
     */
     int PointTableUpdateLua(string pointTableName, string luaFileName, ref string errorStr);
 
+切換點位錶並應用
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /** 
+    * @brief 切換點位錶並應用
+    * @param [in] pointTableName 要切換的點位表名稱  "pointTable1.db"
+    * @param [out] errorStr 切換點位表錯誤資訊   
+    * @return 錯誤碼 
+    */
+    int PointTableSwitch(string pointTableName, ref string errorStr);
+
 代碼範例
 +++++++++
 .. code-block:: c#
@@ -667,24 +680,4 @@
         Console.WriteLine($"robot SN is {SN}");
     }
 
-關閉機器人操作系統
-+++++++++++++++++++++++++++++
-.. code-block:: c#
-    :linenos:
 
-    /**
-    * @brief 關閉機器人操作系統
-    * @return 錯誤碼
-    */
-    int ShutDownRobotOS();
-
-代碼示例
-+++++++++++++++++++++++++++++
-.. code-block:: c#
-    :linenos:
-
-    private void button6_Click(object sender, EventArgse)
-    {   
-        int rtn = robot.ShutDownRobotOS();
-        Console.WriteLine($"ShutDownRobotOS rtn is {rtn}");
-    }

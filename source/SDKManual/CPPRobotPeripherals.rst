@@ -1,4 +1,4 @@
-機器人週邊
+機器人外設
 ============
 
 .. toctree:: 
@@ -12,35 +12,35 @@
     /**
     * @brief  配置夾爪
     * @param  [in] company  夾爪廠商，待定
-    * @param  [in] device  設備號，暫不使用，預設為0
-    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
-    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @param  [in] device  設備號，暫不使用，默認爲0
+    * @param  [in] softvesion  軟件版本號，暫不使用，默認爲0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，默認爲0
     * @return  錯誤碼
     */
     errno_t  SetGripperConfig(int company, int device, int softvesion, int bus);
 
-取得夾爪配置
+獲取夾爪配置
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  取得夾爪配置
+    * @brief  獲取夾爪配置
     * @param  [in] company  夾爪廠商，待定
-    * @param  [in] device  設備號，暫不使用，預設為0
-    * @param  [in] softvesion  軟體版本號，暫不使用，預設為0
-    * @param  [in] bus 設備掛在末端總線位置，暫不使用，預設為0
+    * @param  [in] device  設備號，暫不使用，默認爲0
+    * @param  [in] softvesion  軟件版本號，暫不使用，默認爲0
+    * @param  [in] bus 設備掛在末端總線位置，暫不使用，默認爲0
     * @return  錯誤碼
     */
     errno_t  GetGripperConfig(int *company, int *device, int *softvesion, int *bus);
 
-啟動夾爪
+激活夾爪
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  啟動夾爪
+    * @brief  激活夾爪
     * @param  [in] index  夾爪編號
     * @param  [in] act  0-復位，1-激活
     * @return  錯誤碼
@@ -72,91 +72,91 @@
 
 
 
-取得夾爪運動狀態
+獲取夾爪運動狀態
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪運動狀態
+     * @brief  獲取夾爪運動狀態
      * @param  [out] fault  0-無錯誤，1-有錯誤
      * @param  [out] staus  0-運動未完成，1-運動完成
      * @return  錯誤碼
      */
     errno_t  GetGripperMotionDone(uint16_t *fault, uint8_t *status);
 
-取得夾爪啟動狀態
+獲取夾爪激活狀態
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪啟動狀態
+     * @brief  獲取夾爪激活狀態
      * @param  [out] fault  0-無錯誤，1-有錯誤
-     * @param  [out] status  bit0~bit15对应夾爪編號0~15，bit=0為未激活，bit=1為激活
+     * @param  [out] status  bit0~bit15對應夾爪編號0~15，bit=0爲未激活，bit=1爲激活
      * @return  錯誤碼
      */
     errno_t  GetGripperActivateStatus(uint16_t *fault, uint16_t *status);
 
-取得夾爪位置
+獲取夾爪位置
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪位置
+     * @brief  獲取夾爪位置
      * @param  [out] fault  0-無錯誤，1-有錯誤
      * @param  [out] position  位置百分比，範圍0~100%
      * @return  錯誤碼
      */
     errno_t  GetGripperCurPosition(uint16_t *fault, uint8_t *position);
 
-取得夾爪速度
+獲取夾爪速度
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪速度
+     * @brief  獲取夾爪速度
      * @param  [out] fault  0-無錯誤，1-有錯誤
      * @param  [out] speed  速度百分比，範圍0~100%
      * @return  錯誤碼
      */
     errno_t  GetGripperCurSpeed(uint16_t *fault, int8_t *speed);
 
-取得夾爪電流
+獲取夾爪電流
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪電流
+     * @brief  獲取夾爪電流
      * @param  [out] fault  0-無錯誤，1-有錯誤
      * @param  [out] current  電流百分比，範圍0~100%
      * @return  錯誤碼
      */
     errno_t  GetGripperCurCurrent(uint16_t *fault, int8_t *current);
 
-取得夾爪電壓
+獲取夾爪電壓
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪電壓
+     * @brief  獲取夾爪電壓
      * @param  [out] fault  0-無錯誤，1-有錯誤
      * @param  [out] voltage  電壓,單位0.1V
      * @return  錯誤碼
      */
     errno_t  GetGripperVoltage(uint16_t *fault, int *voltage);
 
-取得夾爪溫度
+獲取夾爪溫度
 ++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得夾爪溫度
+     * @brief  獲取夾爪溫度
      * @param  [out] fault  0-無錯誤，1-有錯誤
      * @param  [out] temp  溫度，單位℃
      * @return  錯誤碼
@@ -191,124 +191,82 @@
      */
     errno_t  ComputePostPick(DescPose *desc_pos, double zlength, double zangle, DescPose *post_pos);
 
-代碼範例
-++++++++++++++++
-.. versionchanged:: C++SDK-v2.1.2.0
+機器人夾爪操作代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: c++
     :linenos:
 
-    #include "libfairino/robot.h"
-
-    //如果使用Windows，包含下面的頭文件
-    #include <string.h>
-    #include <windows.h>
-    //如果使用linux，包含下面的頭文件
-    /*
-    #include <cstdlib>
-    #include <iostream>
-    #include <stdio.h>
-    #include <cstring>
-    #include <unistd.h>
-    */
-
-    #include <chrono>
-    #include <thread>
-
-    using namespace std;
-
-    int main(void)
+    int TestGripper(void)
     {
-        FRRobot robot; 
-        robot.RPC("192.168.58.2"); 
-
-        int company = 4;
-        int device = 0;
-        int softversion = 0;
-        int bus = 1;
-        int index = 1;
-        int act = 0;
-        int max_time = 30000;
-        uint8_t block = 0;
-        uint8_t status;
-        uint16_t fault;
-        uint16_t active_status = 0;
-        uint8_t current_pos = 0;
-        int8_t current = 0;
-        int voltage = 0;
-        int temp = 0;
-        int8_t speed = 0;
-
-        robot.SetGripperConfig(company, device, softversion, bus);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        robot.GetGripperConfig(&company, &device, &softversion, &bus);
-        printf("gripper config:%d,%d,%d,%d\n", company, device, softversion, bus);
-
-        robot.ActGripper(index, act);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        act = 1;
-        robot.ActGripper(index, act);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-        robot.MoveGripper(index, 100, 50, 50, max_time, block);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        robot.MoveGripper(index, 0, 50, 0, max_time, block);
-
-        robot.GetGripperMotionDone(&fault, &status);
-        printf("motion status:%u,%u\n", fault, status);
-
-        robot.GetGripperActivateStatus(&fault, &active_status);
-        printf("gripper active fault is: %u, status is: %u\n", fault, active_status);
-
-        robot.GetGripperCurPosition(&fault, &current_pos);
-        printf("fault is:%u, current position is: %u\n", fault, current_pos);
-
-        robot.GetGripperCurCurrent(&fault, &current);
-        printf("fault is:%u, current current is: %d\n", fault, current);
-
-        robot.GetGripperVoltage(&fault, &voltage);
-        printf("fault is:%u, current voltage is: %d \n", fault, voltage);
-
-        robot.GetGripperTemp(&fault, &temp);
-        printf("fault is:%u, current temperature is: %d\n", fault, temp);
-
-        robot.GetGripperCurSpeed(&fault, &speed);
-        printf("fault is:%u, current speed is: %d\n", fault, speed);
-
-        int retval = 0;
-        DescPose prepick_pose;
-        DescPose postpick_pose;
-        memset(&prepick_pose, 0, sizeof(DescPose));
-        memset(&postpick_pose, 0, sizeof(DescPose));
-
-        DescPose desc_p1;
-        desc_p1.tran.x = -351.553;
-        desc_p1.tran.y = 87.913;
-        desc_p1.tran.z = 354.175;
-        desc_p1.rpy.rx = -179.680;
-        desc_p1.rpy.ry = -0.133;
-        desc_p1.rpy.rz = 2.472;
-
-        DescPose desc_p2;
-        desc_p2.tran.x = -351.535;
-        desc_p2.tran.y = -247.222;
-        desc_p2.tran.z = 354.173;
-        desc_p2.rpy.rx = -179.680;
-        desc_p2.rpy.ry = -0.137;
-        desc_p2.rpy.rz = 2.473;
-
-        retval = robot.ComputePrePick(&desc_p1, 10, 0, &prepick_pose);
-        printf("ComputePrePick retval is: %d\n", retval);
-        printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", prepick_pose.tran.x, prepick_pose.tran.y, prepick_pose.tran.z, prepick_pose.rpy.rx, prepick_pose.rpy.ry, prepick_pose.rpy.rz);
-
-        retval = robot.ComputePostPick(&desc_p2, -10, 0, &postpick_pose);
-        printf("ComputePostPick retval is: %d\n", retval);
-        printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", postpick_pose.tran.x, postpick_pose.tran.y, postpick_pose.tran.z, postpick_pose.rpy.rx, postpick_pose.rpy.ry, postpick_pose.rpy.rz);
-
-        return 0;
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      int company = 4;
+      int device = 0;
+      int softversion = 0;
+      int bus = 2;
+      int index = 2;
+      int act = 0;
+      int max_time = 30000;
+      uint8_t block = 0;
+      uint8_t status;
+      uint16_t fault;
+      uint16_t active_status = 0;
+      uint8_t current_pos = 0;
+      int8_t current = 0;
+      int voltage = 0;
+      int temp = 0;
+      int8_t speed = 0;
+      robot.SetGripperConfig(company, device, softversion, bus);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      robot.GetGripperConfig(&company, &device, &softversion, &bus);
+      printf("gripper config:%d,%d,%d,%d\n", company, device, softversion, bus);
+      robot.ActGripper(index, act);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      act = 1;
+      robot.ActGripper(index, act);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      robot.MoveGripper(index, 100, 50, 50, max_time, block, 0, 0, 0, 0);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      robot.MoveGripper(index, 0, 50, 0, max_time, block, 0, 0, 0, 0);
+      robot.GetGripperMotionDone(&fault, &status);
+      printf("motion status:%u,%u\n", fault, status);
+      robot.GetGripperActivateStatus(&fault, &active_status);
+      printf("gripper active fault is: %u, status is: %u\n", fault, active_status);
+      robot.GetGripperCurPosition(&fault, &current_pos);
+      printf("fault is:%u, current position is: %u\n", fault, current_pos);
+      robot.GetGripperCurCurrent(&fault, &current);
+      printf("fault is:%u, current current is: %d\n", fault, current);
+      robot.GetGripperVoltage(&fault, &voltage);
+      printf("fault is:%u, current voltage is: %d \n", fault, voltage);
+      robot.GetGripperTemp(&fault, &temp);
+      printf("fault is:%u, current temperature is: %d\n", fault, temp);
+      robot.GetGripperCurSpeed(&fault, &speed);
+      printf("fault is:%u, current speed is: %d\n", fault, speed);
+      int retval = 0;
+      DescPose prepick_pose = {};
+      DescPose postpick_pose = {};
+      DescPose p1Desc(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
+      DescPose p2Desc(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
+      retval = robot.ComputePrePick(&p1Desc, 10, 0, &prepick_pose);
+      printf("ComputePrePick retval is: %d\n", retval);
+      printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", prepick_pose.tran.x, prepick_pose.tran.y, prepick_pose.tran.z, prepick_pose.rpy.rx, prepick_pose.rpy.ry, prepick_pose.rpy.rz);
+      retval = robot.ComputePostPick(&p2Desc, -10, 0, &postpick_pose);
+      printf("ComputePostPick retval is: %d\n", retval);
+      printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", postpick_pose.tran.x, postpick_pose.tran.y, postpick_pose.tran.z, postpick_pose.rpy.rx, postpick_pose.rpy.ry, postpick_pose.rpy.rz);
+      robot.CloseRPC();
+      return 0;
     }
 
-取得旋轉夾爪的旋轉圈數
+獲取旋轉夾爪的旋轉圈數
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: 3.7.6版本加入
@@ -317,14 +275,14 @@
     :linenos:
 
     /**
-	 * @brief  取得旋轉夾爪的旋轉圈數
+	 * @brief  獲取旋轉夾爪的旋轉圈數
 	 * @param  [out] fault  0-無錯誤，1-有錯誤
 	 * @param  [out] num  旋轉圈數
 	 * @return  錯誤碼
 	 */
 	errno_t GetGripperRotNum(uint16_t* fault, double* num);
 
-取得旋轉夾爪的旋轉速度
+獲取旋轉夾爪的旋轉速度
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: V3.7.6
@@ -333,14 +291,14 @@
     :linenos:
 
     /**
-	 * @brief  取得旋轉夾爪的旋轉速度
+	 * @brief  獲取旋轉夾爪的旋轉速度
 	 * @param  [out] fault  0-無錯誤，1-有錯誤
 	 * @param  [out] speed  旋轉速度百分比
 	 * @return  錯誤碼
 	 */
 	errno_t GetGripperRotSpeed(uint16_t* fault, int* speed);
 
-取得旋轉夾爪的旋轉力矩
+獲取旋轉夾爪的旋轉力矩
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. versionadded:: V3.7.6
@@ -349,36 +307,764 @@
     :linenos:
 
     /**
-	 * @brief  取得旋轉夾爪的旋轉力矩
+	 * @brief  獲取旋轉夾爪的旋轉力矩
 	 * @param  [out] fault  0-無錯誤，1-有錯誤
 	 * @param  [out] torque  旋轉力矩百分比
 	 * @return  錯誤碼
 	 */
 	errno_t GetGripperRotTorque(uint16_t* fault, int* torque);
 
-範例程式
-********************
+獲取旋轉夾爪狀態代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
 
-.. versionadded:: V3.7.6
+    int TestRotGripperState(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      uint16_t fault = 0;
+      double rotNum = 0.0;
+      int rotSpeed = 0;
+      int rotTorque = 0;
+      robot.GetGripperRotNum(&fault, &rotNum);
+      robot.GetGripperRotSpeed(&fault, &rotSpeed);
+      robot.GetGripperRotTorque(&fault, &rotTorque);
+      printf("gripper rot num : %lf, gripper rotSpeed : %d, gripper rotTorque : %d\n", rotNum, rotSpeed, rotTorque);
+      robot.CloseRPC();
+      return 0;
+    }
+
+
+傳動帶啓動、停止
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳動帶啓動、停止
+    * @param [in] status 狀態，1-啓動，0-停止 
+    * @return 錯誤碼
+    */
+    errno_t ConveyorStartEnd(uint8_t status);
+
+記錄IO檢測點
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 記錄IO檢測點
+    * @return 錯誤碼
+    */
+    errno_t ConveyorPointIORecord();
+
+記錄A點
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 記錄A點
+    * @return 錯誤碼
+    */
+    errno_t ConveyorPointARecord();
+
+記錄參考點
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 記錄參考點
+    * @return 錯誤碼
+    */
+    errno_t ConveyorRefPointRecord();
+
+記錄B點
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 記錄B點
+    * @return 錯誤碼
+    */
+    errno_t ConveyorPointBRecord();
+
+傳送帶工件IO檢測
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳送帶工件IO檢測
+    * @param [in] max_t 最大檢測時間，單位ms
+    * @return 錯誤碼
+    */
+    errno_t ConveyorIODetect(int max_t);
+
+獲取物體當前位置
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取物體當前位置
+    * @param [in] mode 
+    * @return 錯誤碼
+    */
+    errno_t ConveyorGetTrackData(int mode);
+
+傳動帶跟蹤開始
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳動帶跟蹤開始
+    * @param [in] status 狀態，1-啓動，0-停止 
+    * @return 錯誤碼
+    */
+    errno_t ConveyorTrackStart(uint8_t status);
+
+傳動帶跟蹤停止
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳動帶跟蹤停止
+    * @return 錯誤碼
+    */
+    errno_t ConveyorTrackEnd();
+
+傳動帶參數配置
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionchanged:: C++SDK-v2.2.1-3.8.1
 
 .. code-block:: c++
     :linenos:
 
-    int MoveRotGripper(FRRobot* robot, int pos, double rotPos)
-    {
-        robot->ResetAllError();
-        robot->ActGripper(1, 1);
-        robot->Sleep(1000);
-        int rtn = robot->MoveGripper(1, pos, 50, 50, 5000, 1, 1, rotPos, 50, 100);
-        printf("move gripper rtn is %d\n", rtn);
-        uint16_t fault = 0;
-        double rotNum = 0.0;
-        int rotSpeed = 0;
-        int rotTorque = 0;
-        robot->GetGripperRotNum(&fault, &rotNum);
-        robot->GetGripperRotSpeed (&fault, &rotSpeed);
-        robot->GetGripperRotTorque(&fault, &rotTorque);
-        printf("gripper rot num : %lf, gripper rotSpeed : %d, gripper rotTorque : %d\n", rotNum, rotSpeed, rotTorque);
+    /**
+    * @brief 傳動帶參數配置
+    * @param [in] para[0] 編碼器通道 1~2
+    * @param [in] para[1] 編碼器轉一圈的脈衝數
+    * @param [in] para[2] 編碼器轉一圈傳送帶行走距離
+    * @param [in] para[3] 工件座標系編號 針對跟蹤運動功能選擇工件座標系編號，跟蹤抓取、TPD跟蹤設爲0
+    * @param [in] para[4] 是否配視覺 0 不配 1 配
+    * @param [in] para[5] 速度比 針對傳送帶跟蹤抓取選項（1-100） 其他選項默認爲1 
+    * @param [in] followType 跟蹤運動類型，0-跟蹤運動；1-追檢運動
+    * @param [in] startDis 追檢抓取需要設置， 跟蹤起始距離， -1：自動計算(工件到達機器人下方後自動追檢)，單位mm， 默認值0
+    * @param [in] endDis 追檢抓取需要設置，跟蹤終止距離， 單位mm， 默認值100
+    * @return 錯誤碼
+    */
+    errno_t ConveyorSetParam(float para[6], int followType = 0, int startDis = 0, int endDis = 100);
 
-        return 0;
+傳動帶抓取點補償
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionchanged:: C++SDK-v2.1.2.0
+
+.. code-block:: c++
+    :linenos:
+
+	/**
+	 * @brief 傳動帶抓取點補償
+	 * @param [in] cmp 補償位置 double[3]{x, y, z}
+	 * @return 錯誤碼
+	 */
+    errno_t ConveyorCatchPointComp(double cmp[3]);
+
+傳送帶直線運動
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳送帶直線運動
+    * @param [in] status 狀態，1-啓動，0-停止 
+    * @return 錯誤碼
+    */
+    errno_t TrackMoveL(char name[32], int tool, int wobj, float vel, float acc, float ovl, float blendR, uint8_t flag, uint8_t type);
+
+傳送帶通訊輸入檢測
+++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳送帶通訊輸入檢測
+    * @param [in] timeout 等待超時時間ms
+    * @return 錯誤碼
+    */
+    errno_t ConveyorComDetect(int timeout);
+
+傳送帶通訊輸入檢測觸發
+++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 傳送帶通訊輸入檢測觸發
+    * @return 錯誤碼
+    */
+    errno_t ConveyorComDetectTrigger();
+
+機器人傳送帶操作示例程序
+++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int TestConveyor(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      int retval = 0;
+      retval = robot.ConveyorStartEnd(1);
+      printf("ConveyorStartEnd retval is: %d\n", retval);
+      retval = robot.ConveyorPointIORecord();
+      printf("ConveyorPointIORecord retval is: %d\n", retval);
+      retval = robot.ConveyorPointARecord();
+      printf("ConveyorPointARecord retval is: %d\n", retval);
+      retval = robot.ConveyorRefPointRecord();
+      printf("ConveyorRefPointRecord retval is: %d\n", retval);
+      retval = robot.ConveyorPointBRecord();
+      printf("ConveyorPointBRecord retval is: %d\n", retval);
+      retval = robot.ConveyorStartEnd(0);
+      printf("ConveyorStartEnd retval is: %d\n", retval);
+      retval = 0;
+      float param[6] = { 1,10000,200,0,0,20 };
+      retval = robot.ConveyorSetParam(param);
+      printf("ConveyorSetParam retval is: %d\n", retval);
+      double cmp[3] = { 0.0, 0.0, 0.0 };
+      retval = robot.ConveyorCatchPointComp(cmp);
+      printf("ConveyorCatchPointComp retval is: %d\n", retval);
+      int index = 1;
+      int max_time = 30000;
+      uint8_t block = 0;
+      retval = 0;
+      DescPose p1Desc(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
+      DescPose p2Desc(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
+      retval = robot.MoveCart(&p1Desc, 1, 0, 100.0, 100.0, 100.0, -1.0, -1);
+      printf("MoveCart retval is: %d\n", retval);
+      retval = robot.WaitMs(1);
+      printf("WaitMs retval is: %d\n", retval);
+      retval = robot.ConveyorIODetect(10000);
+      printf("ConveyorIODetect retval is: %d\n", retval);
+      retval = robot.ConveyorGetTrackData(1);
+      printf("ConveyorGetTrackData retval is: %d\n", retval);
+      retval = robot.ConveyorTrackStart(1);
+      printf("ConveyorTrackStart retval is: %d\n", retval);
+      retval = robot.TrackMoveL("cvrCatchPoint", 1, 0, 100, 100, 100, -1.0, 0, 0);
+      printf("TrackMoveL retval is: %d\n", retval);
+      retval = robot.MoveGripper(index, 51, 40, 30, max_time, block, 0, 0, 0, 0);
+      printf("MoveGripper retval is: %d\n", retval);
+      retval = robot.TrackMoveL("cvrRaisePoint", 1, 0, 100, 100, 100, -1.0, 0, 0);
+      printf("TrackMoveL retval is: %d\n", retval);
+      retval = robot.ConveyorTrackEnd();
+      printf("ConveyorTrackEnd retval is: %d\n", retval);
+      robot.MoveCart(&p2Desc, 1, 0, 100.0, 100.0, 100.0, -1.0, -1);
+      retval = robot.MoveGripper(index, 100, 40, 10, max_time, block, 0, 0, 0, 0);
+      printf("MoveGripper retval is: %d\n", retval);
+      rtn = robot->ConveyorComDetect(1000 * 10);
+      printf("ConveyorComDetect rtn is: %d\n", rtn);
+      robot.Sleep(2000);
+      rtn = robot->ConveyorComDetectTrigger();
+      printf("ConveyorComDetectTrigger rtn is: %d\n", rtn);
+      robot.CloseRPC();
+      return 0;
+    }
+
+
+末端傳感器配置
++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 末端傳感器配置
+    * @param [in] idCompany 廠商，18-JUNKONG；25-HUIDE
+    * @param [in] idDevice 類型，0-JUNKONG/RYR6T.V1.0
+    * @param [in] idSoftware 軟件版本，0-J1.0/HuiDe1.0(暫未開放)
+    * @param [in] idBus 掛載位置，1-末端1號口；2-末端2號口...8-末端8號口(暫未開放)
+    * @return 錯誤碼
+    */
+    errno_t AxleSensorConfig(int idCompany, int idDevice, int idSoftware, int idBus);
+
+獲取末端傳感器配置
++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+     * @brief 獲取末端傳感器配置
+     * @param [out] idCompany 廠商，18-JUNKONG；25-HUIDE
+     * @param [out] idDevice 類型，0-JUNKONG/RYR6T.V1.0
+     * @return 錯誤碼
+     */
+    errno_t AxleSensorConfigGet(int& idCompany, int& idDevice);
+
+末端傳感器激活
++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+     * @brief 末端傳感器激活
+     * @param [in] actFlag 0-復位；1-激活
+     * @return 錯誤碼
+     */
+    errno_t AxleSensorActivate(int actFlag);
+
+末端傳感器寄存器寫入
++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+     * @brief 末端傳感器寄存器寫入
+     * @param [in] devAddr 設備地址編號 0-255
+     * @param [in] regHAddr 寄存器地址高8位
+     * @param [in] regLAddr 寄存器地址低8位
+     * @param [in] regNum 寄存器個數 0-255
+     * @param [in] data1 寫入寄存器數值1
+     * @param [in] data2 寫入寄存器數值2
+     * @param [in] isNoBlock 0-阻塞；1-非阻塞
+     * @return 錯誤碼
+     */
+    errno_t AxleSensorRegWrite(int devAddr, int regHAddr, int regLAddr, int regNum, int data1, int data2, int isNoBlock);
+
+末端傳感器代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int TestAxleSensor(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      robot.AxleSensorConfig(18, 0, 0, 1);
+      int company = -1;
+      int type = -1;
+      robot.AxleSensorConfigGet(company, type);
+      printf("company is %d, type is %d\n", company, type);
+      rtn = robot.AxleSensorActivate(1);
+      printf("AxleSensorActivate rtn is %d\n", rtn);
+      robot.Sleep(1000);
+      rtn = robot.AxleSensorRegWrite(1, 4, 6, 1, 0, 0, 0);
+      printf("AxleSensorRegWrite rtn is %d\n", rtn);
+      robot.CloseRPC();
+      return 0;
+    }
+        
+獲取機器人外設協議
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.3.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取機器人外設協議
+    * @param [out] protocol 機器人外設協議號 4096-擴展軸控制卡；4097-ModbusSlave；4098-ModbusMaster
+    * @return 錯誤碼
+    */
+    errno_t GetExDevProtocol(int *protocol);
+
+設置機器人外設協議
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.3.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置機器人外設協議
+    * @param [in] protocol 機器人外設協議號 4096-擴展軸控制卡；4097-ModbusSlave；4098-ModbusMaster
+    * @return 錯誤碼
+    */
+    errno_t SetExDevProtocol(int protocol);
+
+設置機器人外設協議示例程序
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.3.0
+
+.. code-block:: c++
+    :linenos:
+    
+    int TestExDevProtocol(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      int protocol = 4096;
+      rtn = robot.SetExDevProtocol(protocol);
+      std::cout << "SetExDevProtocol rtn " << rtn << std::endl;
+      rtn = robot.GetExDevProtocol(&protocol);
+      std::cout << "GetExDevProtocol rtn " << rtn << " protocol is: " << protocol << std::endl;
+      robot.CloseRPC();
+      return 0;
+    }
+
+獲取末端通訊參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取末端通訊參數
+    * @param param 末端通訊參數
+    * @return  錯誤碼
+    */
+    errno_t GetAxleCommunicationParam(AxleComParam* param);
+
+設置末端通訊參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置末端通訊參數
+    * @param param  末端通訊參數
+    * @return  錯誤碼
+    */
+    errno_t SetAxleCommunicationParam(AxleComParam param);
+
+設置末端文件傳輸類型
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置末端文件傳輸類型
+    * @param type 1-MCU升級文件；2-LUA文件
+    * @return  錯誤碼
+    */
+    errno_t SetAxleFileType(int type);
+
+設置啓用末端LUA執行
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置啓用末端LUA執行
+    * @param enable 0-不啓用；1-啓用
+    * @return  錯誤碼
+    */
+    errno_t SetAxleLuaEnable(int enable);
+
+末端LUA文件異常錯誤恢復
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 末端LUA文件異常錯誤恢復
+    * @param status 0-不恢復；1-恢復
+    * @return  錯誤碼
+    */
+    errno_t SetRecoverAxleLuaErr(int status);
+
+末端LUA文件異常錯誤恢復
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取末端LUA執行使能狀態
+    * @param status status[0]: 0-未使能；1-已使能
+    * @return  錯誤碼
+    */
+    errno_t GetAxleLuaEnableStatus(int status[]);
+
+設置末端LUA末端設備啓用類型
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置末端LUA末端設備啓用類型
+    * @param forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
+    * @param gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
+    * @param IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+    * @return  錯誤碼
+    */
+    errno_t SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable);
+
+設置末端LUA末端設備啓用類型
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+        
+    /**
+    * @brief 獲取末端LUA末端設備啓用類型
+    * @param enable enable[0]:forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
+    * @param enable enable[1]:gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
+    * @param enable enable[2]:IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+    * @return  錯誤碼
+    */
+    errno_t GetAxleLuaEnableDeviceType(int* forceSensorEnable, int* gripperEnable, int* IOEnable);
+
+獲取當前配置的末端設備
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取當前配置的末端設備
+    * @param forceSensorEnable 力傳感器啓用設備編號 0-未啓用；1-啓用
+    * @param gripperEnable 夾爪啓用設備編號，0-不啓用；1-啓用
+    * @param IODeviceEnable IO設備啓用設備編號，0-不啓用；1-啓用
+    * @return  錯誤碼
+    */
+    errno_t GetAxleLuaEnableDevice(int forceSensorEnable[], int gripperEnable[], int IODeviceEnable[]);
+
+設置啓用夾爪動作控制功能
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置啓用夾爪動作控制功能
+    * @param id 夾爪設備編號
+    * @param func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+    * @return  錯誤碼
+    */
+    errno_t SetAxleLuaGripperFunc(int id, int func[]);
+
+獲取啓用夾爪動作控制功能
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取啓用夾爪動作控制功能
+    * @param id 夾爪設備編號
+    * @param func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+    * @return  錯誤碼
+    */
+    errno_t GetAxleLuaGripperFunc(int id, int func[]);
+
+機器人Ethercat從站文件寫入
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 機器人Ethercat從站文件寫入
+    * @param type 從站文件類型，1-升級從站文件；2-升級從站配置文件
+    * @param slaveID 從站號
+    * @param fileName 上傳文件名
+    * @return  錯誤碼
+    */
+    errno_t SlaveFileWrite(int type, int slaveID, std::string fileName);
+
+上傳末端Lua開放協議文件
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 上傳末端Lua開放協議文件
+    * @param filePath 本地lua文件路徑名 ".../AXLE_LUA_End_DaHuan.lua"
+    * @return 錯誤碼
+    */
+    errno_t AxleLuaUpload(std::string filePath);
+
+機器人Ethercat從站進入boot模式
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 機器人Ethercat從站進入boot模式
+    * @return  錯誤碼
+    */
+    errno_t SetSysServoBootMode();
+
+機器人末端LUA文件操作代碼示例
+++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int TestAxleLua(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      robot.AxleLuaUpload("D://zUP/AXLE_LUA_End_DaHuan.lua");
+      AxleComParam param(7, 8, 1, 0, 5, 3, 1);
+      robot.SetAxleCommunicationParam(param);
+      AxleComParam getParam;
+      robot.GetAxleCommunicationParam(&getParam);
+      printf("GetAxleCommunicationParam param is %d %d %d %d %d %d %d\n", getParam.baudRate, getParam.dataBit, getParam.stopBit, getParam.verify, getParam.timeout, getParam.timeoutTimes, getParam.period);
+      robot.SetAxleLuaEnable(1);
+      int luaEnableStatus = 0;
+      robot.GetAxleLuaEnableStatus(&luaEnableStatus);
+      robot.SetAxleLuaEnableDeviceType(0, 1, 0);
+      int forceEnable = 0;
+      int gripperEnable = 0;
+      int ioEnable = 0;
+      robot.GetAxleLuaEnableDeviceType(&forceEnable, &gripperEnable, &ioEnable);
+      printf("GetAxleLuaEnableDeviceType param is %d %d %d\n", forceEnable, gripperEnable, ioEnable);
+      int func[16] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+      robot.SetAxleLuaGripperFunc(1, func);
+      int getFunc[16] = { 0 };
+      robot.GetAxleLuaGripperFunc(1, getFunc);
+      int getforceEnable[16] = { 0 };
+      int getgripperEnable[16] = { 0 };
+      int getioEnable[16] = { 0 };
+      robot.GetAxleLuaEnableDevice(getforceEnable, getgripperEnable, getioEnable);
+      printf("\ngetforceEnable status : ");
+      for (int i = 0; i < 16; i++)
+      {
+        printf("%d,", getforceEnable[i]);
+      }
+      printf("\ngetgripperEnable status : ");
+      for (int i = 0; i < 16; i++)
+      {
+        printf("%d,", getgripperEnable[i]);
+      }
+      printf("\ngetioEnable status : ");
+      for (int i = 0; i < 16; i++)
+      {
+        printf("%d,", getioEnable[i]);
+      }
+      printf("\n");
+      robot.ActGripper(1, 0);
+      robot.Sleep(2000);
+      robot.ActGripper(1, 1);
+      robot.Sleep(2000);
+      robot.MoveGripper(1, 90, 10, 100, 50000, 0, 0, 0, 0, 0);
+      int pos = 0;
+      while (true)
+      {
+        robot.GetRobotRealTimeState(&pkg);
+        printf("gripper pos is %u\n", pkg.gripper_position);
+        robot.Sleep(100);
+      }
+      robot.CloseRPC();
+      return 0;
+    }
+
+獲取SmartTool按鈕狀態
+++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取SmartTool按鈕狀態
+    * @param [out] state SmartTool手柄按鈕狀態;(bit0:0-通信正常；1-通信掉線；bit1-撤銷操作；bit2-清空程序；
+    bit3-A鍵；bit4-B鍵；bit5-C鍵；bit6-D鍵；bit7-E鍵；bit8-IO鍵；bit9-手自動；bit10開始)
+    * @return 錯誤碼
+    */
+    errno_t GetSmarttoolBtnState(int& state);
+    
+SmartTool按鈕代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int main(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      robot.SetReConnectParam(true, 30000, 500);
+
+      while (true)
+      {
+        int btn = 0;
+        robot.GetSmarttoolBtnState(btn);
+        cout << "smarttool " << std::bitset<sizeof(btn) * 8>(btn) << endl;
+
+        Sleep(100);
+      }
     }

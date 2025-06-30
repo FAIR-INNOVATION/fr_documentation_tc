@@ -1507,9 +1507,216 @@
     robot.ARCStart(1, 0, 10000)
     robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
     robot.WeaveStart(0)
-    robot.WeaveChangeStart(1)
+    robot.WeaveChangeStart(1,1,0,0)
     robot.MoveL(desc_pos=p3Desc, tool=1, user=1, vel=100.0, acc=100.0, ovl=1.0)
     robot.WeaveChangeEnd()
     robot.WeaveEnd(0)
     robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
     robot.ARCEnd(1, 0, 10000)
+
+電弧追蹤焊機電流反饋AI通道選擇
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceAIChannelCurrent(channel)``"
+    "描述", "電弧追蹤焊機電流反饋AI通道選擇"
+    "必選參數", "- ``channel``：通道；0-擴展AI0；1-擴展AI1；2-擴展AI2；3-擴展AI3；4-控制箱AI0；5-控制箱AI1"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧追蹤焊機電壓反饋AI通道選擇
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceAIChannelVoltage(channel)``"
+    "描述", "電弧追蹤焊機電壓反饋AI通道選擇"
+    "必選參數", "- ``channel``：通道；0-擴展AI0；1-擴展AI1；2-擴展AI2；3-擴展AI3；4-控制箱AI0；5-控制箱AI1"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧追蹤焊機電流反饋轉換參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceCurrentPara(AILow, AIHigh, currentLow, currentHigh)``"
+    "描述", "電弧追蹤焊機電流反饋轉換參數"
+    "必選參數", "無"
+    "默認參數", "- ``AILow``：AI通道下限，默認值0V，範圍[0-10V]
+    - ``AIHigh``：AI通道上限，默認值10V，範圍[0-10V]
+    - ``currentLow``：AI通道下限對應焊機電流值，默認值0V，範圍[0-200V]
+    - ``currentHigh``：AI通道上限對應焊機電流值，默認值100V，範圍[0-200V]"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧追蹤焊機電壓反饋轉換參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceVoltagePara(AILow, AIHigh, voltageLow, voltageHigh)``"
+    "描述", "電弧追蹤焊機電壓反饋轉換參數"
+    "必選參數", "無"
+    "默認參數", "- ``AILow``：AI通道下限，默認值0V，範圍[0-10V]
+    - ``AIHigh``：AI通道上限，默認值10V，範圍[0-10V]
+    - ``voltageLow``：AI通道下限對應焊機電壓值，默認值0V，範圍[0-200V]
+    - ``voltageHigh``：AI通道上限對應焊機電壓值，默認值100V，範圍[0-200V]"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+程式碼範例
+------------
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+
+    safetydescPose = [-504.043,275.181,40.908,-28.002,-42.025,-14.044]
+    safetyjointPos = [-39.078,-76.732,87.227,-99.47,-94.301,18.714]
+    startdescPose = [-473.86,257.879,-20.849,-37.317,-42.021,2.543]
+    startjointPos = [-43.487,-76.526,95.568,-104.445,-89.356,3.72]
+    enddescPose = [-499.844,141.225,7.72,-34.856,-40.17,13.13]
+    endjointPos = [-31.305,-82.998,99.401,-104.426,-89.35,3.696]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    robot.MoveJ(joint_pos=safetyjointPos, tool=1, user=0, vel=20, acc=100)
+    robot.WeldingSetCurrentRelation(0, 495, 1, 10, 0)
+    robot.WeldingSetVoltageRelation(10, 45, 1, 10, 1)
+    robot.WeldingSetVoltage(0, 25, 1, 0)  # ----設定電壓
+    robot.WeldingSetCurrent(0, 260, 0, 0)  # ----設定電流
+    rtn = robot.ArcWeldTraceAIChannelCurrent(4)
+    print("ArcWeldTraceAIChannelCurrent rtn is", rtn)
+    rtn = robot.ArcWeldTraceAIChannelVoltage(5)
+    print("ArcWeldTraceAIChannelVoltage rtn is", rtn)
+    rtn = robot.ArcWeldTraceCurrentPara(0, 5, 0, 500)
+    print("ArcWeldTraceCurrentPara rtn is", rtn)
+    rtn = robot.ArcWeldTraceVoltagePara(1.018, 10, 0, 50)
+    print("ArcWeldTraceVoltagePara rtn is", rtn)
+    robot.MoveJ(joint_pos=startjointPos, tool=1, user=0, vel=20, acc=100)
+    robot.ArcWeldTraceControl(1, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
+    robot.ARCStart(0, 0, 10000)
+    robot.WeaveStart(0)
+    robot.MoveL(desc_pos=enddescPose, tool=1, user=0, vel=100, ovl= 2, acc=100)
+    robot.ARCEnd(0, 0, 10000)
+    robot.WeaveEnd(0)
+    robot.ArcWeldTraceControl(0, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
+    robot.MoveJ(joint_pos=safetyjointPos, tool=1, user=0, vel=20, acc=100)
+
+設定焊接電壓漸變開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetVoltageGradualChangeStart(IOType, voltageStart, voltageEnd, AOIndex, blend)``"
+    "描述", "設定焊接電壓漸變開始"
+    "必選參數", "- ``IOType``：控制類型；0-控制箱IO；1-數字通信協議(UDP);2-數字通信協議(ModbusTCP)
+    - ``voltageStart``：起始焊接電壓(V)
+    - ``voltageEnd``：終止焊接電壓(V)
+    - ``AOIndex``：控制箱AO端口號(0-1)
+    - ``blend``：是否平滑 0-不平滑；1-平滑"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設定焊接電壓漸變結束
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetVoltageGradualChangeEnd()``"
+    "描述", "設定焊接電壓漸變結束"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設定焊接電流漸變開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetCurrentGradualChangeStart(IOType, currentStart, currentEnd, AOIndex, blend)``"
+    "描述", "設定焊接電流漸變開始"
+    "必選參數", "- ``IOType``：控制類型；0-控制箱IO；1-數字通信協議(UDP);2-數字通信協議(ModbusTCP)
+    - ``currentStart``：起始焊接電流(A)
+    - ``currentEnd``：終止焊接電流(A)
+    - ``AOIndex``：控制箱AO端口號(0-1)
+    - ``blend``：是否平滑 0-不平滑；1-平滑"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設定焊接電流漸變結束
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetCurrentGradualChangeEnd()``"
+    "描述", "設定焊接電流漸變結束"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+程式碼範例
+------------
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+
+    startdescPose = [-484.707, 276.996, -14.013, -37.657, -40.508, -1.548]
+    startjointPos = [-45.421, -75.673, 93.627, -104.302, -87.938, 6.005]
+    enddescPose = [-508.767, 137.109, -13.966, -37.639, -40.508, -1.559]
+    endjointPos = [-32.768, -80.947, 100.254, -106.201, -87.201, 18.648]
+    safedescPose = [-484.709, 294.436, 13.621, -37.660, -40.508, -1.545]
+    safejointPos = [-46.604, -75.410, 89.109, -100.003, -88.012, 4.823]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+
+    robot.WeldingSetCurrentRelation(0, 495, 1, 10, 0)
+    robot.WeldingSetVoltageRelation(10, 45, 1, 10, 1)
+    robot.WeldingSetVoltage(0, 25, 1, 0)  # ----設定電壓
+    robot.WeldingSetCurrent(0, 260, 0, 0)  # ----設定電流
+    robot.MoveJ(joint_pos=safejointPos, tool=1, user=0, vel=5, acc=100)
+    rtn = robot.WeldingSetCurrentGradualChangeStart(0, 260, 220, 0, 0)
+    print("WeldingSetCurrentGradualChangeStart rtn is", rtn)
+    rtn = robot.WeldingSetVoltageGradualChangeStart(0, 25, 22, 1, 0)
+    print("WeldingSetVoltageGradualChangeStart rtn is", rtn)
+    rtn = robot.ArcWeldTraceControl(1, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
+    print("ArcWeldTraceControl rtn is", rtn)
+    robot.MoveJ(joint_pos=startjointPos, tool=1, user=0, vel=5, acc=100)
+    robot.ARCStart(0, 0, 10000)
+    robot.WeaveStart(0)
+    robot.WeaveChangeStart(2, 1, 24, 36)
+    robot.MoveL(desc_pos=enddescPose, tool=1, user=0, vel=100, ovl=2, acc=100)
+    robot.ARCEnd(0, 0, 10000)
+    robot.WeaveChangeEnd()
+    robot.WeaveEnd(0)
+    robot.ArcWeldTraceControl(0, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
+    robot.WeldingSetCurrentGradualChangeEnd()
+    robot.WeldingSetVoltageGradualChangeEnd()

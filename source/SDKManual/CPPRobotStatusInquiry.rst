@@ -4,94 +4,52 @@
 .. toctree:: 
     :maxdepth: 5
 
-取得機器人安裝角度
+獲取當前關節位置(角度)
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  取得機器人安裝角度
-    * @param  [out] yangle 傾斜角
-    * @param  [out] zangle 旋轉角
-    * @return  錯誤碼
-    */
-    errno_t  GetRobotInstallAngle(float *yangle, float *zangle);
-
-取得系統變數值
-+++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得系統變數值
-    * @param  [in] id 系統變數編號，範圍[1~20]
-    * @param  [out] value  系統變數值
-    * @return  錯誤碼
-    */
-    errno_t  GetSysVarValue(int id, float *value);
-
-取得目前關節位置(角度)
-+++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得目前關節位置(角度)
+    * @brief  獲取當前關節位置(角度)
     * @param  [in] flag 0-阻塞，1-非阻塞
     * @param  [out] jPos 六個關節位置，單位deg
     * @return  錯誤碼
     */
     errno_t  GetActualJointPosDegree(uint8_t flag, JointPos *jPos);
 
-取得目前關節位置(弧度)
-+++++++++++++++++++++++++++++++++
-
-.. deprecated:: C++SDK-v2.1.1.0
-
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得目前關節位置(弧度)
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] jPos 六個關節位置，單位rad
-    * @return  錯誤碼
-    */   
-    errno_t  GetActualJointPosRadian(uint8_t flag, JointPos *jPos);
-
-取得關節回饋速度
+獲取關節反饋速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得關節回饋速度-deg/s
+     * @brief  獲取關節反饋速度-deg/s
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] speed 六個關節速度
      * @return  錯誤碼 
      */ 
     errno_t  GetActualJointSpeedsDegree(uint8_t flag, float speed[6]);
 
-取得關節回饋加速度
+獲取關節反饋加速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得關節回饋加速度-deg/s^2
+     * @brief  獲取關節反饋加速度-deg/s^2
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] acc 六個關節加速度
      * @return  錯誤碼 
      */ 
     errno_t  GetActualJointAccDegree(uint8_t flag, float acc[6]);   
 
-取得TCP指令速度
+獲取TCP指令合速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得TCP指令速度
+     * @brief  獲取TCP指令合速度
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] tcp_speed 線性速度
      * @param  [out] ori_speed 姿態速度
@@ -99,13 +57,13 @@
      */
     errno_t  GetTargetTCPCompositeSpeed(uint8_t flag, float *tcp_speed, float *ori_speed);
 
-獲取TCP回饋速度
+獲取TCP反饋合速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  獲取TCP回饋速度
+     * @brief  獲取TCP反饋合速度
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] tcp_speed 線性速度
      * @param  [out] ori_speed 姿態速度
@@ -113,83 +71,294 @@
      */ 
     errno_t  GetActualTCPCompositeSpeed(uint8_t flag, float *tcp_speed, float *ori_speed);
 
-取得TCP指令速度
+獲取TCP指令速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  取得TCP指令速度
+     * @brief  獲取TCP指令速度
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] speed [x,y,z,rx,ry,rz]速度
      * @return  錯誤碼 
      */ 
     errno_t  GetTargetTCPSpeed(uint8_t flag, float speed[6]);
 
-獲取TCP回饋速度
+獲取TCP反饋速度
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  獲取TCP回饋速度
+     * @brief  獲取TCP反饋速度
      * @param  [in] flag 0-阻塞，1-非阻塞
      * @param  [out] speed [x,y,z,rx,ry,rz]速度
      * @return  錯誤碼 
      */ 
     errno_t  GetActualTCPSpeed(uint8_t flag, float speed[6]);
 
-取得當前工具位姿
+獲取當前工具位姿
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  取得當前工具位姿
+    * @brief  獲取當前工具位姿
     * @param  [in] flag  0-阻塞，1-非阻塞
     * @param  [out] desc_pos  工具位姿
     * @return  錯誤碼
     */
     errno_t  GetActualTCPPose(uint8_t flag, DescPose *desc_pos);
 
-取得目前工具坐標系編號
+獲取當前工具座標系編號
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  取得目前工具坐標系編號
+    * @brief  獲取當前工具座標系編號
     * @param  [in] flag  0-阻塞，1-非阻塞
     * @param  [out] id  工具座標系編號
     * @return  錯誤碼
     */
     errno_t  GetActualTCPNum(uint8_t flag, int *id);
 
-取得目前工件坐標系編號
+獲取當前工件座標系編號
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  取得目前工件坐標系編號
+    * @brief  獲取當前工件座標系編號
     * @param  [in] flag  0-阻塞，1-非阻塞
     * @param  [out] id  工件座標系編號
     * @return  錯誤碼
     */
     errno_t  GetActualWObjNum(uint8_t flag, int *id);  
 
-取得目前末端法蘭位姿
+獲取當前末端法蘭位姿
 +++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  取得目前末端法蘭位姿
+    * @brief  獲取當前末端法蘭位姿
     * @param  [in] flag  0-阻塞，1-非阻塞
     * @param  [out] desc_pos  法蘭位姿
     * @return  錯誤碼
     */
     errno_t  GetActualToolFlangePose(uint8_t flag, DescPose *desc_pos);  
+
+獲取當前關節轉矩
+++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取當前關節轉矩
+    * @param  [in] flag 0-阻塞，1-非阻塞
+    * @param  [out] torques 關節轉矩
+    * @return  錯誤碼
+    */
+    errno_t  GetJointTorques(uint8_t flag, float torques[6]);
+
+獲取系統時間
+++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  獲取系統時間
+    * @param  [out] t_ms 單位ms
+    * @return  錯誤碼
+    */
+    errno_t  GetSystemClock(float *t_ms);
+
+查詢機器人運動是否完成
+++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  查詢機器人運動是否完成
+    * @param  [out]  state  0-未完成，1-完成
+    * @return  錯誤碼
+    */   
+    errno_t  GetRobotMotionDone(uint8_t *state);
+
+查詢機器人運動隊列緩存長度
+++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+     * @brief  查詢機器人運動隊列緩存長度
+     * @param  [out]  len  緩存長度
+     * @return  錯誤碼
+     */ 
+    errno_t  GetMotionQueueLength(int *len);
+
+獲取機器人急停狀態
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取機器人急停狀態
+    * @param [out] state 急停狀態，0-非急停，1-急停
+    * @return 錯誤碼 
+    */
+    errno_t GetRobotEmergencyStopState(uint8_t *state);
+
+獲取SDK與機器人的通訊狀態
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取SDK與機器人的通訊狀態
+    * @param [out] state 通訊狀態，0-通訊正常，1-通訊異常
+    */
+    errno_t GetSDKComState(int *state);
+
+獲取安全停止信號
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取安全停止信號
+    * @param [out] si0_state 安全停止信號SI0，0-無效，1-有效
+    * @param [out] si1_state 安全停止信號SI1，0-無效，1-有效
+    */
+    errno_t GetSafetyStopState(uint8_t *si0_state, uint8_t *si1_state);
+
+獲取機器人關節驅動器溫度(℃)
+++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取機器人關節驅動器溫度(℃)
+    * @return 錯誤碼
+    */
+    errno_t GetJointDriverTemperature(double temperature[]);
+
+獲取機器人關節驅動器扭矩(Nm)
+++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.5.0
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取機器人關節驅動器扭矩(Nm)
+    * @return 錯誤碼
+    */
+    errno_t GetJointDriverTorque(double torque[]);
+        
+獲取機器人實時狀態結構體
+++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.1.3.0
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取機器人實時狀態結構體
+    * @param [out] pkg 機器人實時狀態結構體
+    * @return 錯誤碼
+    */
+    errno_t GetRobotRealTimeState(ROBOT_STATE_PKG *pkg);
+
+機器人狀態查詢代碼示例
++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos: 
+
+    int TestGetStatus(void)
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      float yangle, zangle;
+      robot.GetRobotInstallAngle(&yangle, &zangle);
+      printf("yangle:%f,zangle:%f\n", yangle, zangle);
+      JointPos j_deg = {};
+      robot.GetActualJointPosDegree(0, &j_deg);
+      printf("joint pos deg:%f,%f,%f,%f,%f,%f\n", j_deg.jPos[0], j_deg.jPos[1], j_deg.jPos[2], j_deg.jPos[3], j_deg.jPos[4], j_deg.jPos[5]);
+      float jointSpeed[6] = { 0.0 };
+      robot.GetActualJointSpeedsDegree(0, jointSpeed);
+      printf("joint speeds deg:%f,%f,%f,%f,%f,%f\n", jointSpeed[0], jointSpeed[1], jointSpeed[2], jointSpeed[3], jointSpeed[4], jointSpeed[5]);
+      float jointAcc[6] = { 0.0 };
+      robot.GetActualJointAccDegree(0, jointAcc);
+      printf("joint acc deg:%f,%f,%f,%f,%f,%f\n", jointAcc[0], jointAcc[1], jointAcc[2], jointAcc[3], jointAcc[4], jointAcc[5]);
+      float tcp_speed = 0.0;
+      float ori_speed = 0.0;
+      robot.GetTargetTCPCompositeSpeed(0, &tcp_speed, &ori_speed);
+      printf("GetTargetTCPCompositeSpeed tcp %f; ori %f\n", tcp_speed, ori_speed);
+      robot.GetActualTCPCompositeSpeed(0, &tcp_speed, &ori_speed);
+      printf("GetActualTCPCompositeSpeed tcp %f; ori %f\n", tcp_speed, ori_speed);
+      float targetSpeed[6] = { 0.0 };
+      robot.GetTargetTCPSpeed(0, targetSpeed);
+      printf("GetTargetTCPSpeed %f,%f,%f,%f,%f,%f\n", targetSpeed[0], targetSpeed[1], targetSpeed[2], targetSpeed[3], targetSpeed[4], targetSpeed[5]);
+      float actualSpeed[6] = { 0.0 };
+      robot.GetActualTCPSpeed(0, actualSpeed);
+      printf("GetTargetTCPSpeed %f,%f,%f,%f,%f,%f\n", actualSpeed[0], actualSpeed[1], actualSpeed[2], actualSpeed[3], actualSpeed[4], actualSpeed[5]);
+      DescPose tcp = {};
+      robot.GetActualTCPPose(0, &tcp);
+      printf("tcp pose:%f,%f,%f,%f,%f,%f\n", tcp.tran.x, tcp.tran.y, tcp.tran.z, tcp.rpy.rx, tcp.rpy.ry, tcp.rpy.rz);
+      DescPose flange = {};
+      robot.GetActualToolFlangePose(0, &flange);
+      printf("flange pose:%f,%f,%f,%f,%f,%f\n", flange.tran.x, flange.tran.y, flange.tran.z, flange.rpy.rx, flange.rpy.ry, flange.rpy.rz);
+      int id = 0;
+      robot.GetActualTCPNum(0, &id);
+      printf("tcp num:%d\n", id);
+      robot.GetActualWObjNum(0, &id);
+      printf("wobj num:%d\n", id);
+      float jtorque[6] = { 0.0 };
+      robot.GetJointTorques(0, jtorque);
+      printf("torques:%f,%f,%f,%f,%f,%f\n", jtorque[0], jtorque[1], jtorque[2], jtorque[3], jtorque[4], jtorque[5]);
+      float t_ms = 0.0;
+      robot.GetSystemClock(&t_ms);
+      printf("system clock:%f\n", t_ms);
+      int config = 0;
+      robot.GetRobotCurJointsConfig(&config);
+      printf("joint config:%d\n", config);
+      uint8_t motionDone = 0;
+      robot.GetRobotMotionDone(&motionDone);
+      printf("GetRobotMotionDone :%d\n", motionDone);
+      int len = 0;
+      robot.GetMotionQueueLength(&len);
+      printf("GetMotionQueueLength :%d\n", len);
+      uint8_t emergState = 0;
+      robot.GetRobotEmergencyStopState(&emergState);
+      printf("GetRobotEmergencyStopState :%d\n", emergState);
+      int comstate = 0;
+      robot.GetSDKComState(&comstate);
+      printf("GetSDKComState :%d\n", comstate);
+      uint8_t si0_state, si1_state;
+      robot.GetSafetyStopState(&si0_state, &si1_state);
+      printf("GetSafetyStopState :%d %d\n", si0_state, si1_state);
+      double temp[6] = { 0.0 };
+      robot.GetJointDriverTemperature(temp);
+      printf("Temperature:%f,%f,%f,%f,%f,%f\n", temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);
+      double torque[6] = { 0.0 };
+      robot.GetJointDriverTorque(torque);
+      printf("torque:%f,%f,%f,%f,%f,%f\n", torque[0], torque[1], torque[2], torque[3], torque[4], torque[5]);
+      robot.GetRobotRealTimeState(&pkg);
+      robot.CloseRPC();
+      return 0;
+    }
 
 逆運動學求解
 +++++++++++++++++++++++++++++++++
@@ -198,38 +367,38 @@
 
     /**
     * @brief  逆運動學求解
-    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
-    * @param  [in] desc_pos 笛卡兒位姿
-    * @param  [in] config 關節空間配置，[-1]-參考目前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] type 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡爾位姿
+    * @param  [in] config 關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
     * @param  [out] joint_pos 關節位置
     * @return  錯誤碼
     */
     errno_t  GetInverseKin(int type, DescPose *desc_pos, int config, JointPos *joint_pos);
 
-逆運動學求解
+逆運動學求解(參考位置)
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
     * @brief  逆運動學求解，參考指定關節位置求解
-    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
-    * @param  [in] desc_pos 笛卡兒位姿
+    * @param  [in] type 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡爾位姿
     * @param  [in] joint_pos_ref 參考關節位置
     * @param  [out] joint_pos 關節位置
     * @return  錯誤碼
     */   
     errno_t  GetInverseKinRef(int type, DescPose *desc_pos, JointPos *joint_pos_ref, JointPos *joint_pos);
 
-逆運動學求解
+獲取逆運動學是否有解
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  逆運動學求解，參考指定關節位置判断是否有解
-    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
-    * @param  [in] desc_pos 笛卡兒位姿
+    * @brief  逆運動學求解，參考指定關節位置判斷是否有解
+    * @param  [in] type 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡爾位姿
     * @param  [in] joint_pos_ref 參考關節位置
     * @param  [out] result 0-無解，1-有解
     * @return  錯誤碼
@@ -244,243 +413,44 @@
     /**
     * @brief  正運動學求解
     * @param  [in] joint_pos 關節位置
-    * @param  [out] desc_pos 笛卡兒位姿
+    * @param  [out] desc_pos 笛卡爾位姿
     * @return  錯誤碼
     */
     errno_t  GetForwardKin(JointPos *joint_pos, DescPose *desc_pos);
 
-取得當前關節轉矩
-++++++++++++++++++++++++++++++++++++
+機器人正逆運動學計算代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
-    /**
-    * @brief 取得當前關節轉矩
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] torques 關節轉矩
-    * @return  錯誤碼
-    */
-    errno_t  GetJointTorques(uint8_t flag, float torques[6]);
-
-取得目前負載的重量
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得目前負載的重量
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] weight 負載重量，單位kg
-    * @return  錯誤碼
-    */
-    errno_t  GetTargetPayload(uint8_t flag, float *weight);
-
-取得目前負載的質心
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得目前負載的質心
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] cog 負載質心，單位mm
-    * @return  錯誤碼
-    */   
-    errno_t  GetTargetPayloadCog(uint8_t flag, DescTran *cog);
-
-獲取當前工具坐標系
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  獲取當前工具坐標系
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] desc_pos 工具坐標系位姿
-    * @return  錯誤碼
-    */
-    errno_t  GetTCPOffset(uint8_t flag, DescPose *desc_pos);
-
-取得當前工件坐標系
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得當前工件坐標系
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] desc_pos 工件座標系位姿
-    * @return  錯誤碼
-    */   
-    errno_t  GetWObjOffset(uint8_t flag, DescPose *desc_pos);
-
-取得關節軟限位角度
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得關節軟限位角度
-    * @param  [in] flag 0-阻塞，1-非阻塞    
-    * @param  [out] negative  負限位角度，單位deg
-    * @param  [out] positive  正限位角度，單位deg
-    * @return  錯誤碼
-    */
-    errno_t  GetJointSoftLimitDeg(uint8_t flag, float negative[6], float positive[6]);
-
-取得系統時間
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得系統時間
-    * @param  [out] t_ms 單位ms
-    * @return  錯誤碼
-    */
-    errno_t  GetSystemClock(float *t_ms);
-
-取得機器人當前關節配置
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得機器人當前關節位置
-    * @param  [out]  config  關節空間配置，範圍[0~7]
-    * @return  錯誤碼
-    */
-    errno_t  GetRobotCurJointsConfig(int *config);
-
-取得當前速度
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  取得機器人預設速度
-    * @param  [out]  vel  速度，單位mm/s
-    * @return  錯誤碼
-    */   
-    errno_t  GetDefaultTransVel(float *vel);
-
-查詢機器人運動是否完成
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief  查詢機器人運動是否完成
-    * @param  [out]  state  0-未完成，1-完成
-    * @return  錯誤碼
-    */   
-    errno_t  GetRobotMotionDone(uint8_t *state);
-
-代碼範例
-+++++++++++
-.. code-block:: c++
-    :linenos:
-
-    #include <cstdlib>
-    #include <iostream>
-    #include <stdio.h>
-    #include <cstring>
-    #include <unistd.h>
-    #include "FRRobot.h"
-    #include "RobotTypes.h"
-
-    using namespace std;
-
-    int main(void)
+    int TestInverseKin(void)
     {
-        FRRobot robot;                 //實例化機器人對象
-        robot.RPC("192.168.58.2");     //與機器人控制器建立通信连接
-
-        float yangle, zangle;
-        int flag = 0;
-        JointPos j_deg, j_rad;
-        DescPose tcp, flange, tcp_offset, wobj_offset;
-        DescTran cog;
-        int id;
-        float torques[6] = {0.0};
-        float weight;
-        float neg_deg[6]={0.0},pos_deg[6]={0.0};
-        float t_ms;
-        int config;
-        float vel;
-
-        memset(&j_deg, 0, sizeof(JointPos));
-        memset(&j_rad, 0, sizeof(JointPos));
-        memset(&tcp, 0, sizeof(DescPose));
-        memset(&flange, 0, sizeof(DescPose));
-        memset(&tcp_offset, 0, sizeof(DescPose));
-        memset(&wobj_offset, 0, sizeof(DescPose));
-        memset(&cog, 0, sizeof(DescTran));
-
-        robot.GetRobotInstallAngle(&yangle, &zangle);
-        printf("yangle:%f,zangle:%f\n", yangle, zangle);
-
-        robot.GetActualJointPosDegree(flag, &j_deg);
-        printf("joint pos deg:%f,%f,%f,%f,%f,%f\n", j_deg.jPos[0],j_deg.jPos[1],j_deg.jPos[2],j_deg.jPos[3],j_deg.jPos[4],j_deg.jPos[5]);
-
-        robot.GetActualJointPosRadian(flag, &j_rad);
-        printf("joint pos rad:%f,%f,%f,%f,%f,%f\n", j_rad.jPos[0],j_rad.jPos[1],j_rad.jPos[2],j_rad.jPos[3],j_rad.jPos[4],j_rad.jPos[5]);   
-
-        robot.GetActualTCPPose(flag, &tcp);
-        printf("tcp pose:%f,%f,%f,%f,%f,%f\n", tcp.tran.x, tcp.tran.y, tcp.tran.z, tcp.rpy.rx, tcp.rpy.ry, tcp.rpy.rz); 
-
-        robot.GetActualToolFlangePose(flag, &flange);
-        printf("flange pose:%f,%f,%f,%f,%f,%f\n", flange.tran.x, flange.tran.y, flange.tran.z, flange.rpy.rx, flange.rpy.ry, flange.rpy.rz); 
-
-        robot.GetActualTCPNum(flag, &id);
-        printf("tcp num:%d\n", id);
-
-        robot.GetActualWObjNum(flag, &id);
-        printf("wobj num:%d\n", id);  
-
-        robot.GetJointTorques(flag, torques);
-        printf("torques:%f,%f,%f,%f,%f,%f\n", torques[0],torques[1],torques[2],torques[3],torques[4],torques[5]); 
-
-        robot.GetTargetPayload(flag, &weight);
-        printf("payload weight:%f\n", weight);
-
-        robot.GetTargetPayloadCog(flag, &cog);
-        printf("payload cog:%f,%f,%f\n",cog.x, cog.y, cog.z);
-
-        robot.GetTCPOffset(flag, &tcp_offset);
-        printf("tcp offset:%f,%f,%f,%f,%f,%f\n", tcp_offset.tran.x,tcp_offset.tran.y,tcp_offset.tran.z,tcp_offset.rpy.rx,tcp_offset.rpy.ry,tcp_offset.rpy.rz);
-
-        robot.GetWObjOffset(flag, &wobj_offset);
-        printf("wobj offset:%f,%f,%f,%f,%f,%f\n", wobj_offset.tran.x,wobj_offset.tran.y,wobj_offset.tran.z,wobj_offset.rpy.rx,wobj_offset.rpy.ry,wobj_offset.rpy.rz);
-
-        robot.GetJointSoftLimitDeg(flag, neg_deg, pos_deg);
-        printf("neg limit deg:%f,%f,%f,%f,%f,%f\n",neg_deg[0],neg_deg[1],neg_deg[2],neg_deg[3],neg_deg[4],neg_deg[5]);
-        printf("pos limit deg:%f,%f,%f,%f,%f,%f\n",pos_deg[0],pos_deg[1],pos_deg[2],pos_deg[3],pos_deg[4],pos_deg[5]);
-
-        robot.GetSystemClock(&t_ms);
-        printf("system clock:%f\n", t_ms);
-
-        robot.GetRobotCurJointsConfig(&config);
-        printf("joint config:%d\n", config);
-
-        robot.GetDefaultTransVel(&vel);
-        printf("trans vel:%f\n", vel);
-
-        return 0;
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      JointPos j1(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
+      DescPose desc_pos1(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
+      JointPos inverseRtn = {};
+      robot.GetInverseKin(0, &desc_pos1, -1, &inverseRtn);
+      printf("dcs1 GetInverseKin rtn is %f %f %f %f %f %f \n", inverseRtn.jPos[0], inverseRtn.jPos[1], inverseRtn.jPos[2], inverseRtn.jPos[3], inverseRtn.jPos[4], inverseRtn.jPos[5]);
+      robot.GetInverseKinRef(0, &desc_pos1, &j1, &inverseRtn);
+      printf("dcs1 GetInverseKinRef rtn is %f %f %f %f %f %f \n", inverseRtn.jPos[0], inverseRtn.jPos[1], inverseRtn.jPos[2], inverseRtn.jPos[3], inverseRtn.jPos[4], inverseRtn.jPos[5]);
+      uint8_t hasResut = 0;
+      robot.GetInverseKinHasSolution(0, &desc_pos1, &j1, &hasResut);
+      printf("dcs1 GetInverseKinRef result %d\n", hasResut);
+      DescPose forwordResult = {};
+      robot.GetForwardKin(&j1, &forwordResult);
+      printf("jpos1 forwordResult rtn is %f %f %f %f %f %f \n", forwordResult.tran.x, forwordResult.tran.y, forwordResult.tran.z, forwordResult.rpy.rx, forwordResult.rpy.ry, forwordResult.rpy.rz);
+      robot.CloseRPC();
+      return 0;
     }
-
-查詢機器人錯誤碼
-++++++++++++++++++++++++++++++++++++
-.. code-block:: c++
-    :linenos:
-
-    /**
-     * @brief  查詢機器人錯誤碼
-     * @param  [out]  maincode  主錯誤碼
-     * @param  [out]  subcode   子錯誤碼
-     * @return  錯誤碼
-     */ 
-    errno_t  GetRobotErrorCode(int *maincode, int *subcode);
 
 查詢機器人示教管理點位數據
 ++++++++++++++++++++++++++++++++++++
@@ -495,138 +465,71 @@
      */ 
     errno_t  GetRobotTeachingPoint(char name[64], float data[20]);
 
-查詢機器人運動隊列緩存長度
-++++++++++++++++++++++++++++++++++++
+獲取機器人DH參數補償值
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. versionadded:: C++SDK-v2.1.1.0
+
 .. code-block:: c++
     :linenos:
 
     /**
-     * @brief  查詢機器人運動隊列緩存長度
-     * @param  [out]  len 緩存長度
-     * @return  錯誤碼
-     */ 
-    errno_t  GetMotionQueueLength(int *len);
+    * @brief 獲取機器人DH參數補償值
+    * @param [out] dhCompensation 機器人DH參數補償值(mm) [cmpstD1,cmpstA2,cmpstA3,cmpstD4,cmpstD5,cmpstD6]
+    * @return 錯誤碼
+    */
+    errno_t GetDHCompensation(double dhCompensation[6]);
 
-代碼範例
-++++++++++++++++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.2.0
-    
+獲取控制箱SN碼
++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v2.2.1-3.8.1
+
 .. code-block:: c++
     :linenos:
 
-    #include "libfairino/robot.h"
-
-    //如果使用Windows，包含下面的頭文件
-    #include <string.h>
-    #include <windows.h>
-    //如果使用linux，包含下面的頭文件
-    /*
-    #include <cstdlib>
-    #include <iostream>
-    #include <stdio.h>
-    #include <cstring>
-    #include <unistd.h>
+    /**
+    * @brief 獲取控制箱SN碼
+    * @param [out] SNCode 控制箱SN碼
+    * @return 錯誤碼
     */
+    errno_t GetRobotSN(std::string& SNCode);
 
-    #include <chrono>
-    #include <thread>
+查詢機器人示教管理點位數據代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
 
-    using namespace std;
-
-    int main(void)
+    int TestGetTeachPoint(void)
     {
-        FRRobot robot;
-        robot.RPC("192.168.58.2");
-
-        uint8_t result = 0;
-        int retval = 0;
-        float joint_speed_deg[6] = {0};
-
-        retval = robot.GetActualJointSpeedsDegree(1, joint_speed_deg);
-        printf("GetActualJointSpeedsDegree retval is: %d \n", retval);
-        printf("joint degree speed is: %f, %f, %f, %f, %f, %f \n", joint_speed_deg[0], joint_speed_deg[1], joint_speed_deg[2], joint_speed_deg[3], joint_speed_deg[4], joint_speed_deg[5]);
-
-        float joint_acc_deg[6] = {0};
-        retval = robot.GetActualJointAccDegree(1, joint_acc_deg);
-        printf("GetActualJointAccDegree retval is: %d \n", retval);
-        printf("joint degree acc is: %f, %f, %f, %f, %f, %f \n", joint_acc_deg[0], joint_acc_deg[1], joint_acc_deg[2], joint_acc_deg[3], joint_acc_deg[4], joint_acc_deg[5]);
-
-        float tcp_speed = 0;
-        float ori_speed = 0;
-        retval = robot.GetTargetTCPCompositeSpeed(1, &tcp_speed, &ori_speed);
-        printf("GetTargetTCPCompositeSpeed retval is: %d \n", retval);
-        printf("tcp_speed is:%f, ori_speed is: %f \n", tcp_speed, ori_speed);
-
-        retval = robot.GetActualTCPCompositeSpeed(1, &tcp_speed, &ori_speed);
-        printf("GetActualTCPCompositeSpeed retval is: %d \n", retval);
-        printf("tcp_speed is:%f, ori_speed is: %f \n", tcp_speed, ori_speed);
-
-        float targer_tcp_speed[6] = {0};
-        retval = robot.GetTargetTCPSpeed(1, targer_tcp_speed);
-        printf("GetTargetTCPSpeed retval is: %d \n", retval);
-        printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", targer_tcp_speed[0], targer_tcp_speed[1], targer_tcp_speed[2], targer_tcp_speed[3], targer_tcp_speed[4], targer_tcp_speed[5]);
-
-        float actual_tcp_speed[6] = {0};
-        robot.GetActualTCPSpeed(1, actual_tcp_speed);
-        printf("GetActualTCPSpeed retval is: %d \n", retval);
-        printf("xyz is: %f, %f, %f; rpy is: %f, %f, %f\n", actual_tcp_speed[0], actual_tcp_speed[1], actual_tcp_speed[2], actual_tcp_speed[3], actual_tcp_speed[4], actual_tcp_speed[5]);
-
-        JointPos j;
-        DescPose desc_pos, offset_pos1, offset_pos2;
-
-        memset(&j, 0, sizeof(JointPos));
-        memset(&desc_pos, 0, sizeof(DescPose));
-        memset(&offset_pos1, 0, sizeof(DescPose));
-        memset(&offset_pos2, 0, sizeof(DescPose));
-
-        j = {{-39.666, -96.491, -79.531, -94.251, 90.961, -58.714}};
-        offset_pos1.tran.x = 10.0;
-        offset_pos1.rpy.rx = -10.0;
-        offset_pos2.tran.x = 30.0;
-        offset_pos2.rpy.rx = -5.0;
-
-        retval = 0;
-        retval = robot.GetForwardKin(&j, &desc_pos); // 只有關節位置的情况下，可用正運動学接口求解笛卡兒空间座標
-        printf("GetForwardKin ret is: %d \n", retval);
-        printf("GetForwardKin result:%f,%f,%f,%f,%f,%f\n", desc_pos.tran.x, desc_pos.tran.y, desc_pos.tran.z, desc_pos.rpy.rx, desc_pos.rpy.ry, desc_pos.rpy.rz);
-
-        retval = 0;
-        JointPos start_joint_pose;
-        memset(&start_joint_pose, 0, sizeof(JointPos));
-        retval = robot.GetInverseKinRef(0, &desc_pos, &j, &start_joint_pose);
-        printf("GetInverseKinRef retval is: %d \n", retval);
-        printf("joint is: %f, %f, %f,%f, %f, %f\n", start_joint_pose.jPos[0], start_joint_pose.jPos[1], start_joint_pose.jPos[2], start_joint_pose.jPos[3], start_joint_pose.jPos[4], start_joint_pose.jPos[5]);
-
-        retval = 0;
-        retval = robot.GetInverseKinHasSolution(1, &offset_pos1, &j, &result); // 根据參考關節座標，判断目標位姿是否有解
-        printf("GetInverseKinHasSolution ret: %d\n", result);
-        if (0 == result)
-        {
-            printf("pose1 can not be solved\n");
-        }
-
-        retval = 0;
-        retval = robot.GetInverseKin(1, &offset_pos1, -1, &start_joint_pose);
-        printf("GetInverseKin retval is: %d \n", retval);
-        printf("GetInverseKin result is: %f, %f, %f, %f, %f, %f\n", start_joint_pose.jPos[0], start_joint_pose.jPos[1], start_joint_pose.jPos[2], start_joint_pose.jPos[3], start_joint_pose.jPos[4], start_joint_pose.jPos[5]);
-
-        int main_code = 0;
-        int sub_code = 0;
-        retval = 0;
-        retval = robot.GetRobotErrorCode(&main_code, &sub_code);
-        printf("GetRobotMotionDone retval is: %d , amin code is:%d, sub code is: %d\n", retval, main_code, sub_code);
-
-        char name[64] = "F1";
-        float data[20] = {0};
-        int ret = robot.GetRobotTeachingPoint(name, data);
-        printf(" %d name is: %s \n", ret, name);
-        for (int i = 0; i < 20; i++)
-        {
-            printf("data is: %f \n", data[i]);
-        }
-
-        int que_len = 0;
-        retval = 0;
-        retval = robot.GetMotionQueueLength(&que_len);
-        printf("GetMotionQueueLength retval is: %d, queue length is: %d \n", retval, que_len);
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      char name[64] = "P1";
+      float data[20] = { 0 };
+      rtn = robot.GetRobotTeachingPoint(name, data);
+      printf(" %d name is: %s \n", rtn, name);
+      for (int i = 0; i < 20; i++)
+      {
+        printf("data is: %f \n", data[i]);
+      }
+      int que_len = 0;
+      rtn = robot.GetMotionQueueLength(&que_len);
+      printf("GetMotionQueueLength rtn is: %d, queue length is: %d \n", rtn, que_len);
+      double dh[6] = { 0 };
+      int retval = 0;
+      retval = robot.GetDHCompensation(dh);
+      cout << "retval is: " << retval << endl;
+      cout << "dh is: " << dh[0] << " " << dh[1] << " " << dh[2] << " " << dh[3] << " " << dh[4] << " " << dh[5] << endl;
+      string SN = "";
+      robot.GetRobotSN(SN);
+      cout << "robot SN is " << SN << endl;
+      robot.CloseRPC();
+      return 0;
     }

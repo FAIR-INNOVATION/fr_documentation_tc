@@ -995,3 +995,17 @@ UDP擴展軸與機器人圓弧運動同步運動
         robot.TractorStop();//小车停止
         robot.TractorMoveC(300, -90, 20);
     }
+
+獲取擴展軸座標系
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.5-3.8.2
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 獲取擴展軸座標系
+    * @param [out] coord 擴展軸座標系
+    * @return 錯誤碼
+    */
+    int ExtAxisGetCoord(DescPose coord);

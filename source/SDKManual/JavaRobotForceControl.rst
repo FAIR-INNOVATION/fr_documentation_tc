@@ -565,24 +565,26 @@
             System.out.println("rpc連接 fail");
             return ;
         }
-        List<Integer> rtnArray = robot.GetForceAndTorqueDragState();
-        System.out.println("the drag state is  " + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));
-
-        robot.Sleep(1000);
         Object[] M = { 15.0, 15.0, 15.0, 0.5, 0.5, 0.1 };
         Object[] B = { 150.0, 150.0, 150.0, 5.0, 5.0, 1.0 };
         Object[] K = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         Object[] F = { 10.0, 10.0, 10.0, 1.0, 1.0, 1.0 };
+        int rtn = robot.EndForceDragControl(1, 0, 0, 0, M, B, K, F, 50, 100);
+        System.out.println("force drag control start rtn is:"+ rtn);
+        robot.Sleep(5000);
+
+        rtn = robot.EndForceDragControl(0, 0, 0, 0, M, B, K, F, 50, 100);
+        System.out.println("force drag control end rtn is:"+ rtn);
+
+        rtn = robot.ResetAllError();
+        System.out.println("ResetAllError rtn is:"+ rtn);
+
         robot.EndForceDragControl(1, 0, 0, 0, M, B, K, F, 50, 100);
+        System.out.println("force drag control start again rtn is:"+ rtn);
+        robot.Sleep(5000);
 
-        rtnArray = robot.GetForceAndTorqueDragState();
-        System.out.println("the drag state is" + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));
-
-        robot.Sleep(1000 * 10);
-        robot.EndForceDragControl(0, 0, 0, 0, M, B, K, F, 50, 100);
-
-        rtnArray = robot.GetForceAndTorqueDragState();
-        System.out.println("the drag state is" + rtnArray.get(1) + "  ForceAndJointImpedance state  " + rtnArray.get(2));
+        rtn = robot.EndForceDragControl(0, 0, 0, 0, M, B, K, F, 50, 100);
+        System.out.println("force drag control end again rtn is:"+ rtn);
     }
 
 設定六維力和關節阻抗混合拖曳開關及參數
@@ -722,3 +724,18 @@
     * @return 錯誤碼
     */
     int ForceSensorAutoComputeLoad(MassCenter massCenter);
+
+設定機器人碰撞檢測方法
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionchanged:: Java SDK-v1.0.5-3.8.2
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 設定機器人碰撞檢測方法
+    * @param [in] method 碰撞檢測方法：0-電流模式；1-雙編碼器；2-電流和雙編碼器同時開啟
+    * @param [in] thresholdMode 碰撞等級閾值方式；0-碰撞等級固定閾值方式；1-自訂碰撞檢測閾值
+    * @return 錯誤碼
+    */
+    int SetCollisionDetectionMethod(int method,int thresholdMode);

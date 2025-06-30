@@ -113,17 +113,19 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ConveyorSetParam(param)``"
-    "描述", "傳動帶參數配置"
-    "必選參數", "- `` param``： = [encChannel,resolution,lead,wpAxis,vision,speedRadio] 
-                                    - ``encChannel``: 編码器通道 1-2
-                                    - ``resolution``: 編碼器分辨率 編码器旋转一圈脉冲個数
-                                    - ``lead``: 機械傳動比 編码器旋转一圈传送带移動距离
-                                    - ``wpAxis``: 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
-                                    - ``vision``: 是否配视觉  0-不配 1-配,
-                                    - ``speedRadio``: 速度比  针对傳送帶追蹤抓取速度範圍為（1-100）  跟踪運動、TPD跟踪設定為1"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "原型", "``ConveyorSetParam(param, followType, startDis, endDis)``"
+    "描述", "傳送帶參數配置"
+    "必選參數", "- ``param``： = [encChannel,resolution,lead,wpAxis,vision,speedRadio] 
+                    - ``encChannel``: 編碼器通道 1-2
+                    - ``resolution``: 編碼器解析度 編碼器旋轉一圈脈衝個數
+                    - ``lead``: 機械傳動比 編碼器旋轉一圈傳送帶移動距離
+                    - ``wpAxis``: 工件坐標系編號 針對追蹤運動功能選擇工件坐標系編號，追蹤抓取、TPD追蹤設為0
+                    - ``vision``: 是否配視覺  0-不配 1-配,
+                    - ``speedRadio``: 速度比  針對傳送帶追蹤抓取速度範圍為（1-100）  追蹤運動、TPD追蹤設置為1
+    - ``followType``：追蹤運動類型，0-追蹤運動；1-追檢運動"
+    "默認參數", "- ``startDis``：追檢抓取需要設置， 追蹤起始距離， -1：自動計算(工件到達機器人下方後自動追檢)，單位mm， 默認值0
+    - ``endDis``：追檢抓取需要設置，追蹤終止距離， 單位mm， 默認值100"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 代碼範例
 ----------------
@@ -263,27 +265,6 @@
     comp = [0.00, 0.00, 0.00]
     ret1 = robot.ConveyorCatchPointComp(comp)
     print("傳動帶抓取點補償錯誤碼",ret1)
-
-傳送帶參數配置
-++++++++++++++++++++++++++++++++++
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ConveyorSetParam(param, followType, startDis, endDis)``"
-    "描述", "傳送帶參數配置"
-    "必選參數", "- ``param``: = [encChannel,resolution,lead,wpAxis,vision,speedRadio] 
-                    - ``encChannel``: 編碼器通道 1-2
-                    - ``resolution``: 編碼器分辨率 (每轉脈衝數)
-                    - ``lead``: 機械傳動比 (編碼器每轉傳送帶移動距離)
-                    - ``wpAxis``: 工件坐標系編號 (追蹤抓取、TPD追蹤設為0)
-                    - ``vision``: 是否配置視覺 0-否 1-是
-                    - ``speedRadio``: 速度比 (追蹤抓取速度範圍1-100，運動追蹤、TPD追蹤設為1)
-    - ``followType``: 追蹤運動類型，0-運動追蹤；1-追檢運動"
-    "默認參數", "- ``startDis``: 追檢抓取需要設置，追蹤起始距離 (-1:自動計算)，單位mm，默認值0
-    - ``endDis``: 追檢抓取需要設置，追蹤終止距離，單位mm，默認值100"
-    "返回值", "錯誤碼 成功-0 失敗- errcode"
-
 
 傳送帶通訊輸入檢測
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
