@@ -384,47 +384,48 @@ jog點動立即停止
     :linenos:
 
     int TestServoJ(void)
-     {
-         ROBOT_STATE_PKG pkg = {};
-         FRRobot robot;
-         robot.LoggerInit();
-         robot.SetLoggerLevel(1);
-         int rtn = robot.RPC("192.168.58.2");
-         if (rtn != 0)
-         {
-             return -1;
-         }
-         robot.SetReConnectParam(true, 30000, 500);
-         JointPos j(0, 0, 0, 0, 0, 0);
-         ExaxisPos epos(0, 0, 0, 0);
-         float vel = 0.0;
-         float acc = 0.0;
-         float cmdT = 0.008;
-         float filterT = 0.0;
-         float gain = 0.0;
-         uint8_t flag = 0;
-         int count = 500;
-         float dt = 0.1;
-         int ret = robot.GetActualJointPosDegree(flag, &j);
-         if (ret == 0)
-         {
-             robot.ServoMoveStart();
-             while (count)
-             {
-                 robot.ServoJ(&j, &epos, acc, vel, cmdT, filterT, gain);
-                 j.jPos[0] += dt;
-                 count -= 1;
-                 robot.WaitMs(cmdT * 1000);
-             }
-             robot.ServoMoveEnd();
-         }
-         else
-         {
-             printf("GetActualJointPosDegree errcode:%d\n", ret);
-         }
-         robot.CloseRPC();
-         return 0;
-     }
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return -1;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        JointPos j(0, 0, 0, 0, 0, 0);
+        ExaxisPos epos(0, 0, 0, 0);
+        float vel = 0.0;
+        float acc = 0.0;
+        float cmdT = 0.008;
+        float filterT = 0.0;
+        float gain = 0.0;
+        uint8_t flag = 0;
+        int count = 500;
+        float dt = 0.1;
+        int cmdID = 0;
+        int ret = robot.GetActualJointPosDegree(flag, &j);
+        if (ret == 0)
+        {
+            robot.ServoMoveStart();
+            while (count)
+            {
+                robot.ServoJ(&j, &epos, acc, vel, cmdT, filterT, gain, cmdID);
+                j.jPos[0] += dt;
+                count -= 1;
+                robot.WaitMs(cmdT * 1000);
+            }
+            robot.ServoMoveEnd();
+        }
+        else
+        {
+            printf("GetActualJointPosDegree errcode:%d\n", ret);
+        }
+        robot.CloseRPC();
+        return 0;
+    }
 
 關節扭矩控制開始
 ++++++++++++++++++++++++++++++++++++++++++

@@ -501,7 +501,73 @@
     :widths: 10 30
 
     "原型", "``DataPackageDownload(savePath)``"
-    "描述", "數據備份包下載"
-    "必選參數", "- ``savePath``：保存文件路徑D://zDown/"
+    "描述", "数据备份包下载"
+    "必选参数", "- ``savePath``：保存文件路径D://zDown/"
+    "默认参数", "无"
+    "返回值", "错误码 成功-0  失败- errcode"
+
+
+下發SCP指令
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.3
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetSSHScpCmd(mode, sshname, sship, usr_file_url, robot_file_url)``"
+    "描述", "下發SCP指令"
+    "必選參數", "- ``mode``：0-上傳（上位機->控制器），1-下載（控制器->上位機）
+    - ``sshname``：上位機用戶名
+    - ``sship``：上位機ip地址
+    - ``usr_file_url``：上位機文件路徑
+    - ``robot_file_url``：機器人控制器文件路徑"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+代碼示例
+------------
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    ssh_name = "fr"
+    ssh_ip = "192.168.58.45"
+    ssh_route = "/home/fr"
+    ssh_robot_url = "/root/robot/dhpara.config"
+    retval = robot.SetSSHScpCmd(1, ssh_name, ssh_ip, ssh_route, ssh_robot_url)
+    print(f"SetSSHScpCmd retval is: {retval}")
+    print(f"robot url is: {ssh_robot_url}")
+
+設置寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.3
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetWideBoxTempFanMonitorParam(enable, period)``"
+    "描述", "設置寬電壓控制箱溫度及風扇轉速監控參數"
+    "必選參數", "- ``enable``：0-不使能監測；1-使能監測
+    - ``period``：監測週期(s),範圍1-100"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.3
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetWideBoxTempFanMonitorParam()``"
+    "描述", "獲取寬電壓控制箱溫度及風扇轉速監控參數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``enable``：0-不使能監測；1-使能監測
+    - ``period``：監測週期(s),範圍1-100"

@@ -37,3 +37,4 @@ Java
     JavaRobotWeld
     JavaRobotExtendedAxis
     JavaRobotOthers
+    JavaAppendix

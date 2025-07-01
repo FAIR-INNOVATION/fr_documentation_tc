@@ -36,3 +36,4 @@ C++
     CPPRobotExtendedAxis
     CPPRobotWelding
     CPPRobotOthers
+    CPPAppendix

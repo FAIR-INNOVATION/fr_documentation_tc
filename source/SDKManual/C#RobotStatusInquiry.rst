@@ -575,7 +575,8 @@
 
     /**
     * @brief 獲取SmartTool按鈕狀態
-    * @param [out] state SmartTool手柄按鈕狀態; （bit0：0-通信正常; 1-通信掉線; bit1-撤銷操作; bit2-清空程式; bit3-A鍵; bit4-B鍵; bit5-C鍵; bit6-D鍵; bit7-E鍵; bit8-IO鍵; bit9-手自動; bit10開始）
+    * @param [out] state SmartTool手柄按鈕狀態;(bit0:0-通信正常；1-通信掉線；bit1-撤銷操作；bit2-清空程序；
+        bit3-A鍵；bit4-B鍵；bit5-C鍵；bit6-D鍵；bit7-E鍵；bit8-IO鍵；bit9-手自動；bit10開始)
     * @return 錯誤碼
     */
     int GetSmarttoolBtnState(ref int state);

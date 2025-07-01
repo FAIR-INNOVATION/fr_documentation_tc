@@ -77,7 +77,7 @@
      - ✅
      - ✅
      - --
-     - :download:`下載<_static/_doc/法奥RoHS 2.0声明.pdf>`
+     - :download:`下載<_static/_doc/ROHS认证证书(FR3-FR30).pdf>`
 
    * - **防爆證書**
      - ✅
@@ -322,6 +322,5 @@ Java SDK
 
 機器人軟體下載
 ---------------------------------
-    :download:`FAIRINO-CobotSoftware-V3.8.2-QX-Release-250529 <https://drive.google.com/file/d/179GBWGo_tdG2NLjIQupfxCEXjN4rFrzz/view?usp=sharing>`
+    :download:`FAIRINO-CobotSoftware-V3.8.3-QX-Release-250627 <https://drive.google.com/file/d/14P8wcBgBTrg8f-l-fzuRYZmpIE9WjaC1/view?usp=sharing>`
 
-    :download:`FAIRINO-CobotSoftware-V3.8.2-LA-Release-250617 <https://drive.google.com/file/d/19IEFvp-cVeleKRfy8JxY-DWCw9LxphkN/view?usp=sharing>`

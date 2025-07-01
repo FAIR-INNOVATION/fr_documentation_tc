@@ -814,17 +814,21 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ForceAndJointImpedanceStartStop(status, impedanceFlag, lamdeDain, KGain, BGain, dragMaxTcpVel, dragMaxTcpOriVel)``"
-    "描述", "力道感測器輔助拖曳"
-    "必選參數", "- ``status``：控制狀態，0-關閉；1-開啟
-    - ``impedanceFlag``：阻抗開啟標誌，0-關閉；1-開啟
-    - ``lamdeDain``：[D1,D2,D3,D4,D5, D6] 拖曳增益
-    - ``KGain``：[K1,K2,K3,K4,K5,K6]剛度增益
-    - ``BGain``：[B1,B2,B3,B4,B5,B]阻尼增益
-    - ``dragMaxTcpVel``：拖曳末端最大線速度限制
-    - ``dragMaxTcpOriVel``：拖曳末端最大角速度限制"
+    "原型", "``EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax, forceCollisionFlag=0)``"
+    "描述", "力傳感器輔助拖動"
+    "必選參數", "- ``status``：控制狀態，0-關閉；1-開啓
+    - ``asaptiveFlag``：自適應開啓標誌，0-關閉；1-開啓
+    - ``interfereDragFlag``：干涉區拖動標誌，0-關閉；1-開啓
+    - ``ingularityConstraintsFlag``：奇異點策略，0-規避；1-穿越
+    - ``forceCollisionFlag``：輔助拖動時機器人碰撞檢測標誌；0-關閉；1-開啓
+    - ``M=[m1,m2,m3,m4,m5,m6]``：慣性系數
+    - ``B=[b1,b2,b3,b4,b5,b6]``：阻尼係數
+    - ``K=[k1,k2,k3,k4,k5,k6]``：剛度係數
+    - ``F=[f1,f2,f3,f4,f5,f6]``：拖動六維力閾值
+    - ``Fmax``：最大拖動力限制
+    - ``Vmax``：最大關節速度限制"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 代碼範例
 ------------
@@ -836,25 +840,27 @@
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
 
     robot = Robot.RPC('192.168.58.2')
+    M = [15.0, 15.0, 15.0, 0.5, 0.5, 0.1]
+    B = [150.0, 150.0, 150.0, 5.0, 5.0, 1.0]
+    K = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    F = [10.0, 10.0, 10.0, 1.0, 1.0, 1.0]
 
-    status = 1 #控制狀態，0-關閉；1-開啟
-    asaptiveFlag = 1 #自適應開啟標誌，0-關閉；1-開啟
-    interfereDragFlag = 1 #干涉區拖曳標誌，0-關閉；1-開啟
-    ingularityConstraintsFlag = 0 #奇異點策略：0-規避；1-穿越
-    M = [15, 15, 15, 0.5, 0.5, 0.1] #慣性係數
-    B = [150, 150, 150, 5, 5, 1] #阻尼係數
-    K = [0, 0, 0, 0, 0, 0] #剛度係數
-    F = [5, 5, 5, 1, 1, 1] #拖曳六維力閾值
-    Fmax = 50 #最大拖動力限制
-    Vmax = 1810 #最大關節速度限制
+    rtn = robot.EndForceDragControl(status=1,asaptiveFlag= 0,interfereDragFlag= 0,ingularityConstraintsFlag= 0,forceCollisionFlag= 1,M= M,B= B,K= K,F= F,Fmax= 50,Vmax=100)
+    print(f"force drag control start rtn is:{rtn}")
+    time.sleep(5)
 
-    error = robot.EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax)
-    print("EndForceDragControl return:",error)
+    rtn = robot.EndForceDragControl(status=0, asaptiveFlag=0, interfereDragFlag=0, ingularityConstraintsFlag=0,forceCollisionFlag=1, M=M, B=B, K=K, F=F, Fmax=50, Vmax=100)
+    print(f"force drag control end rtn is:{rtn}")
 
-    time.sleep(10)
-    status=0
-    error = robot.EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax)
-    print("EndForceDragControl return:",error)
+    rtn = robot.ResetAllError()
+    print(f"ResetAllError rtn is:{rtn}")
+
+    rtn = robot.EndForceDragControl(status=1, asaptiveFlag=0, interfereDragFlag=0, ingularityConstraintsFlag=0,forceCollisionFlag=1, M=M, B=B, K=K, F=F, Fmax=50, Vmax=100)
+    print(f"force drag control start again rtn is:{rtn}")
+    time.sleep(5)
+
+    rtn = robot.EndForceDragControl(status=0, asaptiveFlag=0, interfereDragFlag=0, ingularityConstraintsFlag=0,forceCollisionFlag=1, M=M, B=B, K=K, F=F, Fmax=50, Vmax=100)
+    print(f"force drag control end again rtn is:{rtn}")
 
 報錯清除後力感知器自動開啟
 ++++++++++++++++++++++++++++++++++
@@ -891,20 +897,17 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``EndForceDragControl(status, asaptiveFlag, interfereDragFlag, ingularityConstraintsFlag, M, B, K, F, Fmax, Vmax)``"
-    "描述", "設定六維力和關節阻抗混合拖曳開關及參數"
-    "必選參數", "- ``status``：控制狀態，0-關閉；1-開啟
-    - ``asaptiveFlag``：自適應開啟標誌，0-關閉；1-開啟
-    - ``interfereDragFlag``：干涉區拖曳標誌，0-關閉；1-開啟
-    - ``ingularityConstraintsFlag``：奇異點策略：0-規避；1-穿越
-    - ``M=[m1,m2,m3,m4,m5,m6]``：慣性係數
-    - ``B=[b1,b2,b3,b4,b5,b6]``：阻尼係數
-    - ``K=[k1,k2,k3,k4,k5,k6]``：剛度係數
-    - ``F=[f1,f2,f3,f4,f5,f6]``：拖曳六維力閾值
-    - ``Fmax``：最大拖動力限制
-    - ``Vmax``：最大關節速度限制"
+    "原型", "``ForceAndJointImpedanceStartStop(status, impedanceFlag, lamdeDain, KGain, BGain, dragMaxTcpVel, dragMaxTcpOriVel)``"
+    "描述", "設置六維力和關節阻抗混合拖動開關及參數"
+    "必選參數", "- ``status``：控制狀態，0-關閉；1-開啓
+    - ``impedanceFlag``：阻抗開啓標誌，0-關閉；1-開啓
+    - ``lamdeDain``：[D1,D2,D3,D4,D5, D6] 拖動增益
+    - ``KGain``：[K1,K2,K3,K4,K5,K6]剛度增益
+    - ``BGain``：[B1,B2,B3,B4,B5,B]阻尼增益
+    - ``dragMaxTcpVel``：拖動末端最大線速度限制
+    - ``dragMaxTcpOriVel``：拖動末端最大角速度限制"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
     
 代碼範例
 ------------

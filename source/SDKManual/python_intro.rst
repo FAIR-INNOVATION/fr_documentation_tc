@@ -37,3 +37,4 @@ Python
     PythonRoboExtendedAxis
     PythonRobotOthers
     PythonRobotStatusFeedback
+    PythonAppendix

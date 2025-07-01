@@ -592,8 +592,41 @@
  */
  int EndForceDragControl(int status, int asaptiveFlag, int interfereDragFlag,int ingularityConstraintsFlag, double[] M, double[] B, double[] K, double[] F, double Fmax, double Vmax);
 
+代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.4  Web-3.8.3
+    
+.. code-block:: c#
+    :linenos:
+
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+
+        double[] M = { 15.0, 15.0, 15.0, 0.5, 0.5, 0.1 };
+        double[] B = { 150.0, 150.0, 150.0, 5.0, 5.0, 1.0 };
+        double[] K = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        double[] F = { 10.0, 10.0, 10.0, 1.0, 1.0, 1.0 };
+        int rtn = robot.EndForceDragControl(1, 0, 0, 0, 1, M, B, K, F, 50, 100);
+        Console.WriteLine("force drag control start rtn is{rtn}");
+        Thread.Sleep(5000);
+
+        rtn = robot.EndForceDragControl(0, 0, 0, 0, 1, M, B, K, F, 50, 100);
+        Console.WriteLine($"force drag control end rtn is{rtn}");
+
+        rtn = robot.ResetAllError();
+        Console.WriteLine($"ResetAllError rtn is{rtn}");
+
+        robot.EndForceDragControl(1, 0, 0, 0, 1, M, B, K, F, 50, 100);
+        Console.WriteLine($"force drag control start again rtn is{rtn}");
+        Thread.Sleep(5000);
+
+        rtn = robot.EndForceDragControl(0, 0, 0, 0, 1, M, B, K, F, 50, 100);
+        Console.WriteLine($"force drag control end again rtn is {rtn}");
+    }
+    
 取得力道感測器拖曳開關狀態
-+++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C# SDK-v1.1.0-3.7.8
 
 .. code-block:: c#

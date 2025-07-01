@@ -782,3 +782,78 @@
        robot.CloseRPC();
        return 0;
     }
+
+設置寬電壓控制箱溫度及風扇電流監控參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置寬電壓控制箱溫度及風扇電流監控參數
+    * @param [in] enable 0-不使能監測；1-使能監測
+    * @param [in] period 監測週期(s),範圍1-100
+    * @return 錯誤碼
+    */
+    errno_t SetWideBoxTempFanMonitorParam(int enable, int period);
+    
+獲取寬電壓控制箱溫度及風扇電流監控參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取寬電壓控制箱溫度及風扇電流監控參數
+    * @param [out] enable 0-不使能監測；1-使能監測
+    * @param [out] period 監測週期(s),範圍1-100
+    * @return 錯誤碼
+    */
+    errno_t GetWideBoxTempFanMonitorParam(int &enable, int &period);
+    
+寬電壓控制箱溫度和風扇電流狀態獲取代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+     int TestWideVoltageCtrlBoxtemp(void)
+     {
+         ROBOT_STATE_PKG pkg = {};
+         FRRobot robot;
+         robot.LoggerInit();
+         robot.SetLoggerLevel(1);
+         int rtn = robot.RPC("192.168.58.2");
+         printf("robot rpc rtn is %d\n", rtn);
+         if (rtn != 0)
+         {
+             return -1;
+         }
+         robot.SetReConnectParam(true, 30000, 500);
+         robot.SetWideBoxTempFanMonitorParam(1, 2);
+         int enable = 0;
+         int period = 0;
+         robot.GetWideBoxTempFanMonitorParam(enable, period);
+         printf("GetWideBoxTempFanMonitorParam enable is %d   period is %d\n", enable, period);
+         for (int i = 0; i < 100; i++)
+         {
+             robot.GetRobotRealTimeState(&pkg);
+             printf("robot ctrl box temp is %f,  fan current is %d\n", pkg.wideVoltageCtrlBoxTemp, pkg.wideVoltageCtrlBoxFanCurrent);
+             robot.Sleep(100);
+         }
+         rtn = robot.SetWideBoxTempFanMonitorParam(0, 2);
+         printf("SetWideBoxTempFanMonitorParam rtn is %d\n", rtn);
+         enable = 0;
+         period = 0;
+         robot.GetWideBoxTempFanMonitorParam(enable, period);
+         printf("GetWideBoxTempFanMonitorParam enable is %d   period is %d\n", enable, period);
+         for (int i = 0; i < 100; i++)
+         {
+             robot.GetRobotRealTimeState(&pkg);
+             printf("robot ctrl box temp is %f,  fan current is %d\n", pkg.wideVoltageCtrlBoxTemp, pkg.wideVoltageCtrlBoxFanCurrent);
+             robot.Sleep(100);
+         }
+         robot.CloseRPC();
+         robot.Sleep(2000);
+         return 0;
+     }

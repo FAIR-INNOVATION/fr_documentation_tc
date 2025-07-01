@@ -90,13 +90,16 @@
     "minute","分"
     "second","秒"
     "millisecond","毫秒"
-    "softwareUpgradeState","機器人軟體升級狀態"
-    "cl_analog_output[i]","控制箱類比輸出,i:0~1"
-    "tl_analog_output","工具類比量輸出"
-    "gripperRotNum","旋轉夾爪目前旋轉圈數"
-    "gripperRotSpeed","旋轉夾爪目前旋轉速度百分比"
-    "gripperRotTorque","旋轉夾爪目前旋轉力矩百分比"
+    "softwareUpgradeState","機器人軟件升級狀態"
     "endLuaErrCode","末端LUA運行狀態"
+    "cl_analog_output[i]","控制箱模擬量輸出,i:0~1"
+    "tl_analog_output","工具模擬量輸出"
+    "gripperRotNum","旋轉夾爪當前旋轉圈數"
+    "gripperRotSpeed","旋轉夾爪當前旋轉速度百分比"
+    "gripperRotTorque","旋轉夾爪當前旋轉力矩百分比"
+    "weldingBreakOffState","焊接中斷狀態"
+    "jt_tgt_tor","關節指令力矩"
+    "smartToolState","SmartTool手柄按鈕狀態"
     
 代碼範例
 ---------------

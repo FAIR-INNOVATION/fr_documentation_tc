@@ -680,4 +680,143 @@
         Console.WriteLine($"robot SN is {SN}");
     }
 
+關閉機器人操作系統
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 關閉機器人操作系統
+    * @return 錯誤碼
+    */
+    int ShutDownRobotOS();
+
+代碼示例
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    private void button6_Click(object sender, EventArgse)
+    {   
+        int rtn = robot.ShutDownRobotOS();
+        Console.WriteLine($"ShutDownRobotOS rtn is {rtn}");
+    }
+
+下發SCP指令
++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.4  Web-3.8.3
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 下發SCP指令
+    * @param [in] mode 0-上傳（上位機->控制器），1-下載（控制器->上位機）
+    * @param [in] sshname 上位機用戶名
+    * @param [in] sship 上位機ip地址
+    * @param [in] usr_file_url 上位機文件路徑
+    * @param [in] robot_file_url 機器人控制器文件路徑
+    * @return 錯誤碼
+    */
+    int SetSSHScpCmd(int mode, string sshname, string sship, string usr_file_url, string robot_file_url);
+
+代碼示例
++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.4  Web-3.8.3
+    
+.. code-block:: c#
+    :linenos:
+
+    private void button46_Click(object sender, EventArgs e)
+    {
+        string file_path = "/fruser/airlab.lua";
+        string md5 = "";
+        byte emerg_state = 0;
+        byte si0_state = 0;
+        byte si1_state = 0;
+        int sdk_com_state = 0;
+
+        string ssh_keygen = "";
+        int retval = robot.GetSSHKeygen(ref ssh_keygen);
+        Console.WriteLine("GetSSHKeygen retval is: {0}", retval);
+        Console.WriteLine("ssh key is: {0}", ssh_keygen);
+
+        string ssh_name = "fr";
+        string ssh_ip = "192.168.58.45";
+        string ssh_route = "/home/fr";
+        string ssh_robot_url = "/root/robot/dhpara.config";
+        retval = robot.SetSSHScpCmd(1, ssh_name, ssh_ip, ssh_route, ssh_robot_url);
+        Console.WriteLine("SetSSHScpCmd retval is: {0}", retval);
+        Console.WriteLine("robot url is: {0}", ssh_robot_url);
+
+        robot.ComputeFileMD5(file_path, ref md5);
+        Console.WriteLine("md5 is: {0}", md5);
+    }
+
+設置寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.4  Web-3.8.3
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 設置寬電壓控制箱溫度及風扇轉速監控參數
+    * @param [in] enable 0-不使能監測；1-使能監測
+    * @param [in] period 監測週期(s),範圍1-100
+    * @return 錯誤碼
+    */
+    int SetWideBoxTempFanMonitorParam(int enable, int period);
+
+獲取寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.4  Web-3.8.3
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取寬電壓控制箱溫度及風扇轉速監控參數
+    * @param [out] enable 0-不使能監測；1-使能監測
+    * @param [out] period 監測週期(s),範圍1-100
+    * @return 錯誤碼
+    */
+    int GetWideBoxTempFanMonitorParam(ref int enable, ref int period);
+
+代碼示例
++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.4  Web-3.8.3
+    
+.. code-block:: c#
+    :linenos:
+
+    private void button46_Click(object sender, EventArgs e)
+    {
+        var pkg = new ROBOT_STATE_PKG(); 
+        robot.SetWideBoxTempFanMonitorParam(1, 2);    
+        int enable = 0;
+        int period = 0;
+        robot.GetWideBoxTempFanMonitorParam(ref enable, ref period);
+        Console.WriteLine($"GetWideBoxTempFanMonitorParam enable is {enable}   period is {period}");  
+        for (int i = 0; i < 100; i++)
+        {
+            robot.GetRobotRealTimeState(ref pkg);
+            Console.WriteLine($"robot ctrl box temp is {pkg.wideVoltageCtrlBoxTemp}, fan current is {pkg.wideVoltageCtrlBoxFanVel}");
+            Thread.Sleep(100);
+        }       
+        int rtn = robot.SetWideBoxTempFanMonitorParam(0, 2);
+        Console.WriteLine($"SetWideBoxTempFanMonitorParam rtn is {rtn}");       
+        enable = 0;
+        period = 0;
+        robot.GetWideBoxTempFanMonitorParam(ref enable, ref period);
+        Console.WriteLine($"GetWideBoxTempFanMonitorParam enable is {enable}   period is {period}");  
+        for (int i = 0; i < 100; i++)
+        {
+            robot.GetRobotRealTimeState(ref pkg);
+            Console.WriteLine($" robot ctrl box temp is {pkg.wideVoltageCtrlBoxTemp}, fan current is {pkg.wideVoltageCtrlBoxFanVel}");
+            Thread.Sleep(100);
+        }
+    }
+
+
 

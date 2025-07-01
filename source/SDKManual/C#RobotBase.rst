@@ -111,8 +111,6 @@
 
 斷線重連
 ++++++++++++++++++++++++++++++++++
-.. versionadded:: C# SDK-v1.1.0-3.7.8
-
 .. code-block:: c#
     :linenos:
 
@@ -132,31 +130,35 @@
     private void btnStandard_Click(object sender, EventArgs e)
     {
             Robot robot = new Robot();
-            robot.SetReconnectParam(true, 100, 1000);
+            robot.SetReconnectParam(true, 100, 200);
             robot.RPC("192.168.58.2");
 
-            string[] ver = new string[20];
-            int rtn = 0;
-            rtn = robot.GetSoftwareVersion(ref ver[0], ref ver[1], ref ver[2]);
-            rtn = robot.GetHardwareVersion(ref ver[3], ref ver[4], ref ver[5], ref ver[6], ref ver[7], ref ver[8], ref ver[9], ref ver[10]);
-            rtn = robot.GetFirmwareVersion(ref ver[11], ref ver[12], ref ver[13], ref ver[14], ref ver[15], ref ver[16], ref ver[17], ref ver[18]);
-            Console.WriteLine($"robotmodel  is: {ver[0]}");
-            Console.WriteLine($"webVersion  is: {ver[1]}");
-            Console.WriteLine($"controllerVersion  is: {ver[2]}");
-            Console.WriteLine($"Hard ctrlBox Version  is: {ver[3]}");
-            Console.WriteLine($"Hard driver1 Version  is: {ver[4]}");
-            Console.WriteLine($"Hard driver2 Version  is: {ver[5]}");
-            Console.WriteLine($"Hard driver3 Version  is: {ver[6]}");
-            Console.WriteLine($"Hard driver4 Version  is: {ver[7]}");
-            Console.WriteLine($"Hard driver5 Version  is: {ver[8]}");
-            Console.WriteLine($"Hard driver6 Version  is: {ver[9]}");
-            Console.WriteLine($"Hard end Version  is: {ver[10]}");
-            Console.WriteLine($"Firm ctrlBox Version  is: {ver[11]}");
-            Console.WriteLine($"Firm driver1 Version  is: {ver[12]}");
-            Console.WriteLine($"Firm driver2 Version  is: {ver[13]}");
-            Console.WriteLine($"Firm driver3 Version  is: {ver[14]}");
-            Console.WriteLine($"Firm driver4 Version  is: {ver[15]}");
-            Console.WriteLine($"Firm driver5 Version  is: {ver[16]}");
-            Console.WriteLine($"Firm driver6 Version  is: {ver[17]}");
-            Console.WriteLine($"Firm end Version  is: {ver[18]}");
-     }
+        string ip = "";
+        string version = "";
+        byte state = 0;
+
+        robot.GetSDKVersion(ref version);
+        Console.WriteLine($"SDK version : {version}");
+        robot.GetControllerIP(ref ip);
+        Console.WriteLine($"controller ip : {ip}");
+
+        robot.Mode(1);
+        Thread.Sleep(1000);
+        robot.DragTeachSwitch(1);
+        int rtn = robot.IsInDragTeach(ref state);
+        Console.WriteLine($"drag state : {state}");
+        Thread.Sleep(3000);
+        robot.DragTeachSwitch(0);
+        Thread.Sleep(1000);
+        robot.IsInDragTeach(ref state);
+        Console.WriteLine($"drag state : {state}");
+        Thread.Sleep(3000);
+        robot.RobotEnable(0);
+        Thread.Sleep(3000);
+        robot.RobotEnable(1);
+
+        robot.Mode(0);
+        Thread.Sleep(1000);
+        robot.Mode(1);
+    }
+

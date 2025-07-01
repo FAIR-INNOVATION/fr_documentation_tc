@@ -250,5 +250,7 @@
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
     public double[] jt_tgt_tor;//关节指令力矩
     public int smartToolState; //SmartTool手柄按鈕狀態
+    public float wideVoltageCtrlBoxTemp;        //寬電壓控制箱溫度
+    public UInt16 wideVoltageCtrlBoxFanVel;   //寬電壓控制箱風扇電流（mA）
     public UInt16 check_sum; /* 與校驗 */                // + 2 = 609                 
     }

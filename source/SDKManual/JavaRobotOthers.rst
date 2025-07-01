@@ -352,3 +352,89 @@
         rtn = robot.RbLogDownload("D://zDOWN/");
         System.out.println("RbLogDownload rtn is: "+rtn);
     }
+
+下發SCP指令
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.6-3.8.3
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 下發SCP指令
+    * @param [in] mode 0-上傳（上位機->控制器），1-下載（控制器->上位機）
+    * @param [in] sshname 上位機用戶名
+    * @param [in] sship 上位機ip地址
+    * @param [in] usr_file_url 上位機文件路徑
+    * @param [in] robot_file_url 機器人控制器文件路徑
+    * @return 錯誤碼
+    */
+    int SetSSHScpCmd(int mode, String sshname, String sship, String usr_file_url, String robot_file_url)
+
+代碼示例
++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void main(String[] args)
+    {
+        Robot robot = new Robot();
+        robot.SetReconnectParam(true,20,500);//設置重連次數、間隔
+        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+        int rtn = robot.RPC("192.168.58.2");
+        if(rtn == 0)
+        {
+            System.out.println("rpc連接 success");
+        }
+        else
+        {
+            System.out.println("rpc連接 fail");
+            return ;
+        }
+
+        String file_path= "/fruser/airlab.lua";
+        String[] md5 =new String[]{""};
+
+        String[] ssh_keygen=new String[]{""};
+        int retval = robot.GetSSHKeygen(ssh_keygen);
+        System.out.println(ssh_keygen[0]);
+
+        String ssh_name = "fr";
+        String ssh_ip = "192.168.58.45";
+        String ssh_route = "/home/fr";
+        String ssh_robot_url = "/root/robot/dhpara.config";
+        retval = robot.SetSSHScpCmd(1, ssh_name, ssh_ip, ssh_route, ssh_robot_url);
+        System.out.println("SetSSHScpCmd retval is:"+ retval);
+        System.out.println("robot url is:"+ ssh_robot_url);
+
+        robot.ComputeFileMD5(file_path, md5);
+        System.out.println("md5 is:+"+ md5[0]);
+    }
+
+設置寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.6-3.8.3
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 設置寬電壓控制箱溫度及風扇轉速監控參數
+    * @param [in] enable 0-不使能監測；1-使能監測
+    * @param [in] period 監測週期(s),範圍1-100
+    * @return 錯誤碼
+    */
+    int SetWideBoxTempFanMonitorParam(int enable, int period);
+
+獲取寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.6-3.8.3
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 獲取寬電壓控制箱溫度及風扇轉速監控參數
+    * @return List[0]-錯誤碼,List[1]-enable 0-不使能監測；1-使能監測,List[2]-period 監測週期(s),範圍1-100
+    */
+    List<Number> GetWideBoxTempFanMonitorParam()

@@ -441,6 +441,8 @@ UDP擴展軸通訊參數
       public double[]  jt_tgt_tor=new double[6];    //關節指令力矩
       int smartToolState;         //SmartTool手柄按鈕狀態
 
+      public float wideVoltageCtrlBoxTemp;        //寬電壓控制箱溫度
+      public int wideVoltageCtrlBoxFanVel;   //寬電壓控制箱風扇轉速(mA)
       public short check_sum = 0;          /* 和校驗 */
 
       public ROBOT_STATE_PKG()

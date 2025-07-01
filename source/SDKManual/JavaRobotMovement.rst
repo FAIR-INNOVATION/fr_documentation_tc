@@ -153,6 +153,7 @@ jog點動立即停止
 
 笛卡兒空間整圓運動
 +++++++++++++++++++++++++++++
+.. versionchanged:: Java SDK-v1.0.6-3.8.3
 .. code-block:: Java
     :linenos:
 
@@ -175,9 +176,11 @@ jog點動立即停止
     * @param  [in] ovl  速度縮放因子，範圍[0~100]
     * @param  [in] offset_flag  0-不偏移，1-基座標系/工件坐標系下偏移，2-工具坐標系下偏移
     * @param  [in] offset_pos  位元位偏移量
+    * @param  [in] oacc 加速度百分比
+    * @param  [in] blendR -1：阻塞；0~1000：平滑半徑
     * @return  錯誤碼
     */      
-    int Circle(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos);
+    int Circle(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR)
 
 代碼範例
 +++++++++++++++++++++++++++++
