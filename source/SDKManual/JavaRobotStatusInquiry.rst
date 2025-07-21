@@ -4,64 +4,345 @@
 .. toctree:: 
     :maxdepth: 5
 
-取得機器人安裝角度
+獲取當前關節位置(角度)
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  取得機器人安裝角度
-    * @return  List[0]:錯誤碼; List[1]:double yangle 傾斜角; List[2]:double zangle 旋轉角
-    */
-    List<Number> GetRobotInstallAngle(); 
-
-取得系統變數值
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得系統變數值
-    * @param  [in] id 系統變數編號，範圍[1~20]
-    * @return  List[0]:錯誤碼; List[1]:double value 系統變數值
-    */
-    List<Number> GetSysVarValue(int id); 
-
-取得目前關節位置(角度)
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得目前關節位置(角度)
+    * @brief  獲取當前關節位置(角度)
     * @param  [out] jPos 獲取的六個關節位置，單位deg
     * @return  錯誤碼
     */
     int GetActualJointPosDegree(JointPos jPos); 
 
-取得關節回饋速度-deg/s
+獲取關節反饋速度-deg/s
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 取得關節回饋速度-deg/s 
+    * @brief 獲取關節反饋速度-deg/s 
     * @param [out] speed 六個關節速度
     * @return 錯誤碼 
     */
     int GetActualJointSpeedsDegree(Object[] speed);
 
-取得當前工具位姿
+獲取關節反饋加速度
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  取得當前工具位姿
+    * @brief  獲取關節反饋加速度-deg/s^2
+    * @param  [in] flag 0-阻塞，1-非阻塞
+    * @param  [out] acc 六個關節加速度
+    * @return  錯誤碼
+    */
+    public int GetActualJointAccDegree(int flag, Object[] acc)
+
+獲取TCP指令合速度
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取TCP指令速度
+    * @param  [in] flag 0-阻塞，1-非阻塞
+    * @param  [out] tcp_speed 線性速度
+    * @param  [out] ori_speed 姿態速度
+    * @return  錯誤碼
+    */
+    public int GetTargetTCPCompositeSpeed(int flag, double tcp_speed, double ori_speed)
+
+獲取TCP反饋合速度
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取TCP反饋合速度
+    * @param  [in] flag 0-阻塞，1-非阻塞
+    * @param  [out] tcp_speed 線性速度
+    * @param  [out] ori_speed 姿態速度
+    * @return  錯誤碼
+    */
+    public int GetActualTCPCompositeSpeed(int flag, double tcp_speed, double ori_speed)
+
+獲取TCP指令速度
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取TCP指令速度
+    * @param  [in] flag 0-阻塞，1-非阻塞
+    * @param  [out] speed [x,y,z,rx,ry,rz]速度
+    * @return  錯誤碼
+    */
+    public int GetTargetTCPSpeed(int flag, Object[] speed)
+
+獲取TCP反饋速度
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取TCP反饋速度
+    * @param  [in] flag 0-阻塞，1-非阻塞
+    * @param  [out] speed [x,y,z,rx,ry,rz]速度
+    * @return  錯誤碼
+    */
+    public int GetActualTCPSpeed(int flag, Object[] speed)
+
+獲取當前工具位姿
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取當前工具位姿
     * @param  [out] desc_pos  工具位姿
     * @return  錯誤碼
     */
     int GetActualTCPPose(DescPose desc_pos); 
+
+獲取當前工具座標系編號
++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取當前工具座標系編號
+    * @param  [in] flag  0-阻塞，1-非阻塞
+    * @param  [out] id  工具座標系編號
+    * @return  錯誤碼
+    */
+    int GetActualTCPNum(int flag, int[] id)
+
+獲取當前工件座標系編號
++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取當前工件座標系編號
+    * @param  [in] flag  0-阻塞，1-非阻塞
+    * @param  [out] id  工件座標系編號
+    * @return  錯誤碼
+    */
+    public int GetActualWObjNum(int flag, int[] id)
+
+獲取當前末端法蘭位姿
++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取當前末端法蘭位姿
+    * @param  [in] flag  0-阻塞，1-非阻塞
+    * @param  [out] desc_pos  法蘭位姿
+    * @return  錯誤碼
+    */
+    public int GetActualToolFlangePose(int flag, DescPose desc_pos)
+
+獲取當前關節轉矩
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取當前關節轉矩
+    * @param  [in]  flag 0-阻塞，1-非阻塞
+    * @param  [out]  torques 關節轉矩
+    * @return  錯誤碼
+    */
+    int GetJointTorques(int flag, Object[] torques);
+
+獲取系統時間
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  獲取系統時間
+    * @return  List[0]:int 錯誤碼; List[1]:double t_ms 單位ms
+    */
+    List<Number> GetSystemClock();
+
+查詢機器人運動是否完成
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  查詢機器人運動是否完成
+    * @param   [out] state  0-未完成，1-完成
+    * @return  錯誤碼
+    */
+    public int GetRobotMotionDone(int[] state)
+
+查詢機器人運動隊列緩存長度
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  查詢機器人運動隊列緩存長度
+    * @param   [out] len  緩存長度
+    * @return  錯誤碼
+    */
+    public int GetMotionQueueLength(int[] len)
+
+獲取機器人急停狀態
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取機器人急停狀態
+    * @param [out] state 急停狀態，0-非急停，1-急停
+    * @return 錯誤碼
+    */
+    public int GetRobotEmergencyStopState(int[] state)
+
+獲取SDK與機器人的通訊狀態
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取SDK與機器人的通訊狀態
+    * @return state 通訊狀態，0-通訊正常，1-通訊異常
+    */
+    public int GetSDKComState()
+
+獲取安全停止信號
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取安全停止信號
+    * @param  [out] si0_state 安全停止信號SI0，0-無效，1-有效
+    * @param  [out] si1_state 安全停止信號SI1，0-無效，1-有效
+    * @return 錯誤碼
+    */
+    public int GetSafetyStopState(int[] si0_state, int[] si1_state)
+
+獲取機器人關節驅動器溫度(℃)
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取機器人關節驅動器溫度(℃)
+    * @param  [out] temperature 溫度
+    * @return 錯誤碼
+    */
+    public int GetJointDriverTemperature(double[] temperature)
+
+獲取機器人關節驅動器扭矩(Nm)
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取機器人關節驅動器扭矩(Nm)
+    * @param  [out] torque 扭矩
+    * @return 錯誤碼
+    */
+    public int GetJointDriverTorque(double[] torque)
+
+獲取機器人實時狀態結構體
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取機器人實時狀態結構體
+    * @return 實時狀態結構體
+    */
+    public ROBOT_STATE_PKG GetRobotRealTimeState()
+
+機器人狀態查詢代碼示例
++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestGetStatus(Robot robot)
+    {
+        List<Number> angle=new ArrayList<>();
+        angle=robot.GetRobotInstallAngle();
+        System.out.println("yangle:"+angle.get(1)+",zangle:"+angle.get(2));
+
+        JointPos j_deg =new JointPos(){};
+        robot.GetActualJointPosDegree( j_deg);
+
+        Object[] jointSpeed =new Object[] { 0,0,0,0,0,0 };
+        robot.GetActualJointSpeedsDegree(jointSpeed);
+
+        Object[] jointAcc = new Object[]{0,0,0,0,0,0 };
+        robot.GetActualJointAccDegree(0, jointAcc);
+
+        double tcp_speed = 0.0;
+        double ori_speed = 0.0;
+        robot.GetTargetTCPCompositeSpeed(0, tcp_speed, ori_speed);
+
+        robot.GetActualTCPCompositeSpeed(0, tcp_speed, ori_speed);
+
+        Object[] targetSpeed =new Object[] { 0,0,0,0,0,0 };
+        robot.GetTargetTCPSpeed(0, targetSpeed);
+
+        Object[] actualSpeed =new Object[] {0,0,0,0,0,0 };
+        robot.GetActualTCPSpeed(0, actualSpeed);
+
+        DescPose tcp = new DescPose(){};
+        robot.GetActualTCPPose(tcp);
+
+        DescPose flange = new DescPose(){};
+        robot.GetActualToolFlangePose(0, flange);
+
+        int[] id = {};
+        robot.GetActualTCPNum(0, id);
+
+        robot.GetActualWObjNum(0, id);
+
+        List<Number> jtorque=new ArrayList<>();
+        jtorque=robot.GetJointTorques(0);
+
+        List<Number> t_ms = new ArrayList<>();
+        t_ms=robot.GetSystemClock();
+
+        List<Integer> config = new ArrayList<>();
+        config=robot.GetRobotCurJointsConfig();
+
+        int motionDone = 0;
+        robot.GetRobotMotionDone(motionDone);
+
+        int[] len ={0 };
+        robot.GetMotionQueueLength(len);
+
+        int[] emergState = {0};
+        robot.GetRobotEmergencyStopState(emergState);
+
+        int comstate = 0;
+        comstate=robot.GetSDKComState();
+
+        int[] si0_state=new int[]{0}, si1_state=new int[]{0};
+        robot.GetSafetyStopState(si0_state, si1_state);
+
+        double[] temp =new double[] { 0,0,0,0,0,0 };
+        robot.GetJointDriverTemperature(temp);
+
+        double[] torque = new double[]{ 0,0,0,0,0,0 };
+        robot.GetJointDriverTorque(torque);
+
+        ROBOT_STATE_PKG pkg=new ROBOT_STATE_PKG();
+        pkg=robot.GetRobotRealTimeState();
+
+        return 0;
+    }
 
 逆運動學求解
 +++++++++++++++++++++++++++++++++++++++++
@@ -70,38 +351,38 @@
 
     /**
     * @brief  逆運動學求解
-    * @param  [in] type 0-絕對位姿(基底座標系)，1-增量位姿(基底座標系)，2-增量位姿(工具座標系)
-    * @param  [in] desc_pos 笛卡兒位姿
-    * @param  [in] config 關節空間配置，[-1]-參考目前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] type 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    * @param  [in] desc_pos 笛卡爾位姿
+    * @param  [in] config 關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
     * @param  [out] joint_pos 關節位置
     * @return  錯誤碼
     */ 
     int GetInverseKin(int type, DescPose desc_pos, int config, JointPos joint_pos);
 
-逆運動學求解
+逆運動學求解(參考位置)
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
     * @brief  逆運動學求解，參考指定關節位置求解
-    * @param  [in] posMode 0絕對位姿， 1相對位姿-基座標系 2相對位姿-工具坐標系
-    * @param  [in] desc_pos 笛卡兒位姿
+    * @param  [in] posMode 0絕對位姿， 1相對位姿-基座標系   2相對位姿-工具座標系
+    * @param  [in] desc_pos 笛卡爾位姿
     * @param  [in] joint_pos_ref 參考關節位置
     * @param  [out] joint_pos 關節位置
     * @return  錯誤碼
     */   
     int GetInverseKinRef(int posMode, DescPose desc_pos, JointPos joint_pos_ref, JointPos joint_pos); 
 
-逆運動學求解
+獲取逆運動學是否有解
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  逆運動學求解，參考指定關節位置判断是否有解
-    * @param  [in] posMode 0絕對位姿， 1相對位姿-基座標系 2相對位姿-工具坐標系
-    * @param  [in] desc_pos 笛卡兒位姿
+    * @brief  逆運動學求解，參考指定關節位置判斷是否有解
+    * @param  [in] posMode 0絕對位姿， 1相對位姿-基座標系   2相對位姿-工具座標系
+    * @param  [in] desc_pos 笛卡爾位姿
     * @param  [in] joint_pos_ref 參考關節位置
     * @return  錯誤碼  List[0]:錯誤碼; List[1]: int hasResult 0-無解，1-有解
     */   
@@ -115,231 +396,33 @@
     /**
     * @brief  正運動學求解
     * @param  [in] joint_pos 關節位置
-    * @param  [out] desc_pos 笛卡兒位姿
+    * @param  [out] desc_pos 笛卡爾位姿
     * @return  錯誤碼
     */
     int GetForwardKin(JointPos joint_pos, DescPose desc_pos); 
 
-取得當前關節轉矩
-+++++++++++++++++++++++++++++++++++++++++
+機器人正逆運動學計算代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /**
-    * @brief 取得當前關節轉矩
-    * @param  [in]  flag 0-阻塞，1-非阻塞
-    * @param  [out]  torques 關節轉矩
-    * @return  錯誤碼
-    */
-    int GetJointTorques(int flag, Object[] torques); 
-
-取得目前負載的重量
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得目前負載的重量
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @return  List[0]:int 錯誤碼; List[1]: double weight  負載重量，單位kg
-    */
-    List<Number> GetTargetPayload(int flag); 
-
-取得目前負載的質心
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得目前負載的質心
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] cog 負載質心，單位mm
-    * @return  錯誤碼
-    */   
-    int GetTargetPayloadCog(int flag, DescTran cog);
-
-代碼範例
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    public static void main(String[] args)
+    public static int TestInverseKin(Robot robot)
     {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        robot.SetRobotInstallAngle(23.4, 56.7);
-        List<Number> rtnArr =  robot.GetRobotInstallAngle();
-        System.out.println("安裝角度: " + rtnArr.get(1) + "  " + rtnArr.get(2));
-        robot.SetRobotInstallAngle(0, 0);
+        JointPos j1=new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
+        DescPose desc_pos1=new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
 
-        robot.SetLoadWeight(0);
-        robot.SetLoadCoord(new DescTran(0.0, 0.0, 0.0));
+        JointPos inverseRtn = new JointPos(){};
 
-        DescTran cog = new DescTran();
-        robot.GetTargetPayloadCog(1, cog);
+        robot.GetInverseKin(0, desc_pos1, -1, inverseRtn);
+        robot.GetInverseKinRef(0, desc_pos1, j1, inverseRtn);
 
-        System.out.println("weight is " + rtnArr.get(1) + " cog is  " + cog.x + "  " + cog.y + "  " + cog.z);
+        int hasResut = 0;
+        robot.GetInverseKinHasSolution(0, desc_pos1, j1);
 
-        List<Integer> Arr = robot.GetRobotCurJointsConfig();
-        System.out.println("config is " + Arr.get(1));
+        DescPose forwordResult = new DescPose(){};
+        robot.GetForwardKin(j1, forwordResult);
 
-        DescPose  desc_p1=new DescPose();
-
-        JointPos JP1=new JointPos(117.408,-86.777,81.499,-87.788,-92.964,92.959);
-        JointPos JP_test=new JointPos();
-        DescPose DP1 =new DescPose(327.359,-420.973,518.377,-177.199,3.209,114.449);
-        robot.GetInverseKin(0, DP1, -1, JP_test);
-        List<Integer> rtnArrInt =  robot.GetInverseKinHasSolution(0, DP1, JP1);//逆向是否有解
-        System.out.println("has Solution ? " + rtnArrInt.get(1));
-        robot.GetForwardKin(JP1, desc_p1);//正向運動学
-        JointPos j2 = new JointPos();
-        robot.GetInverseKinRef(0, DP1, JP1, JP_test);//逆向運動学
-    }
-
-獲取當前工具坐標系
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  獲取當前工具坐標系
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] desc_pos 工具坐標系位姿
-    * @return  錯誤碼
-    */
-    int GetTCPOffset(int flag, DescPose desc_pos); 
-
-取得當前工件坐標系
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得當前工件坐標系
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] desc_pos 工件座標系位姿
-    * @return  錯誤碼
-    */   
-    int GetWObjOffset(int flag, DescPose desc_pos); 
-
-取得關節軟限位角度
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得關節軟限位角度
-    * @param  [in] flag 0-阻塞，1-非阻塞
-    * @param  [out] negative  負限位角度，單位deg
-    * @param  [out] positive  正限位角度，單位deg
-    * @return  錯誤碼
-    */
-    int GetJointSoftLimitDeg(int flag, Object[] negative, Object[] positive); 
-
-代碼範例
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    public static void main(String[] args)
-    {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        DescPose offset = new DescPose();
-        robot.GetTCPOffset(1, offset);//工具
-        System.out.println("offset is " + offset);
-        robot.GetWObjOffset(1, offset);//工件
-        System.out.println("offset is " + offset);
-
-        Object[] neg_deg = new Object[]{0, 0 , 0, 0, 0, 0};
-        Object[] pos_deg = new Object[]{0, 0 , 0, 0, 0, 0};
-        robot.GetJointSoftLimitDeg(1,  neg_deg,  pos_deg);
-        System.out.println("neg is " + Arrays.toString(neg_deg) + " pos is " + Arrays.toString(pos_deg));
-    }
-
-取得系統時間
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得系統時間
-    * @return  List[0]:int 錯誤碼; List[1]:double t_ms 單位ms
-    */
-    List<Number> GetSystemClock();
-
-取得機器人當前關節配置
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得機器人當前關節配置
-    * @return  List[0]:int 錯誤碼; List[1]:int config 關節空間配置，範圍[0~7]
-    */
-    List<Integer> GetRobotCurJointsConfig();
-
-取得機器人預設速度
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /**
-    * @brief  取得機器人預設速度
-    * @return  List[0]:int 錯誤碼; List[1]: double vel 速度，單位mm/s
-    */   
-    List<Number> GetDefaultTransVel(); 
-
-代碼範例
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    public static void main(String[] args)
-    {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        List<Integer> rtnArr = robot.GetRobotCurJointsConfig();
-        System.out.println("config is " + rtnArr.get(1));
-
-        List<Number> rtnArrN = robot.GetSystemClock();
-        System.out.println("systom clock is  " + rtnArrN.get(1));
-
-        rtnArrN = robot.GetDefaultTransVel();
-        System.out.println("機器人當前速度為: " + rtnArrN.get(1));
+        return 0;
     }
 
 查詢機器人示教管理點數據
@@ -354,144 +437,59 @@
     */ 
     List<Number> GetRobotTeachingPoint(String name); 
 
-取得SSH公鑰
+獲取機器人DH參數補償值
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 取得SSH公鑰 
-    * @param [in] keygen 公鑰 
-    * @return 錯誤碼    
-    */ 
-    List<Number> GetRobotTeachingPoint(String name); 
+    /**
+    * @brief 獲取機器人DH參數補償值
+    * @param dhCompensation 機器人DH參數補償值(mm) [cmpstD1,cmpstA2,cmpstA3,cmpstD4,cmpstD5,cmpstD6]
+    * @return 錯誤碼
+    */
+    public int GetDHCompensation(Object[] dhCompensation)
 
-計算指定路徑下檔案的MD5值
-+++++++++++++++++++++++++++++++++++++++++
+獲取控制箱SN碼
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.4-3.8.1
+
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 計算指定路徑下檔案的MD5值 
-    * @param [in] file_path 檔案路徑包含檔名，預設Traj資料夾路徑為:"/fruser/traj/",如"/fruser/traj/trajHelix_aima_1.txt" 
-    * @return 錯誤碼   
-    */ 
-    int ComputeFileMD5(String file_path, String md5); 
+    /**
+    * @brief 獲取控制箱SN碼
+    * @param [out] SNCode 控制箱SN碼
+    * @return 錯誤碼
+    */
+    int GetRobotSN(String[] SNCode);
 
-代碼範例
-+++++++++++++++++++++++++++++++++++++++++
+查詢機器人示教管理點位數據代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    public static void main(String[] args)
+    public static int TestGetTeachPoint(Robot robot)
     {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
+        String name = "P1";
+        List<Number> data=new ArrayList<>();
+        data = robot.GetRobotTeachingPoint(name);
+        System.out.println(name+" name is: "+data.get(0));
+        for (int i = 0; i < 20; i++)
         {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
+            System.out.println("data is: "+ data.get(i+1));
         }
 
-        List<Number> rtnArr = robot.GetRobotTeachingPoint("P1");
-        System.out.println("point data  " + rtnArr);
+        int[] que_len = {0};
+        int rtn = robot.GetMotionQueueLength(que_len);
+        System.out.println("GetMotionQueueLength rtn is:"+rtn+", queue length is:"+ que_len[0]);
 
-        String[] key = {""};
-        robot.GetSSHKeygen(key);
-        System.out.println("ssh key  " + key[0]);
-    }
+        Object[] dh = new Object[]{ 0,0,0,0,0,0 };
+        int retval = 0;
+        retval = robot.GetDHCompensation(dh);
+        System.out.println("retval is: "+retval);
 
-取得機器人軟體版本
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /** 
-    * @brief 取得機器人軟體版本
-    * @param [out] robotModel 機器人型號
-    * @param [out] webVersion web版本
-    * @param [out] controllerVersion 控制器版本
-    * @return 錯誤碼 
-    */
-    int GetSoftwareVersion(String robotModel, String webVersion, String controllerVersion);
-
-取得機器人硬體版本
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /** 
-    * @brief 取得機器人硬體版本
-    * @param [out] ctrlBoxBoardVersion 控制箱載板硬體版本
-    * @param [out] driver1Version 驅動器1硬體版本
-    * @param [out] driver1Version 驅動器2硬體版本
-    * @param [out] driver1Version 驅動器3硬體版本
-    * @param [out] driver1Version 驅動器4硬體版本
-    * @param [out] driver1Version 驅動器5硬體版本
-    * @param [out] driver1Version 驅動器6硬體版本
-    * @param [out] endBoardVersion 端板硬體版本
-    * @return 錯誤碼 
-    */
-    int GetHardwareVersion(String ctrlBoxBoardVersion, String driver1Version, String driver2Version, String driver3Version,
-                                          String driver4Version, String driver5Version, String driver6Version, String endBoardVersion);
-
-取得機器人韌體版本
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /** 
-    * @brief 取得機器人韌體版本
-    * @param [out] ctrlBoxBoardVersion 控制箱載板韌體版本
-    * @param [out] driver1Version 驅動器1韌體版本
-    * @param [out] driver1Version 驅動器2韌體版本
-    * @param [out] driver1Version 驅動器3韌體版本
-    * @param [out] driver1Version 驅動器4韌體版本
-    * @param [out] driver1Version 驅動器5韌體版本
-    * @param [out] driver1Version 驅動器6韌體版本
-    * @param [out] endBoardVersion 末端板韌體版本
-    * @return 錯誤碼 
-    */
-    int GetFirmwareVersion(String ctrlBoxBoardVersion, String driver1Version, String driver2Version, String driver3Version,
-                                          String driver4Version, String driver5Version, String driver6Version, String endBoardVersion);
-
-代碼範例
-+++++++++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    public static void main(String[] args)
-    {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        String ctrlBoxBoardVersion = "";
-        String driver1Version = "";
-        String driver2Version = "";
-        String driver3Version = "";
-        String driver4Version = "";
-        String driver5Version = "";
-        String driver6Version = "";
-        String endBoardVersion = "";
-        robot.GetHardwareVersion(ctrlBoxBoardVersion ,driver1Version,  driver2Version,  driver3Version,
-                 driver4Version,  driver5Version,  driver6Version,  endBoardVersion);
-
-        robot.GetFirmwareVersion(ctrlBoxBoardVersion, driver1Version, driver2Version, driver3Version,
-                driver4Version, driver5Version, driver6Version, endBoardVersion);
+        String[] SN = new String[]{""};
+        robot.GetRobotSN(SN);
+        System.out.println("robot SN is "+SN[0]);
+        return 0;
     }

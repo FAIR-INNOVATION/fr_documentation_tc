@@ -1,285 +1,222 @@
-機器人WebAPP程式使用
+機器人WebAPP程序使用
 ======================
 
 .. toctree:: 
     :maxdepth: 5
 
-設定開機自動載入預設的作業程序
+設置開機自動加載默認的作業程序
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  設定開機自動載入預設的作業程序
-    * @param  [in] flag  0-開機不自動載入預設程序，1-開機自動載入預設程序
-    * @param  [in] program_name 作業程序名稱及路徑，如"/fruser/movej.lua"，其中"/fruser/"為固定路徑
+    * @brief  設置開機自動加載默認的作業程序
+    * @param  [in] flag  0-開機不自動加載默認程序，1-開機自動加載默認程序
+    * @param  [in] program_name 作業程序名及路徑，如"/fruser/movej.lua"，其中"/fruser/"爲固定路徑
     * @return  錯誤碼
     */
     int LoadDefaultProgConfig(int flag, String program_name); 
 
-代碼範例
-++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    public static void main(String[] args)
-    {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        robot.LoadDefaultProgConfig(1,"/fruser/1010Test.lua");
-    }
-
-載入指定的作業程序
+加載指定的作業程序
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  載入指定的作業程序
-    * @param  [in] program_name 作業程序名稱及路徑，如"/fruser/movej.lua"，其中"/fruser/"為固定路徑
+    * @brief  加載指定的作業程序
+    * @param  [in] program_name 作業程序名及路徑，如"/fruser/movej.lua"，其中"/fruser/"爲固定路徑
     * @return  錯誤碼
     */
     int ProgramLoad(String program_name); 
 
-取得已載入的作業程序名
+獲取已加載的作業程序名
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  取得已載入的作業程序名
-    * @param  [out] program_name program_name[0]:作業程序名稱及路徑，如"/fruser/movej.lua"，其中"/fruser/"為固定路徑
+    * @brief  獲取已加載的作業程序名
+    * @param  [out] program_name program_name[0]:作業程序名及路徑，如"/fruser/movej.lua"，其中"/fruser/"爲固定路徑
     * @return  錯誤碼
     */
     int GetLoadedProgram(String[] program_name); 
 
-取得目前機器人作業程序的執行行號
+獲取當前機器人作業程序的執行行號
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  取得目前機器人作業程式執行的行號
+    * @brief  獲取當前機器人作業程序執行的行號
     * @param  [out] List[0]:錯誤碼; List[1]:int line 行號
     * @return  錯誤碼
     */   
     List<Integer> GetCurrentLine();
 
-運行目前已載入的作業程序
+運行當前加載的作業程序
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  運行目前已載入的作業程序
+    * @brief  運行當前加載的作業程序
     * @return  錯誤碼
     */
     int ProgramRun();
 
-代碼範例
-++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    public static void main(String[] args)
-    {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        robot.Mode(0);
-        robot.ProgramLoad("/fruser/1010Test.lua");
-        String[] loadedNameStr = new String[1];
-        robot.GetLoadedProgram(loadedNameStr);
-        System.out.println("Loaded lua Name is " + loadedNameStr[0]);
-        robot.ProgramRun();
-        while(true)
-        {
-            List<Integer> results =  robot.GetCurrentLine();
-            ROBOT_STATE_PKG pkg = robot.GetRobotRealTimeState();
-            System.out.println("current line is " + results.get(1) + " Robot Runing State: " + pkg.robot_state);
-            robot.Sleep(500);
-        }
-    }
-
-暫停運動
+暫停當前運行的作業程序
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  暫停目前正在執行的作業程序
+    * @brief  暫停當前運行的作業程序
     * @return  錯誤碼
     */ 
     int PauseMotion();
 
-恢復運動
+恢復當前暫停的作業程序
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  恢復目前暫停的作業程序
+    * @brief  恢復當前暫停的作業程序
     * @return  錯誤碼
     */ 
     int ResumeMotion(); 
 
-終止目前正在執行的作業程序
+終止當前運行的作業程序
 +++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  終止目前正在執行的作業程序
+    * @brief  終止當前運行的作業程序
     * @return  錯誤碼
     */ 
     int StopMotion();   
 
-代碼範例
-++++++++++++
+獲取機器人作業程序執行狀態
++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    public static void main(String[] args)
-    {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
-        {
-            System.out.println("rpc連接 success");
-        }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        robot.Mode(0);
-        robot.ProgramLoad("/fruser/1010Test.lua");
-        String[] loadedNameStr = new String[1];
-        robot.GetLoadedProgram(loadedNameStr);
-        System.out.println("Loaded lua Name is " + loadedNameStr[0]);
-        robot.ProgramRun();
+    /**
+    * @brief  獲取機器人作業程序執行狀態
+    * @param   [out] state 1-程序停止或無程序運行，2-程序運行中，3-程序暫停
+    * @return  錯誤碼
+    */
+    public int GetProgramState(int[] state)
 
-        for(int i = 0; i < 10;  i++)
-        {
-            robot.PauseMotion();//暫停運動
-            robot.Sleep(1000);
-            robot.ResumeMotion();//恢復運動
-            robot.Sleep(1000);
-        }
-        robot.StopMotion();//停止
+機器人LUA程序操作代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestLuaOp(Robot robot)
+    {
+        String program_name = "/fruser/Text1.lua";
+        String[] loaded_name = new String[]{""};
+        int[] state=new int[]{0};
+        List<Integer> line=new ArrayList<>();
+
+        robot.Mode(0);
+        robot.LoadDefaultProgConfig(0, program_name);
+        robot.ProgramLoad(program_name);
+        robot.ProgramRun();
+        robot.Sleep(1000);
+        robot.ProgramPause();
+        robot.GetProgramState(state);
+        System.out.println("program state:"+ state[0]);
+        line=robot.GetCurrentLine();
+        System.out.println("current line:"+ line);
+        robot.GetLoadedProgram(loaded_name);
+        System.out.println("program name:"+ loaded_name[0]);
+        robot.Sleep(1000);
+        robot.ProgramResume();
+        robot.Sleep(1000);
+        robot.ProgramStop();
+        robot.Sleep(1000);
+
+        robot.CloseRPC();
+        return 0;
     }
 
-下載lua程序
-+++++++++++++++++++++++++++++++++++
-
-.. versionadded:: JavaSDK-v1.0.5
-
+下載Lua程序
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
     * @brief 下載作業程序
     * @param [in] fileName 要下載的lua文件名"test.lua"或"test.tar.gz"
-    * @param [in] savePath 儲存檔案本機路徑“D://Down/”
+    * @param [in] savePath 保存文件本地路徑“D://Down/”
     * @return 錯誤碼 
     */
     int LuaDownLoad(String fileName, String savePath);
 
-上傳lua程序
+刪除Lua程序
 +++++++++++++++++++++++++++++++++++
-
-.. versionadded:: JavaSDK-v1.0.5
-
-.. code-block:: Java
-    :linenos:
-
-    /** 
-    * @brief 上傳作業程序
-    * @param [in] filePath 本地lua檔案路徑名 ".../test.lua"或".../test.tar.gz"
-    * @param [out] errStr 錯誤訊息
-    * @return 錯誤碼 
-    */
-    int LuaUpload(String filePath, String errStr);
-
-删除Lua程序
-+++++++++++++++++++++++++++++++++++
-
-.. versionadded:: JavaSDK-v1.0.5
-
 .. code-block:: Java
     :linenos:
 
     /** 
     * @brief 刪除作業程序
-    * @param [in] fileName 要刪除的作業程序名稱"test.lua"
+    * @param [in] fileName 要刪除的作業程序名"test.lua"
     * @return 錯誤碼 
     */
     int LuaDelete(String fileName);
 
-取得目前所有作業程序名稱
+獲取當前所有lua文件名稱
 +++++++++++++++++++++++++++++++++++
-
-.. versionadded:: JavaSDK-v1.0.5
-
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 取得目前所有作業程序名稱
+    * @brief 獲取當前所有lua文件名稱
     * @param [out] luaNames 作業程序名稱列表
     * @return 錯誤碼 
     */
     int GetLuaList(List<String> luaNames);
 
-代碼範例
-++++++++++++
+上傳Lua程序
++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    public static void main(String[] args)
+    /** 
+    * @brief 上傳作業程序
+    * @param [in] filePath 本地lua文件路徑名 ".../test.lua"或".../test.tar.gz"
+    * @param [out] errStr 錯誤信息
+    * @return 錯誤碼 
+    */
+    int LuaUpload(String filePath, String errStr);
+
+機器人LUA文件上傳下載代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestLUAUpDownLoad(Robot robot)
     {
-        Robot robot = new Robot();
-        robot.SetReconnectParam(true,20,500);//設定重連次數、間隔
-        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
-        int rtn = robot.RPC("192.168.58.2");
-        if(rtn == 0)
+        List<String> luaNames=new ArrayList<>();
+        int rtn = robot.GetLuaList(luaNames);
+        System.out.println("res is: "+rtn);
+        System.out.println("size is: "+luaNames.size());
+        for (int it =1; it < luaNames.size(); it++)
         {
-            System.out.println("rpc連接 success");
+            System.out.println(luaNames.get(it));
         }
-        else
-        {
-            System.out.println("rpc連接 fail");
-            return ;
-        }
-        robot.LuaDownLoad("1010TestLUA.lua", "D://LUA/");
-        List<String> names = new ArrayList<String>();
-        robot.GetLuaList(names);
-        System.out.println("lua Num " + names.size() + "   " + names.get(0));
-        String errStr = "";
-        robot.LuaUpload("D://LUA/1010TestLUA.lua", errStr);
-        System.out.println("robot upload 1010TestLUA lua result " + errStr);
-        robot.LuaDelete("1010TestLUA.lua");
+
+        rtn = robot.LuaDownLoad("test.lua", "D://zDOWN/");
+        System.out.println("LuaDownLoad rtn is:"+rtn);
+
+        rtn = robot.LuaUpload("D://zUP/XG.lua","");
+        System.out.println("LuaUpload rtn is:"+ rtn);
+
+        rtn = robot.LuaDelete("XG.lua");
+        System.out.println("LuaDelete rtn is:"+ rtn);
+
+        return 0;
     }

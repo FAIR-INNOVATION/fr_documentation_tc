@@ -273,7 +273,7 @@
 FAIRINO SimMachine
 -----------------------
 
-    :download:`FAIRINO SimMachine Docker <https://drive.google.com/file/d/1T1JKsQqiFdPhVYEe9KN7S5_LSVyE0pUL/view?usp=sharing>`
+    :download:`FAIRINO SimMachine Docker <https://drive.google.com/file/d/1Mmeyl81KE6_24k3YIw-Py83kJIzmOVji/view?usp=sharing>`
 
 碼高機frcap
 ---------------------------------
@@ -321,6 +321,4 @@ Java SDK
 
 機器人軟體下載
 ---------------------------------
-    :download:`FAIRINO-CobotSoftware-V3.8.3-QX-Release-250627 <https://drive.google.com/file/d/14P8wcBgBTrg8f-l-fzuRYZmpIE9WjaC1/view?usp=sharing>`
-
-    :download:`FAIRINO-CobotSoftware-V3.8.3-LA-Release-250704 <https://drive.google.com/file/d/1Vn1NbR0sY6j5UiKhxirJgzcpvGskNHdl/view?usp=sharing>`
+    :download:`FAIRINO-CobotSoftware-QX-V3.8.4-20250718.zip <https://drive.google.com/file/d/1H7SBa_NWM-x45dEK_oNpH8jlZxIgQcZA/view?usp=sharing>`

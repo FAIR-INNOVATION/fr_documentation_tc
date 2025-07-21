@@ -10,7 +10,7 @@
 
 PDF下載
 ------------------
-    :download:`法奧意威協作機器人使用手冊 <https://drive.google.com/file/d/1BhS9fw_DNonoDXXYkYiTAOxCqNwRebPe/view?usp=sharing>`
+    :download:`法奧意威協作機器人使用手冊 <https://drive.google.com/file/d/1liQ5VU47irHdUh7-_Fl3h8oDG7VHK3DM/view?usp=sharing>`
 
 快速開始
 ------------

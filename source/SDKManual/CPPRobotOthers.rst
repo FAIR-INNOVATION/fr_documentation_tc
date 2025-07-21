@@ -351,3 +351,94 @@
       return 0;
     }
 
+設定關節韌體升級
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設定關節韌體升級
+    * @param [in] type 升級檔案類型：1-韌體升級(需進入boot模式)；2-從站配置檔案升級(需先關閉機器人使能)
+    * @param [in] path 本地升級包完整路徑(D://zUP/XXXXX.bin)
+    * @return 錯誤碼
+    */
+    errno_t SetJointFirmwareUpgrade(int type, std::string path);
+  
+設定控制箱韌體升級
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設定控制箱韌體升級
+    * @param [in] type 升級檔案類型：1-韌體升級(需進入boot模式)；2-從站配置檔案升級(需先關閉機器人使能)
+    * @param [in] path 本地升級包完整路徑(D://zUP/XXXXX.bin)
+    * @return 錯誤碼
+    */
+    errno_t SetCtrlFirmwareUpgrade(int type, std::string path);
+  
+設定末端韌體升級
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設定末端韌體升級
+    * @param [in] type 升級檔案類型：1-韌體升級(需進入boot模式)；2-從站配置檔案升級(需先關閉機器人使能)
+    * @param [in] path 本地升級包完整路徑(D://zUP/XXXXX.bin)
+    * @return 錯誤碼
+    */
+    errno_t SetEndFirmwareUpgrade(int type, std::string path);
+
+關節全參數配置檔案升級
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 關節全參數配置檔案升級(需先關閉機器人使能)
+    * @param [in] path 本地升級包完整路徑(D://zUP/XXXXX.bin)
+    * @return 錯誤碼
+    */
+    errno_t JointAllParamUpgrade(std::string path);
+    
+機器人從站韌體升級代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int TestFirmWareUpgrade()
+    {
+    ROBOT_STATE_PKG pkg = {};
+    FRRobot robot;
+    robot.LoggerInit();
+    robot.SetLoggerLevel(1);
+    int rtn = robot.RPC("192.168.58.2");
+    if (rtn != 0)
+    {
+    return -1;
+    }
+    robot.SetReConnectParam(true, 30000, 500);
+    robot.RobotEnable(0);
+    robot.Sleep(200);
+    rtn = robot.JointAllParamUpgrade("D://zUP/upgrade/jointallparameters.db");
+    printf("robot JointAllParamUpgrade rtn is %d\n", rtn);
+    rtn = robot.SetCtrlFirmwareUpgrade(2, "D://zUP/upgrade/FAIR_Cobot_Cbd_Asix_V2.0.bin");
+    printf("robot SetCtrlFirmwareUpgrade config param rtn is %d\n", rtn);
+    rtn = robot.SetEndFirmwareUpgrade(2, "D://zUP/upgrade/FAIR_Cobot_Axle_Asix_V2.4.bin");
+    printf("robot SetEndFirmwareUpgrade config param rtn is %d\n", rtn);
+    robot.SetSysServoBootMode();
+    rtn = robot.SetCtrlFirmwareUpgrade(1, "D://zUP/upgrade/FR_CTRL_PRIMCU_FV201212_MAIN_U4_T01_20250428(MT).bin");
+    printf("robot SetCtrlFirmwareUpgrade rtn is %d\n", rtn);
+    rtn = robot.SetEndFirmwareUpgrade(1, "D://zUP/upgrade/FR_END_FV201009_MAIN_U1_T01_20250428.bin");
+    printf("robot SetEndFirmwareUpgrade rtn is %d\n", rtn);
+    rtn = robot.SetJointFirmwareUpgrade(1, "D://zUP/upgrade/FR_SERVO_FV504214_MAIN_U7_T07_20250519.bin");
+    printf("robot SetJointFirmwareUpgrade rtn is %d\n", rtn);
+    robot.CloseRPC();
+    return 0;
+    }

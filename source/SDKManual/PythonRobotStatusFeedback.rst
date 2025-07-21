@@ -1,35 +1,35 @@
-狀態回饋訊息
+數據結構說明
 ==========================
 
 .. toctree:: 
     :maxdepth: 5
 
-狀態回饋訊息對照表
+控制器狀態反饋數據包
 ~~~~~~~~~~~~~~~~~~~~~~~~
-.. versionchanged:: Python SDK-v2.0.8-3.7.8
+.. versionadded:: python SDK-v2.1.3
     
 .. csv-table:: 
     :header-rows: 1
-    :name: 狀態回饋訊息對照表
+    :name: 控制器狀態反饋數據包
     :widths: 20 30
 
-    "變數","意義"
-    "program_state","程式運作狀態，1-停止；2-運轉；3-暫停"
-    "robot_state","機器人運動狀態，1-停止；2-運轉；3-暫停；4-拖曳"
+    "變量","含義"
+    "program_state","程序運行狀態，1-停止；2-運行；3-暫停"
+    "robot_state","機器人運動狀態，1-停止；2-運行；3-暫停；4-拖動"
     "main_code","主故障碼"
-    "sub_code", 子故障碼"
+    "sub_code",	子故障碼"
     "robot_mode","機器人模式，0-自動模式；1-手動模式"
-    "jt_cur_pos[i]","關節目前位置,單位deg,i:0~5"
+    "jt_cur_pos[i]","關節當前位置,單位deg,i:0~5"
     "tl_cur_pos[i]","工具當前位姿,單位deg&mm,i:0~5"
-    "flange_cur_pos[i]","末端法蘭目前位姿,單位deg&mm,i:0~5"
-    "actual_qd[i]","機器人目前關節速度,單位deg/s^2,i:0~5"
+    "flange_cur_pos[i]","末端法蘭當前位姿,單位deg&mm,i:0~5"
+    "actual_qd[i]","機器人當前關節速度,單位deg/s^2,i:0~5"
     "actual_qdd[i]","機器人當前關節加速度,單位mm/s,i:0~5"
     "target_TCP_CmpSpeed[i]","機器人TCP合成指令速度,單位mm/s&deg/s,i:0~1"
     "target_TCP_Speed[i]","機器人TCP指令速度,單位mm/s&deg/s,i:0~5"
     "actual_TCP_CmpSpeed[i]","機器人TCP合成實際速度,單位mm/s&deg/s,i:0~1"
     "actual_TCP_Speed[i]","機器人TCP實際速度,單位mm/s&deg/s,i:0~5"
-    "jt_cur_tor[i]","當前扭力,單位N·m ,i:0~5"
-    "tool","應用程式的工具坐標系編號"
+    "jt_cur_tor[i]","當前扭矩,單位N·m ,i:0~5"
+    "tool","應用的工具座標系編號"
     "user","應用的工件座標系編號"
     "cl_dgt_output_h","控制箱數字量IO輸出15-8"
     "cl_dgt_output_l","控制箱數字量IO輸出7-0"
@@ -37,19 +37,19 @@
     "dgt_input_h","控制箱數字量IO輸入15-8"
     "cl_dgt_input_l","控制箱數字量IO輸入7-0"
     "tl_dgt_input_l","工具數字量IO輸入7-0，僅bit0-bit1有效"
-    "cl_analog_input[i]","控制箱類比輸入,i:0~2"
-    "tl_anglog_input","工具類比輸入"
-    "ft_sensor_raw_data","力矩傳感器原始資料,單位N&Nm,i:0~5"
-    "ft_sensor_data","力矩感測器資料,單​​位N&Nm,i:0~5"
-    "ft_sensor_active","力矩感應器啟動狀態，0-復位，1-啟動"
+    "cl_analog_input[i]","控制箱模擬量輸入,i:0~2"
+    "tl_anglog_input","工具模擬量輸入"
+    "ft_sensor_raw_data","力矩傳感器原始數據,單位N&Nm,i:0~5"
+    "ft_sensor_data","力矩傳感器數據,單位N&Nm,i:0~5"
+    "ft_sensor_active","力矩傳感器激活狀態，0-復位，1-激活"
     "EmergencyStop","急停標誌,0-急停未按下,1-急停按下"
-    "motion_done","運動到位訊號,1-到位，0-未到位"
-    "gripper_motiondone","夾爪動作完成訊號,1-完成，0-未完成"
+    "motion_done","運動到位信號,1-到位，0-未到位"
+    "gripper_motiondone","夾爪運動完成信號,1-完成，0-未完成 "
     "mc_queue_len","運動指令隊列長度"
-    "collisionState","碰撞偵測,1-碰撞，0-無碰撞"
+    "collisionState","碰撞檢測,1-碰撞，0-無碰撞 "
     "trajectory_pnum","軌跡點編號"
-    "safety_stop0_state","安全停止訊號SI0"
-    "safety_stop1_state","安全停止訊號SI1"
+    "safety_stop0_state","安全停止信號SI0"
+    "safety_stop1_state","安全停止信號SI1"
     "gripper_fault_id","錯誤夾爪號"
     "gripper_fault","夾爪故障"
     "gripper_active","夾爪激活狀態，0-未激活，1-激活"
@@ -58,30 +58,30 @@
     "gripper_current","夾爪電流(百分比)"
     "gripper_tmp","夾爪溫度,單位℃"
     "gripper_voltage","夾爪電壓,單位V"
-    "auxState.servoId","485擴充軸,伺服驅動程式ID號碼,i:0~3"
-    "auxState.servoErrCode","485擴充軸,伺服驅動故障碼,i:0~3"
-    "auxState.servoState","485擴充軸,伺服驅動器狀態,i:0~3"
-    "auxState.servoPos","485擴充軸,伺服目前位置,i:0~3"
-    "auxState.servoVel","485擴充軸,伺服當前速度,i:0~3"
-    "auxState.servoTorque","485擴充軸,伺服當前轉矩,i:0~3"
+    "auxState.servoId","485擴展軸,伺服驅動器ID號,i:0~3"
+    "auxState.servoErrCode","485擴展軸,伺服驅動器故障碼,i:0~3"
+    "auxState.servoState","485擴展軸,伺服驅動器狀態,i:0~3"
+    "auxState.servoPos","485擴展軸,伺服當前位置,i:0~3"
+    "auxState.servoVel","485擴展軸,伺服當前速度,i:0~3"
+    "auxState.servoTorque","485擴展軸,伺服當前轉矩,i:0~3"
     "extAxisStatus[i].pos","UDP擴展軸,位置,i:0~3"
     "extAxisStatus[i].vel","UDP擴展軸,速度,i:0~3"
-    "extAxisStatus[i].errorCode","UDP擴充軸,故障碼,i:0~3"
-    "extAxisStatus[i].ready","UDP擴充軸,伺服準備好,i:0~3"
+    "extAxisStatus[i].errorCode","UDP擴展軸,故障碼,i:0~3"
+    "extAxisStatus[i].ready","UDP擴展軸,伺服準備好,i:0~3"
     "extAxisStatus[i].inPos","UDP擴展軸,伺服到位,i:0~3"
-    "extAxisStatus[i].alarm","UDP擴展軸,伺服警報,i:0~3"
+    "extAxisStatus[i].alarm","UDP擴展軸,伺服報警,i:0~3"
     "extAxisStatus[i].flerr","UDP擴展軸,跟隨誤差,i:0~3"
     "extAxisStatus[i].nlimit","UDP擴展軸,到負限位,i:0~3"
     "extAxisStatus[i].pLimit","UDP擴展軸,到正限位,i:0~3"
-    "extAxisStatus[i].mdbsOffLine","UDP擴充軸,磁碟機485匯流排斷線"
-    "extAxisStatus[i].mdbsTimeout","UDP擴充軸,控制卡與控制箱485通訊逾時"
-    "extAxisStatus[i].homingStatus","UDP擴充軸,回零狀態"
-    "extDIState","擴充數位輸入狀態"
-    "extDOState","擴充數位輸出狀態"
-    "extAIState","擴充模擬輸入狀態"
-    "extAOState","擴充類比輸出狀態"
-    "rbtEnableState","機器人啟用狀態"
-    "jointDriverTorque","關節驅動器當前扭力"
+    "extAxisStatus[i].mdbsOffLine","UDP擴展軸,驅動器485總線掉線"
+    "extAxisStatus[i].mdbsTimeout","UDP擴展軸,控制卡與控制箱485通信超時"
+    "extAxisStatus[i].homingStatus","UDP擴展軸,回零狀態"
+    "extDIState","擴展數字輸入狀態"
+    "extDOState","擴展數字輸出狀態"
+    "extAIState","擴展模擬輸入狀態"
+    "extAOState","擴展模擬輸出狀態"
+    "rbtEnableState","機器人使能狀態"
+    "jointDriverTorque","關節驅動器當前扭矩"
     "jointDriverTemperature","關節驅動器當前溫度"
     "year","年"
     "mouth","月"
@@ -100,9 +100,64 @@
     "weldingBreakOffState","焊接中斷狀態"
     "jt_tgt_tor","關節指令力矩"
     "smartToolState","SmartTool手柄按鈕狀態"
+    "wideVoltageCtrlBoxTemp","寬電壓控制箱溫度"
+    "wideVoltageCtrlBoxFanCurrent","寬電壓控制箱風扇電流(ma)"
+
+伺服控制器狀態
+~~~~~~~~~~~~~~~~~~~~~~~~
+.. versionadded:: python SDK-v2.1.3
     
-代碼範例
----------------
+.. csv-table:: 
+    :header-rows: 1
+    :name: 伺服控制器狀態
+    :widths: 20 30
+
+    "變量","含義"
+    "servoId","伺服驅動器ID號"
+    "servoErrCode","伺服驅動器故障碼"
+    "servoState","伺服驅動器狀態"
+    "servoPos","伺服當前位置"
+    "servoVel","伺服當前速度"
+    "servoTorque","伺服當前轉矩"
+
+擴展軸狀態
+~~~~~~~~~~~~~~~~~~~~~~~~
+.. versionadded:: python SDK-v2.1.3
+    
+.. csv-table:: 
+    :header-rows: 1
+    :name: 擴展軸狀態
+    :widths: 20 30
+
+    "變量","含義"
+    "pos","擴展軸位置"
+    "vel","擴展軸速度"
+    "errorCode","擴展軸故障碼"
+    "ready","伺服準備好"
+    "inPos","伺服到位"
+    "alarm","伺服報警"
+    "flerr","跟隨誤差"
+    "nlimit","到負限位"
+    "pLimit","到正限位"
+    "mdbsOffLine","驅動器485總線掉線"
+    "mdbsTimeout","控制卡與控制箱485通信超時"
+    "homingStatus","擴展軸回零狀態"
+
+焊接中斷狀態
+~~~~~~~~~~~~~~~~~~~~~~~~
+.. versionadded:: python SDK-v2.1.3
+    
+.. csv-table:: 
+    :header-rows: 1
+    :name: 焊接中斷狀態
+    :widths: 20 30
+
+    "變量","含義"
+    "breakOffState","焊接中斷狀態"
+    "weldArcState","焊接電弧中斷狀態"
+
+代碼示例
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
     :linenos:
@@ -262,3 +317,5 @@
     print("gripperRotTorque:", robot.robot_state_pkg.gripperRotTorque)
     print("jt_tgt_tor:", robot.robot_state_pkg.jt_tgt_tor)
     print("smartToolState:", robot.robot_state_pkg.smartToolState)
+    print("wideVoltageCtrlBoxTemp:", robot.robot_state_pkg.wideVoltageCtrlBoxTemp)
+    print("wideVoltageCtrlBoxFanCurrent:", robot.robot_state_pkg.wideVoltageCtrlBoxFanCurrent)

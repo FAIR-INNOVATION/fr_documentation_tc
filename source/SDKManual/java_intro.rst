@@ -33,8 +33,7 @@ Java
     JavaRobotWebAPPProgramUse
     JavaRobotPeripherals
     JavaRobotForceControl
-    JavaRobotConveyor
-    JavaRobotWeld
     JavaRobotExtendedAxis
+    JavaRobotWeld
     JavaRobotOthers
     JavaAppendix

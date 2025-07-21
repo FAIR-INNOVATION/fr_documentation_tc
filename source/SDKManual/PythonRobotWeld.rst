@@ -3,6 +3,376 @@
 
 .. toctree:: 
     :maxdepth: 5
+    
+設置焊接工藝曲線參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetProcessParam(id, startCurrent, startVoltage, startTime, weldCurrent, weldVoltage, endCurrent, endVoltage, endTime)``"
+    "描述", "設置焊接工藝曲線參數"
+    "必選參數", "
+    - ``id``： 焊接工藝編號(1-99)
+    - ``startCurrent``： 起弧電流(A)
+    - ``startVoltage``：startVoltage 起弧電壓(V)
+    - ``startTime``：startTime 起弧時間(ms)
+    - ``weldCurrent``：weldCurrent 焊接電流(A)
+    - ``weldVoltage``：weldVoltage 焊接電壓(V)
+    - ``endCurrent``：endCurrent 收弧電流(A)
+    - ``endVoltage``：endVoltage 收弧電壓(V)
+    - ``endTime``：endTime 收弧時間(ms)
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+獲取焊接工藝曲線參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingGetProcessParam(id)``"
+    "描述", "獲取焊接工藝曲線參數"
+    "必選參數", "
+    - ``id``： 焊接工藝編號(1-99)
+    "
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``startCurrent``：起弧電流(A)
+    - ``startVoltage``： 起弧電壓(V)
+    - ``startTime``：起弧時間(ms)
+    - ``weldCurrent``：焊接電流(A)
+    - ``weldVoltage``：焊接電壓(V)
+    - ``endCurrent``：收弧電流(A)
+    - ``endVoltage``：收弧電壓(V)
+    - ``endTime``：收弧時間(ms)
+    " 
+
+設置焊接電流與輸出模擬量對應關係
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.0.5
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetCurrentRelation(currentMin, currentMax, outputVoltageMin, outputVoltageMax)``"
+    "描述", "設置焊接電流與輸出模擬量對應關係"
+    "必選參數", "- ``currentMin``： 焊接電流-模擬量輸出線性關係左側點電流值(A)
+    - ``currentMax``：  焊接電流-模擬量輸出線性關係右側點電流值(A)
+    - ``outputVoltageMin``： 焊接電流-模擬量輸出線性關係左側點模擬量輸出電壓值(V)
+    - ``outputVoltageMax``：焊接電流-模擬量輸出線性關係右側點模擬量輸出電壓值(V)
+    - ``AOIndex``：焊接電流模擬量輸出端口"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置焊接電壓與輸出模擬量對應關係
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.0.5
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetVoltageRelation(weldVoltageMin, weldVoltageMax, outputVoltageMin, outputVoltageMax)``"
+    "描述", "設置焊接電壓與輸出模擬量對應關係"
+    "必選參數", "- ``weldVoltageMin``： 焊接電壓-模擬量輸出線性關係左側點焊接電壓值(A)
+    - ``weldVoltageMax``：  焊接電壓-模擬量輸出線性關係右側點焊接電壓值(A)
+    - ``outputVoltageMin``： 焊接電壓-模擬量輸出線性關係左側點模擬量輸出電壓值(V)
+    - ``outputVoltageMax``：焊接電壓-模擬量輸出線性關係右側點模擬量輸出電壓值(V)
+    - ``AOIndex``：焊接電壓模擬量輸出端口"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取焊接電流與輸出模擬量對應關係
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.0.5
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingGetCurrentRelation()``"
+    "描述", "獲取焊接電流與輸出模擬量對應關係"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``currentMin``：焊接電流-模擬量輸出線性關係左側點電流值(A)
+    - ``currentMax``：焊接電流-模擬量輸出線性關係右側點電流值(A)
+    - ``outputVoltageMin``：焊接電流-模擬量輸出線性關係左側點模擬量輸出電壓值(V)
+    - ``outputVoltageMax``：焊接電流-模擬量輸出線性關係右側點模擬量輸出電壓值(V)
+    - ``AOIndex``：焊接電壓模擬量輸出端口"
+
+獲取焊接電壓與輸出模擬量對應關係
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.0.5
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingGetVoltageRelation()``"
+    "描述", "獲取焊接電壓與輸出模擬量對應關係"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``weldVoltageMin``: 焊接電壓-模擬量輸出線性關係左側點焊接電壓值(V)
+    - ``weldVoltageMax``: 焊接電壓-模擬量輸出線性關係右側點焊接電壓值(V)
+    - ``outputVoltageMin``: 焊接電壓-模擬量輸出線性關係左側點模擬量輸出電壓值(V)
+    - ``outputVoltageMax``: 焊接電流-模擬量輸出線性關係右側點模擬量輸出電壓值(V)
+    - ``AOIndex``：焊接電壓模擬量輸出端口"
+
+設置焊接電流
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.0.5
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetCurrent(ioType, current, AOIndex, blend)``"
+    "描述", "設置焊接電流"
+    "必選參數", "- ``ioType``： 類型 0-控制器IO； 1-擴展IO
+    - ``current``： 焊接電流值(A)
+    - ``AOIndex``： 焊接電流控制箱模擬量輸出端口(0-1)
+    - ``blend``：是否平滑 0-不平滑，1-平滑"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置焊接電壓
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.0.5
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetVoltage(ioType, voltage, AOIndex, blend)``"
+    "描述", "設置焊接電壓"
+    "必選參數", "- ``ioType``： 類型 0-控制器IO； 1-擴展IO
+    - ``voltage``： 焊接電壓值(V)
+    - ``AOIndex``： 焊接電流控制箱模擬量輸出端口(0-1)
+    - ``blend``：是否平滑 0-不平滑，1-平滑"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置擺動參數
+++++++++++++++++++++++++++++++++++
+.. versionchanged:: python SDK-v2.1.2
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveSetPara(weaveNum, weaveType, weaveFrequency, weaveIncStayTime, weaveRange, weaveLeftRange, weaveRightRange, additionalStayTime, weaveLeftStayTime, weaveRightStayTime, weaveCircleRadio, weaveStationary, weaveYawAngle, weaveRotAngle)``"
+    "描述", "設置擺動參數"
+    "必選參數", "- ``weaveNum``： 擺焊參數配置編號
+    - ``weaveType``： 擺動類型 0-平面三角波擺動；1-垂直L型三角波擺動；2-順時針圓形擺動；3-逆時針圓形擺動；4-平面正弦波擺動；5-垂直L型正弦波擺動；6-垂直三角波擺動；7-垂直正弦波擺動
+    - ``weaveFrequency``： 擺動頻率(Hz)
+    - ``weaveIncStayTime``： 等待模式 0-週期不包含等待時間；1-週期包含等待時間必選參數
+    - ``weaveRange``： 擺動幅度(mm)
+    - ``weaveLeftRange``： 垂直三角擺動左弦長度(mm)
+    - ``weaveRightRange``： 垂直三角擺動右弦長度(mm)
+    - ``additionalStayTime``： 垂直三角擺動垂三角點停留時間(mm)
+    - ``weaveLeftStayTime``： 擺動左停留時間(ms)
+    - ``weaveRightStayTime``：  擺動右停留時間(ms)
+    - ``weaveCircleRadio``： 圓形擺動-回調比率(0-100%)
+    - ``weaveStationary``： 擺動位置等待，0-等待時間內位置繼續移動；1-等待時間內位置靜止"
+    "默認參數", "- ``weaveYawAngle``： 擺動方向方位角（繞擺動Z軸旋轉），單位°,默認0
+    - ``weaveRotAngle``： 擺動方向方位角（繞擺動X軸旋轉），單位°,默認0"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置焊接參數代碼示例
+++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.WeldingSetProcessParam(1, 177, 27, 1000, 178, 28, 176, 26, 1000)
+    robot.WeldingSetProcessParam(2, 188, 28, 555, 199, 29, 133, 23, 333)
+    start_current = 0
+    start_voltage = 0
+    start_time = 0
+    weld_current = 0
+    weld_voltage = 0
+    end_current = 0
+    end_voltage = 0
+    end_time = 0
+    error, start_current, start_voltage, start_time, weld_current, weld_voltage, end_current,end_voltage, end_time = robot.WeldingGetProcessParam(1)
+    print(f"the Num 1 process param is {start_current} {start_voltage} {start_time} {weld_current} {weld_voltage} {end_current} {end_voltage} {end_time}")
+    error, start_current, start_voltage, start_time, weld_current, weld_voltage, end_current,end_voltage, end_time = robot.WeldingGetProcessParam(2)
+    print(f"the Num 2 process param is {start_current} {start_voltage} {start_time} {weld_current} {weld_voltage} {end_current} {end_voltage} {end_time}")
+    rtn = robot.WeldingSetCurrentRelation(0, 400, 0, 10, 0)
+    print(f"WeldingSetCurrentRelation rtn is: {rtn}")
+    rtn = robot.WeldingSetVoltageRelation(0, 40, 0, 10, 1)
+    print(f"WeldingSetVoltageRelation rtn is: {rtn}")
+    current_min = 0
+    current_max = 0
+    vol_min = 0
+    vol_max = 0
+    output_vmin = 0
+    output_vmax = 0
+    cur_index = 0
+    vol_index = 0
+    rtn,current_min, current_max, output_vmin, output_vmax, cur_index = robot.WeldingGetCurrentRelation()
+    print(f"WeldingGetCurrentRelation rtn is: {rtn}")
+    print(f"current min {current_min} current max {current_max} output vol min {output_vmin} output vol max {output_vmax}")
+    rtn,vol_min, vol_max, output_vmin, output_vmax, vol_index = robot.WeldingGetVoltageRelation()
+    print(f"WeldingGetVoltageRelation rtn is: {rtn}")
+    print(f"vol min {vol_min} vol max {vol_max} output vol min {output_vmin} output vol max {output_vmax}")
+    rtn = robot.WeldingSetCurrent(1, 100, 0, 0)
+    print(f"WeldingSetCurrent rtn is: {rtn}")
+    time.sleep(3)
+    rtn = robot.WeldingSetVoltage(1, 10, 0, 0)
+    print(f"WeldingSetVoltage rtn is: {rtn}")
+    rtn = robot.WeaveSetPara(0, 0, 2.000000, 0, 10.000000, 0.000000, 0.000000, 0, 0, 0, 0, 0,0.0, 60.000000)
+    print(f"rtn is: {rtn}")
+    robot.WeaveOnlineSetPara(0, 0, 1, 0, 20, 0, 0, 0, 0)
+    rtn = robot.WeldingSetCheckArcInterruptionParam(1, 200)
+    print(f"WeldingSetCheckArcInterruptionParam {rtn}")
+    rtn = robot.WeldingSetReWeldAfterBreakOffParam(1, 5.7, 98.2, 0)
+    print(f"WeldingSetReWeldAfterBreakOffParam {rtn}")
+    enable = 0
+    length = 0
+    velocity = 0
+    move_type = 0
+    check_enable = 0
+    arc_interrupt_time_length = 0
+    rtn,check_enable, arc_interrupt_time_length = robot.WeldingGetCheckArcInterruptionParam()
+    print(f"WeldingGetCheckArcInterruptionParam checkEnable {check_enable} arcInterruptTimeLength {arc_interrupt_time_length}")
+    rtn,enable, length, velocity, move_type = robot.WeldingGetReWeldAfterBreakOffParam()
+    print(f"WeldingGetReWeldAfterBreakOffParam enable = {enable}, length = {length}, velocity = {velocity}, moveType = {move_type}")
+    robot.SetWeldMachineCtrlModeExtDoNum(17)
+    for i in range(5):
+        robot.SetWeldMachineCtrlMode(0)
+        time.sleep(1)
+        robot.SetWeldMachineCtrlMode(1)
+        time.sleep(1)
+    robot.CloseRPC()
+
+即時設置擺動參數
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.1
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveOnlineSetPara (weaveNum, weaveType, weaveFrequency, weaveIncStayTime, weaveRange, weaveLeftStayTime, weaveRightStayTime, weaveCircleRadio, weaveStationary)``"
+    "描述", "即時設置擺動參數"
+    "必選參數", "- ``weaveNum``： 擺焊參數配置編號
+    - ``weaveType``： 擺動類型 0-平面三角波擺動；1-垂直L型三角波擺動；2-順時針圓形擺動；3-逆時針圓形擺動；4-平面正弦波擺動；5-垂直L型正弦波擺動；6-垂直三角波擺動；7-垂直正弦波擺動
+    - ``weaveFrequency``： 擺動頻率(Hz)
+    - ``weaveIncStayTime``： 等待模式 0-週期不包含等待時間；1-週期包含等待時間必選參數
+    - ``weaveRange``： 擺動幅度(mm)
+    - ``weaveLeftStayTime``： 擺動左停留時間(ms)
+    - ``weaveRightStayTime``：  擺動右停留時間(ms)
+    - ``weaveCircleRadio``： 圓形擺動-回調比率(0-100%)
+    - ``weaveStationary``： 擺動位置等待，0-等待時間內位置繼續移動；1-等待時間內位置靜止"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取機器人焊接電弧意外中斷檢測參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingGetCheckArcInterruptionParam()``"
+    "描述", "獲取機器人焊接電弧意外中斷檢測參數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
+    - ``checkEnable``：是否使能檢測；0-不使能；1-使能
+    - ``arcInterruptTimeLength``：電弧中斷確認時長(ms)"
+
+設置機器人焊接電弧意外中斷檢測參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetCheckArcInterruptionParam(checkEnable, arcInterruptTimeLength)``"
+    "描述", "設置機器人焊接電弧意外中斷檢測參數"
+    "必選參數", "- ``checkEnable``：是否使能檢測；0-不使能；1-使能
+    - ``arcInterruptTimeLength``：電弧中斷確認時長(ms)"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+獲取機器人焊接中斷恢復參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingGetReWeldAfterBreakOffParam()``"
+    "描述", "獲取機器人焊接中斷恢復參數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
+    - ``enable``：是否使能焊接中斷恢復
+    - ``length``：焊縫重疊距離(mm)
+    - ``velocity``：機器人回到再起弧點速度百分比(0-100)
+    - ``moveType``：機器人運動到再起弧點方式；0-LIN；1-PTP"
+
+設置機器人焊接中斷恢復參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingSetReWeldAfterBreakOffParam(enable, length, velocity, moveType)``"
+    "描述", "設置機器人焊接中斷恢復參數"
+    "必選參數", "- ``enable``：是否使能焊接中斷恢復
+    - ``length``：焊縫重疊距離(mm)
+    - ``velocity``：機器人回到再起弧點速度百分比(0-100)
+    - ``moveType``：機器人運動到再起弧點方式；0-LIN；1-PTP"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+設置焊機控制模式擴展DO端口
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetWeldMachineCtrlModeExtDoNum(DONum)``"
+    "描述", "設置焊機控制模式擴展DO端口"
+    "必選參數", "- ``DONum``：焊機控制模式DO端口(0-127)"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+設置焊機控制模式
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetWeldMachineCtrlMode(mode)``"
+    "描述", "設置焊機控制模式"
+    "必選參數", "- ``mode``：焊機控制模式;0-一元化"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
 
 焊接開始
 ++++++++++++++++++++++++++++++++++
@@ -14,29 +384,11 @@
 
     "原型", "``ARCStart(ioType, arcNum, timeout)``"
     "描述", "焊接開始"
-    "必選參數", "- ``ioType``：io 類型 0-控制器IO；1-擴展IO
-    - ``arcNum``： 焊機設定檔編號
+    "必選參數", "- ``ioType``：io類型 0-控制器IO； 1-擴展IO
+    - ``arcNum``： 焊機配置文件編號
     - ``timeout``： 起弧超時時間"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    weldIOType =0
-    arcNum =0
-    weldTimeout=5000
-    #起弧
-    ret = robot.ARCStart(weldIOType,arcNum,weldTimeout)
-    print("ARCStart錯誤碼", ret)
-    time.sleep(3)
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 焊接結束
 ++++++++++++++++++++++++++++++++++
@@ -48,264 +400,13 @@
 
     "原型", "``ARCEnd(ioType, arcNum, timeout)``"
     "描述", "焊接結束"
-    "必選參數", "- ``ioType``： 類型 0-控制器IO；1-擴充IO
-    - ``arcNum``： 焊機設定檔編號
+    "必選參數", "- ``ioType``： 類型 0-控制器IO； 1-擴展IO
+    - ``arcNum``： 焊機配置文件編號
     - ``timeout``： 起弧超時時間"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    weldIOType =0
-    arcNum =0
-    weldTimeout=5000
-    #收弧
-    ret = robot.ARCEnd(weldIOType,arcNum,weldTimeout)
-    print("ARCEnd錯誤碼", ret)
-    time.sleep(3)
-
-設定焊接電流與輸出模擬量對應關係
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: python SDK-v2.0.5
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingSetCurrentRelation(currentMin, currentMax, outputVoltageMin, outputVoltageMax)``"
-    "描述", "設定焊接電流與輸出模擬量對應關係"
-    "必選參數", "- ``currentMin``： 焊接電流-類比量輸出線性關係左點電流值(A)
-    - ``currentMax``：  焊接電流-類比量輸出線性關係右側點電流值(A)
-    - ``outputVoltageMin``： 焊接電流-類比輸出線性關係左側點類比量輸出電壓值(V)
-    - ``outputVoltageMax``：焊接電流-類比輸出線性關係右側點類比量輸出電壓值(V)
-    - ``AOIndex``：焊接電流類比量輸出端口"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    weldIOType =0
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    weldIOType =0
-    arcNum =0
-    weldTimeout=5000
-
-    #設定焊接電流与類比線性關係
-    ret = robot.WeldingSetCurrentRelation(0,400,0,10,0)
-    print("WeldingSetCurrentRelation", ret)
-    time.sleep(1)
-    #取得焊接電流與類比量線性關係
-    ret = robot.WeldingGetCurrentRelation()
-    print("WeldingGetCurrentRelation", ret)
-    time.sleep(1)
-
-    #設定焊接電壓与類比線性關係
-    ret = robot.WeldingSetVoltageRelation(0,400,0,10,0)
-    print("WeldingSetVoltageRelation", ret)
-    time.sleep(1)
-    #取得焊接電壓與類比線性關係
-    ret = robot.WeldingGetVoltageRelation()
-    print("WeldingGetVoltageRelation", ret)
-    time.sleep(1)
-
-設定焊接電壓與輸出模擬量對應關係
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: python SDK-v2.0.5
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingSetVoltageRelation(weldVoltageMin, weldVoltageMax, outputVoltageMin, outputVoltageMax)``"
-    "描述", "設定焊接電壓與輸出模擬量對應關係"
-    "必選參數", "- ``weldVoltageMin``： 焊接電壓-類比輸出線性關係左點焊接電壓值(A)
-    - ``weldVoltageMax``：  焊接電壓-類比輸出線性關係右側點焊接電壓值(A)
-    - ``outputVoltageMin``： 焊接電壓-類比輸出線性關係左側點類比輸出電壓值(V)
-    - ``outputVoltageMax``：焊接電壓-類比輸出線性關係右側點類比輸出電壓值(V)
-    - ``AOIndex``：焊接電壓類比量輸出端口"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-取得焊接電流與輸出模擬量對應關係
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: python SDK-v2.0.5
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingGetCurrentRelation()``"
-    "描述", "取得焊接電流與輸出模擬量對應關係"
-    "必選參數", "無"
-    "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
-    - ``currentMin``：焊接電流-類比量輸出線性關係左點電流值(A)
-    - ``currentMax``：焊接電流-類比量輸出線性關係右側點電流值(A)
-    - ``outputVoltageMin``：焊接電流-類比輸出線性關係左側點類比量輸出電壓值(V)
-    - ``outputVoltageMax``：焊接電流-類比輸出線性關係右側點類比量輸出電壓值(V)
-    - ``AOIndex``：焊接電壓類比量輸出端口"
-
-取得焊接電壓與輸出類比對應關係
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: python SDK-v2.0.5
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingGetVoltageRelation()``"
-    "描述", "取得焊接電壓與輸出類比對應關係"
-    "必選參數", "無"
-    "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
-    - ``weldVoltageMin``: 焊接電壓-類比輸出線性關係左點焊接電壓值(V)
-    - ``weldVoltageMax``: 焊接電壓-類比輸出線性關係右側點焊接電壓值(V)
-    - ``outputVoltageMin``: 焊接電壓-類比輸出線性關係左側點類比輸出電壓值(V)
-    - ``outputVoltageMax``: 焊接電流-類比輸出線性關係右側點類比量輸出電壓值(V)
-    - ``AOIndex``：焊接電壓類比量輸出端口"
-
-設定焊接電流
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: python SDK-v2.0.5
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingSetCurrent(ioType, current, AOIndex, blend)``"
-    "描述", "設定焊接電流"
-    "必選參數", "- ``ioType``： 類型 0-控制器IO；1-擴充IO
-    - ``current``： 焊接電流值(A)
-    - ``AOIndex``： 焊接電流控制箱類比輸出端口(0-1)
-    - ``blend``：是否平滑 0-不平滑，1-平滑"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-設定焊接電壓
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: python SDK-v2.0.5
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingSetVoltage(ioType, voltage, AOIndex, blend)``"
-    "描述", "設定焊接電壓"
-    "必選參數", "- ``ioType``： 類型 0-控制器IO；1-擴充IO
-    - ``voltage``： 焊接電壓值(V)
-    - ``AOIndex``： 焊接電流控制箱類比輸出端口(0-1)
-    - ``blend``：是否平滑 0-不平滑，1-平滑"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-設定擺動參數
-++++++++++++++++++++++++++++++++++
-.. versionchanged:: Python SDK-v2.0.8-3.7.8
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveSetPara(weaveNum, weaveType, weaveFrequency, weaveIncStayTime, weaveRange, weaveLeftRange, weaveRightRange, additionalStayTime, weaveLeftStayTime, weaveRightStayTime, weaveCircleRadio, weaveStationary, weaveYawAngle=0)``"
-    "描述", "設定擺動參數"
-    "必選參數", "- ``weaveNum``： 擺焊參數配置編號
-    - ``weaveType``： 擺動類型0-平面三角波擺動；1-垂直L型三角波擺動；2-順時針圓形擺動；3-逆時針圓形擺動；4-平面正弦波擺動；5-垂直L型正弦波擺動；6-垂直三角波擺動；7-垂直正弦波擺動
-    - ``weaveFrequency``： 擺動頻率(Hz)
-    - ``weaveIncStayTime``： 等待模式 0-週期不包含等待時間；1-週期包含等待時間必選參數
-    - ``weaveRange``： 擺動幅度(mm)
-    - ``weaveLeftRange``： 垂直三角擺動左弦長度(mm)
-    - ``weaveRightRange``： 垂直三角擺動右弦長度(mm)
-    - ``additionalStayTime``： 垂直三角擺動垂三角點停留時間(mm)
-    - ``weaveLeftStayTime``： 擺動左停留時間(ms)
-    - ``weaveRightStayTime``：  擺動右停留時間(ms)
-    - ``weaveCircleRadio``： 圓形擺動-回調比率(0-100%)
-    - ``weaveStationary``： 擺動位置等待，0-等待時間內位置繼續移動；1-等待時間內位置靜止"
-    "默認參數", "- ``weaveYawAngle``： 摆動方向方位角（绕摆動Z軸旋转），單位°,默認0"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    weaveNum =0
-    weaveType = 0
-    weaveFraquency = 1
-    weavelncStayTime = 0
-    weaveRange = 10
-    weaveLeftStayTime = 10
-    weaveRightStayTime = 10
-    weaveCircleRadio =0
-    weaveStationary =1
-    #設定擺動參數
-    ret = robot.WeaveSetPara(weaveNum,weaveType,weaveFraquency,weavelncStayTime,weaveRange,weaveLeftStayTime,weaveRightStayTime,weaveCircleRadio,weaveStationary)
-    print("WeaveSetPara ", ret)
-    time.sleep(1)
-
-    #擺盪開始
-    ret = robot.WeaveStart(0)
-    print("WeaveStart ", ret)
-    time.sleep(1)
-    ret,pose =robot.GetActualTCPPose(1);
-    print(ret,pose)
-    pose[2]=pose[2]+50
-    ret = robot.MoveL(pose,tool,user)
-    print("MoveL ", ret)
-    time.sleep(1)
-    #即时設定擺動參數
-    ret = robot.WeaveOnlineSetPara (weaveNum,weaveType,weaveFraquency,weavelncStayTime,weaveRange,weaveLeftStayTime,weaveRightStayTime,weaveCircleRadio,weaveStationary)
-    print("WeaveOnlineSetPara ", ret)
-    time.sleep(1)
-    #擺盪結束
-    ret = robot.WeaveEnd(0)
-    print("WeaveEnd ", ret)
-    time.sleep(1)
-
-即时設定擺動參數
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.1
-    
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveOnlineSetPara (weaveNum, weaveType, weaveFrequency, weaveIncStayTime, weaveRange, weaveLeftStayTime, weaveRightStayTime, weaveCircleRadio, weaveStationary)``"
-    "描述", "即时設定擺動參數"
-    "必選參數", "- ``weaveNum``： 擺焊參數配置編號
-    - ``weaveType``： 擺動類型0-平面三角波擺動；1-垂直L型三角波擺動；2-順時針圓形擺動；3-逆時針圓形擺動；4-平面正弦波擺動；5-垂直L型正弦波擺動；6-垂直三角波擺動；7-垂直正弦波擺動
-    - ``weaveFrequency``： 擺動頻率(Hz)
-    - ``weaveIncStayTime``： 等待模式 0-週期不包含等待時間；1-週期包含等待時間必選參數
-    - ``weaveRange``： 擺動幅度(mm)
-    - ``weaveLeftStayTime``： 擺動左停留時間(ms)
-    - ``weaveRightStayTime``：  擺動右停留時間(ms)
-    - ``weaveCircleRadio``： 圓形擺動-回調比率(0-100%)
-    - ``weaveStationary``： 擺動位置等待，0-等待時間內位置繼續移動；1-等待時間內位置靜止"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-擺盪開始
+擺動開始
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.1
     
@@ -314,12 +415,12 @@
     :widths: 10 30
 
     "原型", "``WeaveStart(weaveNum)``"
-    "描述", "擺盪開始"
-    "必選參數", "- ``weaveNum``： 類型 0-控制器IO；1-擴充IO"
+    "描述", "擺動開始"
+    "必選參數", "- ``weaveNum``： 類型 0-控制器IO； 1-擴展IO"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-擺盪結束
+擺動結束
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.1
     
@@ -328,10 +429,10 @@
     :widths: 10 30
 
     "原型", "``WeaveEnd(weaveNum)``"
-    "描述", "擺盪結束"
+    "描述", "擺動結束"
     "必選參數", "- ``weaveNum``： 擺焊參數配置編號"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 正向送絲
 ++++++++++++++++++++++++++++++++++
@@ -343,47 +444,10 @@
 
     "原型", "``SetForwardWireFeed(ioType, wireFeed)``"
     "描述", "正向送絲"
-    "必選參數", "- ``ioType``： 0-控制器IO；1-扩展IO
-    - ``wireFeed``： 送絲控制 0-停止送絲；1-送絲"
+    "必選參數", "- ``ioType``： 0-控制器IO；1-擴展IO
+    - ``wireFeed``： 送絲控制  0-停止送絲；1-送絲"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    weldIOType =0
-    #正向送絲
-    ret = robot.SetForwardWireFeed(weldIOType,1)
-    print("SetForwardWireFeed錯誤碼", ret)
-    time.sleep(1)
-    ret = robot.SetForwardWireFeed(weldIOType,0)
-    print("SetForwardWireFeed錯誤碼", ret)
-    time.sleep(1)
-
-    #反向送絲
-    ret = robot.SetReverseWireFeed(weldIOType,1)
-    print("SetReverseWireFeed錯誤碼", ret)
-    time.sleep(1)
-    #停止反向送絲
-    ret = robot.SetReverseWireFeed(weldIOType,0)
-    print("SetReverseWireFeed錯誤碼", ret)
-    time.sleep(1)
-
-    #送氣
-    ret = robot.SetAspirated(weldIOType,1)
-    print("SetAspirated錯誤碼", ret)
-    time.sleep(1)
-    #停止送氣
-    ret = robot.SetAspirated(weldIOType,0)
-    print("SetAspirated錯誤碼", ret)
-    time.sleep(1)
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 反向送絲
 ++++++++++++++++++++++++++++++++++
@@ -395,10 +459,10 @@
 
     "原型", "``SetReverseWireFeed(ioType, wireFeed)``"
     "描述", "反向送絲"
-    "必選參數", "- ``ioType``： 0-控制器IO；1-扩展IO
-    - ``wireFeed``： 送絲控制 0-停止送絲；1-送絲"
+    "必選參數", "- ``ioType``： 0-控制器IO；1-擴展IO
+    - ``wireFeed``： 送絲控制  0-停止送絲；1-送絲"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 送氣
 ++++++++++++++++++++++++++++++++++
@@ -410,32 +474,75 @@
 
     "原型", "``SetAspirated(ioType, airControl)``"
     "描述", "送氣"
-    "必選參數", "- ``ioType``： 0-控制器IO；1-扩展IO
+    "必選參數", "- ``ioType``： 0-控制器IO；1-擴展IO
     - ``airControl``： 送氣控制  0-停止送氣；1-送氣"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-段焊獲取位置與姿態
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.1
-    
+設置機器人焊接中斷後恢復焊接
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``GetSegmentWeldPoint(startPos, endPos, startDistance)``"
-    "描述", "段焊獲取位置與姿態"
-    "必選參數", "- ``startPos=[x,y,z,rx,ry,rz]``： 起始點座標
-    - ``endPos=[x,y,z,rx,ry,rz]``： 終止點座標
-    - ``startDistance``： 焊接點至起點的長度"
+    "原型", "``WeldingStartReWeldAfterBreakOff()``"
+    "描述", "設置機器人焊接中斷後恢復焊接"
+    "必選參數", "無"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
-    - ``weldPointDesc=[x,y,z,rx,ry,rz]``： 焊接點的笛卡兒座標信息 
-    - ``weldPointJoint=[j1,j2,j3,j4,j5,j6]``： 焊接點的關節座標信息
-    - ``tool``： 工具號
-    - ``user``： 工件號"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-分段焊接啟動
+設置機器人焊接中斷後退出焊接
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeldingAbortWeldAfterBreakOff()``"
+    "描述", "設置機器人焊接中斷後退出焊接"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+機器人焊接控制代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.SetForwardWireFeed(0, 1)
+    time.sleep(1)
+    robot.SetForwardWireFeed(0, 0)
+    robot.SetReverseWireFeed(0, 1)
+    time.sleep(1)
+    robot.SetReverseWireFeed(0, 0)
+    robot.SetAspirated(0, 1)
+    time.sleep(1)
+    robot.SetAspirated(0, 0)
+    robot.WeldingSetCurrent(1, 230, 0, 0)
+    robot.WeldingSetVoltage(1, 24, 0, 1)
+    p1Desc = [228.879, -503.594, 453.984, -175.580, 8.293, 171.267]
+    p1Joint = [102.700, -85.333, 90.518, -102.365, -83.932, 22.134]
+    p2Desc = [-333.302, -435.580, 449.866, -174.997, 2.017, 109.815]
+    p2Joint = [41.862, -85.333, 90.526, -100.587, -90.014, 22.135]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    robot.MoveJ(joint_pos=p1Joint, tool=13, user=0)
+    robot.ARCStart(1, 0, 10000)
+    robot.WeaveStart(0)
+    robot.MoveL(desc_pos=p2Desc, tool=13, user=0)
+    robot.ARCEnd(1, 0, 10000)
+    robot.WeaveEnd(0)
+    robot.WeldingStartReWeldAfterBreakOff()
+    robot.WeldingAbortWeldAfterBreakOff()
+    robot.CloseRPC()
+
+分段焊接啓動
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.1
     
@@ -444,14 +551,14 @@
     :widths: 10 30
 
     "原型", "``SegmentWeldStart(startDesePos,  endDesePos, startJPos, endJPos, weldLength, noWeldLength, weldIOType, arcNum, weldTimeout, isWeave,weaveNum,tool,user,vel=20.0, acc=0.0, ovl=100.0, blendR=-1.0,exaxis_pos=[0.0, 0.0, 0.0, 0.0],  search=0, offset_flag=0, offset_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])``"
-    "描述", "分段焊接啟動"
-    "必選參數", "- ``startDesePos``： 初始笛卡兒位姿，單位 [mm][°]
-    - ``endDesePos``： 目標笛卡兒位姿，單位 [mm][°]
+    "描述", "分段焊接啓動"
+    "必選參數", "- ``startDesePos``： 初始笛卡爾位姿，單位 [mm][°]
+    - ``endDesePos``： 目標笛卡爾位姿，單位 [mm][°]
     - ``startJPos``：初始關節位置，單位 [°] 
     - ``endJPos``：目標關節位置，單位 [°]  
     - ``weldLength``：焊接長度，單位 [mm] 
     - ``noWeldLength``：非焊接長度，單位 [mm] 
-    - ``weldIOType``：焊接IO類型(0-控制箱IO；1-擴展IO) arcNum 焊機設定檔編號 
+    - ``weldIOType``：焊接IO類型(0-控制箱IO；1-擴展IO) arcNum 焊機配置文件編號 
     - ``timeout``：熄弧超時時間 
     - ``isWeave``：焊接 False-不焊接 
     - ``weaveNum``：擺焊參數配置編號 
@@ -459,16 +566,16 @@
     - ``user``：工件號，[0~14]"
     "默認參數", "- ``vel``：速度百分比，[0~100] 默認20.0
     - ``acc``：加速度[0~100] 暫不開放 默認0.0
-    - ``ovl``：速度縮放因子，[0~100] 預設100.0
-    - ``blendR``：[-1.0]-運動到位 (阻塞)，[0~1000]-平滑半径 (非阻塞)，單位 [mm] 默認-1.0
+    - ``ovl``：速度縮放因子，[0~100] 默認100.0
+    - ``blendR``：[-1.0]-運動到位 (阻塞)，[0~1000]-平滑半徑 (非阻塞)，單位 [mm] 默認-1.0
     - ``exaxis_pos``：外部軸 1 位置 ~ 外部軸 4 位置 默認[0.0,0.0,0.0,0.0]
-    - ``search``：[0]-不焊丝寻位，[1]-焊丝寻位
-    - ``offset_flag``：[0]-不偏移，[1]-工件/基底座標系下偏移，[2]-工具坐標系下偏移 預設 0
-    - ``offset_pos``：位元位偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode"
+    - ``search``：[0]-不焊絲尋位，[1]-焊絲尋位
+    - ``offset_flag``：[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0
+    - ``offset_pos``：位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode"
 
-代碼範例
-------------
+機器人段焊代碼示例
+++++++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
@@ -476,43 +583,19 @@
     import time
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
+    robot.WeldingSetCurrent(1, 230, 0, 0)
+    robot.WeldingSetVoltage(1, 24, 0, 1)
+    p1Desc = [228.879, -503.594, 453.984, -175.580, 8.293, 171.267]
+    p1Joint = [102.700, -85.333, 90.518, -102.365, -83.932, 22.134]
+    p2Desc = [-333.302, -435.580, 449.866, -174.997, 2.017, 109.815]
+    p2Joint = [41.862, -85.333, 90.526, -100.587, -90.014, 22.135]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    rtn = robot.SegmentWeldStart(p1Desc, p2Desc, p1Joint, p2Joint, 20, 20, 0, 0, 5000, 0, 0, 0, 0)
+    print(f"SegmentWeldStart rtn is {rtn}")
+    robot.CloseRPC()
 
-    weldIOType =0
-    arcNum =0
-    weldTimeout=5000
-    weaveNum =0
-    tool =1
-    user =0
-    weaveType = 0
-    weaveFraquency = 1
-    weavelncStayTime = 0
-    weaveRange = 10
-    weaveLeftStayTime = 10
-    weaveRightStayTime = 10
-    weaveCircleRadio =0
-    weaveStationary =1
-    start_desc=[0,0,0,0,0,0]
-    end_desc=[0,0,0,0,0,0]
-    start_joint=[0,0,0,0,0,0]
-    end_joint=[0,0,0,0,0,0]
-    ret,start_desc =robot.GetActualTCPPose(1);
-    print("start_desc",start_desc)
-    ret,end_desc =robot.GetActualTCPPose(1);
-    end_desc[1]=end_desc[1]+200
-    print("start_desc",start_desc)
-    print("end_desc",end_desc)
-    ret,start_joint=robot.GetInverseKin(0,start_desc)
-    ret,end_joint=robot.GetInverseKin(0,end_desc)
-    print("start_joint",start_joint)
-    print("end_joint",end_joint)
-    weldLength =40
-    noweldLength =40
-    #段焊
-
-    ret = robot.SegmentWeldStart(start_desc,end_desc,start_joint,end_joint,weldLength,noweldLength,weldIOType,arcNum,weldTimeout,True,weaveNum,tool,user)
-    print("SegmentWeldStart", ret)
-
-分段焊接終止
+仿真擺動開始
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -520,13 +603,544 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SegmentWeldEnd(ioType, arcNum, timeout)``"
-    "描述", "分段焊接終止"
-    "必選參數", "- ``ioType``：io 類型 0-控制器IO；1-擴展IO
-    - ``arcNum``：焊機設定檔編號
-    - ``timeout``：熄弧超時時間"
+    "原型", "``WeaveStartSim(weaveNum)``"
+    "描述", "仿真擺動開始"
+    "必選參數", "- ``weaveNum``：擺動參數編號"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+仿真擺動結束
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveEndSim(weaveNum)``"
+    "描述", "仿真擺動結束"
+    "必選參數", "- ``weaveNum``：擺動參數編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+開始軌跡檢測預警(不運動)
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveInspectStart(weaveNum)``"
+    "描述", "開始軌跡檢測預警(不運動)"
+    "必選參數", "- ``weaveNum``：擺動參數編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+結束軌跡檢測預警(不運動)
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveInspectEnd(weaveNum)``"
+    "描述", "結束軌跡檢測預警(不運動)"
+    "必選參數", "- ``weaveNum``：擺動參數編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+擺動漸變開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveChangeStart(weaveChangeFlag, weaveNum, velStart, velEnd)``"
+    "描述", "擺動漸變開始"
+    "必選參數", "- ``weaveChangeFlag``：擺動編號 1-變擺動參數；2-變擺動參數+焊接速度
+    - ``weaveNum``：擺動編號
+    - ``velStart``：焊接開始速度，(cm/min)
+    - ``velEnd``：焊接結束速度，(cm/min)"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+機器人擺動漸變焊接代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    p1Desc = [228.879, -503.594, 453.984, -175.580, 8.293, 171.267]
+    p1Joint = [102.700, -85.333, 90.518, -102.365, -83.932, 22.134]
+    p2Desc = [-333.302, -435.580, 449.866, -174.997, 2.017, 109.815]
+    p2Joint = [41.862, -85.333, 90.526, -100.587, -90.014, 22.135]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    robot.MoveJ(joint_pos= p1Joint,tool= 13,user= 0)
+    robot.WeaveStartSim(0)
+    robot.MoveL(desc_pos= p2Desc,tool= 13,user= 0)
+    robot.WeaveEndSim(0)
+    robot.MoveJ(joint_pos= p1Joint,tool= 13,user= 0)
+    robot.WeaveInspectStart(0)
+    robot.MoveL(desc_pos= p2Desc,tool= 13,user= 0,)
+    robot.WeaveInspectEnd(0)
+    robot.WeldingSetVoltage(1, 19, 0, 0)
+    robot.WeldingSetCurrent(1, 190, 0, 0)
+    robot.MoveL(desc_pos= p1Desc,tool= 1,user= 1,vel= 100,acc= 100,ovl= 50)
+    robot.ARCStart(1, 0, 10000)
+    robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
+    robot.WeaveStart(0)
+    robot.WeaveChangeStart(1, 0, 50, 30)
+    robot.MoveL(desc_pos= p2Desc,tool= 1,user= 1,vel= 100)
+    robot.WeaveChangeEnd()
+    robot.WeaveEnd(0)
+    robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
+    robot.ARCEnd(1, 0, 10000)
+    robot.CloseRPC()
+
+擺動漸變結束
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.9-3.7.9
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WeaveChangeEnd()``"
+    "描述", "擺動漸變結束"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+擴展IO-配置焊機氣體檢測信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetAirControlExtDoNum(DONum)``"
+    "描述", "擴展IO-配置焊機氣體檢測信號"
+    "必選參數", "
+    - ``DONum``：氣體檢測信號擴展DO編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+擴展IO-配置焊機起弧信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetArcStartExtDoNum(DONum)``"
+    "描述", "擴展IO-配置焊機起弧信號"
+    "必選參數", "
+    - ``DONum``：氣體檢測信號擴展DO編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+        
+擴展IO-配置焊機反向送絲信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetWireReverseFeedExtDoNum(DONum)``"
+    "描述", "擴展IO-配置焊機反向送絲信號"
+    "必選參數", "
+    - ``DONum``：氣體檢測信號擴展DO編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+        
+擴展IO-配置焊機正向送絲信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetWireForwardFeedExtDoNum(DONum)``"
+    "描述", "擴展IO-配置焊機正向送絲信號"
+    "必選參數", "
+    - ``DONum``：氣體檢測信號擴展DO編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+        
+擴展IO-配置焊機起弧成功信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetArcDoneExtDiNum(DINum)``"
+    "描述", "擴展IO-配置焊機起弧成功信號"
+    "必選參數", "
+    - ``DINum``：焊機準備信號擴展DI編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+        
+擴展IO-配置焊機準備信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetArcDoneExtDiNum(DINum)``"
+    "描述", "擴展IO-配置焊機準備信號"
+    "必選參數", "
+    - ``DINum``：焊機準備信號擴展DI編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+        
+擴展IO-配置焊接中斷恢復信號
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetExtDIWeldBreakOffRecover(reWeldDINum, abortWeldDINum)``"
+    "描述", "擴展IO-配置焊接中斷恢復信號"
+    "必選參數", "
+    - ``reWeldDINum``：焊接中斷後恢復焊接信號擴展DI編號
+    - ``abortWeldDINum``：焊接中斷後退出焊接信號擴展DI編號
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+設置擴展IO焊接信號代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    rtn = robot.SetArcStartExtDoNum(10)
+    print(f"SetArcStartExtDoNum rtn is {rtn}")
+    rtn = robot.SetAirControlExtDoNum(20)
+    print(f"SetAirControlExtDoNum rtn is {rtn}")
+    rtn = robot.SetWireForwardFeedExtDoNum(30)
+    print(f"SetWireForwardFeedExtDoNum rtn is {rtn}")
+    rtn = robot.SetWireReverseFeedExtDoNum(40)
+    rtn = robot.SetWeldReadyExtDiNum(50)
+    print(f"SetWeldReadyExtDiNum rtn is {rtn}")
+    rtn = robot.SetArcDoneExtDiNum(60)
+    print(f"SetArcDoneExtDiNum rtn is {rtn}")
+    rtn = robot.SetExtDIWeldBreakOffRecover(70, 80)
+    print(f"SetExtDIWeldBreakOffRecover rtn is {rtn}")
+    rtn = robot.SetWireSearchExtDIONum(0, 1)
+    print(f"SetWireSearchExtDIONum rtn is {rtn}")
+    robot.CloseRPC()
+
+電弧跟蹤控制
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.9-3.7.9
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd, sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent, offsetType, offsetParameter)``"
+    "描述", "電弧跟蹤控制"
+    "必選參數", "- ``flag``： 開關，0-關；1-開
+    - ``delayTime``：滯後時間，單位ms
+    - ``isLeftRight``：左右偏差補償 0-關閉，1-開啓
+    - ``klr``：左右調節係數(靈敏度)
+    - ``tStartLr``：左右開始補償時間cyc
+    - ``stepMaxLr``：左右每次最大補償量 mm
+    - ``sumMaxLr``：左右總計最大補償量 mm
+    - ``isUpLow``：上下偏差補償 0-關閉，1-開啓
+    - ``kud``：上下調節係數(靈敏度)
+    - ``tStartUd``：上下開始補償時間cyc
+    - ``stepMaxUd``：上下每次最大補償量 mm
+    - ``sumMaxUd``：上下總計最大補償量
+    - ``axisSelect``：上下座標系選擇，0-擺動；1-工具；2-基座
+    - ``referenceType``：上下基準電流設定方式，0-反饋；1-常數
+    - ``referSampleStartUd``：上下基準電流採樣開始計數(反饋)，cyc
+    - ``referSampleCountUd``：上下基準電流採樣循環計數(反饋)，cyc
+    - ``referenceCurrent``：上下基準電流mA
+    - ``offsetType``：偏置跟蹤類型，0-不偏置；1-採樣；2-百分比
+    - ``offsetParameter``：偏置參數；採樣(偏置採樣開始時間，默認採一週期)；百分比(偏置百分比(-100 ~ 100))"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+電弧跟蹤AI通帶選擇
+++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceExtAIChannelConfig(channel)``"
+    "描述", "電弧跟蹤AI通帶選擇"
+    "必選參數", "- ``channel``：電弧跟蹤AI通帶選擇,[0-3]"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+電弧追蹤 + 多層多道補償開啓
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceReplayStart()``"
+    "描述", "電弧追蹤 + 多層多道補償開啓"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧追蹤 + 多層多道補償關閉
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceReplayEnd()``"
+    "描述", "電弧追蹤 + 多層多道補償關閉"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+偏移量座標變化-多層多道焊
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MultilayerOffsetTrsfToBase(pointo, pointX, pointZ, dx, dy, db)``"
+    "描述", "偏移量座標變化-多層多道焊"
+    "必選參數", "- ``pointo``：基準點笛卡爾位姿
+    - ``pointX``：基準點X向偏移方向點笛卡爾位姿
+    - ``pointZ``：基準點Z向偏移方向點笛卡爾位姿
+    - ``dx``：x方向偏移量(mm)
+    - ``dz``：z方向偏移量(mm)
+    - ``dry``：繞y軸偏移量(°)"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
+    - ``offset``：計算結果偏移量"
+
+多層多道焊電弧跟蹤代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    mulitilineorigin1_joint = [-24.090, -63.501, 84.288, -111.940, -93.426, 57.669]
+    mulitilineorigin1_desc = [-677.559, 190.951, -1.205, 1.144, -41.482, -82.577]
+    mulitilineX1_desc = [-677.556, 211.949, -1.206]
+    mulitilineZ1_desc = [-677.564, 190.956, 19.817]
+    mulitilinesafe_joint = [-25.734, -63.778, 81.502, -108.975, -93.392, 56.021]
+    mulitilinesafe_desc = [-677.561, 211.950, 19.812, 1.144, -41.482, -82.577]
+    mulitilineorigin2_joint = [-29.743, -75.623, 101.241, -116.354, -94.928, 55.735]
+    mulitilineorigin2_desc = [-563.961, 215.359, -0.681, 2.845, -40.476, -87.443]
+    mulitilineX2_desc = [-563.965, 220.355, -0.680]
+    mulitilineZ2_desc = [-563.968, 215.362, 4.331]
+    epos = [0, 0, 0, 0]
+    offset = [0, 0, 0, 0, 0, 0]
+    time.sleep(0.01)
+    error = robot.MoveJ(joint_pos= mulitilinesafe_joint,tool= 13,user= 0,vel= 10)
+    print(f"MoveJ return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin1_desc,tool= 13,user= 0,vel= 10,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveJ(joint_pos= mulitilinesafe_joint,tool= 13,user= 0,vel= 10)
+    print(f"MoveJ return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin2_desc,tool= 13,user= 0,vel= 10,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveJ(joint_pos= mulitilinesafe_joint,tool= 13,user= 0,vel= 10)
+    print(f"MoveJ return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin1_desc,tool= 13,user= 0,vel= 10,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.ARCStart(1, 0, 3000)
+    print(f"ARCStart return: {error}")
+    error = robot.WeaveStart(0)
+    print(f"WeaveStart return: {error}")
+    error = robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 50, 1, 0.06, 5, 5, 55, 0, 0, 4, 1, 10,0,0)
+    print(f"ArcWeldTraceControl return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin2_desc,tool= 13,user= 0,vel= 1,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 50, 1, 0.06, 5, 5, 55, 0, 0, 4, 1, 10,0,0)
+    print(f"ArcWeldTraceControl return: {error}")
+    error = robot.WeaveEnd(0)
+    print(f"WeaveEnd return: {error}")
+    error = robot.ARCEnd(1, 0, 10000)
+    print(f"ARCEnd return: {error}")
+    error = robot.MoveJ(joint_pos= mulitilinesafe_joint,tool= 13,user= 0,vel= 10)
+    print(f"MoveJ return: {error}")
+    error,offset = robot.MultilayerOffsetTrsfToBase(mulitilineorigin1_desc[:3], mulitilineX1_desc, mulitilineZ1_desc, 10.0, 0.0, 0.0)
+    print(f"MultilayerOffsetTrsfToBase return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin1_desc,tool= 13,user= 0,vel= 10,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.ARCStart(1, 0, 3000)
+    print(f"ARCStart return: {error}")
+    error, offset = robot.MultilayerOffsetTrsfToBase(mulitilineorigin2_desc[:3], mulitilineX2_desc, mulitilineZ2_desc, 10, 0, 0)
+    print(f"MultilayerOffsetTrsfToBase return: {error}")
+    error = robot.ArcWeldTraceReplayStart()
+    print(f"ArcWeldTraceReplayStart return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin2_desc,tool= 13,user= 0,vel= 2,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.ArcWeldTraceReplayEnd()
+    print(f"ArcWeldTraceReplayEnd return: {error}")
+    error = robot.ARCEnd(1, 0, 10000)
+    print(f"ARCEnd return: {error}")
+    error = robot.MoveJ(joint_pos= mulitilinesafe_joint,tool= 13,user= 0,vel= 10)
+    print(f"MoveJ return: {error}")
+    error, offset = robot.MultilayerOffsetTrsfToBase(mulitilineorigin1_desc[:3], mulitilineX1_desc, mulitilineZ1_desc, 0, 10, 0)
+    print(f"MultilayerOffsetTrsfToBase return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin1_desc,tool= 13,user= 0,vel= 10,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.ARCStart(1, 0, 3000)
+    print(f"ARCStart return: {error}")
+    error, offset = robot.MultilayerOffsetTrsfToBase(mulitilineorigin2_desc[:3], mulitilineX2_desc, mulitilineZ2_desc, 0, 10, 0)
+    error = robot.ArcWeldTraceReplayStart()
+    print(f"ArcWeldTraceReplayStart return: {error}")
+    error = robot.MoveL(desc_pos= mulitilineorigin2_desc,tool= 13,user= 0,vel= 2,speedPercent=100)
+    print(f"MoveL return: {error}")
+    error = robot.ArcWeldTraceReplayEnd()
+    print(f"ArcWeldTraceReplayEnd return: {error}")
+    error = robot.ARCEnd(1, 0, 3000)
+    print(f"ARCEnd return: {error}")
+    error = robot.MoveJ(joint_pos= mulitilinesafe_joint,tool= 13,user= 0,vel= 10)
+    print(f"MoveJ return: {error}")
+    robot.CloseRPC()
+
+電弧跟蹤焊機電流反饋AI通道選擇
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceAIChannelCurrent(channel)``"
+    "描述", "電弧跟蹤焊機電流反饋AI通道選擇"
+    "必選參數", "- ``channel``：通道；0-擴展AI0；1-擴展AI1；2-擴展AI2；3-擴展AI3；4-控制箱AI0；5-控制箱AI1"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧跟蹤焊機電壓反饋AI通道選擇
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceAIChannelVoltage(channel)``"
+    "描述", "電弧跟蹤焊機電壓反饋AI通道選擇"
+    "必選參數", "- ``channel``：通道；0-擴展AI0；1-擴展AI1；2-擴展AI2；3-擴展AI3；4-控制箱AI0；5-控制箱AI1"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧跟蹤焊機電流反饋轉換參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceCurrentPara(AILow, AIHigh, currentLow, currentHigh)``"
+    "描述", "電弧跟蹤焊機電流反饋轉換參數"
+    "必選參數", "無"
+    "默認參數", "- ``AILow``：AI通道下限，默認值0V，範圍[0-10V]
+    - ``AIHigh``：AI通道上限，默認值10V，範圍[0-10V]
+    - ``currentLow``：AI通道下限對應焊機電流值，默認值0V，範圍[0-200V]
+    - ``currentHigh``：AI通道上限對應焊機電流值，默認值100V，範圍[0-200V]"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧跟蹤焊機電壓反饋轉換參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.2
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ArcWeldTraceVoltagePara(AILow, AIHigh, voltageLow, voltageHigh)``"
+    "描述", "電弧跟蹤焊機電壓反饋轉換參數"
+    "必選參數", "無"
+    "默認參數", "- ``AILow``：AI通道下限，默認值0V，範圍[0-10V]
+    - ``AIHigh``：AI通道上限，默認值10V，範圍[0-10V]
+    - ``voltageLow``：AI通道下限對應焊機電壓值，默認值0V，範圍[0-200V]
+    - ``voltageHigh``：AI通道上限對應焊機電壓值，默認值100V，範圍[0-200V]"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+電弧跟蹤代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+
+    safetydescPose = [-504.043,275.181,40.908,-28.002,-42.025,-14.044]
+    safetyjointPos = [-39.078,-76.732,87.227,-99.47,-94.301,18.714]
+    startdescPose = [-473.86,257.879,-20.849,-37.317,-42.021,2.543]
+    startjointPos = [-43.487,-76.526,95.568,-104.445,-89.356,3.72]
+    enddescPose = [-499.844,141.225,7.72,-34.856,-40.17,13.13]
+    endjointPos = [-31.305,-82.998,99.401,-104.426,-89.35,3.696]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    robot.MoveJ(joint_pos=safetyjointPos, tool=1, user=0, vel=20, acc=100)
+    robot.WeldingSetCurrentRelation(0, 495, 1, 10, 0)
+    robot.WeldingSetVoltageRelation(10, 45, 1, 10, 1)
+    robot.WeldingSetVoltage(0, 25, 1, 0)  # ----設置電壓
+    robot.WeldingSetCurrent(0, 260, 0, 0)  # ----設置電流
+    rtn = robot.ArcWeldTraceAIChannelCurrent(4)
+    print("ArcWeldTraceAIChannelCurrent rtn is", rtn)
+    rtn = robot.ArcWeldTraceAIChannelVoltage(5)
+    print("ArcWeldTraceAIChannelVoltage rtn is", rtn)
+    rtn = robot.ArcWeldTraceCurrentPara(0, 5, 0, 500)
+    print("ArcWeldTraceCurrentPara rtn is", rtn)
+    rtn = robot.ArcWeldTraceVoltagePara(1.018, 10, 0, 50)
+    print("ArcWeldTraceVoltagePara rtn is", rtn)
+    robot.MoveJ(joint_pos=startjointPos, tool=1, user=0, vel=20, acc=100)
+    robot.ArcWeldTraceControl(1, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
+    robot.ARCStart(0, 0, 10000)
+    robot.WeaveStart(0)
+    robot.MoveL(desc_pos=enddescPose, tool=1, user=0, vel=100, ovl= 2, acc=100)
+    robot.ARCEnd(0, 0, 10000)
+    robot.WeaveEnd(0)
+    robot.ArcWeldTraceControl(0, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
+    robot.MoveJ(joint_pos=safetyjointPos, tool=1, user=0, vel=20, acc=100)
 
 焊絲尋位開始
 ++++++++++++++++++++++++++++++++++
@@ -546,113 +1160,7 @@
     - ``autoBackDis``： 自動返回距離 mm
     - ``offectFlag``： 1-帶偏移量尋位；2-示教點尋位"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-
-    robot = Robot.RPC('192.168.58.2')
-
-    refPos = 1 #  1-基準點 2-接觸點
-    searchVel = 10 #尋位速度 %
-    searchDis = 100 #尋位距離 mm
-    autoBackFlag = 0 #自動返回标志，0-不自動；1-自動
-    autoBackVel = 10 #自動返回速度 %
-    autoBackDis = 100 #自動返回距離 mm
-    offectFlag = 0  #1-帶偏移量尋位；2-示教點尋位
-    descStart =[203.061, 56.768, 62.719, -177.249, 1.456, -83.597]
-    jointStart = [-127.012, -112.931, -94.078, -62.014, 87.186, 91.326]
-    descEnd = [122.471, 55.718, 62.209, -177.207, 1.375, -76.310]
-    jointEnd = [-119.728, -113.017, -94.027, -62.061, 87.199, 91.326]
-
-    robot.MoveL(descStart,1,1,joint_pos= jointStart,vel=100)
-    robot.MoveL(descEnd,1,1,joint_pos= jointEnd,vel=100)
-
-    descREF0A = [147.139, -21.436, 60.717, -179.633, -3.051, -83.170]
-    jointREF0A = [-121.731, -106.193, -102.561, -64.734, 89.972, 96.171]
-
-    descREF0B = [139.247, 43.721, 65.361, -179.634, -3.043, -83.170]
-    jointREF0B = [-122.364, -113.991, -90.860, -68.630, 89.933, 95.540]
-
-    descREF1A = [289.747, 77.395, 58.390, -179.074, -2.901, -89.790]
-    jointREF1A =[-135.719, -119.588, -83.454, -70.245, 88.921, 88.819]
-
-    descREF1B = [259.310, 79.998, 64.774, -179.073, -2.900, -89.790]
-    jointREF1B =[-133.133, -119.029, -83.326, -70.976, 89.069, 91.401]
-
-    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
-    print("WireSearchStart return:",error)
-
-    robot.MoveL(descREF0A,1,1, joint_pos = jointREF0A, vel=100)
-    print("MoveL(descREF0A return:",error)
-    robot.MoveL(descREF0B,1,1, joint_pos = jointREF0B, vel=10,search=1)
-    print("MoveL(descREF0B return:",error)
-
-    error =robot.WireSearchWait("REF0")
-    print("WireSearchWait return:",error)
-
-    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
-    print("WireSearchEnd return:",error)
-
-    error = robot.WireSearchStart(1,10,100,0,10,100,0)
-    print("WireSearchStart return:",error)
-
-    robot.MoveL(descREF1A,1,1, joint_pos = jointREF1A, vel=100)
-    robot.MoveL(descREF1B,1,1, joint_pos = jointREF1B, vel=10,search=1)
-
-    error =robot.WireSearchWait("REF1")
-    print("WireSearchWait return:",error)
-
-    error = robot.WireSearchEnd(1,10,100,0,10,100,0)
-    print("WireSearchEnd return:",error)
-
-    error = robot.WireSearchStart(1,10,100,0,10,100,0)
-    print("WireSearchStart return:",error)
-
-    robot.MoveL(descREF0A,1,1, joint_pos = jointREF0A, vel=100)
-    robot.MoveL(descREF0B,1,1, joint_pos = jointREF0B, vel=10,search=1)
-
-    error =robot.WireSearchWait("RES0")
-    print("WireSearchWait return:",error)
-
-    error = robot.WireSearchEnd(1,10,100,0,10,100,0)
-    print("WireSearchEnd return:",error)
-
-    error = robot.WireSearchStart(1,10,100,0,10,100,0)
-    print("WireSearchStart return:",error)
-
-    robot.MoveL(descREF1A,1,1, joint_pos = jointREF1A, vel=100)
-    robot.MoveL(descREF1B,1,1, joint_pos = jointREF1B, vel=10,search=1)
-
-    error =robot.WireSearchWait("RES1")
-    print("WireSearchWait return:",error)
-
-    error = robot.WireSearchEnd(1,10,100,0,10,100,0)
-    print("WireSearchEnd return:",error)
-
-    varNameRef = ["REF0", "REF1", "#", "#", "#", "#"]
-    varNameRes = ["RES0", "RES1", "#", "#", "#", "#"]
-    error = robot.GetWireSearchOffset(0, 0, varNameRef, varNameRes)
-    print("GetWireSearchOffect return:",error)
-    if error[0]==0:
-        ref = error[1]
-        offdesc =error[2]
-
-        error = robot.PointsOffsetEnable(ref,offdesc)
-        print("PointsOffsetEnable return:",error)
-
-        error = robot.MoveL(descStart, 1, 1, joint_pos=jointStart, vel=100)
-        print("MoveL return:",error)
-        robot.MoveL(descEnd, 1, 1, joint_pos=jointEnd, vel=10)
-        print("MoveL return:",error)
-        error = robot.PointsOffsetDisable()
-        print("PointsOffsetDisable return:",error)
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 焊絲尋位結束
 ++++++++++++++++++++++++++++++++++
@@ -672,7 +1180,7 @@
     - ``autoBackDis``： 自動返回距離 mm
     - ``offectFlag``： 1-帶偏移量尋位；2-示教點尋位"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 計算焊絲尋位偏移量
 ++++++++++++++++++++++++++++++++++
@@ -684,12 +1192,12 @@
 
     "原型", "``GetWireSearchOffset(seamType, method,varNameRef,varNameRes)``"
     "描述", "計算焊絲尋位偏移量"
-    "必選參數", "- ``seamType``： 焊缝類型
+    "必選參數", "- ``seamType``： 焊縫類型
     - ``method``： 計算方法
-    - ``varNameRef``： 基準點1-6，「#」表示無點變數
-    - ``varNameRes``： 接觸點1-6，「#」表示無點變數"
+    - ``varNameRef``： 基準點1-6，“#”表示無點變量
+    - ``varNameRes``： 接觸點1-6，“#”表示無點變量"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
     - ``offsetFlag``： 0-偏移量直接疊加到指令點；1-偏移量需要對指令點進行座標變換
     - ``offset``： 偏移位姿[x, y, z, a, b, c]"
 
@@ -705,9 +1213,9 @@
     "描述", "等待焊絲尋位完成"
     "必選參數", "- ``varName``： 接觸點名稱 “RES0” ~ “RES99”"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
 
-焊絲尋位接觸點寫入資料庫
+焊絲尋位接觸點寫入數據庫
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -716,907 +1224,98 @@
     :widths: 10 30
 
     "原型", "``SetPointToDatabase(varName,pos)``"
-    "描述", "焊絲尋位接觸點寫入資料庫"
+    "描述", "焊絲尋位接觸點寫入數據庫"
     "必選參數", "- ``varName``： 接觸點名稱 “RES0” ~ “RES99”
-    - ``pos``：接触點數據[x, y, x, a, b, c]"
+    - ``pos``：接觸點數據[x, y, x, a, b, c]"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
 
-電弧追蹤控制
+機器人焊絲尋位代碼示例
 ++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd, sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent, offsetType, offsetParameter)``"
-    "描述", "電弧追蹤控制"
-    "必選參數", "- ``flag``： 開關，0-關；1-開
-    - ``delayTime``：滯後時間，單位ms
-    - ``isLeftRight``：左右偏差補償 0-關閉，1-開啟
-    - ``klr``：左右調節係數(靈敏度)
-    - ``tStartLr``：左右開始補償時間cyc
-    - ``stepMaxLr``：左右每次最大補償量 mm
-    - ``sumMaxLr``：左右總計最大補償量 mm
-    - ``isUpLow``：上下偏差補償 0-關閉，1-開啟
-    - ``kud``：上下調節係數(靈敏度)
-    - ``tStartUd``：上下開始補償時間cyc
-    - ``stepMaxUd``：上下每次最大補償量 mm
-    - ``sumMaxUd``：上下总计最大补偿量
-    - ``axisSelect``：上下座標系選擇，0-擺動；1-工具；2-基座
-    - ``referenceType``：上下基準電流設定方式，0-回饋；1-常數
-    - ``referSampleStartUd``：上下基準電流取樣開始計數(回饋)，cyc
-    - ``referSampleCountUd``：上下基準電流取樣循環計數(回饋)，cyc
-    - ``referenceCurrent``：上下基準電流mA
-    - ``offsetType``：偏移追蹤類型，0-不偏移；1-採樣；2-百分比
-    - ``offsetParameter``：偏移參數；採樣(偏移採樣開始時間，默認採一周期)；百分比(偏移百分比(-100 ~ 100))"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-代碼範例
-------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
-
     robot = Robot.RPC('192.168.58.2')
-
-    flag = 1 #開關，0-關；1-開
-    delaytime=0 #滯後時間，單位ms
-    isLeftRight=0 #左右偏差補償 0-關閉，1-開啟
-    klr = 0.06 #左右調節係數(靈敏度)
-    tStartLr = 5 #左右開始補償時間cyc
-    stepMaxLr =5 #左右每次最大補償量 mm
-    sumMaxLr = 300 #左右總計最大補償量 mm
-    isUpLow = 1 #上下偏差補償
-    kud =-0.06 #上下調節係數(靈敏度)
-    tStartUd = 5 #上下開始補償時間cyc
-    stepMaxUd = 5 #上下每次最大補償量 mm
-    sumMaxUd = 300 #上下总计最大补偿量
-    axisSelect = 1 #上下座標系選擇，0-擺動；1-工具；2-基座
-    referenceType = 0 #上下基準電流設定方式，0-回饋；1-常數
-    referSampleStartUd = 4 # 上下基準電流取樣開始計數(回饋)，cyc
-    referSampleCountUd = 1 # 上下基準電流取樣循環計數(回饋)，cyc
-    referenceCurrent = 10 # 上下基準電流mA
-
-    startdescPose = [-583.168, 325.637, 1.176, 75.262, 0.978, -3.571]
-    startjointPos = [-49.049, -77.203, 136.826, -189.074, -79.407, -11.811]
-    enddescPose = [-559.439, 420.491, 32.252, 77.745, 1.460, -10.130]
-    endjointPos = [-54.986, -77.639, 131.865, -185.707, -80.916, -12.218]
-
-    error = robot.WeldingSetCurrent(1, 230, 0)
-    print("WeldingSetCurrent return:",error)
-    robot.WeldingSetVoltage(1, 24, 0)
-
-    print("WeldingSetVoltage return:",error)
-    robot.ArcWeldTraceExtAIChannelConfig(0)
-    print("ArcWeldTraceExtAIChannelConfig return:",error)
-
-    robot.MoveJ(startjointPos,13,0,desc_pos=startdescPose,vel =5)
-    print("MoveJ return:",error)
-
-    error = robot.ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd,
-                                sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent,0,0)
-    print("WireSearchStart return:",error)
-
-    robot.ARCStart(1, 0, 10000)
-    print("ARCStart return:",error)
-
-    robot.MoveL(enddescPose,13,0,joint_pos=endjointPos,vel =5)
-    print("MoveJ return:",error)
-
-    robot.ARCEnd(1, 0, 10000)
-    print("ARCEnd return:",error)
-
-    flag = 0
-    error = robot.ArcWeldTraceControl(flag,delaytime, isLeftRight, klr, tStartLr, stepMaxLr, sumMaxLr, isUpLow, kud, tStartUd, stepMaxUd,
-                                sumMaxUd, axisSelect, referenceType, referSampleStartUd, referSampleCountUd, referenceCurrent,0,0)
-    print("WireSearchStart return:",error)
-
-電弧追蹤AI通帶選擇
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceExtAIChannelConfig(channel)``"
-    "描述", "電弧追蹤AI通帶選擇"
-    "必選參數", "- ``channel``：電弧追蹤AI通帶選擇,[0-3]"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-仿真擺盪開始
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveStartSim(weaveNum)``"
-    "描述", "仿真擺盪開始"
-    "必選參數", "- ``weaveNum``：擺動參數編號"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-    
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-
-    robot = Robot.RPC('192.168.58.2')
-
-    desc1 = [238.209, -403.633, 251.291, 177.222, -1.433, 133.675]
-    joint1= [-48.728, -86.235, -95.288, -90.025, 92.715, 87.595]
-    desc2 = [238.207, -596.305, 251.294, 177.223, -1.432, 133.675]
-    joint2= [-60.240, -110.743, -66.784, -94.531, 92.351, 76.078 ]
-
-
-    error = robot.MoveL(desc1,1,0,joint_pos=joint1)
-    print("MoveL return:",error)
-
-    error = robot.WeaveStartSim(0)
-    print("WeaveStartSim return:",error)
-
-    error = robot.MoveL(desc2,1,0,joint_pos=joint2)
-    print("MoveL return:",error)
-
-    error = robot.WeaveEndSim(0)
-    print("WeaveEndSim return:",error)
-
-仿真擺盪結束
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveEndSim(weaveNum)``"
-    "描述", "仿真擺盪結束"
-    "必選參數", "- ``weaveNum``：擺動參數編號"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-開始軌跡偵測預警(不運動)
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveInspectStart(weaveNum)``"
-    "描述", "開始軌跡偵測預警(不運動)"
-    "必選參數", "- ``weaveNum``：擺動參數編號"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-        
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-
-    robot = Robot.RPC('192.168.58.2')
-
-    desc1 = [238.209, -403.633, 251.291, 177.222, -1.433, 133.675]
-    joint1= [-48.728, -86.235, -95.288, -90.025, 92.715, 87.595]
-    desc2 = [238.207, -596.305, 251.294, 177.223, -1.432, 133.675]
-    joint2= [-60.240, -110.743, -66.784, -94.531, 92.351, 76.078 ]
-
-    error = robot.MoveL(desc1,1,0,joint_pos=joint1)
-    print("MoveL return:",error)
-
-    error = robot.WeaveInspectStart(0)
-    print("WeaveInspectStart return:",error)
-
-    error = robot.MoveL(desc2,1,0,joint_pos=joint2)
-    print("MoveL return:",error)
-
-    error = robot.WeaveInspectEnd(0)
-    print("WeaveInspectEnd return:",error)
-    
-結束軌跡偵測預警(不運動)
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveInspectEnd(weaveNum)``"
-    "描述", "結束軌跡偵測預警(不運動)"
-    "必選參數", "- ``weaveNum``：擺動參數編號"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-    
-設定焊接製程曲線參數
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingSetProcessParam(id, startCurrent, startVoltage, startTime, weldCurrent, weldVoltage, endCurrent, endVoltage, endTime)``"
-    "描述", "設定焊接製程曲線參數"
-    "必選參數", "
-    - ``id``： 焊接工藝編號(1-99)
-    - ``startCurrent``： 起弧電流(A)
-    - ``startVoltage``：startVoltage 起弧電壓(V)
-    - ``startTime``：startTime 起弧時間(ms)
-    - ``weldCurrent``：weldCurrent 焊接電流(A)
-    - ``weldVoltage``：weldVoltage 焊接電壓(V)
-    - ``endCurrent``：endCurrent 收弧電流(A)
-    - ``endVoltage``：endVoltage 收弧電壓(V)
-    - ``endTime``：endTime 收弧時間(ms)
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-            
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-
-    robot = Robot.RPC('192.168.58.2')
-
-    id = 1 #焊接工藝編號(1-99)
-    startCurrent = 177 #起弧電流(A)
-    startVoltage = 27 #起弧電壓(V)
-    startTime = 1000 #起弧時間(ms)
-    weldCurrent = 178 #焊接電流(A)
-    weldVoltage = 28 #焊接電壓(V)
-    endCurrent = 176 #收弧電流(A)
-    endVoltage = 26 # 收弧電壓(V)
-    endTime = 1000 #收弧時間(ms)
-
-    error = robot.WeldingSetProcessParam(id, startCurrent, startVoltage, startTime, weldCurrent, weldVoltage,
-                                            endCurrent, endVoltage, endTime)
-
-    print("WeldingSetProcessParam return:",error)
-
-    error = robot.WeldingGetProcessParam(1)
-    print("WeldingGetProcessParam return:",error)
-        
-取得焊接製程曲線參數
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeldingGetProcessParam(id)``"
-    "描述", "取得焊接製程曲線參數"
-    "必選參數", "
-    - ``id``： 焊接工藝編號(1-99)
-    "
-    "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
-    - ``傳回值（调用成功返回） startCurrent``：起弧電流(A)
-    - ``startVoltage``： 起弧電壓(V)
-    - ``startTime``：起弧時間(ms)
-    - ``weldCurrent``：焊接電流(A)
-    - ``weldVoltage``：焊接電壓(V)
-    - ``endCurrent``：收弧電流(A)
-    - ``endVoltage``：收弧電壓(V)
-    - ``endTime``：收弧時間(ms)
-    " 
-    
-擴展IO-配置焊機氣體偵測訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetAirControlExtDoNum(DONum)``"
-    "描述", "擴展IO-配置焊機氣體偵測訊號"
-    "必選參數", "
-    - ``DONum``：氣體偵測訊號擴展DO編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-            
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-
-    robot = Robot.RPC('192.168.58.2')
-
-    #擴展IO-配置焊機氣體偵測訊號
-    error = robot.SetAirControlExtDoNum(10)
-    print("SetAirControlExtDoNum 10 return:",error)
-
-    #擴充IO-配置焊接機起弧訊號
-    error = robot.SetArcStartExtDoNum(11)
-    print("SetArcStartExtDoNum 11 return:",error)
-
-    #擴充IO-配置焊接機反向送絲訊號
-    error = robot.SetWireReverseFeedExtDoNum(12)
-    print("SetWireReverseFeedExtDoNum 12 return:",error)
-
-    #擴充IO-配置焊接機正向送絲訊號
-    error = robot.SetWireForwardFeedExtDoNum(13)
-    print("SetWireForwardFeedExtDoNum 13 return:",error)
-
-    #擴充IO-配置焊接機起弧成功訊號
-    error = robot.SetArcDoneExtDiNum(10)
-    print("SetArcDoneExtDiNum 10 return:",error)
-
-    #擴充IO-配置焊接機準備訊號
-    error = robot.SetWeldReadyExtDiNum(11)
-    print("SetWeldReadyExtDiNum 11 return:",error)
-
-    #擴展IO-配置焊接中斷恢復訊號
-    error = robot.SetExtDIWeldBreakOffRecover(12,13)
-    print("SetExtDIWeldBreakOffRecover 12  13 return:",error)
-        
-擴充IO-配置焊接機起弧訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetArcStartExtDoNum(DONum)``"
-    "描述", "擴充IO-配置焊接機起弧訊號"
-    "必選參數", "
-    - ``DONum``：氣體偵測訊號擴展DO編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-        
-擴充IO-配置焊接機反向送絲訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetWireReverseFeedExtDoNum(DONum)``"
-    "描述", "擴充IO-配置焊接機反向送絲訊號"
-    "必選參數", "
-    - ``DONum``：氣體偵測訊號擴展DO編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-        
-擴充IO-配置焊接機正向送絲訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetWireForwardFeedExtDoNum(DONum)``"
-    "描述", "擴充IO-配置焊接機正向送絲訊號"
-    "必選參數", "
-    - ``DONum``：氣體偵測訊號擴展DO編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-        
-擴充IO-配置焊接機起弧成功訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetArcDoneExtDiNum(DINum)``"
-    "描述", "擴充IO-配置焊接機起弧成功訊號"
-    "必選參數", "
-    - ``DINum``：焊接機準備訊號擴展DI編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-        
-擴充IO-配置焊接機準備訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetArcDoneExtDiNum(DINum)``"
-    "描述", "擴充IO-配置焊接機準備訊號"
-    "必選參數", "
-    - ``DINum``：焊接機準備訊號擴展DI編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-        
-擴展IO-配置焊接中斷恢復訊號
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetExtDIWeldBreakOffRecover(reWeldDINum, abortWeldDINum)``"
-    "描述", "擴展IO-配置焊接中斷恢復訊號"
-    "必選參數", "
-    - ``reWeldDINum``：焊接中斷後恢復焊接訊號擴展DI編號
-    - ``abortWeldDINum``：焊接中斷後退出焊接訊號擴展DI編號
-    "
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-設定焊絲尋位擴充IO端口
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetWireSearchExtDIONum(searchDoneDINum, searchStartDONum)``"
-    "描述", "設定焊絲尋位擴充IO端口"
-    "必選參數", "- ``searchDoneDINum``：焊絲尋位成功DO端口(0-127)
-    - ``searchStartDONum``：焊絲尋位啟動停止控制DO端口(0-127)"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-焊机控制模式切换
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-設定焊機控制模式擴展DO端口
----------------------------------
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetWeldMachineCtrlModeExtDoNum(DONum)``"
-    "描述", "設定焊機控制模式擴展DO端口"
-    "必選參數", "- ``DONum``：焊機控制模式DO端口(0-127)"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-設定焊機控制模式
----------------------------------
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetWeldMachineCtrlMode(mode)``"
-    "描述", "設定焊機控制模式"
-    "必選參數", "- ``mode``：焊接機控制模式;0-一元化"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode" 
-
-代碼範例
-------------
-
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    error = robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 50, 5, 50, 1, 50, 10)
-    print("ExtDevSetUDPComParam return ", error)
-    error = robot.ExtDevLoadUDPDriver()
-    print("ExtDevLoadUDPDriver return ", error)
-
-    robot.SetWeldMachineCtrlModeExtDoNum(DONum=17)
-    robot.SetWeldMachineCtrlMode(mode=0)
-    robot.SetWeldMachineCtrlModeExtDoNum(DONum=18)
-    robot.SetWeldMachineCtrlMode(mode=0)
-    robot.SetWeldMachineCtrlModeExtDoNum(DONum=19)
-    robot.SetWeldMachineCtrlMode(mode=0)
-
-    error = robot.SetWeldMachineCtrlModeExtDoNum(DONum=17)
-    print("SetWeldMachineCtrlModeExtDoNum return ", error)
-    for  i  in  range(0,5):
-        error = robot.SetWeldMachineCtrlMode(mode=0)
-        print("SetWeldMachineCtrlMode return ", error)
-        time.sleep(0.5)
-        error = robot.SetWeldMachineCtrlMode(mode=1)
-        print("SetWeldMachineCtrlMode return ", error)
-        time.sleep(0.5)
-
-    error = robot.SetWeldMachineCtrlModeExtDoNum(DONum=18)
-    print("SetWeldMachineCtrlModeExtDoNum return ", error)
-    for  i  in  range(0,5):
-        error = robot.SetWeldMachineCtrlMode(mode=0)
-        print("SetWeldMachineCtrlMode return ", error)
-        time.sleep(0.5)
-        error = robot.SetWeldMachineCtrlMode(mode=1)
-        print("SetWeldMachineCtrlMode return ", error)
-        time.sleep(0.5)
-
-    error = robot.SetWeldMachineCtrlModeExtDoNum(DONum=19)
-    print("SetWeldMachineCtrlModeExtDoNum return ", error)
-    for  i  in  range(0,5):
-        error = robot.SetWeldMachineCtrlMode(mode=0)
-        print("SetWeldMachineCtrlMode return ", error)
-        time.sleep(0.5)
-        error = robot.SetWeldMachineCtrlMode(mode=1)
-        print("SetWeldMachineCtrlMode return ", error)
-        time.sleep(0.5)
-
-電弧追蹤 + 多層多道補償開啟
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceReplayStart()``"
-    "描述", "電弧追蹤 + 多層多道補償開啟"
-    "必選參數", "無"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-電弧追蹤 + 多層多道補償關閉
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceReplayEnd()``"
-    "描述", "電弧追蹤 + 多層多道補償關閉"
-    "必選參數", "無"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-偏移量座標變化-多層多道焊
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``MultilayerOffsetTrsfToBase(pointo, pointX, pointZ, dx, dy, db)``"
-    "描述", "偏移量座標變化-多層多道焊"
-    "必選參數", "- ``pointo``：基准點笛卡兒位姿
-    - ``pointX``：基准點X向偏移方向點笛卡兒位姿
-    - ``pointZ``：基准點Z向偏移方向點笛卡兒位姿
-    - ``dx``：x方向偏移量(mm)
-    - ``dz``：z方向偏移量(mm)
-    - ``dry``：绕y軸偏移量(°)"
-    "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode 
-    - ``offset``：計算結果偏移量"
-
-設定機器人焊接電弧意外中斷偵測參數
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: Python SDK-v2.0.8-3.7.8
-
-.. csv-table::
- :stub-columns: 1
- :widths: 10 30
-
- "原型", "``WeldingSetCheckArcInterruptionParam(checkEnable, arcInterruptTimeLength)``"
- "描述", "設定機器人焊接電弧意外中斷偵測參數"
- "必選參數", "- ``checkEnable``：是否使能檢測；0-不使能；1-使能
- - ``arcInterruptTimeLength``：電弧中斷確認時長(ms)"
- "預設參數", "無"
- "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-取得機器人焊接電弧意外中斷偵測參數
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: Python SDK-v2.0.8-3.7.8
-
-.. csv-table::
- :stub-columns: 1
- :widths: 10 30
-
- "原型", "``WeldingGetCheckArcInterruptionParam()``"
- "描述", "取得機器人焊接電弧意外中斷偵測參數"
- "必選參數", "無"
- "預設參數", "無"
- "傳回值", "- 錯誤碼 成功-0 失敗- errcode
- - ``checkEnable``：是否使能偵測；0-不使能；1-使能
- - ``arcInterruptTimeLength``：電弧中斷確認時長(ms)"
-
-設定機器人焊接中斷恢復參數
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.8-3.7.8
-
-.. csv-table::
- :stub-columns: 1
- :widths: 10 30
-
- "原型", "``WeldingSetReWeldAfterBreakOffParam(enable, length, velocity, moveType)``"
- "描述", "設定機器人焊接中斷恢復參數"
- "必選參數", "- ``enable``：是否使能焊接中斷恢復
- - ``length``：焊縫重疊距離(mm)
- - ``velocity``：機器人回到再起弧點速度百分比(0-100)
- - ``moveType``：機器人運動到再起弧點方式；0-LIN；1-PTP"
- "預設參數", "無"
- "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-取得機器人焊接中斷恢復參數
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.8-3.7.8
-
-.. csv-table::
- :stub-columns: 1
- :widths: 10 30
-
- "原型", "``WeldingGetReWeldAfterBreakOffParam()``"
- "描述", "取得機器人焊接中斷恢復參數"
- "必選參數", "無"
- "預設參數", "無"
- "傳回值", "- 錯誤碼 成功-0 失敗- errcode
- - ``enable``：是否使能焊接中斷恢復
- - ``length``：焊縫重疊距離(mm)
- - ``velocity``：機器人回到再起弧點速度百分比(0-100)
- - ``moveType``：機器人運動到再起弧點方式；0-LIN；1-PTP"
-
-設定機器人焊接中斷後恢復焊接
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.8-3.7.8
-
-.. csv-table::
- :stub-columns: 1
- :widths: 10 30
-
- "原型", "``WeldingStartReWeldAfterBreakOff()``"
- "描述", "設定機器人焊接中斷後恢復焊接"
- "必選參數", "無"
- "預設參數", "無"
- "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-設定機器人焊接中斷後退出焊接
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.8-3.7.8
-
-.. csv-table::
- :stub-columns: 1
- :widths: 10 30
-
- "原型", "``WeldingAbortWeldAfterBreakOff()``"
- "描述", "設定機器人焊接中斷後退出焊接"
- "必選參數", "無"
- "預設參數", "無"
- "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-程式碼範例
-------------
-.. code-block:: python
- :linenos:
-
- from fairino import Robot
- # 與機器人控制器建立連接，連接成功返回一個機器人對象
- robot = Robot.RPC('192.168.58.2')
-
- rtn = -1
- rtn = robot.WeldingSetCheckArcInterruptionParam(1, 200)
- print("WeldingSetCheckArcInterruptionParam return", rtn)
- rtn = robot.WeldingSetReWeldAfterBreakOffParam(1, 5.7, 98.2, 0)
- print("WeldingSetReWeldAfterBreakOffParam return", rtn)
- enable = 0
- length = 0
- velocity = 0
- moveType = 0
- checkEnable = 0
- arcInterruptTimeLength = 0
- rtn, checkEnable, arcInterruptTimeLength = robot.WeldingGetCheckArcInterruptionParam()
- print("WeldingGetCheckArcInterruptionParam checkEnable:", checkEnable)
- print("WeldingGetCheckArcInterruptionParam arcInterruptTimeLength:", arcInterruptTimeLength)
- rtn, enable, length, velocity, moveType = robot.WeldingGetReWeldAfterBreakOffParam()
- print("*****")
- print("WeldingGetReWeldAfterBreakOffParam enable:", enable)
- print("WeldingGetReWeldAfterBreakOffParam length:", length)
- print("WeldingGetReWeldAfterBreakOffParam velocity:", velocity)
- print("WeldingGetReWeldAfterBreakOffParam moveType:", moveType)
-
- robot.ProgramLoad("/fruser/test.lua")
- robot.ProgramRun()
-
- time.sleep(5)
-
- while True:
- print("welding breakoff state is ", robot.robot_state_pkg.weldingBreakOffState.breakOffState)
- if robot.robot_state_pkg.weldingBreakOffState.breakOffState == 1:
- print("welding breakoff !")
- time.sleep(2)
- rtn = robot.WeldingStartReWeldAfterBreakOff()
- print("WeldingStartReWeldAfterBreakOff return", rtn)
- break
- time.sleep(0.1)
-
-擺動漸變開始
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.9-3.8.0
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveChangeStart(weaveNum)``"
-    "描述", "擺動漸變開始"
-    "必選參數", "- ``weaveNum``：擺動編號"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode "
-
-擺動漸變結束
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.9-3.8.0
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WeaveChangeEnd()``"
-    "描述", "擺動漸變結束"
-    "必選參數", "無"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode "
-
-代碼示例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    p1Joint = [74.620, -80.903, 94.608, -109.882, -90.436, -13.432]
-    p1Desc = [-72.912, -587.664, 31.849, 43.283, -6.731, 15.068]
-    p2Joint = [66.431, -92.875, 116.362, -120.516, -88.627, -24.731]
-    p2Desc = [-104.915, -483.712, -25.231, 42.228, -6.572, 18.433]
-    p3Joint = [56.457, -84.796, 104.618, -114.497, -92.422, -25.430]
-    p3Desc = [-240.651, -483.840, -7.161, 46.577, -5.286, 8.318]
-    
-    robot.WeldingSetVoltage(1, 19, 0, 0)
-    robot.WeldingSetCurrent(1, 190, 0, 0)
-    robot.MoveJ(joint_pos=p1Joint, tool=1, user=1, vel=100.0, acc=100.0, ovl=100.0)
-    robot.MoveL(desc_pos=p2Desc, tool=1, user=1, vel=100.0, acc=100.0, ovl=50.0)
-    robot.ARCStart(1, 0, 10000)
-    robot.ArcWeldTraceControl(1, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
-    robot.WeaveStart(0)
-    robot.WeaveChangeStart(1,1,0,0)
-    robot.MoveL(desc_pos=p3Desc, tool=1, user=1, vel=100.0, acc=100.0, ovl=1.0)
-    robot.WeaveChangeEnd()
-    robot.WeaveEnd(0)
-    robot.ArcWeldTraceControl(0, 0, 1, 0.06, 5, 5, 60, 1, 0.06, 5, 5, 80, 0, 0, 4, 1, 10, 0, 0)
-    robot.ARCEnd(1, 0, 10000)
-
-電弧追蹤焊機電流反饋AI通道選擇
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.2
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceAIChannelCurrent(channel)``"
-    "描述", "電弧追蹤焊機電流反饋AI通道選擇"
-    "必選參數", "- ``channel``：通道；0-擴展AI0；1-擴展AI1；2-擴展AI2；3-擴展AI3；4-控制箱AI0；5-控制箱AI1"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
-
-電弧追蹤焊機電壓反饋AI通道選擇
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.2
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceAIChannelVoltage(channel)``"
-    "描述", "電弧追蹤焊機電壓反饋AI通道選擇"
-    "必選參數", "- ``channel``：通道；0-擴展AI0；1-擴展AI1；2-擴展AI2；3-擴展AI3；4-控制箱AI0；5-控制箱AI1"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
-
-電弧追蹤焊機電流反饋轉換參數
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.2
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceCurrentPara(AILow, AIHigh, currentLow, currentHigh)``"
-    "描述", "電弧追蹤焊機電流反饋轉換參數"
-    "必選參數", "無"
-    "默認參數", "- ``AILow``：AI通道下限，默認值0V，範圍[0-10V]
-    - ``AIHigh``：AI通道上限，默認值10V，範圍[0-10V]
-    - ``currentLow``：AI通道下限對應焊機電流值，默認值0V，範圍[0-200V]
-    - ``currentHigh``：AI通道上限對應焊機電流值，默認值100V，範圍[0-200V]"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
-
-電弧追蹤焊機電壓反饋轉換參數
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.2
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ArcWeldTraceVoltagePara(AILow, AIHigh, voltageLow, voltageHigh)``"
-    "描述", "電弧追蹤焊機電壓反饋轉換參數"
-    "必選參數", "無"
-    "默認參數", "- ``AILow``：AI通道下限，默認值0V，範圍[0-10V]
-    - ``AIHigh``：AI通道上限，默認值10V，範圍[0-10V]
-    - ``voltageLow``：AI通道下限對應焊機電壓值，默認值0V，範圍[0-200V]
-    - ``voltageHigh``：AI通道上限對應焊機電壓值，默認值100V，範圍[0-200V]"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
-
-程式碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    safetydescPose = [-504.043,275.181,40.908,-28.002,-42.025,-14.044]
-    safetyjointPos = [-39.078,-76.732,87.227,-99.47,-94.301,18.714]
-    startdescPose = [-473.86,257.879,-20.849,-37.317,-42.021,2.543]
-    startjointPos = [-43.487,-76.526,95.568,-104.445,-89.356,3.72]
-    enddescPose = [-499.844,141.225,7.72,-34.856,-40.17,13.13]
-    endjointPos = [-31.305,-82.998,99.401,-104.426,-89.35,3.696]
+    toolCoord = [0, 0, 200, 0, 0, 0]
+    robot.SetToolCoord(1, toolCoord, 0, 0, 1, 0)
+    wobjCoord = [0, 0, 0, 0, 0, 0]
+    robot.SetWObjCoord(1, wobjCoord, 0)
     exaxisPos = [0, 0, 0, 0]
     offdese = [0, 0, 0, 0, 0, 0]
-    robot.MoveJ(joint_pos=safetyjointPos, tool=1, user=0, vel=20, acc=100)
-    robot.WeldingSetCurrentRelation(0, 495, 1, 10, 0)
-    robot.WeldingSetVoltageRelation(10, 45, 1, 10, 1)
-    robot.WeldingSetVoltage(0, 25, 1, 0)  # ----設定電壓
-    robot.WeldingSetCurrent(0, 260, 0, 0)  # ----設定電流
-    rtn = robot.ArcWeldTraceAIChannelCurrent(4)
-    print("ArcWeldTraceAIChannelCurrent rtn is", rtn)
-    rtn = robot.ArcWeldTraceAIChannelVoltage(5)
-    print("ArcWeldTraceAIChannelVoltage rtn is", rtn)
-    rtn = robot.ArcWeldTraceCurrentPara(0, 5, 0, 500)
-    print("ArcWeldTraceCurrentPara rtn is", rtn)
-    rtn = robot.ArcWeldTraceVoltagePara(1.018, 10, 0, 50)
-    print("ArcWeldTraceVoltagePara rtn is", rtn)
-    robot.MoveJ(joint_pos=startjointPos, tool=1, user=0, vel=20, acc=100)
-    robot.ArcWeldTraceControl(1, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
-    robot.ARCStart(0, 0, 10000)
-    robot.WeaveStart(0)
-    robot.MoveL(desc_pos=enddescPose, tool=1, user=0, vel=100, ovl= 2, acc=100)
-    robot.ARCEnd(0, 0, 10000)
-    robot.WeaveEnd(0)
-    robot.ArcWeldTraceControl(0, 0, 1, 0.08, 5, 5, 300, 1, 0.06, 4, 4, 300, 1, 0, 4, 1, 10, 0, 0)
-    robot.MoveJ(joint_pos=safetyjointPos, tool=1, user=0, vel=20, acc=100)
+    descStart = [216.543, 445.175, 93.465, 179.683, 1.757, -112.641]
+    jointStart = [-128.345, -86.660, 114.679, -119.625, -89.219, 74.303]
+    descEnd = [111.143, 523.384, 87.659, 179.703, 1.835, -97.750]
+    jointEnd = [-113.454, -81.060, 109.328, -119.954, -89.218, 74.302]
+    error = robot.MoveL(desc_pos=descStart,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveL(desc_pos=descEnd,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    descREF0A = [142.135, 367.604, 86.523, 179.728, 1.922, -111.089]
+    jointREF0A = [-126.794, -100.834, 128.922, -119.864, -89.218, 74.302]
+    descREF0B = [254.633, 463.125, 72.604, 179.845, 2.341, -114.704]
+    jointREF0B = [-130.413, -81.093, 112.044, -123.163, -89.217, 74.303]
+    descREF1A = [92.556, 485.259, 47.476, -179.932, 3.130, -97.512]
+    jointREF1A = [-113.231, -83.815, 119.877, -129.092, -89.217, 74.303]
+    descREF1B = [203.103, 583.836, 63.909, 179.991, 2.854, -103.372]
+    jointREF1B = [-119.088, -69.676, 98.692, -121.761, -89.219, 74.303]
+    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchStart return: {error}")
+    error = robot.MoveL(desc_pos=descREF0A,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveL(desc_pos=descREF0B,tool= 1,user= 1,vel= 100,search=1)
+    print(f"MoveL return: {error}")
+    error = robot.WireSearchWait("REF0")
+    print(f"WireSearchWait return: {error}")
+    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchEnd return: {error}")
+    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchStart return: {error}")
+    error = robot.MoveL(desc_pos= descREF1A,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveL(desc_pos= descREF1B,tool= 1,user= 1,vel= 100,search=1)
+    print(f"MoveL return: {error}")
+    error = robot.WireSearchWait("REF1")
+    print(f"WireSearchWait return: {error}")
+    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
+    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchStart return: {error}")
+    error = robot.MoveL(desc_pos= descREF0A,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveL(desc_pos= descREF0B,tool= 1,user= 1,vel= 100,search=1)
+    print(f"MoveL return: {error}")
+    error = robot.WireSearchWait("RES0")
+    print(f"WireSearchWait return: {error}")
+    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchEnd return: {error}")
+    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchStart return: {error}")
+    error = robot.MoveL(desc_pos= descREF1A,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveL(desc_pos= descREF1B,tool= 1,user= 1,vel= 100,search=1)
+    print(f"MoveL return: {error}")
+    error = robot.WireSearchWait("RES1")
+    print(f"WireSearchWait return: {error}")
+    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
+    print(f"WireSearchEnd return: {error}")
+    varNameRef = ["REF0", "REF1", "#", "#", "#", "#"]
+    varNameRes = ["RES0", "RES1", "#", "#", "#", "#"]
+    offectFlag = 0
+    offectPos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    error, offectFlag, offectPos = robot.GetWireSearchOffset(0, 0, varNameRef, varNameRes)
+    print(f"GetWireSearchOffset return: {error}")
+    error = robot.PointsOffsetEnable(0, offectPos)
+    print(f"PointsOffsetEnable return: {error}")
+    error = robot.MoveL(desc_pos= descStart,tool= 1,user= 1,vel= 100)
+    print(f"MoveL return: {error}")
+    error = robot.MoveL(desc_pos= descEnd,tool= 1,user= 1,vel= 100,search=1)
+    print(f"MoveL return: {error}")
+    error = robot.PointsOffsetDisable()
+    robot.CloseRPC()
 
-設定焊接電壓漸變開始
+設置焊接電壓漸變開始
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.1.2
 
@@ -1625,7 +1324,7 @@
     :widths: 10 30
 
     "原型", "``WeldingSetVoltageGradualChangeStart(IOType, voltageStart, voltageEnd, AOIndex, blend)``"
-    "描述", "設定焊接電壓漸變開始"
+    "描述", "設置焊接電壓漸變開始"
     "必選參數", "- ``IOType``：控制類型；0-控制箱IO；1-數字通信協議(UDP);2-數字通信協議(ModbusTCP)
     - ``voltageStart``：起始焊接電壓(V)
     - ``voltageEnd``：終止焊接電壓(V)
@@ -1634,7 +1333,7 @@
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-設定焊接電壓漸變結束
+設置焊接電壓漸變結束
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.1.2
 
@@ -1643,12 +1342,12 @@
     :widths: 10 30
 
     "原型", "``WeldingSetVoltageGradualChangeEnd()``"
-    "描述", "設定焊接電壓漸變結束"
+    "描述", "設置焊接電壓漸變結束"
     "必選參數", "無"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-設定焊接電流漸變開始
+設置焊接電流漸變開始
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.1.2
 
@@ -1657,7 +1356,7 @@
     :widths: 10 30
 
     "原型", "``WeldingSetCurrentGradualChangeStart(IOType, currentStart, currentEnd, AOIndex, blend)``"
-    "描述", "設定焊接電流漸變開始"
+    "描述", "設置焊接電流漸變開始"
     "必選參數", "- ``IOType``：控制類型；0-控制箱IO；1-數字通信協議(UDP);2-數字通信協議(ModbusTCP)
     - ``currentStart``：起始焊接電流(A)
     - ``currentEnd``：終止焊接電流(A)
@@ -1666,7 +1365,7 @@
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-設定焊接電流漸變結束
+設置焊接電流漸變結束
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.1.2
 
@@ -1675,20 +1374,19 @@
     :widths: 10 30
 
     "原型", "``WeldingSetCurrentGradualChangeEnd()``"
-    "描述", "設定焊接電流漸變結束"
+    "描述", "設置焊接電流漸變結束"
     "必選參數", "無"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-程式碼範例
-------------
+機器人焊接電流電壓漸變代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-
     startdescPose = [-484.707, 276.996, -14.013, -37.657, -40.508, -1.548]
     startjointPos = [-45.421, -75.673, 93.627, -104.302, -87.938, 6.005]
     enddescPose = [-508.767, 137.109, -13.966, -37.639, -40.508, -1.559]
@@ -1697,11 +1395,10 @@
     safejointPos = [-46.604, -75.410, 89.109, -100.003, -88.012, 4.823]
     exaxisPos = [0, 0, 0, 0]
     offdese = [0, 0, 0, 0, 0, 0]
-
     robot.WeldingSetCurrentRelation(0, 495, 1, 10, 0)
     robot.WeldingSetVoltageRelation(10, 45, 1, 10, 1)
-    robot.WeldingSetVoltage(0, 25, 1, 0)  # ----設定電壓
-    robot.WeldingSetCurrent(0, 260, 0, 0)  # ----設定電流
+    robot.WeldingSetVoltage(0, 25, 1, 0)  # ----設置電壓
+    robot.WeldingSetCurrent(0, 260, 0, 0)  # ----設置電流
     robot.MoveJ(joint_pos=safejointPos, tool=1, user=0, vel=5, acc=100)
     rtn = robot.WeldingSetCurrentGradualChangeStart(0, 260, 220, 0, 0)
     print("WeldingSetCurrentGradualChangeStart rtn is", rtn)

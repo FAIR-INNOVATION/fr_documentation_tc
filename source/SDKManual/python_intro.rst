@@ -22,6 +22,7 @@ Python
     :numbered: 5
     :maxdepth: 5
 
+    PythonRobotStatusFeedback
     PythonRobotBase
     PythonRobotMovement
     PythonRobotIO
@@ -32,9 +33,7 @@ Python
     PythonRobotWebAPPProgramUse
     PythonRobotPeripherals
     PythonRobotForceControl
-    PythonRobotConveyor
-    PythonRobotWeld
     PythonRoboExtendedAxis
+    PythonRobotWeld
     PythonRobotOthers
-    PythonRobotStatusFeedback
     PythonAppendix

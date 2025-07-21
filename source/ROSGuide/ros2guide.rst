@@ -115,16 +115,23 @@ fairino_hardware有兩個功能包組成，一個是自訂資料結構的功能�
     mkdir -p ros2_ws/src
 
 2. 編譯功能包
-將安裝套件的程式碼拷貝至ros2_ws/src目錄下，在ros2_ws目錄下執行以下命令：
+將安裝包的程式碼拷貝至ros2_ws/src目錄下，那麼在ros2_ws目錄下運行如下命令：
+
+.. code-block:: shell
+    :linenos:
+
+    source ~/ros2_control_ws/install/setup.bash
+
+待指令完成之後，運行以下指令：
 
 .. code-block:: shell
     :linenos:
 
     colcon build --packages-select fairino_msgs
 
-等待上一條指令完成編譯後
+等待上一條命令完成編譯後，再使用以下指令編譯fairino_hardware:
 
-.. code-block::  shell
+.. code-block:: shell
     :linenos:
 
     colcon build --packages-select fairino_hardware
@@ -368,12 +375,141 @@ API說明
     SetAnticollision(1,1,1,1,1,1)
 
     /*
-    函數功能描述:設定碰撞後策略
-    int strategy - 0-報錯停止,1-繼續運行
+     * @brief  設定碰撞後策略
+     * @param  [in] strategy  0-報錯停止，1-繼續運行
+     * @param  [in] safeTime  安全停止時間[1000 - 2000]ms
+     * @param  [in] safeDistance  安全停止距離[1-150]mm
+     * @param  [in] safeVel 安全速度[50-250] mm/s
+     * @param  [in] safetyMargin  j1-j6安全係數[1-10]
+     * @return  錯誤碼
     */
-    int SetCollisionStrategy(int strategy);
+    int SetCollisionStrategy(int strategy, int safeTime, int safeDistance, int safeVel, int safetyMargin[])
     // 例子
     SetCollisionStrategy(1)
+
+    /*
+     * @brief 設定機器人碰撞檢測方法
+     * @param [in] method 碰撞檢測方法：0-電流模式；1-雙編碼器；2-電流和雙編碼器同時開啟
+     * @param [in] thresholdMode 碰撞等級閾值方式；0-碰撞等級固定閾值方式；1-自定義碰撞檢測閾值
+     * @return  錯誤碼
+    */
+    int SetCollisionDetectionMethod(int method, int thresholdMode);
+    // 例子
+    SetCollisionDetectionMethod(0,0)
+
+    /*
+     * @brief 設定靜態下碰撞檢測開始關閉
+     * @param  [in] status 0-關閉；1-開啟
+     * @return  錯誤碼
+    */
+    int SetStaticCollisionOnOff(int status);
+    // 例子
+    SetStaticCollisionOnOff(1)
+
+    /*
+     * @brief 關節扭矩功率檢測
+     * @param  [in] status 0-關閉；1-開啟
+     * @param  [in] power 設定最大功率(W);
+     * @return  錯誤碼
+    */
+    int SetPowerLimit(int status, double power);
+    //例子
+    SetPowerLimit(1,100)
+
+    /*
+     * @brief  配置力傳感器
+     * @param  [in] company  力傳感器廠商，17-坤維科技，19-航天十一院，20-ATI傳感器，21-中科米點，22-偉航敏芯，23-NBIT，24-鑫精誠(XJC)，26-NSR
+     * @param  [in] device  設備號，坤維(0-KWR75B)，航天十一院(0-MCS6A-200-4)，ATI(0-AXIA80-M8)，中科米點(0-MST2010)，偉航敏芯(0-WHC6L-YB-10A)，NBIT(0-XLH93003ACS)，鑫精誠XJC(0-XJC-6F-D82)，NSR(0-NSR-FTSensorA)
+     * @param  [in] softvesion  軟件版本號，暫不使用，默認為0
+     * @param  [in] bus 設備掛在末端總線位置，暫不使用，默認為0
+     * @return  錯誤碼
+    */
+    int FT_SetConfig(int company, int device, int softvesion, int bus);
+    // 例子
+    FT_SetConfig(0,1,0,0)
+
+    /*
+     * @brief  獲取力傳感器配置
+     * @param  [out] company  力傳感器廠商，待定
+     * @param  [out] device  設備號，暫不使用，默認為0
+     * @param  [out] softvesion  軟件版本號，暫不使用，默認為0
+     * @param  [out] bus 設備掛在末端總線位置，暫不使用，默認為0
+     * @return  錯誤碼
+    */
+    int FT_GetConfig(int *company, int *device, int *softvesion, int *bus);
+    // 例子
+    FT_GetConfig()
+
+    /*
+     * @brief  力傳感器激活
+     * @param  [in] act  0-復位，1-激活
+     * @return  錯誤碼
+    */
+    int FT_Activate(uint8_t act);
+    // 例子
+    FT_Activate(1)
+
+    /*
+     * @brief  力傳感器校零
+     * @param  [in] act  0-去除零點，1-零點矯正
+     * @return  錯誤碼
+    */
+    int FT_SetZero(uint8_t act);
+    // 例子
+    FT_SetZero(1)
+
+    /*
+     * @brief  碰撞守護
+     * @param  [in] flag 0-關閉碰撞守護，1-開啟碰撞守護
+     * @param  [in] sensor_id 力傳感器編號
+     * @param  [in] select  選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
+     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
+     * @param  [in] max_threshold 最大閾值
+     * @param  [in] min_threshold 最小閾值
+     * @note   力/扭矩檢測範圍：(ft-min_threshold, ft+max_threshold)
+     * @return  錯誤碼
+    */
+    int FT_Guard(uint8_t flag, int sensor_id, uint8_t select[6], ForceTorque *ft, float max_threshold[6], float min_threshold[6]);
+    // 例子
+    FT_Guard(1,1,0,0,1,0,0,0,0,0,100,0,0,0,0,0,200,0,0,0,0,0,50,0,0,0)
+
+    /*
+     * @brief  恆力控制
+     * @param  [in] flag 0-關閉恆力控制，1-開啟恆力控制
+     * @param  [in] sensor_id 力傳感器編號
+     * @param  [in] select  選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
+     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
+     * @param  [in] ft_pid 力pid參數，力矩pid參數
+     * @param  [in] adj_sign 自適應啟停控制，0-關閉，1-開啟
+     * @param  [in] ILC_sign ILC啟停控制， 0-停止，1-訓練，2-實操
+     * @param  [in] max_dis 最大調整距離，單位mm
+     * @param  [in] max_ang 最大調整角度，單位deg
+     * @param  [in] filter_Sign 濾波開啟標誌 0-關；1-開，默認關閉
+     * @param  [in] posAdapt_sign 姿態順應開啟標誌 0-關；1-開，默認關閉
+     * @param  [in] isNoBlock 阻塞標誌，0-阻塞；1-非阻塞
+     * @return  錯誤碼
+    */
+    int FT_Control(uint8_t flag, int sensor_id, uint8_t select[6], ForceTorque *ft, float ft_pid[6], uint8_t adj_sign, uint8_t ILC_sign, float max_dis, float max_ang, int filter_Sign = 0, int posAdapt_sign = 0, int isNoBlock = 0);
+    // 例子
+    FT_Control(1,1,0,0,1,0,0,0,0,0,-10,0,0,0,0.0005,0,0,0,0,0,0,0,100,10,0,0,0)
+
+    /*
+     * @brief  柔順控制開啟
+     * @param  [in] p 位置調節係數或柔順係數
+     * @param  [in] force 柔順開啟力閾值，單位N
+     * @return  錯誤碼
+    */
+    int FT_ComplianceStart(float p, float force);
+    // 例子
+    FT_ComplianceStart(0.005,20)
+
+    /**
+     * @brief  柔順控制關閉
+     * @return  錯誤碼
+    */
+    int FT_ComplianceStop();
+    // 例子
+    FT_ComplianceStop()
 
     /*
     函數功能描述:設定正限位,注意設定值必須在硬限位範圍內
@@ -513,32 +649,52 @@ API說明
 
     /*
     函數功能描述:關節空間運動
-    string point_name - 預存點位名稱,例如JNT1就是關節點位資訊序號為1的點位,CART1就是笛卡爾點位資訊序號為1的點位,MoveJ指令支持輸入關節點位或是直角點位。需要注意的,MoveJ指令由於默認參數中有指定工具坐標系和工件坐標系,當這兩個坐標系序號與當前加載的不一致時,該指令會導致報錯,需要在默認參數中修改坐標系參數並load參數後再執行此運動指令。
-    float vel - 指令速度百分比,範圍0-100
-    int tool - 工具座標系序号
-    int user - 工件座標系序号
+    string point_name - 預存點位名稱，比如JNT1就是關節點位信息序號為1的點位，CART1就是笛卡爾點位信息序號為1的點位，MoveJ指令支持輸入關節點位或者笛卡爾點位。需要注意的是，MoveJ指令由於默認參數中有指定工具坐標系和工件坐標系，當這兩個坐標系序號與當前加載的不一致時，該指令會導致報錯，需要在默認參數中修改坐標系參數並load參數後再運行該運動指令。
+    float vel - 指令速度百分比，範圍0-100
+    int tool - 工具坐標系序號
+    int user - 工件坐標系序號
+    double expos1 - 外部軸1的位置
+    double expos2 - 外部軸2的位置
+    double expos3 - 外部軸3的位置
+    double expos4 - 外部軸4的位置
     */
-    int MoveJ(string point_name, float vel,int tool, int user);//point_name是輸入预存點位信息,
+    int MoveJ(string point_name, float vel,int tool, int user,double expos1,double expos2,double expos3,double expos4);//point_name是輸入預存點位信息,
     // 例子
-    MoveJ(JNT1,10,1,1)
+    MoveJ(JNT1,10,1,1,0,0,0,0)
 
     /*
     函數功能描述:笛卡爾空間直線運動
-    string point_name - 預存點位名稱,例如JNT1就是關節點位資訊序號為1的點位,CART1就是笛卡爾點位資訊序號為1的點位,MoveL指令支援輸入關節點位或是直角點位。需要注意的,MoveL指令由於默認參數中有指定工具坐標系和工件坐標系,當這兩個坐標系序號與當前加載的不一致時,該指令會導致報錯,需要在默認參數中修改坐標系參數並load參數後再執行該運動指令。
-    float vel - 指令速度百分比,範圍0-100
+    string point_name - 預存點位名稱，比如JNT1就是關節點位信息序號為1的點位，CART1就是笛卡爾點位信息序號為1的點位，MoveL指令支持輸入關節點位或者笛卡爾點位。需要注意的是，MoveL指令由於默認參數中有指定工具坐標系和工件坐標系，當這兩個坐標系序號與當前加載的不一致時，該指令會導致報錯，需要在默認參數中修改坐標系參數並load參數後再運行該運動指令。
+    float vel - 指令速度百分比，範圍0-100
+    int tool - 工具坐標系序號
+    int user - 工件坐標系序號
+    double expos1 - 外部軸1的位置
+    double expos2 - 外部軸2的位置
+    double expos3 - 外部軸3的位置
+    double expos4 - 外部軸4的位置
     */
-    int MoveL(string point_name,float vel);
+    int MoveL(string point_name,float vel,int tool,int user,double expos1,double expos2,double expos3,double expos4);
     // 例子
-    MoveL(CART1,10)
+    MoveL(CART1,10,1,1,0,0,0,0)
 
     /*
     函數功能描述:笛卡爾空間圓弧運動
-    string point1_name point2_name - 預存點位名稱,例如JNT1就是關節點位訊息序號為1的點位,CART1就是笛卡爾點位訊息序號為1的點位,MoveC指令支持輸入關節點位或笛卡爾點位,但是兩個點位必須同類型的,即不支持第一個點位輸入關節空間點位,第二個點位輸入笛卡爾點位。需要注意的,MoveC指令由於默認參數中有指定工具坐標系和工件坐標系,當這兩個坐標系序號與當前加載的不一致時,該指令會導致報錯,需要在默認參數中修改坐標系參數並load參數後再執行該運動指令。
-    float vel - 指令速度百分比,範圍0-100
+    string point1_name point2_name - 預存點位名稱，比如JNT1就是關節點位信息序號為1的點位，CART1就是笛卡爾點位信息序號為1的點位，MoveC指令支持輸入關節點位或者笛卡爾點位，但是兩個點位必須同類型的，即不支持第一個點位輸入關節空間點位，第二個點位輸入笛卡爾點位。需要注意的是，MoveC指令由於默認參數中有指定工具坐標系和工件坐標系，當這兩個坐標系序號與當前加載的不一致時，該指令會導致報錯，需要在默認參數中修改坐標系參數並load參數後再運行該運動指令。
+    float vel - 指令速度百分比，範圍0-100
+    int tool - 工具坐標系序號
+    int user - 工件坐標系序號
+    double expos1 - 點1的外部軸1的位置
+    double expos2 - 點1的外部軸2的位置
+    double expos3 - 點1的外部軸3的位置
+    double expos4 - 點1的外部軸4的位置
+    double expos1 - 點2的外部軸1的位置
+    double expos2 - 點2的外部軸2的位置
+    double expos3 - 點2的外部軸3的位置
+    double expos4 - 點2的外部軸4的位置
     */
-    int MoveC(string point1_name,string point2_name, float vel);
+    int MoveC(string point1_name,string point2_name, float vel, int tool,int user,double expos1,double expos2,double expos3,double expos4,double expos1,double expos2,double expos3,double expos4);
     // 例子
-    MoveC(JNT1,JNT2,10)
+    MoveC(JNT1,JNT2,10,1,1,0,0,0,0,0,0,0,0)
 
     /*
     函數功能描述:樣條運動開始

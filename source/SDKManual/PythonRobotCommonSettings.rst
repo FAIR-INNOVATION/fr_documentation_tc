@@ -1,91 +1,20 @@
-機器人常用設定
+機器人常用設置
 =================
 
 .. toctree:: 
     :maxdepth: 5
 
-設定全域速度
-+++++++++++++++++++
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetSpeed(vel)``"
-    "描述", "設定全域速度"
-    "必選參數", "- ``vel``:速度百分比，範圍[0~100]"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    error = robot.SetSpeed(20)
-    print("設定全域速度錯誤碼:",error)
-
-設定係統變數值
-+++++++++++++++++
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetSysVarValue(id,value)``"
-    "描述", "設定系統變數"
-    "必選參數", "- ``id``：變數編號，範圍[1~20];
-    - ``value``：變數值"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    for i in range(1,21):
-        error = robot.SetSysVarValue(i,10)
-    robot.WaitMs(1000)
-    for i in range(1,21):
-        sys_var = robot.GetSysVarValue(i)
-        print("系統變數編號:",i,"值",sys_var)
-
-設定工具參考點-六點法
+設置工具參考點-六點法
 +++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetToolPoint(point_num)``"
-    "描述", "設定工具參考點-六點法"
+    "描述", "設置工具參考點-六點法"
     "必選參數", "- ``point_num``：點編號,範圍[1~6]"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    t_coord = [1.0,2.0,3.0,4.0,5.0,6.0]
-    for i in range(1,7):
-        robot.DragTeachSwitch(1)#切入拖曳示教模式
-        time.sleep(5)
-        error = robot.SetToolPoint(i) #实际應控制機器人依照要求移動到適當位置後再發送指令
-        print("六點法設定工具坐標系，記錄點",i,"錯誤碼",error)
-        robot.DragTeachSwitch(0)
-        time.sleep(1)
-    error = robot.ComputeTool()
-    print("六點法設定工具坐標系錯誤碼",error)
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 計算工具座標系-六點法
 +++++++++++++++++++++
@@ -94,44 +23,24 @@
     :widths: 10 30
 
     "原型", "``ComputeTool()``"
-    "描述", "計算工具座標系-六點法（設定完六個工具參考點后再进行计算）"
+    "描述", "計算工具座標系-六點法（設置完六個工具參考點後再進行計算）"
     "必選參數", "無"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
     - ``tcp_pose=[x,y,z,rx,ry,rz]``：工具座標系"
 
-設定工具參考點-四點法
+設置工具參考點-四點法
 +++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetTcp4RefPoint(point_num)``"
-    "描述", "設定工具參考點-四點法"
+    "描述", "設置工具參考點-四點法"
     "必選參數", "``point_num``：點編號,範圍[1~4]"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
     - ``tcp_pose=[x,y,z,rx,ry,rz]``：工具座標系"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    t_coord = [1.0,2.0,3.0,4.0,5.0,6.0]
-    for i in range(1,5):
-        robot.DragTeachSwitch(1)#切入拖曳示教模式
-        time.sleep(5)
-        error = robot.SetTcp4RefPoint(i) #應控制機器人依照要求移動到適當位置後再發送指令
-        print("四點法設定工具坐標系，記錄點",i,"錯誤碼",error)
-        robot.DragTeachSwitch(0)
-        time.sleep(1)
-    error,t_coord= robot.ComputeTcp4()
-    print("四點法設定工具坐標系錯誤碼",error,"工具TCP",t_coord)
 
 計算工具座標系-四點法
 +++++++++++++++++++++
@@ -140,204 +49,226 @@
     :widths: 10 30
 
     "原型", "``ComputeTcp4()``"
-    "描述", "計算工具座標系-四點法（設定完四個工具參考點后再进行计算）"
+    "描述", "計算工具座標系-四點法（設置完四個工具參考點後再進行計算）"
     "必選參數", "無"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
     - ``tcp_pose=[x,y,z,rx,ry,rz]``：工具座標系"
 
-設定工具坐標系
+根據點位信息計算工具座標系
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ComputeToolCoordWithPoints(method, pos)``"
+    "描述", "根據點位信息計算工具座標系"
+    "必選參數", "- ``method``：計算方法；0-四點法；1-六點法
+    - ``pos``：關節位置組，四點法時數組長度爲4個，六點法時數組長度爲6個"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
+    - ``tcp_offset=[x,y,z,rx,ry,rz]``：根據點位信息計算得到的工具座標系，單位 [mm][°]"
+
+設置工具座標系
 +++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetToolCoord(id,t_coord,type,install,toolID,loadNum)``"
-    "描述", "設定工具坐標系"
+    "描述", "設置工具座標系"
     "必選參數", "- ``id``:座標系編號，範圍[1~15]；
     - ``t_coord``:工具中心點相對末端法蘭中心位姿，單位[mm][°]；
-    - ``type``:0-工具坐標系，1-感測器座標系；
+    - ``type``:0-工具座標系，1-傳感器座標系；
     - ``install``:安裝位置，0-機器人末端，1-機器人外部
     - ``toolID``:工具ID
     - ``loadNum``:負載編號"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    t_coord = [1.0,2.0,3.0,4.0,5.0,6.0]
-    error = robot.SetToolCoord(10,t_coord,0,0,0,0)
-    print("設定工具坐標系錯誤碼",error)
-
-設定工具坐標系列表
+設置工具座標系列表
 ++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetToolList(id,t_coord ,type, install, loadNum)``"
-    "描述", "設定工具坐標系列表"
+    "描述", "設置工具座標系列表"
     "必選參數", "- ``id``:座標系編號，範圍[1~15]；
     - ``t_coord``:[x,y,z,rx,ry,rz] 工具中心點相對末端法蘭中心位姿，單位[mm][°]；
-    - ``type``:0-工具坐標系，1-感測器座標系；
+    - ``type``:0-工具座標系，1-傳感器座標系；
     - ``install``:安裝位置，0-機器人末端，1-機器人外部
     - ``loadNum``:負載編號"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-代碼範例
-------------
+獲取當前工具座標系
+++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetTCPOffset(flag=1)``"
+    "描述", "獲取當前工具座標系"
+    "必選參數", "無"
+    "默認參數", "``flag``：0-阻塞，1-非阻塞  默認1"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``tcp_offset=[x,y,z,rx,ry,rz]``: 當前工具座標系相對位姿，單位[mm][°]"
+
+機器人工具座標系操作代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
+    import threading
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    t_coord = [1.0,2.0,3.0,4.0,5.0,6.0]
-    error = robot.SetToolList(10,t_coord,0,0,0)
-    print("設定工具坐標系列表錯誤碼",error)
+    p1Desc = [186.331, 487.913, 209.850, 149.030, 0.688, -114.347]
+    p2Desc = [69.721, 535.073, 202.882, -144.406, -14.775, -89.012]
+    p3Desc = [146.861, 578.426, 205.598, 175.997, -36.178, -93.437]
+    p4Desc = [136.284, 509.876, 225.613, 178.987, 1.372, -100.696]
+    p5Desc = [138.395, 505.972, 298.016, 179.134, 2.147, -101.110]
+    p6Desc = [105.553, 454.325, 232.017, -179.426, 0.444, -99.952]
+    p1Joint = [-127.876, -75.341, 115.417, -122.741, -59.820, 74.300]
+    p2Joint = [-101.780, -69.828, 110.917, -125.740, -127.841, 74.300]
+    p3Joint = [-112.851, -60.191, 86.566, -80.676, -97.463, 74.300]
+    p4Joint = [-116.397, -76.281, 113.845, -128.611, -88.654, 74.299]
+    p5Joint = [-116.814, -82.333, 109.162, -118.662, -88.585, 74.302]
+    p6Joint = [-115.649, -84.367, 122.447, -128.663, -90.432, 74.303]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    posJ = [p1Joint, p2Joint, p3Joint, p4Joint, p5Joint, p6Joint]
+    rtn,coordRtn = robot.ComputeToolCoordWithPoints(1, posJ)
+    print(f"ComputeToolCoordWithPoints    {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.MoveJ(joint_pos=p1Joint,tool=0, user=0, vel=100)
+    robot.SetToolPoint(1)
+    robot.MoveJ(joint_pos=p2Joint,tool=0, user=0, vel=100)
+    robot.SetToolPoint(2)
+    robot.MoveJ(joint_pos=p3Joint,tool=0, user=0, vel=100)
+    robot.SetToolPoint(3)
+    robot.MoveJ(joint_pos=p4Joint,tool=0, user=0, vel=100)
+    robot.SetToolPoint(4)
+    robot.MoveJ(joint_pos=p5Joint,tool=0, user=0, vel=100)
+    robot.SetToolPoint(5)
+    robot.MoveJ(joint_pos=p6Joint,tool=0, user=0, vel=100)
+    robot.SetToolPoint(6)
+    rtn,coordRtn = robot.ComputeTool()
+    print(f"6 Point ComputeTool        {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.SetToolList(1, coordRtn, 0, 0, 0)
+    robot.MoveJ(joint_pos=p1Joint,tool=0, user=0, vel=100)
+    robot.SetTcp4RefPoint(1)
+    robot.MoveJ(joint_pos=p2Joint,tool=0, user=0, vel=100)
+    robot.SetTcp4RefPoint(2)
+    robot.MoveJ(joint_pos=p3Joint,tool=0, user=0, vel=100)
+    robot.SetTcp4RefPoint(3)
+    robot.MoveJ(joint_pos=p4Joint,tool=0, user=0, vel=100)
+    robot.SetTcp4RefPoint(4)
+    rtn,coordRtn = robot.ComputeTcp4()
+    print(f"4 Point ComputeTool        {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.SetToolCoord(2, coordRtn, 0, 0, 1, 0)
+    rtn,getCoord = robot.GetTCPOffset(0)
+    print(f"GetTCPOffset    {rtn}  coord is {getCoord[0]} {getCoord[1]} {getCoord[2]} {getCoord[3]} {getCoord[4]} {getCoord[5]}")
+    robot.CloseRPC()
 
-設定外部工具參考點-三點法
+設置外部工具參考點-六點法
 +++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetExTCPPoint(point_num)``"
-    "描述", "設定外部工具參考點-三點法"
+    "描述", "設置外部工具參考點-三點法"
     "必選參數", "- ``point_num``：點編號,範圍[1~3]"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    etcp = [1.0,2.0,3.0,4.0,5.0,6.0]
-    etool = [21.0,22.0,23.0,24.0,25.0,26.0]
-    for i in range(1,4):
-        error = robot.SetExTCPPoint(i) #應控制機器人依照要求移動到適當位置後再發送指令
-        print("三點法設定外部工具坐標系，記錄點",i,"錯誤碼",error)
-        time.sleep(1)
-    error,etcp = robot.ComputeExTCF()
-    print("三點法設定外部工具坐標系錯誤碼",error,"外部工具TCP",etcp)
-    error = robot.SetExToolCoord(10,etcp,etool)
-    print("設定外部工具坐標系錯誤碼",error)
-    error = robot.SetExToolList(10,etcp,etool)
-    print("設定外部工具坐標系列表錯誤碼",error)
-
-計算外部工具坐標系-三點法
+計算外部工具座標系-六點法
 +++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ComputeExTCF (point_num)``"
-    "描述", "計算外部工具坐標系-三點法（設定完三個參考點后再进行计算）"
+    "原型", "``ComputeExTCF(point_num)``"
+    "描述", "計算外部工具座標系-三點法（設置完三個參考點後再進行計算）"
     "必選參數", "``point_num``：點編號,範圍[1~3]"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode 
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
     - ``etcp=[x,y,z,rx,ry,rz]``：外部工具座標系"
 
-設定外部工具坐標系
+設置外部工具座標系
 ++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetExToolCoord(id,etcp,etool)``"
-    "描述", "設定外部工具坐標系"
+    "描述", "設置外部工具座標系"
     "必選參數", "- ``id``:座標系編號，範圍[0~14]；
     - ``etcp``:外部工具座標系，單位[mm][°]；
     - ``etool``:末端工具座標系，單位[mm][°]；"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    etcp = [1.0,2.0,3.0,4.0,5.0,6.0]
-    etool = [21.0,22.0,23.0,24.0,25.0,26.0]
-    error = robot.SetExToolCoord(10,etcp,etool)
-    print("設定外部工具坐標系錯誤碼",error)
-
-設定外部工具坐標系列表
+設置外部工具座標系列表
 ++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetExToolList(id,etcp ,etool)``"
-    "描述", "設定外部工具坐標系列表"
+    "描述", "設置外部工具座標系列表"
     "必選參數", "- ``id``:座標系編號，範圍[0~14]；
     - ``etcp``:外部工具座標系，單位[mm][°]；
     - ``etool``:末端工具座標系，單位[mm][°]；"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-代碼範例
-------------
+機器人外部工具座標系操作代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
+    import threading
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    etcp = [1.0,2.0,3.0,4.0,5.0,6.0]
-    etool = [21.0,22.0,23.0,24.0,25.0,26.0]
-    error = robot.SetExToolList(10,etcp,etool)
-    print("設定外部工具坐標系列表錯誤碼",error)
+    p1Desc = [-89.606, 779.517, 193.516, 178.000, 0.476, -92.484]
+    p1Joint = [-108.145, -50.137, 85.818, -125.599, -87.946, 74.329]
+    p2Desc = [-24.656, 850.384, 191.361, 177.079, -2.058, -95.355]
+    p2Joint = [-111.024, -41.538, 69.222, -114.913, -87.743, 74.329]
+    p3Desc = [-99.813, 766.661, 241.878, -176.817, 1.917, -91.604]
+    p3Joint = [-107.266, -56.116, 85.971, -122.560, -92.548, 74.331]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    posTCP = [p1Desc, p2Desc, p3Desc]
+    robot.MoveJ(joint_pos=p1Joint,tool=1, user=0, vel=50)
+    robot.SetExTCPPoint(1)
+    robot.MoveJ(joint_pos=p2Joint,tool=1, user=0, vel=50)
+    robot.SetExTCPPoint(2)
+    robot.MoveJ(joint_pos=p3Joint,tool=1, user=0, vel=50)
+    robot.SetExTCPPoint(3)
+    rtn,coordRtn = robot.ComputeExTCF()
+    print(f"ComputeExTCF {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.SetExToolCoord(1, coordRtn, offdese)
+    robot.SetExToolList(1, coordRtn, offdese)
+    robot.CloseRPC()
 
-設定工件參考點-三點法
+設置工件參考點-三點法
 ++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetWObjCoordPoint(point_num)``"
-    "描述", "設定工件參考點-三點法"
+    "描述", "設置工件參考點-三點法"
     "必選參數", "``point_num``:點編號,範圍[1~3]"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    w_coord = [11.0,12.0,13.0,14.0,15.0,16.0]
-    robot.SetToolList(0,[0,0,0,0,0,0],0,0)#設定參考點前应當将工具和工件號座標系切换至0
-    robot.SetWObjList(0,[0,0,0,0,0,0])
-    for i in range(1,4):
-        error = robot.SetWObjCoordPoint(i) #实际應控制機器人依照要求移動到適當位置後再發送指令
-        print("三點法設定工件座標系，記錄點",i,"錯誤碼",error)
-        time.sleep(1)
-    error, w_coord = robot.ComputeWObjCoord(0,0)
-    print("三點法計算工件座標系錯誤碼",error,"工件座標系", w_coord)
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
 計算工件座標系-三點法
 ++++++++++++++++++++++++
@@ -346,187 +277,117 @@
     :widths: 10 30
 
     "原型", "``ComputeWObjCoord(method, refFrame)``"
-    "描述", "計算工件座標系-三點法（三個參考點設定完成后再进行计算）;"
-    "必選參數", "- ``method``：计算方式0：原點-x軸-z軸，1：原點-x軸-xy平面
+    "描述", "計算工件座標系-三點法（三個參考點設置完成後再進行計算）;"
+    "必選參數", "- ``method``：計算方式0：原點-x軸-z軸，1：原點-x軸-xy平面
     - ``refFrame``：參考座標系"
     "默認參數", "無"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode 
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
     - ``wobj_pose=[x,y,z,rx,ry,rz]``：工件座標系"
 
-
-設定工件座標系
+設置工件座標系
 ++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetWObjCoord(id, coord, refFrame)``"
-    "描述", "設定工件座標系"
+    "描述", "設置工件座標系"
     "必選參數", "- ``id``:座標系編號，範圍[0~14]；
-    - ``coord``:工件坐標系相對於末端法蘭中心位姿，單位 [mm][°]
+    - ``coord``:工件座標系相對於末端法蘭中心位姿，單位 [mm][°]
     - ``refFrame``:參考座標系"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    w_coord = [11.0,12.0,13.0,14.0,15.0,16.0]
-    error = robot.SetWObjCoord(id=11,coord=w_coord,refFrame=0)
-    print("設定工件座標系錯誤碼",error)
-
-設定工件座標系列表
+設置工件座標系列表
 ++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
     "原型", "``SetWObjList(id, coord, refFrame)``"
-    "描述", "設定工件座標系列表"
+    "描述", "設置工件座標系列表"
     "必選參數", "- ``id``:座標系編號，範圍[0~14]；
-    - ``coord``:工件坐標系相對於末端法蘭中心位姿，單位 [mm][°]
+    - ``coord``:工件座標系相對於末端法蘭中心位姿，單位 [mm][°]
     - ``refFrame``:參考座標系"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
+根據點位信息計算工件座標系
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.0.8
 
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    w_coord = [11.0,12.0,13.0,14.0,15.0,16.0]
-    error = robot.SetWObjList(id=11,coord=w_coord,refFrame=0)
-    print("設定工件座標系列表錯誤碼",error)
-
-設定末端負載重量
-++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetLoadWeight(loadNum, weight)``"
-    "描述", "設定末端負載重量,錯誤負載重量設定可能会导致拖動模式下機器人失控"
-    "必選參數", "- ``loadNum``:負載编号；
-    - ``weight``:單位[kg]"
+    "原型", "``ComputeWObjCoordWithPoints(method, pos, refFrame)``"
+    "描述", "根據點位信息計算工件座標系"
+    "必選參數", "- ``method``：計算方法；0：原點-x軸-z軸  1：原點-x軸-xy平面
+    - ``pos``：三個TCP位置組
+    - ``refFrame``：參考座標系"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode 
+    - ``wobj_offset=[x,y,z,rx,ry,rz]``：根據點位信息計算得到的工件座標系，單位 [mm][°]"
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
+獲取當前工件座標系
+++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
 
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    error = robot.SetLoadWeight(0)#！！！負載重量設定应于实际相符(錯誤負載重量設定可能会导致拖動模式下機器人失控)
+    "原型", "``GetWObjOffset(flag=1)``"
+    "描述", "獲取當前工件座標系"
+    "必選參數", "無"
+    "默認參數", "``flag``：0-阻塞，1-非阻塞，默認1"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``wobj_offset=[x,y,z,rx,ry,rz]``: 當前工件座標系相對位姿，單位[mm][°]"
 
-設定機器人安裝方式-固定安裝
+機器人工件座標系操作代碼示例
 ++++++++++++++++++++++++++++++
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetRobotInstallPos(method)``"
-    "描述", "設定機器人安裝方式-固定安裝,錯誤安裝方式設定會導致拖曳模式下機器人失控"
-    "必選參數", "- ``method``:0-平裝，1-側裝，2-挂裝"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-代碼範例
-------------
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    error = robot.SetRobotInstallPos(0) #！！！安裝方式設定应与实际一致 0-正裝，1-側裝，2-倒裝 (錯誤安裝方式設定会导致拖動模式下機器人失控）
-    print("設定機器人安裝方式錯誤碼",error)
+    p1Desc = [-89.606, 779.517, 193.516, 178.000, 0.476, -92.484]
+    p2Desc = [-24.656, 850.384, 191.361, 177.079, -2.058, -95.355]
+    p3Desc = [-99.813, 766.661, 241.878, -176.817, 1.917, -91.604]
+    p1Joint = [-108.145, -50.137, 85.818, -125.599, -87.946, 74.329]
+    p2Joint = [-111.024, -41.538, 69.222, -114.913, -87.743, 74.329]
+    p3Joint = [-107.266, -56.116, 85.971, -122.560, -92.548, 74.331]
+    exaxisPos = [0, 0, 0, 0]
+    offdese = [0, 0, 0, 0, 0, 0]
+    posTCP = [p1Desc, p2Desc, p3Desc]
+    rtn,coordRtn = robot.ComputeWObjCoordWithPoints(1, posTCP, 0)
+    print(f"ComputeWObjCoordWithPoints    {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.MoveJ(joint_pos=p1Joint,tool=1, user=0, vel=100)
+    robot.SetWObjCoordPoint(1)
+    robot.MoveJ(joint_pos=p2Joint,tool=1, user=0, vel=100)
+    robot.SetWObjCoordPoint(2)
+    robot.MoveJ(joint_pos=p3Joint,tool=1, user=0, vel=100)
+    robot.SetWObjCoordPoint(3)
+    rtn,coordRtn = robot.ComputeWObjCoord(1, 0)
+    print(f"ComputeWObjCoord   {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.SetWObjCoord(1, coordRtn, 0)
+    robot.SetWObjList(1, coordRtn, 0)
+    rtn,getWobjDesc = robot.GetWObjOffset(0)
+    print(f"GetWObjOffset    {rtn}  coord is {getWobjDesc[0]} {getWobjDesc[1]} {getWobjDesc[2]} {getWobjDesc[3]} {getWobjDesc[4]} {getWobjDesc[5]}")
+    robot.CloseRPC()
 
-設定機器人安裝角度-自由安裝
-++++++++++++++++++++++++++++++
+設置全局速度
++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetRobotInstallAngle(yangle,zangle)``"
-    "描述", "設定機器人安裝角度-自由安裝,錯誤安裝角度設定会导致拖動模式下機器人失控"
-    "必選參數", "- ``yangle``：傾斜角
-    - ``zangle``：旋轉角"
+    "原型", "``SetSpeed(vel)``"
+    "描述", "設置全局速度"
+    "必選參數", "- ``vel``:速度百分比，範圍[0~100]"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    error = robot.SetRobotInstallAngle(0.0,0.0) #！！！安裝角度設定应与实际一致 (錯誤安裝角度設定会导致拖動模式下機器人失控）
-    print("設定機器人安裝角度錯誤碼",error)
-
-設定末端負載質心座標
-++++++++++++++++++++++
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetLoadCoord(x,y,z)``"
-    "描述", "設定末端負載質心座標,錯誤負載質心設定可能会导致拖動模式下機器人失控"
-    "必選參數", "- ``x``: 质心座標，單位[mm]
-    - ``y``: 质心座標，單位[mm]
-    - ``z``: 质心座標，單位[mm]"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    error = robot.SetLoadCoord(3.0,4.0,5.0) #！！！負載質心設定应于实际相符(錯誤負載質心設定可能会导致拖動模式下機器人失控)
-    print("設定負載質心錯誤碼",error)
-
-等待指定時間
-+++++++++++++++
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``WaitMs(t_ms)``"
-    "描述", "等待指定時間"
-    "必選參數", "- ``t_ms``:單位[ms]"
-    "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    error = robot.WaitMs(1000)
-    print("等待指定時間錯誤碼",error)
-
-設定機器人加速度
+設置機器人加速度
 +++++++++++++++++
 .. versionadded:: python SDK-v2.0.4
 
@@ -535,212 +396,490 @@
     :widths: 10 30
 
     "原型", "``SetOaccScale(acc)``"
-    "描述", "設定機器人加速度"
+    "描述", "設置機器人加速度"
     "必選參數", "- ``acc``:機器人加速度百分比"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-代碼範例
-------------
+獲取默認速度
++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetDefaultTransVel()``"
+    "描述", "獲取默認速度"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``vel``: 默認速度，單位 [mm/s]"
+
+設置末端負載重量
+++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetLoadWeight(loadNum, weight)``"
+    "描述", "設置末端負載重量,錯誤負載重量設置可能會導致拖動模式下機器人失控"
+    "必選參數", "- ``loadNum``:負載編號
+    - ``weight``:單位[kg]"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+設置末端負載質心座標
+++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetLoadCoord(x,y,z)``"
+    "描述", "設置末端負載質心座標,錯誤負載質心設置可能會導致拖動模式下機器人失控"
+    "必選參數", "- ``x``: 質心座標，單位[mm]
+    - ``y``: 質心座標，單位[mm]
+    - ``z``: 質心座標，單位[mm]"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+獲取當前負載的重量
++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetTargetPayload(flag=1)``"
+    "描述", "獲取當前負載的質量"
+    "必選參數", "無"
+    "默認參數", "``flag``：0-阻塞，1-非阻塞  默認1"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``weight``：當前負載重量，單位 [kg]"
+
+獲取當前負載的質心
++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetTargetPayloadCog(flag=1)``"
+    "描述", "獲取當前負載的質心"
+    "必選參數", "無"
+    "默認參數", "``flag``：0-阻塞，1-非阻塞  默認1"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``cog=[x,y,z]``: 當前質心座標，單位 [mm]"
+
+設置機器人安裝方式-固定安裝
+++++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetRobotInstallPos(method)``"
+    "描述", "設置機器人安裝方式-固定安裝,錯誤安裝方式設置會導致拖動模式下機器人失控"
+    "必選參數", "- ``method``:0-平裝，1-側裝，2-掛裝"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+設置機器人安裝角度-自由安裝
+++++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetRobotInstallAngle(yangle,zangle)``"
+    "描述", "設置機器人安裝角度-自由安裝,錯誤安裝角度設置會導致拖動模式下機器人失控"
+    "必選參數", "- ``yangle``：傾斜角
+    - ``zangle``：旋轉角"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取機器人安裝角度
+++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetRobotInstallAngle()``"
+    "描述", "獲取機器人安裝角度"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``[yangle,zangle]``：yangle-傾斜角,zangle-旋轉角"
+
+設置系統變量值
++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetSysVarValue(id,value)``"
+    "描述", "設置系統變量"
+    "必選參數", "- ``id``：變量編號，範圍[1~20];
+    - ``value``：變量值"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取系統變量值
++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetSysVarValue(id)``"
+    "描述", "獲取系統變量值"
+    "必選參數", "- ``id``：系統變量編號，範圍[1~20]"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``var_value``：系統變量值"
+
+機器人常用設置代碼示例
+++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    robot.SetOaccScale (20)
+    for i in range(1, 100):
+        robot.SetSpeed(i)
+        robot.SetOaccScale(i)
+        time.sleep(0.03)
+    error,defaultVel = robot.GetDefaultTransVel()
+    print(f"GetDefaultTransVel is {defaultVel}")
+    for i in range(1, 21):
+        robot.SetSysVarValue(i, i + 0.5)
+        time.sleep(0.1)
+    for i in range(1, 21):
+        value = robot.GetSysVarValue(i)
+        print(f"sys value {i} is: {value}")
+        time.sleep(0.1)
+    robot.SetLoadWeight(0, 2.5)
+    robot.SetLoadCoord(3.0,4.0,5.0)
+    time.sleep(1)
+    error,getLoad = robot.GetTargetPayload(0)
+    error,getLoadTran = robot.GetTargetPayloadCog(0)
+    print(f"get load is {getLoad}; get load cog is {getLoadTran[0]} {getLoadTran[1]} {getLoadTran[2]}")
+    robot.SetRobotInstallPos(0)
+    robot.SetRobotInstallAngle(15.0, 25.0)
+    error,[anglex, angley] = robot.GetRobotInstallAngle()
+    print(f"GetRobotInstallAngle x: {anglex}; y: {angley}")
+    robot.CloseRPC()
 
-設定機器指定姿態速度開啟
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
+關節摩擦力補償開關
+++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``AngularSpeedStart(ratio)``"
-    "描述", "指定姿態速度開啟"
-    "必選參數", "- ``ratio``:姿態速度百分比[0-300]"
+    "原型", "``FrictionCompensationOnOff(state)``"
+    "描述", "關節摩擦力補償開關"
+    "必選參數", "- ``state``：0-關，1-開"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-指定姿態速度關閉
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
+設置關節摩擦力補償係數-正裝
+++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``AngularSpeedEnd()``"
-    "描述", "指定姿態速度關閉"
+    "原型", "``SetFrictionValue_level(coeff)``"
+    "描述", "設置關節摩擦力補償係數-固定安裝-正裝"
+    "必選參數", "- ``coeff=[j1,j2,j3,j4,j5,j6]``：六個關節補償係數"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置關節摩擦力補償係數-側裝
+++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetFrictionValue_wall(coeff)``"
+    "描述", "設置關節摩擦力補償係數-固定安裝-側裝"
+    "必選參數", "- ``coeff=[j1,j2,j3,j4,j5,j6]``：六個關節補償係數"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置關節摩擦力補償係數-倒裝
+++++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetFrictionValue_ceiling(coeff)``"
+    "描述", "設置關節摩擦力補償係數-固定安裝-倒裝"
+    "必選參數", "- ``coeff=[j1,j2,j3,j4,j5,j6]``：六個關節補償係數"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置關節摩擦力補償係數-自由安裝
++++++++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetFrictionValue_freedom(coeff)``"
+    "描述", "設置關節摩擦力補償係數-自由安裝"
+    "必選參數", "- ``coeff=[j1,j2,j3,j4,j5,j6]``：六個關節補償係數"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+機器人設置關節摩擦力補償代碼示例
++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    lcoeff = [0.9, 0.9, 0.9, 0.9, 0.9, 0.9]
+    wcoeff = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
+    ccoeff = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
+    fcoeff = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+    rtn = robot.FrictionCompensationOnOff(1)
+    print(f"FrictionCompensationOnOff rtn is {rtn}")
+    rtn = robot.SetFrictionValue_level(lcoeff)
+    print(f"SetFrictionValue_level rtn is {rtn}")
+    rtn = robot.SetFrictionValue_wall(wcoeff)
+    print(f"SetFrictionValue_wall rtn is {rtn}")
+    rtn = robot.SetFrictionValue_ceiling(ccoeff)
+    print(f"SetFrictionValue_ceiling rtn is {rtn}")
+    rtn = robot.SetFrictionValue_freedom(fcoeff)
+    print(f"SetFrictionValue_freedom rtn is {rtn}")
+    robot.CloseRPC()
+
+查詢機器人錯誤碼
+++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetRobotErrorCode()``"
+    "描述", "查詢機器人錯誤碼"
     "必選參數", "無"
     "默認參數", "無"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``[maincode subcode]``：機器人錯誤碼，maincode-主錯誤碼，subcode-子錯誤碼"
 
-工具坐標係轉換開始
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: Python SDK-v2.0.8-3.7.8
-
+錯誤狀態清除
+++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ToolTrsfStart(toolNum)``"
-    "描述", "工具坐標係轉換開始"
-    "必選參數", "- ``toolNum``:工具座標系編號[0-14]"
-    "默認參數", "无"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
+    "原型", "``ResetAllError()``"
+    "描述", "錯誤狀態清除，只能清除可復位的錯誤"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-工具坐標系轉換結束
+機器人故障狀態獲取及清除錯誤代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: Python SDK-v2.0.8-3.7.8
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ToolTrsfEnd()``"
-    "描述", "工具坐標系轉換結束"
-    "必選參數", "无"
-    "默認參數", "无"
-    "傳回值", "錯誤碼 成功-0 失敗- errcode "
-    
-代碼範例
-------------
-.. versionadded:: Python SDK-v2.0.8-3.7.8
-
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 與機器人控制器建立連接，並連接到一個機器人對象
+    import time
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
+    p1Joint = [-108.145, -50.137, 85.818, -125.599, -87.946, 74.329]
+    robot.MoveJ(joint_pos=p1Joint, tool=5, user=2, vel=50)
+    time.sleep(1)
+    error,[maincode, subcode] = robot.GetRobotErrorCode()
+    print(f"robot maincode is {maincode}; subcode is {subcode}")
+    time.sleep(1)
+    robot.ResetAllError()
+    time.sleep(1)
+    error,[maincode, subcode] = robot.GetRobotErrorCode()
+    print(f"robot maincode is {maincode}; subcode is {subcode}")
+    robot.CloseRPC()
 
-    startjointPos = [52.850, -84.327, 102.163, -112.843, -84.131, 0.063]
-    startdescPose = [-226.699, -501.969, 264.638, -174.973, 5.852, 143.301]
-    endjointPos = [52.850, -77.596, 111.785, -129.196, -84.131, 0.062]
-    enddescPose = [-226.702, -501.973, 155.833, -174.973, 5.852, 143.301]
-
-    robot.ToolTrsfStart(1)
-    rtn = robot.MoveJ(startjointPos, 0, 0, startdescPose)
-    print("rtn is ", rtn)
-    rtn = robot.MoveJ(endjointPos, 0, 0, enddescPose)
-    print("rtn is ", rtn)
-    robot.ToolTrsfEnd()
-
-根據位置資訊計算工具座標系
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: Python SDK-v2.0.8-3.7.8
+設置寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.3
 
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ComputeToolCoordWithPoints(method, pos)``"
-    "描述", "根據位置資訊計算工具座標系"
-    "必選參數", "- ``method``：計算方法；0-四點法；1-六點法
-    - ``pos``：關節位置組，四點法時數組長度為4個，六點法時數組長度為6個"
-    "默認參數", "无"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode 
-    - ``tcp_offset=[x,y,z,rx,ry,rz]``：根據點位資訊計算得到的工具座標系，單位[mm][°]"
+    "原型", "``SetWideBoxTempFanMonitorParam(enable, period)``"
+    "描述", "設置寬電壓控制箱溫度及風扇轉速監控參數"
+    "必選參數", "- ``enable``：0-不使能監測；1-使能監測
+    - ``period``：監測週期(s),範圍1-100"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-代碼範例
-------------
+獲取寬電壓控制箱溫度及風扇轉速監控參數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.3
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetWideBoxTempFanMonitorParam()``"
+    "描述", "獲取寬電壓控制箱溫度及風扇轉速監控參數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``enable``：0-不使能監測；1-使能監測
+    - ``period``：監測週期(s),範圍1-100"
+
+寬電壓控制箱溫度和風扇電流狀態獲取代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
-    # 與機器人控制器建立連接，並連接到一個機器人對象
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
+    robot.SetWideBoxTempFanMonitorParam(1, 2)
+    error, enable, period = robot.GetWideBoxTempFanMonitorParam()
+    print(f"GetWideBoxTempFanMonitorParam enable is:{enable},period is:{period}")
+    for i in range(100):
+        error, pkg = robot.GetRobotRealTimeState()
+        print(f"robot ctrl box temp is:{pkg.wideVoltageCtrlBoxTemp},fan current is:{pkg.wideVoltageCtrlBoxFanCurrent}")
+        time.sleep(0.1)
+    rtn = robot.SetWideBoxTempFanMonitorParam(0, 2)
+    print(f"SetWideBoxTempFanMonitorParam rtn is:{rtn}")
+    error, enable, period = robot.GetWideBoxTempFanMonitorParam()
+    print(f"GetWideBoxTempFanMonitorParam enable is:{enable},period is:{period}")
+    for i in range(100):
+        error, pkg = robot.GetRobotRealTimeState()
+        print(f"robot ctrl box temp is:{pkg.wideVoltageCtrlBoxTemp},fan current is:{pkg.wideVoltageCtrlBoxFanCurrent}")
+        time.sleep(0.1)
+    robot.CloseRPC()
 
-    p1Desc = [-394.073, -276.405, 399.451, -133.692, 7.657, -139.047]
-    p1Joint = [15.234, -88.178, 96.583, -68.314, -52.303, -122.926]
+設置焦點標定點
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.4
 
-    p2Desc = [-187.141, -444.908, 432.425, 148.662, 15.483, -90.637]
-    p2Joint = [61.796, -91.959, 101.693, -102.417, -124.511, -122.767]
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
 
-    p3Desc = [-368.695, -485.023, 426.640, -162.588, 31.433, -97.036]
-    p3Joint = [43.896, -64.590, 60.087, -50.269, -94.663, -122.652]
+    "原型", "``SetFocusCalibPoint(pointNum, point)``"
+    "描述", "設置焦點標定點"
+    "必選參數", "- ``pointNum``：焦點標定點編號 1-8
+    - ``point``：標定點座標"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
-    p4Desc = [-291.069, -376.976, 467.560, -179.272, -2.326, -107.757]
-    p4Joint = [39.559, -94.731, 96.307, -93.141, -88.131, -122.673]
+計算焦點標定結果
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.4
 
-    p5Desc = [-284.140, -488.041, 478.579, 179.785, -1.396, -98.030]
-    p5Joint = [49.283, -82.423, 81.993, -90.861, -89.427, -122.678]
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
 
-    p6Desc = [-296.307, -385.991, 484.492, -178.637, -0.057, -107.059]
-    p6Joint = [40.141, -92.742, 91.410, -87.978, -88.824, -122.808]
+    "原型", "``ComputeFocusCalib(pointNum)``"
+    "描述", "計算焦點標定結果"
+    "必選參數", "- ``pointNum``：標定點個數"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``resultPos``：標定結果XYZ
+    - ``accuracy``：標定精度誤差"
 
+開啓焦點跟隨
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.4
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FocusStart(kp=50.0, kpredic=19.0, aMax=1440, vMax=180, type=0)``"
+    "描述", "開啓焦點跟隨"
+    "必選參數", "無"
+    "默認參數", "- ``kp``：比例參數，默認50.0
+    - ``kpredic``：前饋參數，默認19.0
+    - ``aMax``：最大角加速度限制，默認1440°/s^2
+    - ``vMax``：最大角速度限制，默認180°/s
+    - ``type``：鎖定X軸指向(0-參考輸入矢量；1-水平；2-垂直)，默認0"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+停止焦點跟隨
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.4
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FocusEnd()``"
+    "描述", "停止焦點跟隨"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置焦點座標
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.4
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetFocusPosition(pos)``"
+    "描述", "設置焦點座標"
+    "必選參數", "- ``pos``：焦點座標XYZ"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+機器人焦點跟隨代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    p1Desc = [186.331, 487.913, 209.850, 149.030, 0.688, -114.347]
+    p1Joint = [-127.876, -75.341, 115.417, -122.741, -59.820, 74.300]
+    p2Desc = [69.721, 535.073, 202.882, -144.406, -14.775, -89.012]
+    p2Joint = [-101.780, -69.828, 110.917, -125.740, -127.841, 74.300]
+    p3Desc = [146.861, 578.426, 205.598, 175.997, -36.178, -93.437]
+    p3Joint = [-112.851, -60.191, 86.566, -80.676, -97.463, 74.300]
+    p4Desc = [136.284, 509.876, 225.613, 178.987, 1.372, -100.696]
+    p4Joint = [-116.397, -76.281, 113.845, -128.611, -88.654, 74.299]
+    p5Desc = [138.395, 505.972, 298.016, 179.134, 2.147, -101.110]
+    p5Joint = [-116.814, -82.333, 109.162, -118.662, -88.585, 74.302]
+    p6Desc = [105.553, 454.325, 232.017, -179.426, 0.444, -99.952]
+    p6Joint = [-115.649, -84.367, 122.447, -128.663, -90.432, 74.303]
     exaxisPos = [0, 0, 0, 0]
-    offdese = [0, 0, 0, 0, 0, 0]
-
-    posJ = [p1Joint, p2Joint, p3Joint, p4Joint, p5Joint, p6Joint]
-    rtn, coordRtn = robot.ComputeToolCoordWithPoints(1, posJ)
-    print("ComputeToolCoordWithPoints ", rtn, "coord is ", coordRtn[0], coordRtn[1], coordRtn[2], coordRtn[3], coordRtn[4], coordRtn[5])
-
-    robot.MoveJ(p1Joint, 0, 0, p1Desc)
-    robot.SetToolPoint(1)
-    robot.MoveJ(p2Joint, 0, 0, p2Desc)
-    robot.SetToolPoint(2)
-    robot.MoveJ(p3Joint, 0, 0, p3Desc)
-    robot.SetToolPoint(3)
-    robot.MoveJ(p4Joint, 0, 0, p4Desc)
-    robot.SetToolPoint(4)
-    robot.MoveJ(p5Joint, 0, 0, p5Desc)
-    robot.SetToolPoint(5)
-    robot.MoveJ(p6Joint, 0, 0, p6Desc)
-    robot.SetToolPoint(6)
-    rtn, coordRtn = robot.ComputeTool()
-    print("ComputeTool ", rtn, "coord is ", coordRtn[0], coordRtn[1], coordRtn[2], coordRtn[3], coordRtn[4], coordRtn[5])
-
-根據位置資訊計算機座標系
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: Python SDK-v2.0.8-3.7.8
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``ComputeWObjCoordWithPoints(method, pos, refFrame)``"
-    "描述", "根據位置資訊計算機座標系"
-    "必選參數", "- ``method``：計算方法；0：原點-x軸-z軸 1：原點-x軸-xy平面
-    - ``pos``：三個TCP位置組
-    - ``refFrame``：參考座標系"
-    "默認參數", "无"
-    "傳回值", "- 錯誤碼 成功-0 失敗- errcode 
-    - ``wobj_offset=[x,y,z,rx,ry,rz]``：根據點位資訊計算得到的工件座標系，單位[mm][°]"
-
-代碼範例
-------------
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    # 與機器人控制器建立連接，並連接到一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-
-    p1Desc = [-275.046, -293.122, 28.747, 174.533, -1.301, -112.101]
-    p1Joint = [35.207, -95.350, 133.703, -132.403, -93.897, -122.768]
-
-    p2Desc = [-280.339, -396.053, 29.762, 174.621, -3.448, -102.901]
-    p2Joint = [44.304, -85.020, 123.889, -134.679, -92.658, -122.768]
-
-    p3Desc = [-270.597, -290.603, 83.034, 179.314, 0.808, -114.171]
-    p3Joint = [32.975, -99.175, 125.966, -116.484, -91.014, -122.857]
-
-    exaxisPos = [0, 0, 0, 0]
-    offdese = [0, 0, 0, 0, 0, 0]
-
-    posTCP = [p1Desc, p2Desc, p3Desc]
-    rtn, coordRtn = robot.ComputeWObjCoordWithPoints(1, posTCP, 0)
-    print("ComputeWObjCoordWithPoints ", rtn, "coord is ", coordRtn[0], coordRtn[1], coordRtn[2], coordRtn[3], coordRtn[4], coordRtn[5])
-
-    robot.MoveJ(p1Joint, 1, 0, p1Desc)
-    robot.SetWObjCoordPoint(1)
-    robot.MoveJ(p2Joint, 1, 0, p2Desc)
-    robot.SetWObjCoordPoint(2)
-    robot.MoveJ(p3Joint, 1, 0, p3Desc)
-    robot.SetWObjCoordPoint(3)
-    rtn, coordRtn = robot.ComputeWObjCoord(1, 0)
-    print("ComputeTool ", rtn, "coord is ", coordRtn[0], coordRtn[1], coordRtn[2], coordRtn[3], coordRtn[4], coordRtn[5])
+    offdese = [0, 0, 100, 0, 0, 0]
+    robot.MoveJ(joint_pos=p1Joint,tool=0,user=0,vel=100,acc=100,ovl=100,exaxis_pos=exaxisPos,blendT=-1,offset_flag=0,offset_pos=offdese)
+    robot.SetTcp4RefPoint(1)
+    robot.MoveJ(joint_pos=p2Joint,tool=0,user=0,vel=100,acc=100,ovl=100,exaxis_pos=exaxisPos,blendT=-1,offset_flag=0,offset_pos=offdese)
+    robot.SetTcp4RefPoint(2)
+    robot.MoveJ(joint_pos=p3Joint,tool=0,user=0,vel=100,acc=100,ovl=100,exaxis_pos=exaxisPos,blendT=-1,offset_flag=0,offset_pos=offdese)
+    robot.SetTcp4RefPoint(3)
+    robot.MoveJ(joint_pos=p4Joint,tool=0,user=0,vel=100,acc=100,ovl=100,exaxis_pos=exaxisPos,blendT=-1,offset_flag=0,offset_pos=offdese)
+    robot.SetTcp4RefPoint(4)
+    rtn,coordRtn = robot.ComputeTcp4()
+    print(f"4 Point ComputeTool {rtn} coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} "
+          f"{coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+    robot.SetToolCoord(1, coordRtn, 0, 0, 1, 0)
+    error, p1Desc = robot.GetForwardKin(p1Joint)
+    error, p2Desc = robot.GetForwardKin(p2Joint)
+    error, p3Desc = robot.GetForwardKin(p3Joint)
+    robot.SetFocusCalibPoint(1, p1Desc)
+    robot.SetFocusCalibPoint(2, p2Desc)
+    robot.SetFocusCalibPoint(3, p3Desc)
+    rtn, resultPos, accuracy = robot.ComputeFocusCalib(pointNum=3)
+    print(f"ComputeFocusCalib coord is {rtn} {resultPos[0]} {resultPos[1]} {resultPos[2]} accuracy is {accuracy}")
+    rtn = robot.SetFocusPosition(resultPos)
+    error, p5Desc = robot.GetForwardKin(p5Joint)
+    error, p6Desc = robot.GetForwardKin(p6Joint)
+    robot.MoveL(desc_pos=p5Desc,tool=1,user=0,vel=10,acc=100,ovl=100,blendR=-1,blendMode=0,exaxis_pos=exaxisPos,search=0,offset_flag=1,offset_pos=offdese)
+    robot.MoveL(desc_pos=p6Desc,tool=1,user=0,vel=10,acc=100,ovl=100,blendR=-1,blendMode=0,exaxis_pos=exaxisPos,search=0,offset_flag=1,offset_pos=offdese)
+    robot.FocusStart(50, 19, 710, 90, 0)
+    robot.MoveL(desc_pos=p5Desc,tool=1,user=0,vel=10,acc=100,ovl=100,blendR=-1,blendMode=0,exaxis_pos=exaxisPos,search=0,offset_flag=1,offset_pos=offdese)
+    robot.MoveL(desc_pos=p6Desc,tool=1,user=0,vel=10,acc=100,ovl=100,blendR=-1,blendMode=0,exaxis_pos=exaxisPos,search=0,offset_flag=1,offset_pos=offdese)
+    robot.FocusEnd()
+    robot.CloseRPC()

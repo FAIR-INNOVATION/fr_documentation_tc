@@ -857,3 +857,127 @@
          robot.Sleep(2000);
          return 0;
      }
+
+計算焦點標定結果
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 計算焦點標定結果
+    * @param [in] pointNum 標定點個數
+    * @param [out] resultPos 標定結果XYZ
+    * @param [out] accuracy 標定精度誤差
+    * @return 錯誤碼
+    */
+    errno_t ComputeFocusCalib(int pointNum, DescTran& resultPos, float& accuracy);
+         
+設定焦點座標
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設定焦點座標
+    * @param [in] pos 焦點座標XYZ
+    * @return 錯誤碼
+    */
+    errno_t SetFocusPosition(DescTran pos);
+         
+開啟焦點跟隨
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 開啟焦點跟隨
+    * @param [in] kp 比例參數（預設：50.0）
+    * @param [in] kpredict 前饋參數（預設：19.0）
+    * @param [in] aMax 最大角加速度限制（預設：1440°/s²）
+    * @param [in] vMax 最大角速度限制（預設：180°/s）
+    * @param [in] type 鎖定X軸模式（0-參考輸入向量；1-水平；2-垂直）
+    * @return 錯誤碼
+    */
+    errno_t FocusStart(double kp, double kpredict, double aMax, double vMax, int type);
+         
+停止焦點跟隨
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 停止焦點跟隨
+    * @return 錯誤碼
+    */
+    errno_t FocusEnd();
+
+機器人焦點跟隨代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int TestFocus()
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      DescPose p1Desc(186.331, 487.913, 209.850, 149.030, 0.688, -114.347);
+      JointPos p1Joint(-127.876, -75.341, 115.417, -122.741, -59.820, 74.300);
+      DescPose p2Desc(69.721, 535.073, 202.882, -144.406, -14.775, -89.012);
+      JointPos p2Joint(-101.780, -69.828, 110.917, -125.740, -127.841, 74.300);
+      DescPose p3Desc(146.861, 578.426, 205.598, 175.997, -36.178, -93.437);
+      JointPos p3Joint(-112.851, -60.191, 86.566, -80.676, -97.463, 74.300);
+      DescPose p4Desc(136.284, 509.876, 225.613, 178.987, 1.372, -100.696);
+      JointPos p4Joint(-116.397, -76.281, 113.845, -128.611, -88.654, 74.299);
+      DescPose p5Desc(138.395, 505.972, 298.016, 179.134, 2.147, -101.110);
+      JointPos p5Joint(-116.814, -82.333, 109.162, -118.662, -88.585, 74.302);
+      DescPose p6Desc(105.553, 454.325, 232.017, -179.426, 0.444, -99.952);
+      JointPos p6Joint(-115.649, -84.367, 122.447, -128.663, -90.432, 74.303);
+      ExaxisPos exaxisPos(0, 0, 0, 0);
+      DescPose offdese(0, 0, 100, 0, 0, 0);
+      robot.MoveJ(&p1Joint, &p1Desc, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+      robot.SetTcp4RefPoint(1);
+      robot.MoveJ(&p2Joint, &p2Desc, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+      robot.SetTcp4RefPoint(2);
+      robot.MoveJ(&p3Joint, &p3Desc, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+      robot.SetTcp4RefPoint(3);
+      robot.MoveJ(&p4Joint, &p4Desc, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+      robot.SetTcp4RefPoint(4);
+      DescPose coordRtn = {};
+      rtn = robot.ComputeTcp4(&coordRtn);
+      printf("4 Point ComputeTool    %d coord is %f %f %f %f %f %f \n", rtn, coordRtn.tran.x, coordRtn.tran.y, coordRtn.tran.z, coordRtn.rpy.rx, coordRtn.rpy.ry, coordRtn.rpy.rz);
+      robot.SetToolCoord(1, &coordRtn, 0, 0, 1, 0);
+      robot.GetForwardKin(&p1Joint, &p1Desc);
+      robot.GetForwardKin(&p2Joint, &p2Desc);
+      robot.GetForwardKin(&p3Joint, &p3Desc);
+      robot.SetFocusCalibPoint(1, p1Desc);
+      robot.SetFocusCalibPoint(2, p2Desc);
+      robot.SetFocusCalibPoint(3, p3Desc);
+      DescTran resultPos = {};
+      float accuracy = 0.0;
+      rtn = robot.ComputeFocusCalib(3, resultPos, accuracy);
+      printf("ComputeFocusCalib coord is %d %f %f %f accuracy is %f\n", rtn, resultPos.x, resultPos.y, resultPos.z, accuracy);
+      rtn = robot.SetFocusPosition(resultPos);
+      robot.GetForwardKin(&p5Joint, &p5Desc);
+      robot.GetForwardKin(&p6Joint, &p6Desc);
+      robot.MoveL(&p5Joint, &p5Desc, 1, 0, 10, 100, 100, -1, 0, &exaxisPos, 0, 1, &offdese);
+      robot.MoveL(&p6Joint, &p6Desc, 1, 0, 10, 100, 100, -1, 0, &exaxisPos, 0, 1, &offdese);
+      robot.FocusStart(50, 19, 710, 90, 0);
+      robot.MoveL(&p5Joint, &p5Desc, 1, 0, 10, 100, 100, -1, 0, &exaxisPos, 0, 1, &offdese);
+      robot.MoveL(&p6Joint, &p6Desc, 1, 0, 10, 100, 100, -1, 0, &exaxisPos, 0, 1, &offdese);
+      robot.FocusEnd();
+      robot.CloseRPC();
+      return 0;
+    }

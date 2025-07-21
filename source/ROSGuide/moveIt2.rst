@@ -300,7 +300,7 @@ fairino_hardware外掛程式編譯
 
 要注意的是需要讓fairino_hardware插件對機器人各關節的命名與moveit2配置的機器人各關節命名相同，本fairino_hardware插件對機器人六個關節的命名由基坐標位置到機器人末端分別為j1、j2、j3、j4 、j5、j6，所以在moveit2配置的機器人時需要將機器人的關節命名為j1、j2、j3、j4、j5、j6。
 
-fairino_hardware外掛程式使用
+fairino_hardware插件使用
 """"""""""""""""""""""""""""""""""
 若採用配置的自訂機器人moveit配置包，進入目錄
 
@@ -309,31 +309,35 @@ fairino_hardware外掛程式使用
 
     /home/fairino/test_fa_ws/install/fairino5_v6_robot_moveit_config/share/fairino5_v6_robot_moveit_config/config
 
-下，找到fairino5_v6_robot.ros2_control.xacro文件，將文件第9行的
+下，找到fairino5_v6_robot.ros2_control.xacro文件，將文件第3行的參數
 
 .. code-block:: shell
     :linenos:
 
-    <plugin>mock_components/GenericSystem</plugin>
+    use_fake_hardware:=false
 
 替換為
 
 .. code-block:: shell
     :linenos:
 
-    <plugin>fairino_hardware/FairinoHardwareInterface</plugin>
+    use_fake_hardware:=true
 
-儲存並退出。
+根據後續的if判斷可以看到，將use_fake_hardware設置成true是啟用fairino_hardware/FairinoHardwareInterface這個插件，保存文件並退出即可。
 
 .. image:: img/fairino_harware_022.png
     :width: 6in
     :align: center
 
-其中「fairino_hardware/FairinoHardwareInterface」hardware外掛程式設定的外掛名稱，具體可以在「/home/fairino/ros2_ws/src/fairino_hardware」目錄下的「fairino_hardware.xml」檔案檢視。
+其中「fairino_hardware/FairinoHardwareInterface」hardware插件設置的插件名稱，具體可以在「/home/fairino/ros2_ws/src/fairino_hardware」目錄下的「fairino_hardware.xml」文件查看。
 
 .. image:: img/fairino_harware_023.png
     :width: 6in
     :align: center
+
+注意，在文件第3行中的robot_control_mode參數決定了加載插件時候暴露的指令接口，即參數代表了控制模式，0為位置控制模式，插件會暴露position接口，1為扭矩控制模式，插件會暴露effort接口。針對扭矩控制接口的demo預計會在適配機械臂軟體V3.8.5版本的fairino_hardware功能包中推出。
+
+當前的Moveit2控制器僅支援位置控制模式，請不要將robot_control_mode設置為1。
 
 運行插件
 """"""""""""""""""""""""""""""""""
@@ -384,66 +388,6 @@ demo.launch.py​​檔案啟動後，rviz2介面如下圖所示：
     :align: center
 
 至此可透過moveit2控制實際機器人和rviz2介面上的模擬機器人同步運動。
-
-fairino_hardware外掛（官方機器人moveit配置套件）
----------------------------------------------------
-在ros2_ws目錄下編譯對應型號的機器人功能包，以fairino5機器人為例
-
-.. code-block:: shell
-    :linenos:
-
-    cd ros2_ws
-    colcon build --packages-select fairino5_v6_moveit2_config
-    source install/setup.bash
-
-然後需要添加fairino_hardware插件，用於與實際機器人同步運動，前往
-
-.. code-block:: shell
-    :linenos:
-
-    ros2_ws/install/fairino5_v6_moveit2_config/share/fairino5_v6_moveit2_config/config
-    
-目錄下，找到fairino5_v6_robot.ros2_control.xacro，將檔案第9行的
-
-.. code-block:: shell
-    :linenos:
-
-    <plugin>mock_components/GenericSystem</plugin>
-    
-替換為
-
-.. code-block:: shell
-    :linenos:
-
-    <plugin>fairino_hardware/FairinoHardwareInterface</plugin>
-
-儲存並退出。
-
-.. image:: img/fairino_harware_028.png
-    :width: 6in
-    :align: center
-
-其中hardware外掛程式設定的插件名稱，具體可以在
-
-.. code-block:: shell
-    :linenos:
-
-    /home/fairino/ros2_ws/src/fairino_hardware
-    
-目錄下的「fairino_hardware.xml」檔案檢視。
-
-.. image:: img/fairino_harware_029.png
-    :width: 6in
-    :align: center
-
-此時運行插件需要轉到ros2_ws工作空間下，然後source環境，運行demo.launch.py​​文件
-
-.. code-block:: shell
-    :linenos:
-
-    cd ros2_ws
-    source install/setup.bash
-    ros2 launch fairino5_v6_moveit2_config demo.launch.py
 
 mtc範例程式碼包
 ++++++++++++++++++++++++++++++

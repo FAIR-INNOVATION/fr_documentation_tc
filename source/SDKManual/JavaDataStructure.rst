@@ -1,16 +1,16 @@
-資料結構說明
+數據結構說明
 ================
 
 .. toctree:: 
     :maxdepth: 5
 
-關節位置資料類型
+關節位置數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /** 
-    * @brief 關節位置資料類型 
+    * @brief 關節位置數據類型 
     */  
     public class JointPos
     {
@@ -37,13 +37,13 @@
       }
     }
 
-笛卡爾空間位置資料類型
+笛卡爾空間位置數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 笛卡爾空間位置資料類型
+    * @brief 笛卡爾空間位置數據類型
     */
     public class DescTran
     {
@@ -64,13 +64,13 @@
 
     }
 
-歐拉角姿態資料型態
+歐拉角姿態數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 歐拉角姿態資料型態
+    * @brief 歐拉角姿態數據類型
     */
     public class Rpy
     {
@@ -85,18 +85,18 @@
       }
     }
 
-笛卡爾空間位姿資料類型
+笛卡爾空間位姿數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    *@brief 笛卡兒空間位姿類型
+    *@brief 笛卡爾空間位姿類型
     */
     public class DescPose
     {
-      public DescTran tran = new DescTran(0.0, 0.0, 0.0);      /* 笛卡兒空間位置  */
-      public Rpy rpy = new Rpy(0.0, 0.0, 0.0);			       /* 笛卡兒空間姿態  */
+      public DescTran tran = new DescTran(0.0, 0.0, 0.0);      /* 笛卡爾空間位置  */
+      public Rpy rpy = new Rpy(0.0, 0.0, 0.0);			       /* 笛卡爾空間姿態  */
 
       public DescPose()
       {
@@ -125,13 +125,13 @@
       }
     }
 
-擴展軸位置資料類型
+擴展軸位置數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 擴展軸位置資料類型
+    * @brief 擴展軸位置數據類型
     */
     public class ExaxisPos
     {
@@ -161,22 +161,22 @@
       }
     }
 
-力矩感測器資料類型
+力矩傳感器數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 力感測器的受力分量和力矩分量
+    * @brief 力傳感器的受力分量和力矩分量
     */
     public class ForceTorque
     {
       public double fx;  /* 沿x軸受力分量，單位N  */
       public double fy;  /* 沿y軸受力分量，單位N  */
       public double fz;  /* 沿z軸受力分量，單位N  */
-      public double tx;  /* 绕x軸力矩分量，單位Nm */
-      public double ty;  /* 绕y軸力矩分量，單位Nm */
-      public double tz;  /* 绕z軸力矩分量，單位Nm */
+      public double tx;  /* 繞x軸力矩分量，單位Nm */
+      public double ty;  /* 繞y軸力矩分量，單位Nm */
+      public double tz;  /* 繞z軸力矩分量，單位Nm */
       public ForceTorque(double fX, double fY, double fZ, double tX, double tY, double tZ)
       {
         fx = fX;
@@ -188,13 +188,13 @@
       }
     }
 
-螺旋參數資料類型
+螺旋參數數據類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  螺旋參數資料類型
+    * @brief  螺旋參數數據類型
     */
     public class SpiralParam
     {
@@ -227,31 +227,31 @@
     {
      public double pos = 0;        //擴展軸位置
      public double vel = 0;        //擴展軸速度
-     public int errorCode = 0;     //擴展軸故障码
-     public int ready = 0;        //伺服准备好
+     public int errorCode = 0;     //擴展軸故障碼
+     public int ready = 0;        //伺服準備好
      public int inPos = 0;        //伺服到位
-     public int alarm = 0;        //伺服报警
-     public int flerr = 0;        //跟随误差
-     public int nlimit = 0;       //到负限位
+     public int alarm = 0;        //伺服報警
+     public int flerr = 0;        //跟隨誤差
+     public int nlimit = 0;       //到負限位
      public int pLimit = 0;       //到正限位
-     public int mdbsOffLine = 0;  //驅動器485总线掉线
-     public int mdbsTimeout = 0;  //控制卡与控制箱485通信超时
+     public int mdbsOffLine = 0;  //驅動器485總線掉線
+     public int mdbsTimeout = 0;  //控制卡與控制箱485通信超時
      public int homingStatus = 0; //擴展軸回零狀態
     }
 
-感測器類型
+傳感器類型
 +++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  感測器類型
+    * @brief  傳感器類型
     */
     public class DeviceConfig
     {
       int company = 0;          // 廠商
       int device = 0;           // 類型/設備號
-      int softwareVersion = 0;  // 軟體版本
+      int softwareVersion = 0;  // 軟件版本
       int bus = 0;              // 掛載位置
 
       public DeviceConfig()
@@ -280,7 +280,7 @@
     {
       int servoCompany;           // 伺服驅動器廠商，1-戴納泰克
       int servoModel;             // 伺服驅動器型號，1-FD100-750C
-      int servoSoftVersion;       // 伺服驅動器軟體版本，1-V1.0
+      int servoSoftVersion;       // 伺服驅動器軟件版本，1-V1.0
       int servoResolution;        // 編碼器分辨率
       double axisMechTransRatio;  // 機械傳動比
 
@@ -309,7 +309,7 @@
     */
     public class ROBOT_AUX_STATE
     {
-      public int servoId = 0;           //伺服驅動器ID号
+      public int servoId = 0;           //伺服驅動器ID號
       public int servoErrCode = 0;       //伺服驅動器故障碼
       public int servoState = 0;         //伺服驅動器狀態
       public double servoPos = 0;        //伺服當前位置
@@ -318,20 +318,18 @@
     }
 
 焊接中斷狀態
-+++++++++++++++++++++++++++
-.. versionadded:: Java SDK-v1.0.1-3.7.8
-
+++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
- :linenos:
+    :linenos:
 
- /**
- * @brief 焊接中斷狀態
- */
- public class WELDING_BREAKOFF_STATE
- {
- public int breakOffState = 0; //焊接中斷狀態
- public int weldArcState = 0; //焊接電弧中斷狀態
- }
+    /**
+    * @brief  焊接中斷狀態
+    */
+    public class WELDING_BREAKOFF_STATE
+    {
+      public int breakOffState = 0;  //焊接中斷狀態
+      public int weldArcState = 0;   //焊接電弧中斷狀態
+    }
 
 UDP擴展軸通訊參數
 ++++++++++++++++++++++++++++++++++++++++
@@ -343,42 +341,40 @@ UDP擴展軸通訊參數
     */
     public class WELDING_BREAKOFF_STATE
     {
-      public String ip = "192.168.58.88";//IP位址
-      public int port = 2021;            //埠號
-      public int period = 2;             //通訊週期(ms，預設為2，請勿修改此參數)
-      public int lossPkgTime = 50;       //封包遺失檢測時間(ms)
-      public int lossPkgNum = 2;         //封包遺失次數
+      public String ip = "192.168.58.88";//IP地址
+      public int port = 2021;            //端口號
+      public int period = 2;             //通訊週期(ms，默認爲2，請勿修改此參數)
+      public int lossPkgTime = 50;       //丟包檢測時間(ms)
+      public int lossPkgNum = 2;         //丟包次數
       public int disconnectTime = 100;   //通訊斷開確認時長
       public int reconnectEnable = 0;    //通訊斷開自動重連使能 0-不使能 1-使能
       public int reconnectPeriod = 100;  //重連週期間隔(ms)
       public int reconnectNum = 3;       //重連次數
-      public int selfConnect =0;         //斷電重啟是否自動建立連接；0-不建立連接；1-建立連接
+      public int selfConnect =0;         //斷電重啓是否自動建立連接；0-不建立連接；1-建立連接
     }
 
-機器人狀態回饋結構體類型
+機器人狀態反饋結構體類型
 +++++++++++++++++++++++++++
-.. versionchanged:: Java SDK-v1.0.1-3.7.8
-
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief  機器人狀態回饋結構體類型
+    * @brief  機器人狀態反饋結構體類型
     */
     public class ROBOT_STATE_PKG
     {
       public short frame_head = 0;            //幀頭 0x5A5A
       public byte frame_cnt = 0;              //幀計數
       public short data_len = 0;              //數據長度  5
-      public int program_state = 0;          //程序運作狀態，1-停止；2-運轉；3-暫停
-      public int robot_state = 0;            //機器人運動狀態，1-停止；2-運轉；3-暫停；4-拖曳 7
+      public int program_state = 0;          //程序運行狀態，1-停止；2-運行；3-暫停
+      public int robot_state = 0;            //機器人運動狀態，1-停止；2-運行；3-暫停；4-拖動  7
       public int main_code = 0;               //主故障碼
       public int sub_code = 0;                //子故障碼
       public int robot_mode = 0;             //機器人模式，0-自動模式；1-手動模式 16
-      public double[] jt_cur_pos  =new double[6];                  //關節目前位置
+      public double[] jt_cur_pos  =new double[6];                  //關節當前位置
       public double[] tl_cur_pos = new double[6];                  //工具當前位姿
-      public double[] flange_cur_pos = new double[6];              //末端法蘭目前位姿
-      public double[] actual_qd = new double[6];                   //機器人目前關節速度
+      public double[] flange_cur_pos = new double[6];              //末端法蘭當前位姿
+      public double[] actual_qd = new double[6];                   //機器人當前關節速度
       public double[] actual_qdd = new double[6];                  //機器人當前關節加速度
       public double[] target_TCP_CmpSpeed = new double[2];         //機器人TCP合成指令速度
       public double[] target_TCP_Speed = new double[6];            //機器人TCP指令速度
@@ -387,25 +383,25 @@ UDP擴展軸通訊參數
       public double[] jt_cur_tor = new double[6];                             //當前扭矩
       public int tool = 0;                        //工具號
       public int user = 0;                        //工件號
-      public int cl_dgt_output_h = 0;            //數位輸出15-8
-      public int cl_dgt_output_l = 0;            //數位輸出7-0
-      public int tl_dgt_output_l = 0;            //工具數位輸出7-0(僅bit0-bit1有效)
+      public int cl_dgt_output_h = 0;            //數字輸出15-8
+      public int cl_dgt_output_l = 0;            //數字輸出7-0
+      public int tl_dgt_output_l = 0;            //工具數字輸出7-0(僅bit0-bit1有效)
       public int cl_dgt_input_h = 0;             //數字輸入15-8
       public int cl_dgt_input_l = 0;             //數字輸入7-0
       public int tl_dgt_input_l = 0;             //工具數字輸入7-0(僅bit0-bit1有效)
-      public short[] cl_analog_input = new short[2];          //控制箱類比輸入
-      public short tl_anglog_input = 0;                       //工具類比輸入
-      public double[] ft_sensor_raw_data = new double[6];     //力/扭矩传感器原始數據
-      public double[] ft_sensor_data = new double[6];         //參考座標系下力/扭矩传感器數據
-      public int ft_sensor_active = 0;           //力/扭力感測器啟動狀態， 0-復位，1-激活
+      public short[] cl_analog_input = new short[2];          //控制箱模擬量輸入
+      public short tl_anglog_input = 0;                       //工具模擬量輸入
+      public double[] ft_sensor_raw_data = new double[6];     //力/扭矩傳感器原始數據
+      public double[] ft_sensor_data = new double[6];         //參考座標系下力/扭矩傳感器數據
+      public int ft_sensor_active = 0;           //力/扭矩傳感器激活狀態， 0-復位，1-激活
       public int EmergencyStop = 0;              //急停標誌
-      public int motion_done = 0;                 //到位訊號
-      public int gripper_motiondone = 0;         //夹爪運動完成信号
-      public int mc_queue_len = 0;                //運動队列長度
-      public int collisionState = 0;             //碰撞检测，1-碰撞；0-無碰撞
+      public int motion_done = 0;                 //到位信號
+      public int gripper_motiondone = 0;         //夾爪運動完成信號
+      public int mc_queue_len = 0;                //運動隊列長度
+      public int collisionState = 0;             //碰撞檢測，1-碰撞；0-無碰撞
       public int trajectory_pnum = 0;             //軌跡點編號
-      public int safety_stop0_state = 0;  /* 安全停止訊號SI0 */
-      public int safety_stop1_state = 0;  /* 安全停止訊號SI1 */
+      public int safety_stop0_state = 0;  /* 安全停止信號SI0 */
+      public int safety_stop1_state = 0;  /* 安全停止信號SI1 */
       public int gripper_fault_id = 0;    /* 錯誤夾爪號 */               // + 19 = 567
       public short gripper_fault = 0;      /* 夾爪故障 */
       public short gripper_active = 0;     /* 夾爪激活狀態 */
@@ -419,7 +415,7 @@ UDP擴展軸通訊參數
       public EXT_AXIS_STATUS extAxisStatus1 = new EXT_AXIS_STATUS();
       public EXT_AXIS_STATUS extAxisStatus2 = new EXT_AXIS_STATUS();
       public EXT_AXIS_STATUS extAxisStatus3 = new EXT_AXIS_STATUS();
-      public short[] extDIState = new short[8];        //擴充DI輸入
+      public short[] extDIState = new short[8];        //擴展DI輸入
       public short[] extDOState = new short[8];        //擴展DO輸出
       public short[] extAIState = new short[4];        //擴展AI輸入
       public short[] extAOState = new short[4];        //擴展AO輸出
@@ -427,22 +423,23 @@ UDP擴展軸通訊參數
       public double[] jointDriverTorque  =new double[6];       //關節驅動器當前扭矩
       public double[] jointDriverTemperature = new double[6];  //關節驅動器當前溫度
       public ROBOT_TIME robotTime = new ROBOT_TIME();
-      public int softwareUpgradeState = 0;   //機器人軟體升級狀態0-空閒或上傳升級包；1~100：升級完成百分比；-1:升級軟體失敗；-2：校驗失敗；-3：版本校驗失敗；-4：解壓縮失敗； -5：使用者配置升級失敗；-6：週邊配置升級失敗；-7：擴展軸配置升級失敗；-8：機器人配置升級失敗；-9：DH參數配置升級失敗
+      public int softwareUpgradeState = 0;   //機器人軟件升級狀態 0-空閒中或上傳升級包中；1~100：升級完成百分比；-1:升級軟件失敗；-2：校驗失敗；-3：版本校驗失敗；-4：解壓失敗；-5：用戶配置升級失敗；-6：外設配置升級失敗；-7：擴展軸配置升級失敗；-8：機器人配置升級失敗；-9：DH參數配置升級失敗
       public int endLuaErrCode;              //末端LUA運行狀態
 
-      public int[] cl_analog_output=new int[2]; //控制箱模擬量輸出
-      public int tl_analog_output; //工具類比量輸出
-      public float gripperRotNum; //旋轉夾爪目前旋轉圈數
-      ublic int gripperRotSpeed; //旋轉夾爪目前旋轉速度百分比
-      public int gripperRotTorque; //旋轉夾爪目前旋轉力矩百分比
+      public int[] cl_analog_output=new int[2];  //控制箱模擬量輸出
+      public int tl_analog_output;              //工具模擬量輸出
+      public float gripperRotNum;               //旋轉夾爪當前旋轉圈數
+      ublic int gripperRotSpeed;                //旋轉夾爪當前旋轉速度百分比
+      public int gripperRotTorque;	            //旋轉夾爪當前旋轉力矩百分比
 
-      public WELDING_BREAKOFF_STATE weldingBreakOffstate=new WELDING_BREAKOFF_STATE();//焊接中斷狀態
+      public  WELDING_BREAKOFF_STATE weldingBreakOffstate=new WELDING_BREAKOFF_STATE();//焊接中斷狀態
 
       public double[]  jt_tgt_tor=new double[6];    //關節指令力矩
-      int smartToolState;         //SmartTool手柄按鈕狀態
+      public int smartToolState;         //SmartTool手柄按鈕狀態
 
       public float wideVoltageCtrlBoxTemp;        //寬電壓控制箱溫度
       public int wideVoltageCtrlBoxFanVel;   //寬電壓控制箱風扇轉速(mA)
+
       public short check_sum = 0;          /* 和校驗 */
 
       public ROBOT_STATE_PKG()
