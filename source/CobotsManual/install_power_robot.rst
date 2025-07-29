@@ -26,17 +26,17 @@
      - ≥10Nm
      - φ5mm
 
-   * - FR3WMS
+   * - FR3-WMS
      - 4顆M6
      - ≥10Nm
      - φ5mm
 
-   * - FR3WML
+   * - FR3-WML
      - 4顆M6
      - ≥10Nm
      - φ5mm
 
-   * - FR3C
+   * - FR3-C
      - 4顆M6
      - ≥10Nm
      - φ5mm
