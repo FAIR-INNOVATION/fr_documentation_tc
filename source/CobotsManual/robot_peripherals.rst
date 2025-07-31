@@ -5905,3 +5905,370 @@ CNC功能包支持在示教程序中調用控制指令，並實時獲取機床�
      - 立三角擺動三角尖點等待時間
      - float
      - 0-99999(ms)
+
+協作機器人陣列式吸盤應用
+-----------------------------------------------------
+
+概述
+~~~~~~~~
+在機器人末端安裝陣列式吸盤可快速部署不同場景的物料抓取工作站，針對不同尺寸、形狀的物料自定義吸盤數量和佈局，提高工作效率和穩定性。
+
+協作機器人最多支持20個吸盤組成的吸盤陣列，可單獨控制某個吸盤的抓取/釋放，也可同步控制整個陣列。每個吸盤站號支持1~20配置（通過DynamicLAB軟件設置）。
+
+硬件描述
+++++++++++++++++++++
+機器人通過以太網轉485模塊與吸盤陣列通信。WebApp生成陣列式吸盤通信協議，通過TCP/IP發送至模塊，再轉換為485信號控制各吸盤（使用ModbusRTU協議）。
+
+以太網轉485模塊作為：
+- 以太網通信的服務端
+- 485通信的主站
+每個吸盤作為485從站，具有唯一站號。
+
+.. figure:: robot_peripherals/272.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-1 協作機器人吸盤陣列應用
+
+模塊通常有兩個TCP服務端口對應485從站（如CH9121）：
+- 端口50001控制從站1-10
+- 端口50002控制從站11-20
+
+配置要求：
+- ① 以太網設為TCP服務端，IP:192.168.58.10，端口1:50001，端口2:50002
+- ② 485設置：波特率115200，數據位8，停止位1，無校驗
+
+.. figure:: robot_peripherals/273.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-2 以太網轉485模塊配置工具
+
+功能配置
+~~~~~~~~~~~~~~~~~~~~~~
+訪問路徑：WebApp → "初始設置" → "外設" → "陣列式吸盤"
+
+兩種控制模式：
+**單播模式**：獨立控制每個吸盤
+**廣播模式**：同步控制所有吸盤
+
+.. figure:: robot_peripherals/274.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-3 吸盤控制模式
+
+單播模式配置
+++++++++++++++++++++++++++
+兩種配置方法：
+1. **自動配置**：上傳現有協議文件
+2. **手動配置**：為每個吸盤設置參數
+
+配置步驟：
+1. 選擇站號（1-20）
+2. 設置最大/最小真空度、超時時間
+3. 點擊"配置"
+4. 重複配置所有所需吸盤
+5. 完成後點擊"連接"
+
+.. figure:: robot_peripherals/275.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-4 單播配置
+
+.. note:: 重要：完成所有配置後再連接。物理斷開可能需要重新插拔網線。
+
+廣播模式
+++++++++++++++
+需先完成單播配置：
+1. 設置統一真空參數
+2. 點擊"配置"
+3. 點擊"連接"
+4. 使用"開始/停止"進行同步控制
+
+.. figure:: robot_peripherals/279.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-8 廣播模式配置
+
+點擊"協議編號1"操作框中的"連接"按鈕，"運行狀態"指示燈亮起，表示機器人與陣列式吸盤已建立通訊連接。連接成功後，所有連接的吸盤操作框列表將顯示在"設備操作及狀態"欄中。
+
+在"參數配置"→"一鍵吸取"中點擊"開始"，陣列式吸盤中的每個吸盤將按照"設定真空度吸取"動作執行，點擊"停止"則所有吸盤停止吸取動作。
+
+.. figure:: robot_peripherals/280.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-9 廣播模式通訊建立
+
+廣播模式協議文件下載操作與單播模式一致，兩處下載的協議文件均可通過單播模式頁面中的"自動配置"上傳至機器人。
+
+陣列式吸盤LUA程序應用
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+在機器人LUA程序中增加陣列吸盤控制、狀態獲取等指令，配合機器人運動指令，可靈活實現物料抓取搬運應用。
+
+打開WebApp，依次點擊"示教程序"→"程序編程"，新建LUA程序"testSucker.lua"。
+
+.. figure:: robot_peripherals/281.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-10 新建"testSucker.lua"程序
+
+選擇指令類型為"外設指令"，點擊"吸盤"按鈕。WebApp右側將顯示"Sucker"陣列式吸盤指令添加頁面。
+
+.. figure:: robot_peripherals/282.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-11 陣列式吸盤指令添加
+
+吸盤控制指令添加
++++++++++++++++++++++++++++++++++++++++++++
+
+LUA程序中的吸盤控制指令可實現吸取/釋放控制。單播與廣播模式具有不同控制邏輯。
+
+單播模式控制指令添加
+***********************************************************
+
+可根據從站起始地址和數量控制單個或多個吸盤，為每個吸盤設置不同控制狀態。
+
+點擊"吸盤控制指令"，選擇"單播模式"，輸入從站號1，寫入數量2，吸取狀態"1,2"。點擊"添加"按鈕。
+
+.. figure:: robot_peripherals/283.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-12 添加吸盤控制指令
+
+參數說明：
+- **從站號**：控制起始從站號
+- **寫入數量**：連續控制的吸盤數量
+- **吸取狀態**：逗號分隔的控制標誌(1-最大真空；2-設定真空；3-停止)
+
+點擊"應用"後，切換至自動模式執行程序將控制從站1(最大真空)和從站2(設定真空)。
+
+.. figure:: robot_peripherals/284.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-13 LUA程序中添加吸盤指令
+
+廣播模式控制指令添加
+***********************************************************
+
+廣播指令對所有連接吸盤生效。
+
+選擇"廣播模式"，輸入吸取狀態1(最大真空)，點擊"添加"。
+
+.. figure:: robot_peripherals/285.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-14 添加廣播控制指令
+
+"應用"後執行程序將使所有吸盤啟動最大真空吸取。
+
+.. figure:: robot_peripherals/286.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-15 LUA中添加廣播指令
+
+吸盤狀態獲取指令添加
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+選擇從站號，點擊"獲取吸盤狀態"→"添加"→"應用"，添加"GetSuckerState(1)"指令。
+
+.. figure:: robot_peripherals/287.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-16 添加狀態獲取指令
+
+GetSuckerState()返回：
+- **state**：0-釋放；1-吸附物體；2-未吸附；3-物體脫離
+- **pressValue**：當前真空度
+- **err**：錯誤碼
+
+程序將返回值存入變量供WebApp顯示。
+
+.. figure:: robot_peripherals/288.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-17 狀態獲取程序
+
+等待吸附狀態指令添加
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+點擊"等待吸盤吸附狀態"，選擇從站1，狀態"檢測到工件"，超時10000ms，點擊"添加"。
+
+.. figure:: robot_peripherals/289.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-18 添加等待指令
+
+"應用"後添加等待吸附完成指令。
+
+.. figure:: robot_peripherals/290.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.21-19 LUA中添加等待指令
+
+應用示例
+++++++++++++++++++++++++++++++++++
+
+物料搬運LUA程序示例：
+
+.. code-block:: lua
+  :linenos:
+
+  while (1) do 
+  ::satety_suck::
+  PTP(sucker_safey,100,-1,0)
+  PTP(sucker_suck,100,-1,0)
+  SetSuckerCtrl(2, 1, {2})
+  SetSuckerCtrl(11, 1, {2})
+  loop1 = 0 
+  while (loop1 < 10) do 
+      state, press, errorcode = GetSuckerState(2)
+      RegisterVar("number","state")
+      RegisterVar("number","press")
+      RegisterVar("number","errorcode")
+      state11, press11, errorcode11 = GetSuckerState(11)
+      RegisterVar("number","state11")
+      RegisterVar("number","press11")
+      RegisterVar("number","errorcode11")
+      loop1 = loop1 + 1
+      WaitMs(50)
+  end
+  
+  if(state11 == 1) then
+      PTP(sucker_safey,100,-1,0)
+      PTP(sucker_release,100,-1,0)
+      WaitMs(1000)
+      SetSuckerCtrl(2, 1, {3})
+      SetSuckerCtrl(11, 1, {3})
+      WaitMs(500)
+  else
+      PTP(sucker_safey,100,-1,0)
+      SetSuckerCtrl(2, 1, {3})
+      SetSuckerCtrl(11, 1, {3})
+      WaitMs(2000)
+      goto satety_suck
+  end
+  ::satety_release::
+  PTP(sucker_safey,100,-1,0)
+  PTP(sucker_release,100,-1,0)
+  SetSuckerCtrl(2, 1, {2})
+  SetSuckerCtrl(11, 1, {2})
+  loop1 = 0 
+  while (loop1 < 10) do 
+      state, press, errorcode = GetSuckerState(2)
+      RegisterVar("number","state")
+      RegisterVar("number","press")
+      RegisterVar("number","errorcode")
+      state11, press11, errorcode11 = GetSuckerState(11)
+      RegisterVar("number","state11")
+      RegisterVar("number","press11")
+      RegisterVar("number","errorcode11")
+      loop1 = loop1 + 1
+      WaitMs(50)
+  end
+  
+  if(state11 == 1) then
+      PTP(sucker_safey,100,-1,0)
+      PTP(sucker_suck,100,-1,0)
+      WaitMs(1000)
+      SetSuckerCtrl(2, 1, {3})
+      SetSuckerCtrl(11, 1, {3})
+      WaitMs(500)
+  else
+      PTP(sucker_safey,100,-1,0)
+      SetSuckerCtrl(2, 1, {3})
+      SetSuckerCtrl(11, 1, {3})
+      WaitMs(2000)
+      goto satety_release
+  end
+  end
+
+激光尋位點位置獲取功能
+-----------------------------------------------------------
+
+機器人激光尋位系統構成
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. figure:: robot_peripherals/291.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.22-1 機器人激光尋位系統拓撲圖
+.. centered:: 系統組成：(a)計算機，(b)機器人及控制箱，(c)激光傳感器。
+
+激光傳感器通信配置
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+訪問路徑：WebApp → "初始設置" → "外設" → "跟踪" → "傳感器"進行通信配置。
+
+.. figure:: robot_peripherals/292.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.22-2 傳感器通信配置
+
+激光尋位點獲取流程
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+操作步驟：
+
+**步驟1**：尋位前先指定起始點"seamStartPt1"和"seamStartPt2"。進入"示教程序"→"程序編程"，選擇"點到點"運動使激光束靠近第一焊縫起點"seamStartPt1"。
+
+.. figure:: robot_peripherals/293.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.22-3 添加移動到起始點指令
+
+**步驟2**：點擊"尋位開始"，選擇標定好的傳感器坐標系。設置尋位方向、速度、長度和最大尋位時間後點擊"添加"。接著點擊"尋位結束"→"添加"。
+
+.. figure:: robot_peripherals/294.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.22-4 添加尋位開始指令
+
+**步驟3**：選擇"傳感器取點運動"，選取已標定的"激光傳感器"坐標系。選擇運動類型("PTP"或"LIN")，設置調試速度並配置位姿選項。點擊"添加"後"應用"插入LUA程序。
+
+.. figure:: robot_peripherals/295.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.22-5 添加傳感器取點指令
+
+**步驟4**：在"程序編程"界面點擊"切換模式"按鈕。將變量"pos"改為"pos1"並刪除移動到尋位點指令。
+
+.. figure:: robot_peripherals/296.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.22-6 程序模式切換
+
+.. figure:: robot_peripherals/297.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.22-7 修改激光尋位程序
+
+**步驟5**：重複步驟1-4進行第二條焊縫的尋位操作。
+
+.. figure:: robot_peripherals/298.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.22-8 第二焊縫尋位獲取
