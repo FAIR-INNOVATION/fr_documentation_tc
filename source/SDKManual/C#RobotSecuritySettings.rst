@@ -25,7 +25,7 @@
 
     /**
     * @brief  設置碰撞後策略
-    * @param  [in] strategy  0-報錯停止，1-繼續運行
+    * @param  [in] strategy  0-報錯暫停；1-繼續運行;2-報錯停止；3-重力矩模式；4-震盪相應模式；5-碰撞回彈模式
     * @param  [in] safeTime  安全停止時間[1000 - 2000]ms
     * @param  [in] safeDistance  安全停止距離[1-150]mm
     * @param  [in] safeVel  tcp安全停止速度 [50-250]mm/s
