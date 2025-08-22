@@ -133,9 +133,10 @@
     * @param [in] ioType 控制IO類型 0-控制箱IO；1-擴展IO
     * @param [in] current 焊接電流值(A)
     * @param [in] AOIndex 焊接電流控制箱模擬量輸出端口(0-1)
+    * @param [in] blend 是否平滑 0-不平滑；1-平滑
     * @return 錯誤碼
     */
-    errno_t WeldingSetCurrent(int ioType, double current, int AOIndex);
+    errno_t WeldingSetCurrent(int ioType, double current, int AOIndex, int blend);
 
 設置焊接電壓
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -148,11 +149,12 @@
     /**
     * @brief 設置焊接電壓
     * @param [in] ioType 控制IO類型 0-控制箱IO；1-擴展IO
-    * @param [in] voltage 焊接電壓值(A)
+    * @param [in] voltage 焊接電壓值(V)
     * @param [in] AOIndex 焊接電壓控制箱模擬量輸出端口(0-1)
+    * @param [in] blend 是否平滑 0-不平滑；1-平滑
     * @return 錯誤碼
     */
-    errno_t WeldingSetVoltage(int ioType, double voltage, int AOIndex);
+    errno_t WeldingSetVoltage(int ioType, double voltage, int AOIndex, int blend);
 
 設置擺動參數
 +++++++++++++++++++++++++++++++++++++++++++++

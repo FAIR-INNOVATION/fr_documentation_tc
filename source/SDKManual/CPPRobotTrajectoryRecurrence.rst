@@ -392,9 +392,10 @@ TPD軌跡復現
 	 * @param  [in] vamx 設定的最大速度，mm/s
 	 * @param  [in] amax 設定的最大加速度，mm/s2
 	 * @param  [in] jmax 設定的最大加加速度，mm/s3
-	 * @return  錯誤碼
+	 * @param [in] flag 勻速前瞻開關；0-不開啟；1-開啟
+	 * @return 錯誤碼
 	 */
-    errno_t LoadTrajectoryLA(char name[30], int mode, double errorLim, int type, double precision, double vamx, double amax, double jmax);
+	 errno_t LoadTrajectoryLA(char name[30], int mode, double errorLim, int type, double precision, double vamx, double amax, double jmax, int flag = 0);
 
 軌跡復現(軌跡前瞻)
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

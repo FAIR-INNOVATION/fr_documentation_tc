@@ -1061,3 +1061,284 @@
     }
 
 
+上傳開放協議的Lua文件
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 上傳開放協議的Lua文件
+    * @param  filePath 本地開放協議lua文件路徑名
+    * @return 錯誤碼
+    */
+    public int OpenLuaUpload(String filePath)
+
+
+獲取從站板卡參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  獲取從站板卡參數
+    * @param  type  0-Ethercat，1-CClink, 3-Ethercat, 4-EIP
+    * @param  version  協議版本
+    * @param  connState  0-未連接 1-已連接
+    * @return  錯誤碼
+    */
+    public int GetFieldBusConfig(int[] type, int[] version, int[] connState)
+
+寫入從站DO
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  寫入從站DO
+    * @param   DOIndex  DO編號
+    * @param   wirteNum  寫入的數量
+    * @param   status 寫入的數值，最多寫8個
+    * @return  錯誤碼
+    */
+    public int FieldBusSlaveWriteDO(int DOIndex, int wirteNum, int[] status)
+
+寫入從站AO
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  寫入從站AO
+    * @param  AOIndex  AO編號
+    * @param  wirteNum  寫入的數量
+    * @param  status 寫入的數值，最多寫8個
+    * @return  錯誤碼
+    */
+    public int FieldBusSlaveWriteAO(int AOIndex, int wirteNum, int[] status)
+
+讀取從站DI
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  讀取從站DI
+    * @param  DOIndex  DI編號
+    * @param  readNum  讀取的數量
+    * @param  status 讀取到的數值，最多讀8個
+    * @return  錯誤碼
+    */
+    public int FieldBusSlaveReadDI(int DOIndex, int readNum, int[] status)
+
+讀取從站AI
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  讀取從站AI
+    * @param  AIIndex  AI編號
+    * @param  readNum  讀取的數量
+    * @param  status 讀取到的數值，最多讀8個
+    * @return  錯誤碼
+    */
+    public int FieldBusSlaveReadAI(int AIIndex, int readNum, double[] status)
+
+等待擴展DI輸入
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 等待擴展DI輸入
+    * @param  DIIndex DI編號
+    * @param  status 0-低電平；1-高電平
+    * @param  waitMs 最大等待時間(ms)
+    * @return 錯誤碼
+    */
+    public int FieldBusSlaveWaitDI(int DIIndex, int status, int waitMs)
+
+等待擴展AI輸入
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 等待擴展AI輸入
+    * @param  AIIndex AI編號
+    * @param  waitType 0-大於；1-小於
+    * @param  value AI值
+    * @param  waitMs 最大等待時間(ms)
+    * @return 錯誤碼
+    */
+    public int FieldBusSlaveWaitAI(int AIIndex, int waitType, double value, int waitMs)
+
+從站模式相關接口指令代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    private void button101_Click(object sender, EventArgs e)
+    {
+        int rtn = 0;
+    
+        int type = 0, version = 0, connState = 0;
+        int[] ctrl = new int[8];
+        int[] ctrlAO = new int[8];
+        int[] DI = new int[8];
+        double[] AI = new double[8];
+        if (rtn != 0)
+        {
+            return;
+        }
+        // Upload and load open protocol file
+        robot.OpenLuaUpload("E://zup/CtrlDev_field.lua");
+        Thread.Sleep(2000);
+        robot.SetCtrlOpenLUAName(3, "CtrlDev_field.lua");
+        robot.UnloadCtrlOpenLUA(3);
+        robot.LoadCtrlOpenLUA(3);
+        Thread.Sleep(8000);
+    
+        // Get protocol type, software version, and connection status with PLC
+        robot.GetFieldBusConfig(ref type, ref version, ref connState);
+        Console.WriteLine($"type is {type}, version is {version}, connState is {connState}");
+    
+        // Write DO0 = 1, DO1 = 0, DO2 = 1
+        ctrl[0] = 1;
+        ctrl[1] = 0;
+        ctrl[2] = 1;
+        robot.FieldBusSlaveWriteDO(0, 3, ctrl);
+    
+        // Write AO2 = 0x1000
+        ctrlAO[0] = 0x1000;
+        robot.FieldBusSlaveWriteAO(2, 1, ctrlAO);
+
+        for (int i = 0; i < 100; i++)
+        {
+            robot.FieldBusSlaveReadDI(0, 4, ref DI);
+            Console.WriteLine($"DI0 is {DI[0]}, DI1 is {DI[1]}, DI2 is {DI[2]}, DI3 is {DI[3]}");
+            robot.FieldBusSlaveReadAI(0, 3, ref AI);
+            Console.WriteLine($"AI0 is {AI[0]}, AI1 is {AI[1]}, AI2 is {AI[2]}");
+            Thread.Sleep(10);
+        }
+        int ret = robot.FieldBusSlaveWaitDI(0, 1, 100);
+        Console.WriteLine($"FieldBusSlaveWaitDI result is {ret}");
+
+        ret = robot.FieldBusSlaveWaitAI(0, 0, 400.00f, 100);
+        Console.WriteLine($"FieldBusSlaveWaitAI result is {ret}"); 
+    }
+
+控制陣列式吸盤
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 控制陣列式吸盤
+    * @param  slaveID 從站號
+    * @param  len 長度
+    * @param  ctrlValue 控制值 1-按最大真空度吸取 2-按設定真空度吸取 3-停止吸取
+    * @return 錯誤碼
+    */
+    public int SetSuckerCtrl(int slaveID, int len, int[] ctrlValue)
+
+獲取陣列式吸盤狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取陣列式吸盤狀態
+    * @param  slaveID 從站號
+    * @param  state 吸附狀態 0-釋放物體 1-檢測到工件吸附成功 2-沒有吸附到物體 3-物體脫離
+    * @param  pressValue 當前真空度 單位kpa
+    * @param  error 吸盤當前的錯誤碼
+    * @return 錯誤碼
+    */
+    public int GetSuckerState(int slaveID, int[] state, int[] pressValue, int[] error)
+
+等待吸盤狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 等待吸盤狀態
+    * @param  slaveID 從站號
+    * @param  state 吸附狀態 0-釋放物體 1-檢測到工件吸附成功 2-沒有吸附到物體 3-物體脫離
+    * @param  ms 等待最大時間
+    * @return 錯誤碼
+    */
+    public int WaitSuckerState(int slaveID, int state, int ms)
+
+陣列式吸盤控制指令代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    private void TestSucker(Robot robot)
+    {
+    
+        int[] ctrl = new int[20];
+        int state=0;
+        int pressValue=0;
+        int error=0;
+        int rtn;
+    
+    
+        // Upload and load open protocol file
+        robot.OpenLuaUpload(@"C:\SDK\CtrlDev_sucker.lua");
+        Thread.Sleep(2000);
+        robot.UnloadCtrlOpenLUA(1);
+        robot.LoadCtrlOpenLUA(1);
+        Thread.Sleep(1000);
+    
+        // Control sucker in broadcast mode with maximum adsorption capacity
+        ctrl[0] = 1;
+        robot.SetSuckerCtrl(0, 1, ctrl);
+    
+        // Monitor states of sucker 1 and sucker 12 in a loop
+        for (int i = 0; i < 100; i++)
+        {
+            robot.GetSuckerState(1, ref state, ref pressValue, ref error);
+            Console.WriteLine($"sucker1 state is {state}, pressValue is {pressValue}, error num is {error}");
+            robot.GetSuckerState(12, ref state, ref pressValue, ref error);
+            Console.WriteLine($"sucker12 state is {state}, pressValue is {pressValue}, error num is {error}");
+            Thread.Sleep(100);
+        }
+        // Wait for sucker 1 to reach adsorbed state, timeout 100ms
+        int ret = robot.WaitSuckerState(1, 1, 100);
+        Console.WriteLine($"WaitSuckerState result is {ret}");
+    
+        // Unicast mode to turn off sucker 1 and 12
+        ctrl[0] = 3;
+        robot.SetSuckerCtrl(1, 1, ctrl);
+        robot.SetSuckerCtrl(12, 1, ctrl);
+    
+        robot.CloseRPC();
+    }
+
+
+

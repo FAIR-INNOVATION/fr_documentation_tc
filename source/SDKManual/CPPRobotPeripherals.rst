@@ -1068,3 +1068,292 @@ SmartTool按鈕代碼示例
         Sleep(100);
       }
     }
+
+控制陣列式吸盤
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 控制陣列式吸盤
+    * @param [in] slaveID 從站號
+    * @param [in] len 長度
+    * @param [in] ctrlValue 控制值
+    * @return 錯誤碼
+    */
+    errno_t FRRobot::SetSuckerCtrl(uint8_t slaveID, uint8_t len, uint8_t ctrlValue[20]);
+
+取得陣列式吸盤狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 取得陣列式吸盤狀態
+    * @param [in] slaveID 從站號
+    * @param [out] state 吸附狀態 0-釋放物體 1-檢測到工件吸附成功 2-沒有吸附到物體 3-物體脫離
+    * @param [out] pressValue 目前真空度 單位kpa 
+    * @param [out] error 吸盤目前的錯誤碼
+    * @return 錯誤碼
+    */
+	errno_t FRRobot::GetSuckerState(uint8_t slaveID, uint8_t* state, int* pressValue, int* error);
+
+等待吸盤狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 等待吸盤狀態
+    * @param [in] slaveID 從站號
+    * @param [in] state 吸附狀態 0-釋放物體 1-檢測到工件吸附成功 2-沒有吸附到物體 3-物體脫離
+    * @param [in] ms 等待最大時間
+    * @return 錯誤碼
+    */
+    errno_t FRRobot::WaitSuckerState(uint8_t slaveID, uint8_t state, int ms);
+
+陣列式吸盤控制指令程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    void testSucker()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        uint8_t ctrl[20];
+        uint8_t state;
+        int pressVlaue;
+        int error;
+
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        //上傳並載入開放協定檔案
+        robot.OpenLuaUpload("E://項目/外設SDK/CtrlDev_sucker.lua");
+        robot.Sleep(2000);
+        robot.SetCtrlOpenLUAName(1, "CtrlDev_sucker.lua");
+        robot.UnloadCtrlOpenLUA(1);
+        robot.LoadCtrlOpenLUA(1);
+        robot.Sleep(1000);
+
+        //控制吸盤廣播模式下，按照最大能力吸附
+        ctrl[0] = 1;
+        robot.SetSuckerCtrl(0, 1, ctrl);
+
+        //循環監控1號吸盤和12號吸盤的狀態
+        for (int i = 0; i < 100; i++)
+        {
+            robot.GetSuckerState(1, &state, &pressVlaue, &error);
+            printf("sucker1 state is %d, pressVlaue is %d, error num is %d\n", state, pressVlaue, error);
+            robot.GetSuckerState(12, &state, &pressVlaue, &error);
+            printf("sucker12 state is %d, pressVlaue is %d, error num is %d\n", state, pressVlaue, error);
+            robot.Sleep(100);
+        }
+
+        //等待1號吸盤是否為吸附到物體的狀態，等待時間100ms
+        int ret = robot.WaitSuckerState(1, 1, 100);
+        printf("WaitSuckerState result is  %d\n", ret);
+
+        //單播模式關閉1號和12號吸盤
+        ctrl[0] = 3;
+        robot.SetSuckerCtrl(1, 1, ctrl);
+        robot.SetSuckerCtrl(12, 1, ctrl);
+
+        robot.CloseRPC();
+    }
+
+上傳外設開放協定LUA檔案
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+	/**
+	 * @brief 上傳Lua檔案
+	 * @param [in] filePath 本機lua檔案路徑名
+	 * @return 錯誤碼
+	 */
+    errno_t FRRobot::OpenLuaUpload(std::string filePath);
+
+取得從站板卡參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  取得從站板卡參數
+    * @param  [out] type  0-Ethercat，1-CClink, 3-Ethercat, 4-EIP
+    * @param  [out] version  協定版本
+    * @param  [out] connState  0-未連接 1-已連接
+    * @return  錯誤碼
+    */
+    errno_t GetFieldBusConfig(uint8_t* type, uint8_t* version, uint8_t* connState);
+
+寫入從站DO
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  寫入從站DO
+    * @param  [in] DOIndex  DO編號
+    * @param  [in] wirteNum  寫入的數量
+    * @param  [in] status[8] 寫入的數值，最多寫8個
+    * @return  錯誤碼
+    */
+    errno_t FieldBusSlaveWriteDO(uint8_t DOIndex, uint8_t wirteNum, uint8_t status[8]);
+
+寫入從站AO
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  寫入從站AO
+    * @param  [in] AOIndex  AO編號
+    * @param  [in] wirteNum  寫入的數量
+    * @param  [in] status[8] 寫入的數值，最多寫8個
+    * @return  錯誤碼
+    */
+    errno_t FieldBusSlaveWriteAO(uint8_t AOIndex, uint8_t wirteNum, int status[8]);
+
+讀取從站DI
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  讀取從站DI
+    * @param  [in] DOIndex  DI編號
+    * @param  [in] readeNum  讀取的數量
+    * @param  [out] status[8] 讀取到的數值，最多讀8個
+    * @return  錯誤碼
+    */
+    errno_t FieldBusSlaveReadDI(uint8_t DOIndex, uint8_t readNum, uint8_t status[8]);
+
+讀取從站AI
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief  讀取從站AI
+    * @param  [in] AOIndex  AI編號
+    * @param  [in] readeNum  讀取的數量
+    * @param  [out] status[8] 讀取到的數值，最多讀8個
+    * @return  錯誤碼
+    */
+    errno_t FieldBusSlaveReadAI(uint8_t AIIndex, uint8_t readNum, int status[8]);
+
+等待擴充DI輸入
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 等待擴充DI輸入
+    * @param [in] DIIndex DI編號
+    * @param [in] status 0-低電位；1-高電位
+    * @param [in] waitMs 最大等待時間(ms)
+    * @return 錯誤碼
+    */
+    errno_t FRRobot::FieldBusSlaveWaitDI(uint8_t DIIndex, bool status, int waitMs);
+
+等待擴充AI輸入
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 等待擴充AI輸入
+    * @param [in] AIIndex AI編號
+    * @param [in] waitType 0-大於；1-小於
+    * @param [in] value AI值
+    * @param [in] waitMs 最大等待時間(ms)
+    * @return 錯誤碼
+    */
+    errno_t FRRobot::FieldBusSlaveWaitAI(uint8_t AIIndex, uint8_t waitType, double value, int waitMs);
+
+從站模式相關介面指令程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    void testFieldBusBoard()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        uint8_t type = 0, version = 0, connState = 0;
+        uint8_t ctrl[8];
+        int ctrlAO[8];
+        static uint8_t DI[8];
+        static int AI[8];
+
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        //上傳並載入開放協定檔案
+        robot.OpenLuaUpload("E://項目/外設SDK/CtrlDev_field.lua");
+        robot.Sleep(2000);
+        robot.SetCtrlOpenLUAName(3, "CtrlDev_field.lua");
+        robot.UnloadCtrlOpenLUA(3);
+        robot.LoadCtrlOpenLUA(3);
+        robot.Sleep(8000);
+
+        //取得從站板卡的協定型別、軟體版本、與PLC的連接狀態
+        robot.GetFieldBusConfig(&type, &version, &connState);
+        printf("type is %d, version is %d,connState is %d\n", type, version, connState);
+
+        //寫入DO0 = 1、DO1 = 0、DO2 = 1
+        ctrl[0] = 0;
+        ctrl[1] = 1;
+        ctrl[2] = 1;
+        robot.FieldBusSlaveWriteDO(0, 3, ctrl);
+
+        //寫入AO2 = 0x1000
+        ctrlAO[0] = 0x1005;
+        robot.FieldBusSlaveWriteAO(2, 1, ctrlAO);
+
+        //循環監控DI0~DI3 AI0~AI2
+        for (int i = 0; i < 100; i++)
+        {
+            robot.FieldBusSlaveReadDI(0, 4, DI);
+            printf("DI0 is %d, DI1 is %d,DI2 is %d,DI3 is %d\n", DI[0], DI[1], DI[2], DI[3]);
+            robot.FieldBusSlaveReadAI(0, 3, AI);
+            printf("AI0 is %d, AI1 is %d,AI2 is %d\n", AI[0], AI[1], AI[2]);
+            robot.Sleep(10);
+        }
+
+        //等待DI0是否為1，等待時間100ms，並列印結果
+        int ret = robot.FieldBusSlaveWaitDI(0, 1, 100);
+        printf("FieldBusSlaveWaitDI result is  %d\n", ret);
+
+        //等待AI0是否大於400，等待時間100ms，並列印結果
+        ret = robot.FieldBusSlaveWaitAI(0,0,400.00,100);
+        printf("FieldBusSlaveWaitAI result is  %d\n", ret);
+
+        robot.CloseRPC();
+    }

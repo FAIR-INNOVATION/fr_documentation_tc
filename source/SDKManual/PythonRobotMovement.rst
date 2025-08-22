@@ -103,13 +103,13 @@ jog點動立即停止
 
 笛卡爾空間直線運動
 +++++++++++++++++++
-.. versionadded:: python SDK-v2.1.2
+.. versionadded:: python SDK-v2.1.5
 
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``MoveL(desc_pos, tool, user, joint_pos = [0.0,0.0,0.0,0.0,0.0,0.0], vel = 20.0, acc = 0.0 , ovl = 100.0, blendR = -1.0, blendMode = 0, exaxis_pos = [0.0,0.0,0.0,0.0], search = 0, offset_flag = 0, offset_pos = [0.0,0.0,0.0,0.0,0.0,0.0],overSpeedStrategy=0,speedPercent=10)``"
+    "原型", "``MoveL(desc_pos, tool, user, joint_pos = [0.0,0.0,0.0,0.0,0.0,0.0], vel = 20.0, acc = 0.0 , ovl = 100.0, blendR = -1.0, blendMode = 0, exaxis_pos = [0.0,0.0,0.0,0.0], search = 0, offset_flag = 0, offset_pos = [0.0,0.0,0.0,0.0,0.0,0.0],config=-1,velAccParamMode=0,overSpeedStrategy=0,speedPercent=10)``"
     "描述", "笛卡爾空間直線運動"
     "必選參數", "- ``desc_pos``:目標笛卡爾位姿，單位[mm][°]；
     - ``tool``:工具號，[0~14]；
@@ -123,7 +123,9 @@ jog點動立即停止
     - ``exaxis_pos``:外部軸 1 位置 ~ 外部軸 4 位置 默認[0.0,0.0,0.0,0.0];
     - ``search``:[0]-不焊絲尋位，[1]-焊絲尋位；
     - ``offset_flag``:[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0;
-    - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]
+    - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0];
+    - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1
+    - ``velAccParamMode``:速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2) 默認0
     - ``overSpeedStrategy``:超速處理策略，0-策略關閉；1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
     - ``speedPercent``:允許降速閾值百分比[0-100]，默認10%
     "
@@ -131,12 +133,13 @@ jog點動立即停止
 
 笛卡爾空間圓弧運動
 ++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
 
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``MoveC(desc_pos_p, tool_p, user_p, desc_pos_t, tool_t, user_t, joint_pos_p =[0.0,0.0,0.0, 0.0,0.0,0.0],joint_pos_t=[0.0,0.0,0.0,0.0,0.0,0.0], vel_p = 20.0,acc_p=100.0, exaxis_pos_p =[0.0,0.0,0.0,0.0], offset_flag_p = 0, offset_pos_p = [0.0,0.0,0.0,0.0,0.0,0.0], vel_t= 20.0, acc_t=100.0,exaxis_pos_t=[0.0,0.0,0.0,0.0], offset_flag_t = 0, offset_pos_t = [0.0,0.0,0.0, 0.0,0.0,0.0], ovl = 100.0, blendR = -1.0)``"
+    "原型", "``MoveC(desc_pos_p, tool_p, user_p, desc_pos_t, tool_t, user_t, joint_pos_p =[0.0,0.0,0.0, 0.0,0.0,0.0],joint_pos_t=[0.0,0.0,0.0,0.0,0.0,0.0], vel_p = 20.0,acc_p=100.0, exaxis_pos_p =[0.0,0.0,0.0,0.0], offset_flag_p = 0, offset_pos_p = [0.0,0.0,0.0,0.0,0.0,0.0], vel_t= 20.0, acc_t=100.0,exaxis_pos_t=[0.0,0.0,0.0,0.0], offset_flag_t = 0, offset_pos_t = [0.0,0.0,0.0, 0.0,0.0,0.0], ovl = 100.0, blendR = -1.0, config=-1,velAccParamMode=0)``"
     "描述", "笛卡爾空間圓弧運動"
     "必選參數", "- ``desc_pos_p``:路徑點笛卡爾位姿，單位[mm][°]；
     - ``tool_p``:路徑點工具號，[0~14];
@@ -156,18 +159,20 @@ jog點動立即停止
     - ``offset_flag_t``:目標點是否偏移[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0;
     - ``offset_pos_t``:目標點位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0];
     - ``ovl:``:速度縮放因子，[0~100] 默認100.0;
-    - ``blendR``:[-1.0]-運動到位 (阻塞)，[0~1000]-平滑半徑 (非阻塞)，單位 [mm] 默認-1.0;"
+    - ``blendR``:[-1.0]-運動到位 (阻塞)，[0~1000]-平滑半徑 (非阻塞)，單位 [mm] 默認-1.0;
+    - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1;
+    - ``velAccParamMode``:速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2) 默認0"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 笛卡爾空間整圓運動
 +++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.3
+.. versionadded:: python SDK-v2.1.5
 
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``Circle(desc_pos_p,tool_p,user_p,desc_pos_t,tool_t,user_t,joint_pos_p=[0.0,0.0,0.0,0.0,0.0,0.0], joint_pos_t = [0.0,0.0,0.0,0.0,0.0,0.0], vel_p = 20.0, acc_p=0.0, exaxis_pos_p= [0.0,0.0, 0.0,0.0], vel_t=20.0, acc_t = 0.0, exaxis_pos_t =[0.0,0.0,0.0,0.0], ovl=100.0, offset_flag=0, offset_pos= [0.0,0.0,0.0,0.0,0.0,0.0],oacc=100.0,blendR=-1)``"
+    "原型", "``Circle(desc_pos_p,tool_p,user_p,desc_pos_t,tool_t,user_t,joint_pos_p=[0.0,0.0,0.0,0.0,0.0,0.0], joint_pos_t = [0.0,0.0,0.0,0.0,0.0,0.0], vel_p = 20.0, acc_p=0.0, exaxis_pos_p= [0.0,0.0, 0.0,0.0], vel_t=20.0, acc_t = 0.0, exaxis_pos_t =[0.0,0.0,0.0,0.0], ovl=100.0, offset_flag=0, offset_pos= [0.0,0.0,0.0,0.0,0.0,0.0],oacc=100.0,blendR=-1,config=-1,velAccParamMode=0)``"
     "描述", "笛卡爾空間整圓運動"
     "必選參數", "- ``desc_pos_p``:路徑點笛卡爾位姿，單位[mm][°]；
     - ``tool_p``:工具號，[0~14]；
@@ -187,7 +192,9 @@ jog點動立即停止
     - ``offset_flag``:是否偏移[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0;
     - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]
     - ``oacc``:加速度百分比，默認：100；
-    - ``blendR``:-1：阻塞；0~1000：平滑半徑,默認：-1；"
+    - ``blendR``:-1：阻塞；0~1000：平滑半徑,默認：-1；
+    - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1;
+    - ``velAccParamMode``:速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2) 默認0"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 笛卡爾空間點到點運動
@@ -254,12 +261,13 @@ jog點動立即停止
 
 笛卡爾空間螺旋線運動
 ++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
 
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``NewSpiral(desc_pos, tool, user, param, joint_pos = [0.0,0.0,0.0,0.0,0.0,0.0], vel = 20.0, acc = 0.0, exaxis_pos = [0.0,0.0,0.0,0.0], ovl = 100.0, offset_flag = 0, offset_pos = [0.0,0.0,0.0,0.0,0.0,0.0])``"
+    "原型", "``NewSpiral(desc_pos, tool, user, param, joint_pos = [0.0,0.0,0.0,0.0,0.0,0.0], vel = 20.0, acc = 0.0, exaxis_pos = [0.0,0.0,0.0,0.0], ovl = 100.0, offset_flag = 0, offset_pos = [0.0,0.0,0.0,0.0,0.0,0.0], config = -1)``"
     "描述", "笛卡爾空間螺旋線運動"
     "必選參數", "- ``desc_pos``:目標笛卡爾位姿，單位[mm][°];
     - ``tool``:工具號，[0~14];
@@ -271,7 +279,8 @@ jog點動立即停止
     - ``exaxis_pos``:外部軸 1 位置 ~ 外部軸 4 位置 默認[0.0,0.0,0.0,0.0];
     - ``ovl``:速度縮放因子，[0~100] 默認100.0;
     - ``offset_flag``:[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0;
-    - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]"
+    - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]
+    - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 代碼示例

@@ -159,6 +159,30 @@ jog點動立即停止
     */
     int MoveJ(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, float ovl, ExaxisPos epos, float blendT, byte offset_flag, DescPose offset_pos); 
 
+關節空間運動(自動正運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /** 
+    * @brief  關節空間運動(自動正運動學計算)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] blendT [-1.0]-運動到位(阻塞)，[0~500.0]-平滑時間(非阻塞)，單位ms
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @return 錯誤碼 
+    */ 
+    int MoveJ(JointPos joint_pos, int tool, int user, double vel, double acc, double ovl, ExaxisPos epos, double blendT, int offset_flag, DescPose offset_pos)
+
+
 笛卡爾空間直線運動
 +++++++++++++++++++++++++++++
 .. code-block:: c#
@@ -183,6 +207,120 @@ jog點動立即停止
     * @return  錯誤碼
     */   
     int MoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, float ovl, float blendR, ExaxisPos epos, byte search, byte offset_flag, DescPose offset_pos, int overSpeedStrategy = 0, int speedPercent = 10); 
+
+笛卡爾空間直線運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動(自動逆運動學計算)
+    * @param [in] desc_pos   目標笛卡爾位姿
+    * @param [in] tool  工具座標號，範圍[1~15]
+    * @param [in] user  工件座標號，範圍[1~15]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] blendMode 過渡方式；0-內切過渡；1-角點過渡
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos  位姿偏移量
+    * @param [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    int MoveL(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int config, int overSpeedStrategy, int speedPercent)
+
+笛卡爾空間直線運動（增加速度加速度參數模式velAccParamMode參數）
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動（增加速度加速度參數模式velAccParamMode參數）
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[1~15]
+    * @param  [in] user  工件座標號，範圍[1~15]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @param  [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param  [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    public int MoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int velAccParamMode, int overSpeedStrategy, int speedPercent)
+
+笛卡爾空間直線運動(重載函數1 增加blendMode)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動(重載函數1 增加blendMode)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[1~15]
+    * @param  [in] user  工件座標號，範圍[1~15]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] blendMode 過渡方式；0-內切過渡；1-角點過渡
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @param  [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param  [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    public int MoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int velAccParamMode, int overSpeedStrategy, int speedPercent)
+
+笛卡爾空間直線運動(重載函數2 不需要輸入關節位置)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動(重載函數2 不需要輸入關節位置)
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[1~15]
+    * @param  [in] user  工件座標號，範圍[1~15]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] blendMode 過渡方式；0-內切過渡；1-角點過渡
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @param  [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param  [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    public int MoveL(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int config, int velAccParamMode, int overSpeedStrategy, int speedPercent)
 
 笛卡爾空間圓弧運動
 +++++++++++++++++++++++++++++
@@ -214,6 +352,105 @@ jog點動立即停止
     * @return  錯誤碼
     */      
     int MoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, float pvel, float pacc, ExaxisPos epos_p, byte poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, float tvel, float tacc, ExaxisPos epos_t, byte toffset_flag, DescPose offset_pos_t, float ovl, float blendR); 
+
+笛卡爾空間圓弧運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間圓弧運動(自動逆運動學計算)
+    * @param [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param [in] ptool  工具座標號，範圍[1~15]
+    * @param [in] puser  工件座標號，範圍[1~15]
+    * @param [in] pvel  速度百分比，範圍[0~100]
+    * @param [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_p  擴展軸位置，單位mm
+    * @param [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos_p  位姿偏移量
+    * @param [in] desc_pos_t   目標點笛卡爾位姿
+    * @param [in] ttool  工具座標號，範圍[1~15]
+    * @param [in] tuser  工件座標號，範圍[1~15]
+    * @param [in] tvel  速度百分比，範圍[0~100]
+    * @param [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_t  擴展軸位置，單位mm
+    * @param [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos_t  位姿偏移量
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return  錯誤碼
+    */
+    int MoveC(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR, int config)
+
+笛卡爾空間圓弧運動(增加速度加速度參數模式velAccParamMode參數)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間圓弧運動(增加速度加速度參數模式velAccParamMode參數)
+    * @param  [in] joint_pos_p  路徑點關節位置,單位deg
+    * @param  [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[1~15]
+    * @param  [in] puser  工件座標號，範圍[1~15]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_p  位姿偏移量
+    * @param  [in] joint_pos_t  目標點關節位置,單位deg
+    * @param  [in] desc_pos_t   目標點笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[1~15]
+    * @param  [in] tuser  工件座標號，範圍[1~15]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_t  位姿偏移量
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @return  錯誤碼
+    */
+    public int MoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR, int velAccParamMode)
+
+笛卡爾空間圓弧運動(重載函數1 不需要輸入關節位置)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間圓弧運動 (重載函數1 不需要輸入關節位置)
+    * @param  [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[1~15]
+    * @param  [in] puser  工件座標號，範圍[1~15]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_p  位姿偏移量
+    * @param  [in] desc_pos_t   目標點笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[1~15]
+    * @param  [in] tuser  工件座標號，範圍[1~15]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_t  位姿偏移量
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @return  錯誤碼
+    */
+    public int MoveC(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR, int config, int velAccParamMode)
 
 笛卡爾空間點到點運動
 ++++++++++++++++++++++++++++++++++
@@ -265,6 +502,102 @@ jog點動立即停止
     * @return  錯誤碼
     */      
     int Circle(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, float pvel, float pacc, ExaxisPos epos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, float tvel, float tacc, ExaxisPos epos_t, float ovl, int offset_flag, DescPose offset_pos, double oacc=100, double blendR=-1);
+
+笛卡爾空間整圓運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+     * @brief  笛卡爾空間整圓運動(自動逆運動學計算)
+     * @param  [in] desc_pos_p   路徑點1笛卡爾位姿
+     * @param  [in] ptool  工具座標號，範圍[0~14]
+     * @param  [in] puser  工件座標號，範圍[0~14]
+     * @param  [in] pvel  速度百分比，範圍[0~100]
+     * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+     * @param  [in] epos_p  擴展軸位置，單位mm
+     * @param  [in] desc_pos_t   路徑點2笛卡爾位姿
+     * @param  [in] ttool  工具座標號，範圍[0~14]
+     * @param  [in] tuser  工件座標號，範圍[0~14]
+     * @param  [in] tvel  速度百分比，範圍[0~100]
+     * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+     * @param  [in] epos_t  擴展軸位置，單位mm
+     * @param  [in] ovl  速度縮放因子，範圍[0~100]
+     * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+     * @param  [in] offset_pos  位姿偏移量
+     * @param  [in] oacc 加速度百分比
+     * @param  [in] blendR -1：阻塞；0~1000：平滑半徑
+     * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+     * @return  錯誤碼
+     */
+    int Circle(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR,int config)
+
+笛卡爾空間整圓運動（增加速度加速度參數模式velAccParamMode參數）
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    *@brief  笛卡爾空間整圓運動（增加速度加速度參數模式velAccParamMode參數）
+    *@param  [in] joint_pos_p  路徑點1關節位置,單位deg
+    *@param  [in] desc_pos_p   路徑點1笛卡爾位姿
+    *@param  [in] ptool  工具座標號，範圍[1~15]
+    *@param  [in] puser  工件座標號，範圍[1~15]
+    *@param  [in] pvel  速度百分比，範圍[0~100]
+    *@param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    *@param  [in] epos_p  擴展軸位置，單位mm
+    *@param  [in] joint_pos_t  路徑點2關節位置,單位deg
+    *@param  [in] desc_pos_t   路徑點2笛卡爾位姿
+    *@param  [in] ttool  工具座標號，範圍[1~15]
+    *@param  [in] tuser  工件座標號，範圍[1~15]
+    *@param  [in] tvel  速度百分比，範圍[0~100]
+    *@param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    *@param  [in] epos_t  擴展軸位置，單位mm
+    *@param  [in] ovl  速度縮放因子，範圍[0~100]
+    *@param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    *@param  [in] offset_pos  位姿偏移量
+    *@param  [in] oacc 加速度百分比
+    *@param  [in] blendR -1：阻塞；0~1000：平滑半徑
+    *@param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    *@return  錯誤碼
+    */
+    public int Circle(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR, int velAccParamMode)
+
+笛卡爾空間整圓運動 (重載函數1 不需要輸入關節位置)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間整圓運動 (重載函數1 不需要輸入關節位置)
+    * @param  [in] desc_pos_p   路徑點1笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[0~14]
+    * @param  [in] puser  工件座標號，範圍[0~14]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] desc_pos_t   路徑點2笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[0~14]
+    * @param  [in] tuser  工件座標號，範圍[0~14]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] oacc 加速度百分比
+    * @param  [in] blendR -1：阻塞；0~1000：平滑半徑
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @return  錯誤碼
+    */
+    public int Circle(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR, int config, int velAccParamMode)
 
 笛卡爾空間整圓運動代碼示例
 ++++++++++++++++++++++++++++++++++++++
@@ -328,53 +661,53 @@ jog點動立即停止
     }
 
 機器人基本運動指令代碼示例
-+++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
 .. code-block:: c#
     :linenos:
 
-    private void btnMovetest_Click(object sender, EventArgs e)
+    private void TestMovePhy_Click(object sender, EventArgs e)
     {
-        JointPos j1= new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
+        JointPos j1 = new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
         JointPos j2 = new JointPos(-45.615, -106.172, 124.296, -107.151, -91.282, 74.255);
         JointPos j3 = new JointPos(-29.777, -84.536, 109.275, -114.075, -86.655, 74.257);
         JointPos j4 = new JointPos(-31.154, -95.317, 94.276, -88.079, -89.740, 74.256);
+    
         DescPose desc_pos1 = new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
         DescPose desc_pos2 = new DescPose(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
         DescPose desc_pos3 = new DescPose(-487.434, 154.362, 308.576, 176.600, 0.268, -14.061);
         DescPose desc_pos4 = new DescPose(-443.165, 147.881, 480.951, 179.511, -0.775, -15.409);
+        DescPose desc_pos5 = new DescPose(-385.268, -386.759, 238.349, 179.619, -2.046, 162.332);
+        DescPose desc_pos6 = new DescPose(-257.470, -566.986, 241.908, -177.038, -2.886, -176.577);
+        DescPose desc_pos7 = new DescPose(-190.925, -390.644, 240.374, 179.089, 0.019, 177.836);
         DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
         ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
-
         int tool = 0;
         int user = 0;
         float vel = 100.0f;
-        float acc = 100.0f;
+        float acc = 200.0f;
         float ovl = 100.0f;
-        float blendT = 0.0f;
-        float blendR = 0.0f;
+        float blendT = -1.0f;
+        float blendR = -1.0f;
         byte flag = 0;
         byte search = 0;
-
         robot.SetSpeed(20);
         int rtn;
-        rtn = robot.MoveJ(j1, desc_pos1, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
-        Console.WriteLine($"MoveJ errcode:{rtn}" );
-
-        rtn = robot.MoveL(j2, desc_pos2, tool, user, vel, acc, ovl, blendR,epos, search, flag, offset_pos);
-        Console.WriteLine($"MoveL errcode:{rtn}");
-
-        rtn = robot.MoveC(j3, desc_pos3, tool, user, vel, acc, epos, flag, offset_pos, j4, desc_pos4, tool, user, vel, acc, epos, flag, offset_pos, ovl, blendR);
-        Console.WriteLine($"MoveC errcode:{rtn}");
-
-        rtn = robot.MoveJ(j2, desc_pos2, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
-        Console.WriteLine("MoveJ errcode:%d\n", rtn);
-
-        rtn = robot.Circle(j3, desc_pos3, tool, user, vel, acc, epos, j1, desc_pos1, tool, user, vel, acc, epos, ovl, flag, offset_pos);
-        Console.WriteLine($"Circle errcode:{rtn}");
-
-        rtn = robot.MoveCart(desc_pos4, tool, user, vel, acc, ovl, blendT, -1);
-        Console.WriteLine($"MoveCart errcode:{rtn}");
-
+        rtn = robot.MoveL(desc_pos1, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 1);
+        Console.WriteLine($"movel errcode:{rtn}");
+        rtn = robot.MoveC(desc_pos3, tool, user, vel, acc, epos, flag, offset_pos,
+                        desc_pos4, tool, user, vel, acc, epos, flag, offset_pos,
+                        ovl, blendR, -1, 1);
+        Console.WriteLine($"movec errcode:{rtn}");   
+        rtn = robot.MoveL(desc_pos5, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 1);
+        Console.WriteLine($"movel errcode:{rtn}");
+    
+            
+        rtn = robot.Circle(desc_pos6, tool, user, vel, acc, epos,
+                            desc_pos7, tool, user, vel, acc, epos,
+                            ovl, flag, offset_pos, 100, -1, -1, 1);
+        Console.WriteLine($"circle errcode:{rtn}");
     }
 
 笛卡爾空間螺旋線運動
@@ -399,42 +732,60 @@ jog點動立即停止
     */
     int NewSpiral(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, ExaxisPos epos, float ovl, byte offset_flag, DescPose offset_pos, SpiralParam spiral_param); 
 
-螺旋線運動代碼示例
-++++++++++++++++++++++++++++
+笛卡爾空間螺旋線運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
 .. code-block:: c#
     :linenos:
 
-    private void btnDescSpiral_Click(object sender, EventArgs e)
+    /**
+    * @brief 笛卡爾空間螺旋線運動 (自動逆運動學計算)
+    * @param [in] desc_pos   目標笛卡爾位姿
+    * @param [in] tool  工具座標號，範圍[0~14]
+    * @param [in] user  工件座標號，範圍[0~14]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos  位姿偏移量
+    * @param [in] spiral_param  螺旋參數
+    * @param [in] config  逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return 錯誤碼 
+    */
+    int NewSpiral(DescPose desc_pos, int tool, int user, double vel, double acc, ExaxisPos epos, double ovl, int offset_flag, DescPose offset_pos, SpiralParam spiral_param,int config)
+
+螺旋線運動代碼示例
++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    public static int TestSpiral(Robot robot)
     {
-        int rtn;
-        JointPos j = new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
-        DescPose desc_pos = new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
-        DescPose offset_pos1 = new DescPose(50, 0, 0, -30, 0, 0);
-        DescPose offset_pos2 = new DescPose(50, 0, 0, -5, 0, 0);
-        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
-        SpiralParam sp;
-        sp.circle_num = 5;
-        sp.circle_angle = 5.0f;
-        sp.rad_init = 50.0f;
-        sp.rad_add = 10.0f;
-        sp.rotaxis_add = 10.0f;
-        sp.rot_direction = 0;
+        int rtn=-1;
+        JointPos j=new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
+        DescPose desc_pos=new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
+        DescPose offset_pos1=new DescPose(50, 0, 0, -30, 0, 0);
+        DescPose offset_pos2=new DescPose(50, 0, 0, -5, 0, 0);
+        ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
+        SpiralParam sp=new SpiralParam(1,5.0,50.0,10.0,10.0,0);
 
         int tool = 0;
         int user = 0;
-        float vel = 100.0f;
-        float acc = 100.0f;
-        float ovl = 100.0f;
-        float blendT = 0.0f;
-        byte flag = 2;
+        double vel = 100.0;
+        double acc = 100.0;
+        double ovl = 100.0;
+        double blendT = 0.0;
+        int flag = 2;
 
-        robot.SetSpeed(20);
+        rtn = robot.MoveJ(j, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos1);
+         Console.WriteLine("movej errcode:"+ rtn);
 
-        rtn = robot.MoveJ(j, desc_pos, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos1);
-        Console.WriteLine($"MoveJ errcode:{rtn}");
+        rtn = robot.NewSpiral(desc_pos, tool, user, vel, acc, epos, ovl, flag, offset_pos2, sp,-1);
+        Console.WriteLine("newspiral errcode:"+ rtn);
 
-        rtn = robot.NewSpiral(j, desc_pos, tool, user, vel, acc, epos, ovl, flag, offset_pos2, sp);
-        Console.WriteLine($"NewSpiral errcode:{rtn}");
+        return 0;
     }
 
 伺服運動開始
@@ -670,6 +1021,25 @@ jog點動立即停止
     */
     int SplinePTP(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, float ovl);
 
+關節空間樣條運動 (自動正運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  關節空間樣條運動 (自動正運動學計算)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @return  錯誤碼
+    */
+    int SplinePTP(JointPos joint_pos, int tool, int user, double vel, double acc, double ovl)
+
 樣條運動結束
 ++++++++++++++++++++++++++++++++++
 .. code-block:: c#
@@ -755,6 +1125,28 @@ jog點動立即停止
     * @return 錯誤碼 
     */ 
     int NewSplinePoint(JointPos joint_pos, DescPose desc_pos, int tool, int user, float vel, float acc, float ovl, float blendR, int lastFlag);
+
+新樣條指令點(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.7  Web-3.8.5
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 新樣條指令點(自動逆運動學計算)
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] lastFlag 是否爲最後一個點，0-否，1-是
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return  錯誤碼
+    */
+    int NewSplinePoint(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int lastFlag,int config)
 
 新樣條運動結束
 ++++++++++++++++++++++++++++++++++
@@ -1301,6 +1693,3 @@ FIR濾波代碼示例
     * @return 錯誤碼
     */
     int GetSafetyCode();
-
-
-

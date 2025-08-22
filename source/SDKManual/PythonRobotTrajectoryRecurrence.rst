@@ -373,13 +373,13 @@
 
 軌跡預處理(軌跡前瞻)
 +++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.0
+.. versionadded:: python SDK-v2.1.4
 
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``LoadTrajectoryLA(name, mode, errorLim, type, precision, vamx, amax, jmax)``"
+    "原型", "``LoadTrajectoryLA(name, mode, errorLim, type, precision, vamx, amax, jmax, flag)``"
     "描述", "軌跡預處理(軌跡前瞻)"
     "必選參數", "- ``name``:軌跡文件名
     - ``mode``：採樣模式，0-不進行採樣；1-等數據間隔採樣；2-等誤差限制採樣
@@ -388,7 +388,8 @@
     - ``precision``:平滑精度，使用貝塞爾平滑時生效
     - ``vamx``:設定的最大速度，mm/s
     - ``amax``:設定的最大加速度，mm/s2
-    - ``jmax``:設定的最大加加速度，mm/s3"
+    - ``jmax``:設定的最大加加速度，mm/s3
+    - ``flag``:勻速前瞻開啓開關 0-不開啓；1-開啓"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -418,7 +419,7 @@
     rtn = robot.TrajectoryJUpLoad("D://zUP/traj.txt")
     print(f"Upload TrajectoryJ A {rtn}")
     traj_file_name = "/fruser/traj/traj.txt"
-    rtn = robot.LoadTrajectoryLA(traj_file_name, 1, 2, 0, 2, 50, 200, 1000)
+    rtn = robot.LoadTrajectoryLA(traj_file_name, 1, 2, 0, 2, 50, 200, 1000, 0)
     print(f"LoadTrajectoryLA {traj_file_name}, rtn is: {rtn}")
     rtn, traj_start_pose = robot.GetTrajectoryStartPose(traj_file_name)
     print(f"GetTrajectoryStartPose is: {rtn}")

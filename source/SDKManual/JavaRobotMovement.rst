@@ -108,6 +108,29 @@ jog點動立即停止
     */
     int MoveJ(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, ExaxisPos epos, double blendT, int offset_flag, DescPose offset_pos);
 
+關節空間運動(自動正運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief  關節空間運動(自動正運動學計算)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] blendT [-1.0]-運動到位(阻塞)，[0~500.0]-平滑時間(非阻塞)，單位ms
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @return 錯誤碼 
+    */ 
+    int MoveJ(JointPos joint_pos, int tool, int user, double vel, double acc, double ovl, ExaxisPos epos, double blendT, int offset_flag, DescPose offset_pos)
+
 笛卡爾空間直線運動
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionchanged:: Java SDK-v1.0.5-3.8.2
@@ -135,6 +158,120 @@ jog點動立即停止
     * @return  錯誤碼
     */   
     int MoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode,ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int overSpeedStrategy, int speedPercent);
+
+笛卡爾空間直線運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動(自動逆運動學計算)
+    * @param [in] desc_pos   目標笛卡爾位姿
+    * @param [in] tool  工具座標號，範圍[1~15]
+    * @param [in] user  工件座標號，範圍[1~15]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] blendMode 過渡方式；0-內切過渡；1-角點過渡
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos  位姿偏移量
+    * @param [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    int MoveL(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int config, int overSpeedStrategy, int speedPercent)
+
+笛卡爾空間直線運動（增加速度加速度參數模式velAccParamMode參數）
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動（增加速度加速度參數模式velAccParamMode參數）
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[1~15]
+    * @param  [in] user  工件座標號，範圍[1~15]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @param  [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param  [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    public int MoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int velAccParamMode, int overSpeedStrategy, int speedPercent)
+
+笛卡爾空間直線運動(重載函數1 增加blendMode)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動(重載函數1 增加blendMode)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[1~15]
+    * @param  [in] user  工件座標號，範圍[1~15]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] blendMode 過渡方式；0-內切過渡；1-角點過渡
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @param  [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param  [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    public int MoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int velAccParamMode, int overSpeedStrategy, int speedPercent)
+
+笛卡爾空間直線運動(重載函數2 不需要輸入關節位置)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間直線運動(重載函數2 不需要輸入關節位置)
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[1~15]
+    * @param  [in] user  工件座標號，範圍[1~15]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] blendMode 過渡方式；0-內切過渡；1-角點過渡
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] search  0-不焊絲尋位，1-焊絲尋位
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @param  [in] overSpeedStrategy  超速處理策略，1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    * @param  [in] speedPercent  允許降速閾值百分比[0-100]，默認10%
+    * @return  錯誤碼
+    */
+    public int MoveL(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int blendMode, ExaxisPos epos, int search, int offset_flag, DescPose offset_pos, int config, int velAccParamMode, int overSpeedStrategy, int speedPercent)
 
 笛卡爾空間圓弧運動
 +++++++++++++++++++++++++++++++++++++++++++
@@ -167,6 +304,105 @@ jog點動立即停止
     */      
     int MoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR);
 
+笛卡爾空間圓弧運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間圓弧運動(自動逆運動學計算)
+    * @param [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param [in] ptool  工具座標號，範圍[1~15]
+    * @param [in] puser  工件座標號，範圍[1~15]
+    * @param [in] pvel  速度百分比，範圍[0~100]
+    * @param [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_p  擴展軸位置，單位mm
+    * @param [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos_p  位姿偏移量
+    * @param [in] desc_pos_t   目標點笛卡爾位姿
+    * @param [in] ttool  工具座標號，範圍[1~15]
+    * @param [in] tuser  工件座標號，範圍[1~15]
+    * @param [in] tvel  速度百分比，範圍[0~100]
+    * @param [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos_t  擴展軸位置，單位mm
+    * @param [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos_t  位姿偏移量
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return  錯誤碼
+    */
+    int MoveC(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR, int config)
+
+笛卡爾空間圓弧運動(增加速度加速度參數模式velAccParamMode參數)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間圓弧運動(增加速度加速度參數模式velAccParamMode參數)
+    * @param  [in] joint_pos_p  路徑點關節位置,單位deg
+    * @param  [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[1~15]
+    * @param  [in] puser  工件座標號，範圍[1~15]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_p  位姿偏移量
+    * @param  [in] joint_pos_t  目標點關節位置,單位deg
+    * @param  [in] desc_pos_t   目標點笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[1~15]
+    * @param  [in] tuser  工件座標號，範圍[1~15]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_t  位姿偏移量
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @return  錯誤碼
+    */
+    public int MoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR, int velAccParamMode)
+
+笛卡爾空間圓弧運動(重載函數1 不需要輸入關節位置)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間圓弧運動 (重載函數1 不需要輸入關節位置)
+    * @param  [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[1~15]
+    * @param  [in] puser  工件座標號，範圍[1~15]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_p  位姿偏移量
+    * @param  [in] desc_pos_t   目標點笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[1~15]
+    * @param  [in] tuser  工件座標號，範圍[1~15]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_t  位姿偏移量
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @return  錯誤碼
+    */
+    public int MoveC(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR, int config, int velAccParamMode)
+
 笛卡爾空間整圓運動
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionchanged:: Java SDK-v1.0.6-3.8.3
@@ -198,6 +434,102 @@ jog點動立即停止
     * @return  錯誤碼
     */
     int Circle(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR)
+
+笛卡爾空間整圓運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+     * @brief  笛卡爾空間整圓運動(自動逆運動學計算)
+     * @param  [in] desc_pos_p   路徑點1笛卡爾位姿
+     * @param  [in] ptool  工具座標號，範圍[0~14]
+     * @param  [in] puser  工件座標號，範圍[0~14]
+     * @param  [in] pvel  速度百分比，範圍[0~100]
+     * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+     * @param  [in] epos_p  擴展軸位置，單位mm
+     * @param  [in] desc_pos_t   路徑點2笛卡爾位姿
+     * @param  [in] ttool  工具座標號，範圍[0~14]
+     * @param  [in] tuser  工件座標號，範圍[0~14]
+     * @param  [in] tvel  速度百分比，範圍[0~100]
+     * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+     * @param  [in] epos_t  擴展軸位置，單位mm
+     * @param  [in] ovl  速度縮放因子，範圍[0~100]
+     * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+     * @param  [in] offset_pos  位姿偏移量
+     * @param  [in] oacc 加速度百分比
+     * @param  [in] blendR -1：阻塞；0~1000：平滑半徑
+     * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+     * @return  錯誤碼
+     */
+    int Circle(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR,int config)
+
+笛卡爾空間整圓運動（增加速度加速度參數模式velAccParamMode參數）
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    *@brief  笛卡爾空間整圓運動（增加速度加速度參數模式velAccParamMode參數）
+    *@param  [in] joint_pos_p  路徑點1關節位置,單位deg
+    *@param  [in] desc_pos_p   路徑點1笛卡爾位姿
+    *@param  [in] ptool  工具座標號，範圍[1~15]
+    *@param  [in] puser  工件座標號，範圍[1~15]
+    *@param  [in] pvel  速度百分比，範圍[0~100]
+    *@param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    *@param  [in] epos_p  擴展軸位置，單位mm
+    *@param  [in] joint_pos_t  路徑點2關節位置,單位deg
+    *@param  [in] desc_pos_t   路徑點2笛卡爾位姿
+    *@param  [in] ttool  工具座標號，範圍[1~15]
+    *@param  [in] tuser  工件座標號，範圍[1~15]
+    *@param  [in] tvel  速度百分比，範圍[0~100]
+    *@param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    *@param  [in] epos_t  擴展軸位置，單位mm
+    *@param  [in] ovl  速度縮放因子，範圍[0~100]
+    *@param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    *@param  [in] offset_pos  位姿偏移量
+    *@param  [in] oacc 加速度百分比
+    *@param  [in] blendR -1：阻塞；0~1000：平滑半徑
+    *@param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    *@return  錯誤碼
+    */
+    public int Circle(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR, int velAccParamMode)
+
+笛卡爾空間整圓運動 (重載函數1 不需要輸入關節位置)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  笛卡爾空間整圓運動 (重載函數1 不需要輸入關節位置)
+    * @param  [in] desc_pos_p   路徑點1笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[0~14]
+    * @param  [in] puser  工件座標號，範圍[0~14]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] desc_pos_t   路徑點2笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[0~14]
+    * @param  [in] tuser  工件座標號，範圍[0~14]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] oacc 加速度百分比
+    * @param  [in] blendR -1：阻塞；0~1000：平滑半徑
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @param  [in] velAccParamMode 速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2)
+    * @return  錯誤碼
+    */
+    public int Circle(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, double ovl, int offset_flag, DescPose offset_pos, double oacc, double blendR, int config, int velAccParamMode)
 
 笛卡爾空間點到點運動
 +++++++++++++++++++++++++++++
@@ -267,6 +599,21 @@ jog點動立即停止
         rtn = robot.MoveCart(desc_pos4, tool, user, vel, acc, ovl, blendT, -1);
         System.out.println("MoveCart errcode:"+ rtn);
 
+        rtn = robot.MoveJ(j1, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
+        System.out.println("movej errcode:"+ rtn);
+
+        rtn = robot.MoveL(desc_pos2, tool, user, vel, acc, ovl, blendR, 0,epos, search, flag, offset_pos,-1,0,10);
+        System.out.println("movel errcode:"+ rtn);
+
+        rtn = robot.MoveC(desc_pos3, tool, user, vel, acc, epos, flag, offset_pos, desc_pos4, tool, user, vel, acc, epos, flag, offset_pos, ovl, blendR,-1);
+        System.out.println("movec errcode:"+ rtn);
+
+        rtn = robot.MoveJ(j2, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
+        System.out.println("movej errcode:"+ rtn);
+
+        rtn = robot.Circle(desc_pos3, tool, user, vel, acc, epos, desc_pos1, tool, user, vel, acc, epos, ovl, flag, offset_pos, 100,-1,-1);
+        System.out.println("circle errcode:"+ rtn);
+
         return 0;
     }
 
@@ -291,6 +638,30 @@ jog點動立即停止
     */
     int NewSpiral(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, ExaxisPos epos, double ovl, int offset_flag, DescPose offset_pos, SpiralParam spiral_param);
 
+笛卡爾空間螺旋線運動(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 笛卡爾空間螺旋線運動 (自動逆運動學計算)
+    * @param [in] desc_pos   目標笛卡爾位姿
+    * @param [in] tool  工具座標號，範圍[0~14]
+    * @param [in] user  工件座標號，範圍[0~14]
+    * @param [in] vel  速度百分比，範圍[0~100]
+    * @param [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param [in] epos  擴展軸位置，單位mm
+    * @param [in] ovl  速度縮放因子，範圍[0~100]
+    * @param [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param [in] offset_pos  位姿偏移量
+    * @param [in] spiral_param  螺旋參數
+    * @param [in] config  逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return 錯誤碼 
+    */
+    int NewSpiral(DescPose desc_pos, int tool, int user, double vel, double acc, ExaxisPos epos, double ovl, int offset_flag, DescPose offset_pos, SpiralParam spiral_param,int config)
+
 螺旋線運動代碼示例
 +++++++++++++++++++++++++++++
 .. code-block:: Java
@@ -304,13 +675,7 @@ jog點動立即停止
         DescPose offset_pos1=new DescPose(50, 0, 0, -30, 0, 0);
         DescPose offset_pos2=new DescPose(50, 0, 0, -5, 0, 0);
         ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
-        SpiralParam sp=new SpiralParam();
-        sp.circle_num = 5;
-        sp.circle_angle = 5.0;
-        sp.rad_init = 50.0;
-        sp.rad_add = 10.0;
-        sp.rotaxis_add = 10.0;
-        sp.rot_direction = 0;
+        SpiralParam sp=new SpiralParam(1,5.0,50.0,10.0,10.0,0);
 
         int tool = 0;
         int user = 0;
@@ -320,12 +685,10 @@ jog點動立即停止
         double blendT = 0.0;
         int flag = 2;
 
-        robot.SetSpeed(20);
-
-        rtn = robot.MoveJ(j, desc_pos, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos1);
+        rtn = robot.MoveJ(j, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos1);
         System.out.println("movej errcode:"+ rtn);
 
-        rtn = robot.NewSpiral(j, desc_pos, tool, user, vel, acc, epos, ovl, flag, offset_pos2, sp);
+        rtn = robot.NewSpiral(desc_pos, tool, user, vel, acc, epos, ovl, flag, offset_pos2, sp,-1);
         System.out.println("newspiral errcode:"+ rtn);
 
         return 0;
@@ -554,6 +917,25 @@ jog點動立即停止
     */
     int SplinePTP(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl);
 
+關節空間樣條運動 (自動正運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  關節空間樣條運動 (自動正運動學計算)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @return  錯誤碼
+    */
+    int SplinePTP(JointPos joint_pos, int tool, int user, double vel, double acc, double ovl)
+
 樣條運動結束
 +++++++++++++++++++++++++++++
 .. code-block:: Java
@@ -576,10 +958,6 @@ jog點動立即停止
         JointPos j2=new JointPos(-45.615, -106.172, 124.296, -107.151, -91.282, 74.255);
         JointPos j3=new JointPos(-61.954, -84.409, 108.153, -116.316, -91.283, 74.260);
         JointPos j4=new JointPos(-89.575, -80.276, 102.713, -116.302, -91.284, 74.267);
-        DescPose desc_pos1=new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
-        DescPose desc_pos2=new DescPose(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
-        DescPose desc_pos3=new DescPose(-327.622, 402.230, 320.402, -178.067, 2.127, -46.207);
-        DescPose desc_pos4=new DescPose(-104.066, 544.321, 327.023, -177.715, 3.371, -73.818);
         DescPose offset_pos=new DescPose(0, 0, 0, 0, 0, 0);
         ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
 
@@ -591,17 +969,14 @@ jog點動立即停止
         double blendT = -1.0;
         int flag = 0;
 
-        robot.SetSpeed(20);
-
-        int err1 = robot.MoveJ(j1, desc_pos1, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
+        int err1 = robot.MoveJ(j1, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
         System.out.println("movej errcode:"+ err1);
         robot.SplineStart();
-        robot.SplinePTP(j1, desc_pos1, tool, user, vel, acc, ovl);
-        robot.SplinePTP(j2, desc_pos2, tool, user, vel, acc, ovl);
-        robot.SplinePTP(j3, desc_pos3, tool, user, vel, acc, ovl);
-        robot.SplinePTP(j4, desc_pos4, tool, user, vel, acc, ovl);
+        robot.SplinePTP(j1, tool, user, vel, acc, ovl);
+        robot.SplinePTP(j2, tool, user, vel, acc, ovl);
+        robot.SplinePTP(j3, tool, user, vel, acc, ovl);
+        robot.SplinePTP(j4, tool, user, vel, acc, ovl);
         robot.SplineEnd();
-
         return 0;
     }
 
@@ -638,6 +1013,28 @@ jog點動立即停止
     */ 
     int NewSplinePoint(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int lastFlag);
 
+新樣條指令點(自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 新樣條指令點(自動逆運動學計算)
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] lastFlag 是否爲最後一個點，0-否，1-是
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return  錯誤碼
+    */
+    int NewSplinePoint(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, int lastFlag,int config)
+
 新樣條運動結束
 +++++++++++++++++++++++++++++
 .. code-block:: Java
@@ -657,10 +1054,6 @@ jog點動立即停止
     public static int TestNewSpline(Robot robot)
     {
         JointPos j1=new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
-        JointPos j2=new JointPos(-45.615, -106.172, 124.296, -107.151, -91.282, 74.255);
-        JointPos j3=new JointPos(-61.954, -84.409, 108.153, -116.316, -91.283, 74.260);
-        JointPos j4=new JointPos(-89.575, -80.276, 102.713, -116.302, -91.284, 74.267);
-        JointPos j5=new JointPos(-95.228, -54.621, 73.691, -112.245, -91.280, 74.268);
         DescPose desc_pos1=new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
         DescPose desc_pos2=new DescPose(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
         DescPose desc_pos3=new DescPose(-327.622, 402.230, 320.402, -178.067, 2.127, -46.207);
@@ -668,6 +1061,7 @@ jog點動立即停止
         DescPose desc_pos5=new DescPose(-33.421, 732.572, 275.103, -177.907, 2.709, -79.482);
         DescPose offset_pos=new DescPose(0, 0, 0, 0, 0, 0);
         ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
+
 
         int tool = 0;
         int user = 0;
@@ -677,16 +1071,15 @@ jog點動立即停止
         double blendT = -1.0;
         int flag = 0;
 
-        robot.SetSpeed(20);
 
-        int err1 = robot.MoveJ(j1, desc_pos1, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
+        int err1 = robot.MoveJ(j1, tool, user, vel, acc, ovl, epos, blendT, flag, offset_pos);
         System.out.println("movej errcode:"+ err1);
         robot.NewSplineStart(1, 2000);
-        robot.NewSplinePoint(j1, desc_pos1, tool, user, vel, acc, ovl, -1, 0);
-        robot.NewSplinePoint(j2, desc_pos2, tool, user, vel, acc, ovl, -1, 0);
-        robot.NewSplinePoint(j3, desc_pos3, tool, user, vel, acc, ovl, -1, 0);
-        robot.NewSplinePoint(j4, desc_pos4, tool, user, vel, acc, ovl, -1, 0);
-        robot.NewSplinePoint(j5, desc_pos5, tool, user, vel, acc, ovl, -1, 0);
+        robot.NewSplinePoint(desc_pos1, tool, user, vel, acc, ovl, -1, 0,-1);
+        robot.NewSplinePoint(desc_pos2, tool, user, vel, acc, ovl, -1, 0,-1);
+        robot.NewSplinePoint(desc_pos3, tool, user, vel, acc, ovl, -1, 0,-1);
+        robot.NewSplinePoint(desc_pos4, tool, user, vel, acc, ovl, -1, 0,-1);
+        robot.NewSplinePoint(desc_pos5, tool, user, vel, acc, ovl, -1, 0,-1);
         robot.NewSplineEnd();
         return 0;
     }

@@ -760,6 +760,29 @@ UDP擴展軸與機器人關節運動同步運動
     */
     int ExtAxisSyncMoveJ(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, ExaxisPos epos, double blendT, int offset_flag, DescPose offset_pos);
 
+UDP擴展軸與機器人關節運動同步運動 (自動正運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  UDP擴展軸與機器人關節運動同步運動 (自動正運動學計算)
+    * @param  [in] joint_pos  目標關節位置,單位deg
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] blendT [-1.0]-運動到位(阻塞)，[0~500.0]-平滑時間(非阻塞)，單位ms
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @return  錯誤碼
+    */
+    int ExtAxisSyncMoveJ(JointPos joint_pos, int tool, int user, double vel, double acc, double ovl, ExaxisPos epos, double blendT, int offset_flag, DescPose offset_pos) 
+
 UDP擴展軸與機器人關節運動同步運動代碼示例
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
@@ -812,6 +835,9 @@ UDP擴展軸與機器人關節運動同步運動代碼示例
         robot.MoveJ(startjointPos, startdescPose, 1, 1, 100, 100, 100, startexaxisPos, 0, 0, offdese);
         //開始同步運動
         robot.ExtAxisSyncMoveJ(endjointPos, enddescPose, 1, 1, 100, 100, 100, endexaxisPos, -1, 0, offdese);
+        robot.MoveJ(startjointPos, 1, 1, 100, 100, 100, startexaxisPos, 0, 0, offdese);
+        //開始同步運動
+        robot.ExtAxisSyncMoveJ(endjointPos, 1, 1, 100, 100, 100, endexaxisPos, -1, 0, offdese);
         robot.CloseRPC();
         return 0;
     }
@@ -837,6 +863,30 @@ UDP擴展軸與機器人直線運動同步運動
     * @return 錯誤碼
     */
     int ExtAxisSyncMoveL(JointPos joint_pos, DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, ExaxisPos epos, int offset_flag, DescPose offset_pos);
+
+UDP擴展軸與機器人直線運動同步運動 (自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  UDP擴展軸與機器人直線運動同步運動 (自動逆運動學計算)
+    * @param  [in] desc_pos   目標笛卡爾位姿
+    * @param  [in] tool  工具座標號，範圍[0~14]
+    * @param  [in] user  工件座標號，範圍[0~14]
+    * @param  [in] vel  速度百分比，範圍[0~100]
+    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] epos  擴展軸位置，單位mm
+    * @param  [in] offset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos  位姿偏移量
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return  錯誤碼
+    */
+    int ExtAxisSyncMoveL(DescPose desc_pos, int tool, int user, double vel, double acc, double ovl, double blendR, ExaxisPos epos, int offset_flag, DescPose offset_pos,int config)
 
 UDP擴展軸與機器人直線運動同步運動代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -890,6 +940,9 @@ UDP擴展軸與機器人直線運動同步運動代碼示例
         robot.MoveJ(startjointPos, startdescPose, 1, 1, 100, 100, 100, startexaxisPos, 0, 0, offdese);
         //開始同步運動
         robot.ExtAxisSyncMoveL(endjointPos, enddescPose, 1, 1, 100, 100, 100, 0, endexaxisPos, 0, offdese);
+        robot.MoveJ(startjointPos, 1, 1, 100, 100, 100, startexaxisPos, 0, 0, offdese);
+        //開始同步運動
+        robot.ExtAxisSyncMoveL(enddescPose, 1, 1, 100, 100, 100, 0, endexaxisPos, 0, offdese,-1);
         robot.CloseRPC();
         return 0;
     }
@@ -924,6 +977,38 @@ UDP擴展軸與機器人圓弧運動同步運動
     * @return 錯誤碼
     */
     int ExtAxisSyncMoveC(JointPos joint_pos_p, DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, JointPos joint_pos_t, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR);
+
+UDP擴展軸與機器人圓弧運動同步運動 (自動逆運動學計算)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.8-3.8.5
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  UDP擴展軸與機器人圓弧運動同步運動 (自動逆運動學計算)
+    * @param  [in] desc_pos_p   路徑點笛卡爾位姿
+    * @param  [in] ptool  工具座標號，範圍[0~14]
+    * @param  [in] puser  工件座標號，範圍[0~14]
+    * @param  [in] pvel  速度百分比，範圍[0~100]
+    * @param  [in] pacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_p  擴展軸位置，單位mm
+    * @param  [in] poffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_p  位姿偏移量
+    * @param  [in] desc_pos_t   目標點笛卡爾位姿
+    * @param  [in] ttool  工具座標號，範圍[0~14]
+    * @param  [in] tuser  工件座標號，範圍[0~14]
+    * @param  [in] tvel  速度百分比，範圍[0~100]
+    * @param  [in] tacc  加速度百分比，範圍[0~100],暫不開放
+    * @param  [in] epos_t  擴展軸位置，單位mm
+    * @param  [in] toffset_flag  0-不偏移，1-基座標系/工件座標系下偏移，2-工具座標系下偏移
+    * @param  [in] offset_pos_t  位姿偏移量
+    * @param  [in] ovl  速度縮放因子，範圍[0~100]
+    * @param  [in] blendR [-1.0]-運動到位(阻塞)，[0~1000.0]-平滑半徑(非阻塞)，單位mm
+    * @param  [in] config 逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解
+    * @return  錯誤碼
+    */
+    int ExtAxisSyncMoveC(DescPose desc_pos_p, int ptool, int puser, double pvel, double pacc, ExaxisPos epos_p, int poffset_flag, DescPose offset_pos_p, DescPose desc_pos_t, int ttool, int tuser, double tvel, double tacc, ExaxisPos epos_t, int toffset_flag, DescPose offset_pos_t, double ovl, double blendR,int config)
 
 UDP擴展軸與機器人圓弧運動同步運動代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -981,6 +1066,9 @@ UDP擴展軸與機器人圓弧運動同步運動代碼示例
         robot.MoveJ(startjointPos, startdescPose, 1, 1, 100, 100, 100, startexaxisPos, 0, 0, offdese);
         //開始同步運動
         robot.ExtAxisSyncMoveC(midjointPos, middescPose, 1, 1, 100, 100, midexaxisPos, 0, offdese, endjointPos, enddescPose, 1, 1, 100, 100, endexaxisPos, 0, offdese, 100, 0);
+        robot.MoveJ(startjointPos, 1, 1, 100, 100, 100, startexaxisPos, 0, 0, offdese);
+        //開始同步運動
+        robot.ExtAxisSyncMoveC(middescPose, 1, 1, 100, 100, midexaxisPos, 0, offdese, enddescPose, 1, 1, 100, 100, endexaxisPos, 0, offdese, 100, 0,-1);
         robot.CloseRPC();
         return 0;
     }
