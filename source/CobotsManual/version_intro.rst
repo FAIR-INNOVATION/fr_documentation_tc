@@ -253,7 +253,7 @@
     說明：新增FOCAS的CNC功能。
 
 - **從站指令適配板卡**：
-    說明：從站指令適配EnTalk miniPCIe板卡（Profinet協議、Ethernet/IP協議、CC-Link協議），適配CIFX 9OE-RE/F/PNS miniPCIe板卡（Profinet協議、Ethernet/IP協議、Ethercat協議、CC-Link協議）。
+    說明：從站指令適配EnTalk miniPCIe板卡（Profinet協議、Ethernet/IP協議、CC-Link IEF Basic協議），適配CIFX 9OE-RE/F/PNS miniPCIe板卡（Profinet協議、Ethernet/IP協議、Ethercat協議、CC-Link IEF Basic協議）。
 
 - **checkpoint時間戳反饋功能**：
     說明：servo J運動可以收到時間戳結果，包含指令號及下發、入隊、出隊、執行時間戳。

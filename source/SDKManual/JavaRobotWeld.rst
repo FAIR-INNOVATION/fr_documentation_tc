@@ -1046,13 +1046,13 @@
 
     /** 
     * @brief 焊絲尋位開始
-    * @param [in] refPos  1-基準點 2-接觸點
+    * @param [in] refPos  1-基準點 0-接觸點
     * @param [in] searchVel   尋位速度 %
     * @param [in] searchDis  尋位距離 mm
     * @param [in] autoBackFlag 自動返回標誌，0-不自動；-自動
     * @param [in] autoBackVel  自動返回速度 %
     * @param [in] autoBackDis  自動返回距離 mm
-    * @param [in] offectFlag  1-帶偏移量尋位；2-示教點尋位
+    * @param [in] offectFlag  1-帶偏移量尋位；0-示教點尋位
     * @return 錯誤碼 
     */
     int WireSearchStart(int refPos, double searchVel, int searchDis, int autoBackFlag, double autoBackVel, int autoBackDis, int offectFlag);

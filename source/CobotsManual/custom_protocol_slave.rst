@@ -10,7 +10,7 @@
 工業總線協議整合實現機器人運動控制
 ---------------------------------------------------------
 
-為實現PLC通過不同工業總線協議(CC-Link、Profinet、Ethernet/IP和EtherCAT)控制機器人運動，在集成式mini控制箱中新增赫優訊板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡及FRJ-PCIeN-EC-RJ-V10板卡設備。
+為實現PLC通過不同工業總線協議(CC-Link IEF Basic、Profinet、Ethernet/IP和EtherCAT)控制機器人運動，在集成式mini控制箱中新增FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡及FRJ-PCIeN-EC-RJ-V10板卡設備。
 
 環境配置
 --------------------------
@@ -26,38 +26,38 @@
      - **板卡型號**
      - **機器人軟件版本**
 
-   * - CC-link
-     - 赫優訊板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+   * - CC-Link IEF Basic
+     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
      - V3.8.0及以上
 
    * - Profinet
-     - 赫優訊板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
      - V3.8.0及以上
 
    * - Ethernet/IP
-     - 赫優訊板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
      - V3.8.0及以上
 
    * - EtherCAT
-     - 赫優訊板卡、FRJ-PCIeN-EC-RJ-V10板卡
+     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EC-RJ-V10板卡
      - V3.8.4.1及以上
 
-赫優訊闆卡硬體環境搭建
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FRH-PCIeN-EC/EIP/CC/PN-RJ-V10闆卡硬體環境搭建
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. 將赫優訊闆卡安裝到整合式mini控制箱，如圖所示。
+1. 將FRH-PCIeN-EC/EIP/CC/PN-RJ-V10闆卡安裝到整合式mini控制箱，如圖所示。
 
 .. image:: custom_protocol_slave/001.png
    :width: 4in
    :align: center
 
-.. centered:: 圖表 17.2-1 赫優訊闆卡安裝
+.. centered:: 圖表 17.2-1 FRH-PCIeN-EC/EIP/CC/PN-RJ-V10闆卡安裝
 
 .. image:: custom_protocol_slave/002.png
    :width: 4in
    :align: center
 
-.. centered:: 圖表 17.2-2 赫優訊闆卡網口
+.. centered:: 圖表 17.2-2 FRH-PCIeN-EC/EIP/CC/PN-RJ-V10闆卡網口
 
 2. 機器人控制箱和PLC接線如下圖所示。
 
@@ -89,7 +89,7 @@
  1：機器人控制箱（闆卡網口）；
  2：交換器；
  3：筆記本PC；
- 4：三菱PLC（CC-link網口）；
+ 4：三菱PLC（CC-Link IEF Basic網口）；
  5：西門子PLC（Profinet網路埠）；
  6：歐姆龍PLC（Ethernet/IP網路埠）；
  7：歐姆龍PLC（EtherCAT網口）；
@@ -131,7 +131,7 @@ FRJ-PCIeN板卡硬件環境搭建
     1：機器人控制箱（板卡網口）；
     2：交換機；
     3：筆記本PC；
-    4：三菱PLC（CC-link網口）；
+    4：三菱PLC（CC-Link IEF Basic網口）；
     5：西門子PLC（Profinet網口）；
     6：匯川PLC（Ethernet/IP網口）；
 
@@ -171,7 +171,7 @@ FRJ-PCIeN板卡硬件環境搭建
    * - **協議**
      - **IP地址**
 
-   * - CC-link
+   * - CC-Link IEF Basic
      - 192.168.0.113
 
    * - Ethernet/IP
@@ -180,7 +180,7 @@ FRJ-PCIeN板卡硬件環境搭建
    * - Profinet
      - 192.168.0.2
 
-配置為CC-link時，控制器會將板卡IP修改為「192.168.0.113」。
+配置為CC-Link IEF Basic時，控制器會將板卡IP修改為「192.168.0.113」。
 
 配置為Ethernet/IP時，控制器會將板卡IP修改為「192.168.0.112」。
 
@@ -255,7 +255,7 @@ PLC環境搭建
      - 6ES75152AM020AB0
      - TIA Portal V17
 
-   * - CC-link
+   * - CC-Link IEF Basic
      - 三菱
      - FX5S-30TR/DS
      - 30MR/ES V1.3
@@ -290,7 +290,7 @@ PLC環境搭建
    :width: 6in
    :align: center
 
-以安裝赫優訊 GSD 檔案為例，如上選擇“管理通用站描述檔(GSD)”，出現“管理通用站描述檔”視窗。
+以安裝FRH-PCIeN-EC/EIP/CC/PN-RJ-V10 GSD 檔案為例，如上選擇“管理通用站描述檔(GSD)”，出現“管理通用站描述檔”視窗。
 
 從「來源路徑」選擇要安裝 GSD 文件的資料夾，從所顯示 GSD 文件的清單中選擇要安裝的一個或多個文件，按一下「安裝」按鈕。如下圖所示。
 
@@ -338,18 +338,18 @@ PLC環境搭建
    :width: 6in
    :align: center
 
-三菱CC-link
+三菱CC-Link IEF Basic
 ++++++++++++++++++++++++++++++++++
 
 1. CC-Link IEF Basic設置
 
-開啟使用CC-link：左側導覽功能表列選擇“乙太網路連接埠”，設定PLC ip位址，確保與赫優訊闆卡位址同網段。點選“CC-link IEF Basic使用有無”，選擇 “使用”。
+開啟使用CC-Link IEF Basic：左側導覽功能表列選擇“乙太網路連接埠”，設定PLC ip位址，確保與FRH-PCIeN-EC/EIP/CC/PN-RJ-V10闆卡位址同網段。點選“CC-Link IEF Basic使用有無”，選擇 “使用”。
 
 .. image:: custom_protocol_slave/022.png
    :width: 6in
    :align: center
 
-CC-Link 網路配置設定：同樣在CC-Link IEF Basic設置，選擇“網路配置設定”，模組選擇赫優訊CIFX Digital I/O模組。拖曳到視圖左下方，完成硬體配置。
+CC-Link 網路配置設定：同樣在CC-Link IEF Basic設置，選擇“網路配置設定”，模組選擇FRH-PCIeN-EC/EIP/CC/PN-RJ-V10CIFX Digital I/O模組。拖曳到視圖左下方，完成硬體配置。
 
 .. image:: custom_protocol_slave/023.png
    :width: 6in
@@ -434,7 +434,7 @@ CC-Link 刷新設定：同樣在CC-Link IEF Basic設置，點選刷新設置，�
    :width: 6in
    :align: center
 
-HMI設定（CC-link仿真）
+HMI設定（CC-Link IEF Basic仿真）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. 登入HMI介面後啟用「Enable Task」建立PLC與控制器通訊連線。
@@ -532,7 +532,7 @@ HMI設定（Profinet仿真）
 
 1. 開啟程式後點選選擇項目樹中的“HMI_1[ktp700 Basic PN]”，之後在選單列中點選“線上”→“模擬”→“啟動”。等待軟體編譯並模擬。
 
-2. 模擬後功能與威綸通螢幕（CC-link）內容一致。可參考上述內容設定。
+2. 模擬後功能與威綸通螢幕（CC-Link IEF Basic）內容一致。可參考上述內容設定。
    
 .. image:: custom_protocol_slave/042.png
    :width: 6in
@@ -556,7 +556,7 @@ HMI設定（Profinet仿真）
 
 .. centered:: 圖表 17.3-1 板卡通訊手動配置
 
-首先，對FRJ-PCIeN板卡IP地址進行配置，如不填寫，則板卡按照預設IP: 192.168.0.100進行啟動配置。目前IP配置僅適用於EIP、CC-link協議，PN協議由PLC主站掃描從站設備分配IP。
+首先，對FRJ-PCIeN板卡IP地址進行配置，如不填寫，則板卡按照預設IP: 192.168.0.100進行啟動配置。目前IP配置僅適用於EIP、CC-Link IEF Basic協議，PN協議由PLC主站掃描從站設備分配IP。
 
 .. note:: 頁面上更改IP地址後，需要加載從站模式方可生效。
 
