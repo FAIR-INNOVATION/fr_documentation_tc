@@ -87,7 +87,7 @@
      - ✅
      - ✅
      - ✅
-     - :download:`下載<_static/_doc/RoHS认证证书(FR3-FR30).pdf>`
+     - :download:`下載<_static/_doc/ROHS认证证书(FR3-FR30).pdf>`
 
    * - **防爆證書**
      - ✅
