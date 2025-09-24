@@ -1454,3 +1454,114 @@
       robot->WeldingSetVoltageGradualChangeEnd();
       return 0;
     }
+
+設定自訂擺動參數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v3.8.6
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設定自訂擺動參數
+    * @param [in] id 自訂擺動編號：0-2
+    * @param [in] pointNum 擺動點位個數 0-10
+    * @param [in] point 移動端點資料x,y,z
+    * @param [in] stayTime 擺動停留時間ms
+    * @param [in] frequency 擺動頻率 Hz
+    * @param [in] incStayType 等待模式：0-週期不包含等待時間；1-週期包含等待時間
+    * @param [in] stationary 擺動位置等待：0-等待時間內繼續運動；1-等待時間內位置靜止
+    * @return 錯誤碼
+    */
+    errno_t CustomWeaveSetPara(int id, int pointNum, DescTran point[10], double stayTime[10], double frequency, int incStayType, int stationary);
+                
+取得自訂擺動參數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v3.8.6
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 取得自訂擺動參數
+    * @param [in] id 自訂擺動編號：0-2
+    * @param [out] pointNum 擺動點位個數 0-10
+    * @param [out] point 移動端點資料x,y,z
+    * @param [out] stayTime 擺動停留時間ms
+    * @param [out] frequency 擺動頻率 Hz
+    * @param [out] incStayType 等待模式：0-週期不包含等待時間；1-週期包含等待時間
+    * @param [out] stationary 擺動位置等待：0-等待時間內繼續運動；1-等待時間內位置靜止
+    * @return 錯誤碼
+    */
+    errno_t CustomWeaveGetPara(int id, int& pointNum, DescTran point[10], double stayTime[10], double& frequency, int& incStayType, int& stationary);
+                    
+自訂擺動參數程式碼範例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C++SDK-v3.8.6
+    
+.. code-block:: c++
+    :linenos:
+
+    int TestCustomWeaveSetPara()
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return 0;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      DescTran point[10] = {}; 
+      point[0].x = -3;
+      point[0].y = -3;
+      point[0].z = 0;
+      point[1].x = -6;
+      point[1].y = 0;
+      point[1].z = 0;
+      point[2].x = -3;
+      point[2].y = 3;
+      point[2].z = 0;
+      point[3].x = 0;
+      point[3].y = 0;
+      point[3].z = 0;
+      double stayTime[10] = { 0,0,0,0,0,0,0,0,0,0 };
+      rtn = robot.CustomWeaveSetPara(2, 4, point, stayTime, 1.000, 0, 0);
+      printf("CustomWeaveSetPara rtn is %d\n", rtn);
+      robot.Sleep(1000);
+      int pointNum = 0;
+      double frequency;
+      int incStayType;
+      int stationary;
+      robot.CustomWeaveGetPara(2, pointNum, point, stayTime, frequency, incStayType, stationary);
+      printf("pointNum is %d\n", pointNum);
+      for (int i = 0; i < pointNum; i++)
+      {
+        printf("point %d, point x y z %f %f %f\n", i, point[i].x, point[i].y, point[i].z);
+      }
+      printf("fre is %f, stay is %d %d \n", frequency, incStayType, stationary);
+      robot.WeaveSetPara(0, 9, 1.000000, 1, 5.000000, 6.000000, 5.000000, 50, 100, 100, 0, 1, 0.000000, 0.000000);
+      DescPose desc_p1 = { -288.650, 367.807, 288.404, 0.000, -0.001, 0.001 };
+      DescPose desc_p2 = { -431.714, 367.815, 288.415, 0.001, 0.001, 0.000 };
+      DescPose desc_p3 = { -348.666, 427.798, 288.404, -0.000, -0.000, 0.001 };
+      JointPos j1 = { 140.656, -84.560, -91.707, -93.734, 90.000, 50.655 };
+      JointPos j2 = { 149.873, -98.298, -77.599, -94.103, 90.000, 59.873 };
+      JointPos j3 = { 139.773, -96.173, -80.014, -93.814, 90.000, 49.772 };
+      ExaxisPos epos = {};
+      DescPose offset_pos = {};
+      robot.MoveJ(&j1, &desc_p1, 3, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+      robot.WeaveStart(0);
+      robot.Circle(&j3, &desc_p3, 3, 0, 100, 100, &epos, &j2, &desc_p2, 3, 0, 100, 100, &epos, 10, -1, &offset_pos);
+      robot.WeaveEnd(0);
+      robot.MoveJ(&j1, &desc_p1, 3, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+      robot.WeaveStart(0);
+      robot.MoveC(&j3, &desc_p3, 3, 0, 100, 100, &epos, 0, &offset_pos, &j2, &desc_p2, 3, 0, 100, 100, &epos, 0, &offset_pos, 10, -1); 
+      robot.WeaveEnd(0);
+      robot.MoveJ(&j1, &desc_p1, 3, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+      robot.WeaveStart(0);
+      robot.MoveL(&j2, &desc_p2, 3, 0, 100, 100, 10, -1, &epos, 0, 0, &offset_pos, 0, 100);
+      robot.WeaveEnd(0);
+      robot.CloseRPC();
+    }

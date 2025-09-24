@@ -547,6 +547,10 @@ WEB介面上鎖
      - FRCustom(9)-V1-001(FR3-C)
      - FR3-C
 
+   * - 905
+     - FRCustom(9)-V01-001(FR30L)
+     - FR30L
+
    * - ...
      - 預留
      - /
