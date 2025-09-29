@@ -398,3 +398,31 @@
     rtn = robot.SetJointFirmwareUpgrade(1, "D://zUP/MT/FR_SERVO_FV504215_MAIN_U7_T07_20250603.bin")
     print(f"robot SetJointFirmwareUpgrade rtn is {rtn}")
     robot.CloseRPC()
+
+機器人操作系統升級(LA控制箱)
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``KernelUpgrade(filePath)``"
+    "描述", "機器人操作系統升級(LA控制箱)"
+    "必選參數", "- ``filePath``：操作系統升級包全路徑"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+       
+獲取機器人操作系統升級結果(LA控制箱)
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetKernelUpgradeResult()``"
+    "描述", "獲取機器人操作系統升級結果(LA控制箱)"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"

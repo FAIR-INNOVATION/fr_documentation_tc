@@ -489,3 +489,214 @@
     error,sn = robot.GetRobotSN()
     print(f"robot SN is {sn[0]}")
     robot.CloseRPC()
+
+根據編號獲取工具座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetToolCoordWithID(id)``"
+    "描述", "根據編號獲取工具座標系"
+    "必選參數", "- ``id``：工具座標系編號"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+根據編號獲取工件座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetWObjCoordWithID(id)``"
+    "描述", "根據編號獲取工件座標系"
+    "必選參數", "- ``id``：工件座標系編號"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+根據編號獲取外部工具座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetExToolCoordWithID(id)``"
+    "描述", "根據編號獲取外部工具座標系"
+    "必選參數", "- ``id``：外部工具座標系編號"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+根據編號獲取擴展軸座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetExAxisCoordWithID(id)``"
+    "描述", "根據編號獲取擴展軸座標系"
+    "必選參數", "- ``id``：擴展軸座標系編號"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+根據編號獲取負載質量及質心
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetTargetPayloadWithID(id)``"
+    "描述", "根據編號獲取負載質量及質心"
+    "必選參數", "- ``id``：擴展軸座標系編號"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``weight``：負載質量
+    - ``cog``：負載質心"
+
+獲取當前工具座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetCurToolCoord()``"
+    "描述", "獲取當前工具座標系"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+獲取當前工件座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetCurWObjCoord()``"
+    "描述", "獲取當前工件座標系"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+獲取當前外部工具座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetCurExToolCoord()``"
+    "描述", "獲取當前外部工具座標系"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+獲取當前擴展軸座標系
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetCurExAxisCoord()``"
+    "描述", "獲取當前擴展軸座標系"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``coord``：座標系數值"
+
+獲取機器人座標系及負載代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    id = 1
+    toolCoord = [0.0] * 6
+    extoolCoord = [0.0] * 6
+    wobjCoord = [0.0] * 6
+    exAxisCoord = [0.0] * 6
+    for i in range(100):
+        print(f"當前ID爲:{id}")
+        coordSet0 = [0.0] * 6
+        coordSet = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+        etcp = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
+        etool = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+        cog = [1.0, 2.0, 3.0]
+        if i % 2 == 0:
+            robot.SetToolCoord(id, coordSet, 0, 0, 1, 0)
+            time.sleep(0.1)
+            robot.SetWObjCoord(id, coordSet, 0)
+            time.sleep(0.1)
+            robot.ExtAxisActiveECoordSys(id, 1, coordSet, 1)
+            time.sleep(0.1)
+            rtn = robot.SetExToolCoord(id, etcp, etool)
+            time.sleep(0.1)
+            rtn = robot.SetLoadWeight(id, 1.5)
+            time.sleep(0.1)
+            rtn = robot.SetLoadCoord(cog[0],cog[1],cog[2],id)
+            time.sleep(0.1)
+        else:
+            robot.SetToolCoord(id, coordSet0, 0, 0, 1, 0)
+            time.sleep(0.1)
+            robot.SetWObjCoord(id, coordSet0, 0)
+            time.sleep(0.1)
+            robot.ExtAxisActiveECoordSys(id, 1, coordSet0, 1)
+            time.sleep(0.1)
+            rtn = robot.SetExToolCoord(id, coordSet0, coordSet0)
+            time.sleep(0.1)
+            rtn = robot.SetLoadWeight(id, 0)
+            time.sleep(0.1)
+            rtn = robot.SetLoadCoord(coordSet0[0],coordSet0[1],coordSet0[2] , id)
+            time.sleep(0.1)
+        rtn, toolCoord = robot.GetCurToolCoord()
+        print(f"GetToolCoord {toolCoord[0]},{toolCoord[1]},{toolCoord[2]},{toolCoord[3]},{toolCoord[4]},{toolCoord[5]}")
+        rtn, wobjCoord = robot.GetCurWObjCoord()
+        print(f"GetWObjCoord {wobjCoord[0]},{wobjCoord[1]},{wobjCoord[2]},{wobjCoord[3]},{wobjCoord[4]},{wobjCoord[5]}")
+        rtn, extoolCoord = robot.GetCurExToolCoord()
+        print(f"GetExToolCoord {extoolCoord[0]},{extoolCoord[1]},{extoolCoord[2]},{extoolCoord[3]},{extoolCoord[4]},{extoolCoord[5]}")
+        rtn, exAxisCoord = robot.GetCurExAxisCoord()
+        print(f"GetExAxisCoord {exAxisCoord[0]},{exAxisCoord[1]},{exAxisCoord[2]},{exAxisCoord[3]},{exAxisCoord[4]},{exAxisCoord[5]}")
+        weight = 0.0
+        getCog = [0.0] * 3
+        rtn, weight = robot.GetTargetPayload(0)
+        rtn, getCog = robot.GetTargetPayloadCog(0)
+        print(f"GetTargetPayload {weight},{getCog[0]},{getCog[1]},{getCog[2]}")
+        
+        rtn, toolCoord = robot.GetToolCoordWithID(id)
+        print(f"GetToolCoordWithID {id},{toolCoord[0]},{toolCoord[1]},{toolCoord[2]},{toolCoord[3]},{toolCoord[4]},{toolCoord[5]}")
+        rtn, wobjCoord = robot.GetWObjCoordWithID(id)
+        print(f"GetWObjCoordWithID {id},{wobjCoord[0]},{wobjCoord[1]},{wobjCoord[2]},{wobjCoord[3]},{wobjCoord[4]},{wobjCoord[5]}")
+        rtn, extoolCoord = robot.GetExToolCoordWithID(id)
+        print(f"GetExToolCoordWithID {id},{extoolCoord[0]},{extoolCoord[1]},{extoolCoord[2]},{extoolCoord[3]},{extoolCoord[4]},{extoolCoord[5]}")
+        rtn, exAxisCoord = robot.GetExAxisCoordWithID(id)
+        print(f"GetExAxisCoordWithID {id},{exAxisCoord[0]},{exAxisCoord[1]},{exAxisCoord[2]},{exAxisCoord[3]},{exAxisCoord[4]},{exAxisCoord[5]}")
+        weight = 0.0
+        getCog = [0.0] * 3
+        rtn, weight, getCog = robot.GetTargetPayloadWithID(id)
+        print(f"GetTargetPayloadWithID {id},{weight},{getCog[0]},{getCog[1]},{getCog[2]}")
+        time.sleep(0.5)
+        print(f"times {i}")

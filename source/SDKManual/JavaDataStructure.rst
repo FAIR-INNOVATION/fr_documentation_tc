@@ -440,6 +440,12 @@ UDP擴展軸通訊參數
       public float wideVoltageCtrlBoxTemp;        //寬電壓控制箱溫度
       public int wideVoltageCtrlBoxFanVel;   //寬電壓控制箱風扇轉速(mA)
 
+      public double[] toolCoord=new double[6];           //工具座標系
+      public double[] wobjCoord=new double[6];		   //工件座標系
+      public double[] extoolCoord=new double[6];		   //外部工具座標系
+      public double[] exAxisCoord=new double[6];		   //擴展軸座標系
+      public double load;                   //負載質量
+      public double[] loadCog=new double[3]; 
       public short check_sum = 0;          /* 和校驗 */
 
       public ROBOT_STATE_PKG()

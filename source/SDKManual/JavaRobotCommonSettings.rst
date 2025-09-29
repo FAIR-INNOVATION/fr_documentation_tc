@@ -453,6 +453,19 @@
     */
     int SetLoadCoord(DescTran coord); 
 
+設置末端負載質心座標
+++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+     * @brief  設置末端負載質心座標
+     * @param  [in] loadNum 負載編號
+     * @param  [in] coord 質心座標，單位mm
+     * @return  錯誤碼
+     */
+    public int SetLoadCoord(int loadNum, DescTran coord)
+
 獲取當前負載的重量
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java

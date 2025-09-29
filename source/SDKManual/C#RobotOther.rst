@@ -289,6 +289,34 @@
         Console.WriteLine("DataPackageDownload rtn is {0}", rtn);
     }
 
+機器人操作系統升級(LA控制箱)
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.8  Web-3.8.6
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+     * @brief 機器人操作系統升級(LA控制箱)
+     * @param [in] filePath 操作系統升級包全路徑
+     * @return  錯誤碼
+     */
+    public int KernelUpgrade(string filePath)
+
+獲取機器人操作系統升級結果(LA控制箱)
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.8  Web-3.8.6
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+     * @brief 獲取機器人操作系統升級結果(LA控制箱)
+     * @param [out] result 升級結果：0:成功；-1:失敗
+     * @return  錯誤碼
+     */
+    public int GetKernelUpgradeResult(ref int[] result)
+
 
 
 

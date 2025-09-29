@@ -102,6 +102,12 @@
     "smartToolState","SmartTool手柄按鈕狀態"
     "wideVoltageCtrlBoxTemp","寬電壓控制箱溫度"
     "wideVoltageCtrlBoxFanCurrent","寬電壓控制箱風扇電流(ma)"
+    "toolCoord[i]","工具座標系,i:0~5"
+    "wobjCoord[i]","工件座標系,i:0~5"
+    "extoolCoord[i]","外部工具座標系,i:0~5"
+    "exAxisCoord[i]","擴展軸座標系,i:0~5"
+    "load","負載質量"
+    "loadCog[i]","負載質心,i:0~2"
 
 伺服控制器狀態
 ~~~~~~~~~~~~~~~~~~~~~~~~

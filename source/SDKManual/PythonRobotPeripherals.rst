@@ -1007,3 +1007,392 @@ SmartTool按鈕代碼示例
         error,state = robot.GetSmarttoolBtnState()
         print(f"{state:016b}")
         time.sleep(0.1)
+
+
+設置拖動開啓前負載力檢測
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetTorqueDetectionSwitch(flag)``"
+    "描述", "設置拖動開啓前負載力檢測"
+    "必選參數", "- ``flag``：0-關閉；1-開啓"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光外設打開關閉函數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserTrackingLaserOnOff(OnOff, weldId)``"
+    "描述", "激光外設打開關閉函數"
+    "必選參數", "- ``OnOff``：0-關閉；1-開啓"
+    "默認參數", "- ``weldId``：焊縫ID 默認爲0"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光跟蹤開始結束函數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserTrackingTrackOnOff(OnOff, coordId)``"
+    "描述", "激光跟蹤開始結束函數"
+    "必選參數", "- ``OnOff``：0-關閉；1-開啓
+    - ``coordId``：激光外設工具座標系編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光尋位-固定方向
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserTrackingSearchStart_xyz(direction, vel, distance, timeout, posSensorNum)``"
+    "描述", "激光尋位-固定方向"
+    "必選參數", "- ``direction``：0-x+ 1-x- 2-y+ 3-y- 4-z+ 5-z-
+    - ``vel``：速度 單位%
+    - ``distance``：最大尋位距離 單位mm
+    - ``timeout``：尋位超時時間 單位ms
+    - ``posSensorNum``：激光標定的工具座標編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光尋位-任意方向
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserTrackingSearchStart_point(directionPoint, vel, distance, timeout, posSensorNum)``"
+    "描述", "激光尋位-任意方向"
+    "必選參數", "- ``directionPoint``：尋位輸入的點的xyz左邊,[x,y,z]
+    - ``vel``：速度 單位%
+    - ``distance``：最大尋位距離 單位mm
+    - ``timeout``：尋位超時時間 單位ms
+    - ``posSensorNum``：激光標定的工具座標編號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光IP配置
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserTrackingSensorConfig(ip, port)``"
+    "描述", "激光IP配置"
+    "必選參數", "- ``ip``：激光外設的ip地址
+    - ``port``：激光外設的端口號"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光外設採樣週期配置
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserTrackingSensorSamplePeriod(period)``"
+    "描述", "激光外設採樣週期配置"
+    "必選參數", "- ``period``：激光外設採樣週期 單位ms"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光外設驅動加載
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LoadPosSensorDriver(type)``"
+    "描述", "激光外設驅動加載"
+    "必選參數", "- ``type``：激光外設驅動的協議類型 101-睿牛 102-創想 103-全視 104-同舟 105-奧太"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光外設驅動卸載
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``UnLoadPosSensorDriver()``"
+    "描述", "激光外設驅動卸載"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光焊縫軌跡記錄
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserSensorRecord1(status, delayTime)``"
+    "描述", "激光焊縫軌跡記錄"
+    "必選參數", "- ``status``：0-停止記錄 1-實時跟蹤  2-開始記錄
+    - ``delayTime``：延時時間 單位ms"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光焊縫軌跡復現
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserSensorReplay(delayTime, speed)``"
+    "描述", "激光焊縫軌跡復現"
+    "必選參數", "- ``delayTime``：延時時間 單位ms
+    - ``speed``：速度 單位%"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    
+激光跟蹤復現
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MoveLTR()``"
+    "描述", "激光跟蹤復現"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+激光焊縫軌跡復現
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``LaserSensorRecordandReplay(delayMode, delayTime, delayDisExAxisNum, delayDis, sensitivePara, speed)``"
+    "描述", "激光焊縫軌跡復現"
+    "必選參數", "- ``delayMode``：模式 0-延時時間 1-延時距離
+    - ``delayTime``：延時時間 單位ms
+    - ``delayDisExAxisNum``：擴展軸編號
+    - ``delayDis``：延時距離 單位mm
+    - ``sensitivePara``：補償靈敏係數
+    - ``speed``：速度 單位%"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+運動到焊縫記錄的起點
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MoveToLaserRecordStart(moveType, ovl)``"
+    "描述", "運動到焊縫記錄的起點"
+    "必選參數", "- ``moveType``：0-PTP 1-LIN
+    - ``ovl``：速度 單位%"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+運動到焊縫記錄的終點
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MoveToLaserRecordEnd(moveType, ovl)``"
+    "描述", "運動到焊縫記錄的終點"
+    "必選參數", "- ``moveType``：0-PTP 1-LIN
+    - ``ovl``：速度 單位%"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+運動到激光傳感器尋位點
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MoveToLaserSeamPos(moveFlag, ovl, dataFlag, plateType, trackOffectType, offset)``"
+    "描述", "運動到激光傳感器尋位點"
+    "必選參數", "- ``moveFlag``：運動類型：0-PTP；1-LIN
+    - ``ovl``：速度縮放因子，0-100
+    - ``dataFlag``：焊縫緩存數據選擇：0-執行規劃數據；1-執行記錄數據
+    - ``plateType``：板材類型：0-波紋板；1-瓦楞板；2-圍欄板；3-油桶；4-波紋甲殼鋼
+    - ``trackOffectType``：激光傳感器偏移類型：0-不偏移；1-基座標系偏移；2-工具座標系偏移；3-激光傳感器原始數據偏移
+    - ``offset``：偏移量"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取激光傳感器尋位點座標信息
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.6
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetLaserSeamPos(trackOffectType, offset)``"
+    "描述", "獲取激光傳感器尋位點座標信息"
+    "必選參數", "- ``trackOffectType``：激光傳感器偏移類型：0-不偏移；1-基座標系偏移；2-工具座標系偏移；3-激光傳感器原始數據偏移
+    - ``offset``：偏移量"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``jPos``：關節位置[°]
+    - ``descPos``：笛卡爾位置[mm]
+    - ``tool``：工具座標系
+    - ``user``：工件座標系
+    - ``exaxis``：擴展軸位置[mm]"
+
+激光外設傳感器參數配置及調試代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.LaserTrackingSensorConfig("192.168.58.20", 5020)
+    robot.LaserTrackingSensorSamplePeriod(20)
+    robot.LoadPosSensorDriver(101)
+    robot.LaserTrackingLaserOnOff(0, 0)
+    time.sleep(3)
+    robot.LaserTrackingLaserOnOff(1, 0)
+    robot.CloseRPC()
+
+激光軌跡掃描及軌跡復現的代碼示例
++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.OpenLuaUpload("D://zUP/CtrlDev_laser_ruiniu-0117.lua")
+    time.sleep(2)
+    robot.SetCtrlOpenLUAName(0, "CtrlDev_laser_ruiniu-0117.lua")
+    robot.UnloadCtrlOpenLUA(0)
+    robot.LoadCtrlOpenLUA(0)
+    time.sleep(8)
+    i = 0
+    while i<10:
+        startjointPos = [56.205, -117.951, 141.872, -118.149, -94.217, -122.176]
+        startdescPose = [-97.552, -282.855, 26.675, 174.182, -1.338, -91.707]
+        exaxisPos = [0.0] * 4
+        offdese = [0.0] * 6
+        robot.MoveL(desc_pos=startdescPose,tool= 1,user= 0,vel= 100,acc= 100,ovl= 100,blendR= -1,exaxis_pos= exaxisPos,search= 0,offset_flag= 0, offset_pos= offdese,overSpeedStrategy= 1,speedPercent= 1)
+        robot.LaserSensorRecord1(2, 10)
+        endjointPos = [68.809, -87.100, 121.120, -127.233, -95.038, -109.555]
+        enddescPose = [-103.555, -464.234, 13.076, 174.179, -1.344, -91.709]
+        robot.MoveL(desc_pos=enddescPose,tool= 1,user= 0,vel= 50,acc= 100,ovl= 100,blendR= -1,exaxis_pos= exaxisPos,search= 0,offset_flag= 0, offset_pos= offdese,overSpeedStrategy= 1,speedPercent= 1)
+        robot.LaserSensorRecord1(0, 10)
+        robot.MoveToLaserRecordStart(1, 30)
+        robot.LaserSensorReplay(10, 100)
+        robot.MoveLTR()
+        robot.LaserSensorRecord1(0, 10)
+        i = i+1
+    robot.CloseRPC()
+
+激光尋位及實時跟蹤的代碼示例
++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.OpenLuaUpload("D://zUP/CtrlDev_laser_ruiniu-0117.lua")
+    time.sleep(2)
+    robot.SetCtrlOpenLUAName(0, "CtrlDev_laser_ruiniu-0117.lua")
+    robot.UnloadCtrlOpenLUA(0)
+    robot.LoadCtrlOpenLUA(0)
+    time.sleep(8)
+    time.sleep(8)
+    i = 0
+    while i < 10:
+        startjointPos = [56.205, -117.951, 141.872, -118.149, -94.217, -122.176]
+        startdescPose = [-97.552, -282.855, 26.675, 174.182, -1.338, -91.707]
+        exaxisPos = [0.0] * 4
+        offdese = [0.0] * 6
+        directionPoint = [0.0] * 3
+        robot.MoveL(desc_pos=startdescPose,tool= 1,user= 0,vel= 100,acc= 100,ovl= 100,blendR= -1,exaxis_pos= exaxisPos,search= 0,offset_flag= 0, offset_pos= offdese,overSpeedStrategy= 1,speedPercent= 1)
+        robot.LaserTrackingSearchStart_xyz(3, 100, 300, 1000, 3)
+        robot.LaserTrackingSearchStop()
+        robot.MoveToLaserSeamPos(1, 30, 0, 0, 0, offdese)
+        robot.LaserTrackingTrackOnOff(1, 3)
+        endjointPos = [68.809, -87.100, 121.120, -127.233, -95.038, -109.555]
+        enddescPose = [-103.555, -464.234, 13.076, 174.179, -1.344, -91.709]
+        robot.MoveL(desc_pos=enddescPose,tool= 1,user= 0,vel= 20,acc= 100,ovl= 100,blendR= -1,exaxis_pos= exaxisPos,search= 0,offset_flag= 0, offset_pos= offdese,overSpeedStrategy= 1,speedPercent= 1)
+        robot.LaserTrackingTrackOnOff(0, 3)
+        i = i + 1
+        print(i)
+    robot.CloseRPC()
+
+擴展軸與機器人同步進行激光跟蹤的代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    startexaxisPos = [0.0, 0.0, 0.0, 0.0]
+    seamexaxisPos = [-10.0, 0.0, 0.0, 0.0]
+    endexaxisPos = [-30.0, 0.0, 0.0, 0.0]
+    offdese = [0.0] * 6
+    seamjointPos = [0.0] * 6
+    seamdescPose = [0.0] * 6
+    i=0
+    while i < 10:
+        startjointPos = [58.337, -119.628, 146.037, -116.358, -92.224, -117.654]
+        startdescPose = [-53.375, -255.363, 0.919, 178.054, 1.077, -94.026]
+        robot.ExtAxisSyncMoveJ(joint_pos=startjointPos, tool=1,user= 0,vel= 100,acc= 100, ovl=100,exaxis_pos= startexaxisPos,blendT= -1,offset_flag= 0,offset_pos= offdese)
+        ret = robot.LaserTrackingSearchStart_xyz(3, 100, 300, 1000, 2)
+        robot.LaserTrackingSearchStop()
+        tool = 0
+        user = 0
+        rnte, seamjointPos, seamdescPose, tool, user, startexaxisPos = robot.GetLaserSeamPos(0, offdese)
+        print(f"{seamjointPos[0]},{seamjointPos[1]},{seamjointPos[2]},{seamjointPos[3]},{seamjointPos[4]},{seamjointPos[5]},{seamdescPose[0]},{seamdescPose[1]},{seamdescPose[2]},{seamdescPose[3]},{seamdescPose[4]},{seamdescPose[5]}")
+        if ret == 0:
+            robot.ExtAxisSyncMoveJ(joint_pos=seamjointPos, tool=1,user= 0,vel= 100,acc= 100, ovl=100,exaxis_pos= seamexaxisPos,blendT= -1,offset_flag= 0,offset_pos= offdese)
+            robot.LaserTrackingTrackOnOff(1, 2)
+            endjointPos = [70.580, -90.918, 126.593, -125.154, -92.162, -105.403]
+            enddescPose = [-53.375, -419.020, 0.920, 178.054, 1.076, -94.026]
+            robot.ExtAxisSyncMoveL(desc_pos=enddescPose, tool=1,user= 0,vel= 20,acc= 100, ovl=100,blendR= -1,exaxis_pos= endexaxisPos,offset_pos= offdese)
+            robot.LaserTrackingTrackOnOff(0, 2)
+        i = i+1
+        print(i)
+    robot.CloseRPC()

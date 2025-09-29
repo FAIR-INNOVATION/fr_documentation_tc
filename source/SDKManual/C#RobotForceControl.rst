@@ -756,6 +756,98 @@
     */
     int SetWireSearchExtDIONum(int searchDoneDINum, int searchStartDONum);
 
+阻抗啓停控制
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.8  Web-3.8.6
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 阻抗啓停控制
+    * @param [in] status 0：關閉；1-開啓
+    * @param [in] workSpace 0-關節空間；1-迪卡爾空間
+    * @param [in] forceThreshold 觸發力閾值(N)
+    * @param [in] m 質量參數
+    * @param [in] b 阻尼參數
+    * @param [in] k 剛度參數
+    * @param [in] maxV 最大線速度(mm/s)
+    * @param [in] maxVA 最大線加速度(mm/s2)
+    * @param [in] maxW 最大角速度(°/s)
+    * @param [in] maxWA 最大角加速度(°/s2)
+    * @return 錯誤碼
+    */
+    public int ImpedanceControlStartStop(int status, int workSpace, double[] forceThreshold, double[] m, double[] b, double[] k, double maxV, double maxVA, double maxW, double maxWA)
+
+機器人阻抗啓停控制代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.8  Web-3.8.6
+
+.. code-block:: c#
+    :linenos:
+
+    public void TestImpedanceControl()
+    { 
+        int[] ctrl = new int[20];
+        int state;
+        int pressValue;
+        int error;
+        int rtn;
+        JointPos j1 = new JointPos(102.622, -135.990, 120.769, -73.950, -90.848, 35.507);
+        JointPos j2 = new JointPos(93.674, -80.062, 82.947, -92.199, -90.967, 26.559);
+        DescPose desc_pos1 = new DescPose(136.552, -149.799, 449.532, 179.817, -1.172, 157.123);
+        DescPose desc_pos2 = new DescPose(136.540, -561.048, 449.542, 179.819, -1.172, 157.122);
+    
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+    
+        int tool = 0;
+        int user = 0;
+        float vel = 100.0f;
+        float acc = 200.0f;
+        float ovl = 100.0f;
+        float blendT = -1.0f;
+        float blendR = -1.0f;
+    
+        byte flag = 0;
+    
+        byte search = 0;
+        robot.SetSpeed(20);
+        int company = 17;
+        int device = 0;
+        int softversion = 0;
+        int bus = 1;
+        robot.FT_SetConfig(company, device, softversion, bus);
+        Thread.Sleep(1000);
+        robot.FT_GetConfig(ref company, ref device, ref softversion, ref bus);
+        Console.WriteLine($"FT config:{company},{device},{softversion},{bus}");
+        Thread.Sleep(1000);
+    
+        robot.FT_Activate(0);
+        Thread.Sleep(1000);
+        robot.FT_Activate(1);
+        Thread.Sleep(1000);
+        Thread.Sleep(1000);
+        robot.FT_SetZero(0);
+        Thread.Sleep(1000);
+        robot.FT_SetZero(1);
+        Thread.Sleep(1000);
+    
+        double[] forceThreshold = new double[] { 30, 30, 30, 5, 5, 5 };
+        double[] m = new double[] { 0.1, 0.1, 0.1, 0.02, 0.02, 0.02 };
+        double[] b = new double[] { 1, 1, 1, 0.08, 0.08, 0.08 };
+        double[] k = new double[] { 0, 0, 0, 0, 0, 0 };
+        rtn = robot.ImpedanceControlStartStop(1, 1, forceThreshold, m, b, k, 1000, 500, 100, 100);
+        Console.WriteLine($"ImpedanceControlStartStop errcode:{rtn}");
+        rtn = robot.MoveL(desc_pos1, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 0);
+        rtn = robot.MoveL(desc_pos2, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 0);
+        rtn = robot.MoveL(desc_pos1, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 0);
+        rtn = robot.MoveL(desc_pos2, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 0);
+        rtn = robot.MoveL(desc_pos1, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 0);
+        rtn = robot.MoveL(desc_pos2, tool, user, vel, acc, ovl, blendR, 0, epos, search, flag, offset_pos, -1, 0);
+        Console.WriteLine($"movel errcode:{rtn}");
+        robot.ImpedanceControlStartStop(0, 1, forceThreshold, m, b, k, 1000, 500, 100, 100);
+    }
 
 
 

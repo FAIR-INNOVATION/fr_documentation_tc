@@ -375,3 +375,31 @@
 
         robot.CloseRPC();
     }
+
+機器人操作系統升級(LA控制箱)
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.9-3.8.6
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+     * @brief 機器人操作系統升級(LA控制箱)
+     * @param [in] filePath 操作系統升級包全路徑
+     * @return  錯誤碼
+     */
+    public int KernelUpgrade(String filePath)
+
+獲取機器人操作系統升級結果(LA控制箱)
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: Java SDK-v1.0.9-3.8.6
+
+.. code-block:: Java
+    :linenos:
+
+    /**
+     * @brief 獲取機器人操作系統升級結果(LA控制箱)
+     * @param [out] result 升級結果：0:成功；-1:失敗
+     * @return  錯誤碼
+     */
+    public int GetKernelUpgradeResult(int[] result)
