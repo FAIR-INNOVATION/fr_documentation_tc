@@ -422,74 +422,71 @@
     :linenos:
 
     /**
-    * @brief  恆力控制
-    * @param  [in] flag 0-關閉恆力控制，1-開啓恆力控制
-    * @param  [in] sensor_id 力傳感器編號
-    * @param  [in] select  選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
-    * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] ft_pid 力pid參數，力矩pid參數
-    * @param  [in] adj_sign 自適應啓停控制，0-關閉，1-開啓
-    * @param  [in] ILC_sign ILC啓停控制， 0-停止，1-訓練，2-實操
-    * @param  [in] 最大調整距離，單位mm
-    * @param  [in] 最大調整角度，單位deg
-    * @return  錯誤碼
-    */   
-    errno_t  FT_Control(uint8_t flag, int sensor_id, uint8_t select[6], ForceTorque *ft, float ft_pid[6], uint8_t adj_sign, uint8_t ILC_sign, float max_dis, float max_ang);   
+    * @brief 恆力控制
+    * @param [in] flag 0-關閉恆力控制，1-開啓恆力控制
+    * @param [in] sensor_id 力傳感器編號
+    * @param [in] select 選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
+    * @param [in] ft 碰撞力/扭矩，fx,fy,fz,tx,ty,tz
+    * @param [in] ft_pid 力pid參數，力矩pid參數
+    * @param [in] adj_sign 自適應啓停控制，0-關閉，1-開啓
+    * @param [in] ILC_sign ILC啓停控制， 0-停止，1-訓練，2-實操
+    * @param [in] max_dis 最大調整距離，單位mm
+    * @param [in] max_ang 最大調整角度，單位deg
+    * @param [in] M 質量參數 
+    * @param [in] B 阻尼參數
+    * @param [in] polishRadio 打磨半徑，單位mm
+    * @param [in] filter_Sign 濾波開啓標誌 0-關；1-開，默認關閉
+    * @param [in] posAdapt_sign 姿態順應開啓標誌 0-關；1-開，默認關閉
+    * @param [in] isNoBlock 阻塞標誌，0-阻塞；1-非阻塞
+    * @return 錯誤碼
+    */
+    errno_t FT_Control(uint8_t flag, int sensor_id, uint8_t select[6], ForceTorque* ft, float ft_pid[6], uint8_t adj_sign, uint8_t ILC_sign, float max_dis, float max_ang, double M[2], double B[2], double polishRadio = 0.0, int filter_Sign = 0, int posAdapt_sign = 0, int isNoBlock = 0); 
 
-恆力控制代碼示例
+具有阻尼的恆力控制代碼示例
 ++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
-    int TestFTControl(void)
+    int TestFTControlWithDamping(void)
     {
       ROBOT_STATE_PKG pkg = {};
       FRRobot robot;
       robot.LoggerInit();
-      robot.SetLoggerLevel(1);
+      robot.SetLoggerLevel(3);
       int rtn = robot.RPC("192.168.58.2");
       if (rtn != 0)
       {
         return -1;
       }
       robot.SetReConnectParam(true, 30000, 500);
-      int company = 24;
-      int device = 0;
-      int softversion = 0;
-      int bus = 1;
-      int index = 1;
-      robot.FT_SetConfig(company, device, softversion, bus);
-      robot.Sleep(1000);
-      robot.FT_GetConfig(&company, &device, &softversion, &bus);
-      printf("FT config:%d,%d,%d,%d\n", company, device, softversion, bus);
-      robot.Sleep(1000);
-      robot.FT_Activate(0);
-      robot.Sleep(1000);
-      robot.FT_Activate(1);
-      robot.Sleep(1000);
-      robot.Sleep(1000);
-      robot.FT_SetZero(0);
-      robot.Sleep(1000);
-      uint8_t sensor_id = 1;
+      uint8_t sensor_id = 10;
       uint8_t select[6] = { 0,0,1,0,0,0 };
-      float ft_pid[6] = { 0.0005,0.0,0.0,0.0,0.0,0.0 };
+      float ft_pid[6] = { 0.0008, 0.0, 0.0, 0.0, 0.0, 0.0 };
       uint8_t adj_sign = 0;
       uint8_t ILC_sign = 0;
       float max_dis = 100.0;
-      float max_ang = 0.0;
-      ForceTorque ft;
-      ExaxisPos epos(0, 0, 0, 0);
-      JointPos j1(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
-      JointPos j2(-45.615, -106.172, 124.296, -107.151, -91.282, 74.255);
-      DescPose desc_p1(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
-      DescPose desc_p2(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
-      DescPose offset_pos(0, 0, 0, 0, 0, 0);
+      float max_ang = 20;
+      ForceTorque ft = {};
       ft.fz = -10.0;
-      rtn = robot.MoveJ(&j1, &desc_p1, 0, 0, 100.0, 180.0, 100.0, &epos, -1.0, 0, &offset_pos);
-      rtn = robot.FT_Control(1, sensor_id, select, &ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang);
+      ExaxisPos epos(0, 0, 0, 0);
+      JointPos j1(-118.985, -86.882, -118.139, -65.019, 90.002, 54.951);
+      JointPos j2(-77.055, -77.218, -126.219, -66.591, 90.028, 96.881);
+      DescPose desc_p1(-300.856, -332.618, 309.240, 179.976, -0.031, 96.065);
+      DescPose desc_p2(-16.399, -383.760, 309.312, 179.975, -0.031, 96.064);
+      DescPose offset_pos(0, 0, 0, 0, 0, 0);
+      double M[2] = {2.0, 2.0};
+      double B[2] = {8.0, 8.0};
+      double polishRadio;
+      int filter_Sign;
+      int posAdapt_sign;
+      int isNoBlock;
+      DescPose ftCoord = {};
+      robot.FT_SetRCS(2, ftCoord);
+      rtn = robot.FT_Control(1, sensor_id, select, &ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0);
       printf("FT_Control start rtn is %d\n", rtn);
-      rtn = robot.MoveL(&j2, &desc_p2, 0, 0, 100.0, 180.0, 20.0, -1.0, &epos, 0, 0, &offset_pos);
-      rtn = robot.FT_Control(0, sensor_id, select, &ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang);
+      rtn = robot.MoveL(&j1, &desc_p1, 0, 0, 100.0, 100.0, 20.0, -1.0, &epos, 0, 0, &offset_pos);
+      rtn = robot.MoveL(&j2, &desc_p2, 0, 0, 100.0, 100.0, 20.0, -1.0, &epos, 0, 0, &offset_pos);
+      rtn = robot.FT_Control(1, sensor_id, select, &ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0);
       printf("FT_Control end rtn is %d\n", rtn);
       robot.CloseRPC();
       return 0;
@@ -1087,96 +1084,6 @@
       printf("ForceAndJointImpedanceStartStop rtn is %d\n", rtn);
       robot.CloseRPC();
       return 0;
-    }
-
-
-設置焊絲尋位擴展IO端口
-++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-    /**
-    * @brief 設置焊絲尋位擴展IO端口
-    * @param searchDoneDINum 焊絲尋位成功DO端口(0-127)
-    * @param searchStartDONum 焊絲尋位啓停控制DO端口(0-127)
-    * @return 錯誤碼
-    */
-    errno_t SetWireSearchExtDIONum(int searchDoneDINum, int searchStartDONum);
-
-示例程序
-+++++++++++++++
-.. versionadded:: C++SDK-v2.1.5.0
-    
-.. code-block:: c++
-    :linenos:
-
-    void TestUDPWireSearch(FRRobot* robot)
-    {
-    robot->ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 50, 5, 50, 1, 50, 10);
-    robot->ExtDevLoadUDPDriver();
-
-    robot->SetWireSearchExtDIONum(0, 0);
-
-    int rtn0, rtn1, rtn2 = 0;
-    ExaxisPos exaxisPos = { 0.0, 0.0, 0.0, 0.0 };
-    DescPose offdese = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-    
-    DescPose descStart = { -158.767, -510.596, 271.709, -179.427, -0.745, -137.349 };
-    JointPos jointStart = { 61.667, -79.848, 108.639, -119.682, -89.700, -70.985 };
-    
-    DescPose descEnd = { 0.332, -516.427, 270.688, 178.165, 0.017, -119.989 };
-    JointPos jointEnd = { 79.021, -81.839, 110.752, -118.298, -91.729, -70.981 };
-
-    robot->MoveL(&jointStart, &descStart, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-    robot->MoveL(&jointEnd, &descEnd, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-    
-    DescPose descREF0A = { -66.106, -560.746, 270.381, 176.479, -0.126, -126.745 };
-    JointPos jointREF0A = { 73.531, -75.588, 102.941, -116.250, -93.347, -69.689 };
-    
-    DescPose descREF0B = { -66.109, -528.440, 270.407, 176.479, -0.129, -126.744 };
-    JointPos jointREF0B = { 72.534, -79.625, 108.046, -117.379, -93.366, -70.687 };
-    
-    DescPose descREF1A = { 72.975, -473.242, 270.399, 176.479, -0.129, -126.744 };
-    JointPos jointREF1A = { 87.169, -86.509, 115.710, -117.341, -92.993, -56.034 };
-    
-    DescPose descREF1B = { 31.355, -473.238, 270.405, 176.480, -0.130, -126.745 };
-    JointPos jointREF1B = { 82.117, -87.146, 116.470, -117.737, -93.145, -61.090 };
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF0A, &descREF0A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese); //起點
-    robot->MoveL(&jointREF0B, &descREF0B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese); //方向點
-    rtn1 = robot->WireSearchWait("REF0");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF1A, &descREF1A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese); //起點
-    robot->MoveL(&jointREF1B, &descREF1B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese); //方向點
-    rtn1 = robot->WireSearchWait("REF1");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF0A, &descREF0A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese); //起點
-    robot->MoveL(&jointREF0B, &descREF0B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese); //方向點
-    rtn1 = robot->WireSearchWait("RES0");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    rtn0 = robot->WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-    robot->MoveL(&jointREF1A, &descREF1A, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese); //起點
-    robot->MoveL(&jointREF1B, &descREF1B, 1, 0, 10, 100, 100, -1, &exaxisPos, 1, 0, &offdese); //方向點
-    rtn1 = robot->WireSearchWait("RES1");
-    rtn2 = robot->WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-    vector <string> varNameRef = { "REF0", "REF1", "#", "#", "#", "#" };
-    vector <string> varNameRes = { "RES0", "RES1", "#", "#", "#", "#" };
-    int offectFlag = 0;
-    DescPose offectPos = { 0, 0, 0, 0, 0, 0 };
-    rtn0 = robot->GetWireSearchOffset(0, 0, varNameRef, varNameRes, offectFlag, offectPos);
-    robot->PointsOffsetEnable(0, &offectPos);
-    robot->MoveL(&jointStart, &descStart, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-    robot->MoveL(&jointEnd, &descEnd, 1, 0, 100, 100, 100, -1, &exaxisPos, 0, 0, &offdese);
-    robot->PointsOffsetDisable();
     }
 
 阻抗啟停控制

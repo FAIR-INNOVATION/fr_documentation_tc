@@ -1039,6 +1039,93 @@
         robot.MoveJ(safejointPos, safedescPose, 1, 0, 20, 20, 100, exaxisPos, -1, 0, offdese);
     }
 
+設置焊絲尋位擴展IO端口
+++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /** 
+    * @brief 設置焊絲尋位擴展IO端口
+    * @param [in] searchDoneDINum 焊絲尋位成功DO端口(0-127)
+    * @param [in] searchStartDONum 焊絲尋位啓停控制DO端口(0-127)
+    * @return 錯誤碼
+    */
+    int SetWireSearchExtDIONum(int searchDoneDINum, int searchStartDONum);
+
+
+示例程序
+++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    private static void TestUDPWireSearch(Robot robot)
+    {
+        UDPComParam param = new UDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10,0);
+        robot.ExtDevSetUDPComParam(param);//udp擴展軸通訊
+
+        robot.SetWireSearchExtDIONum(0, 0);
+
+        int rtn0, rtn1, rtn2 = 0;
+        ExaxisPos exaxisPos = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
+        DescPose offdese = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+        DescPose descStart = new DescPose(-158.767, -510.596, 271.709, -179.427, -0.745, -137.349);
+        JointPos jointStart = new JointPos(61.667, -79.848, 108.639, -119.682, -89.700, -70.985);
+
+        DescPose descEnd = new DescPose(0.332, -516.427, 270.688, 178.165, 0.017, -119.989);
+        JointPos jointEnd = new JointPos(79.021, -81.839, 110.752, -118.298, -91.729, -70.981);
+
+        robot.MoveL(jointStart, descStart, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);
+        robot.MoveL(jointEnd, descEnd, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);
+
+        DescPose descREF0A = new DescPose(-66.106, -560.746, 270.381, 176.479, -0.126, -126.745);
+        JointPos jointREF0A = new JointPos(73.531, -75.588, 102.941, -116.250, -93.347, -69.689);
+
+        DescPose descREF0B = new DescPose(-66.109, -528.440, 270.407, 176.479, -0.129, -126.744);
+        JointPos jointREF0B = new JointPos(72.534, -79.625, 108.046, -117.379, -93.366, -70.687);
+
+        DescPose descREF1A = new DescPose(72.975, -473.242, 270.399, 176.479, -0.129, -126.744);
+        JointPos jointREF1A = new JointPos(87.169, -86.509, 115.710, -117.341, -92.993, -56.034);
+
+        DescPose descREF1B = new DescPose(31.355, -473.238, 270.405, 176.480, -0.130, -126.745);
+        JointPos jointREF1B = new JointPos(82.117, -87.146, 116.470, -117.737, -93.145, -61.090);
+
+        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
+        robot.MoveL(jointREF0A, descREF0A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
+        robot.MoveL(jointREF0B, descREF0B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
+        rtn1 = robot.WireSearchWait("REF0");
+        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
+
+        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
+        robot.MoveL(jointREF1A, descREF1A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
+        robot.MoveL(jointREF1B, descREF1B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
+        rtn1 = robot.WireSearchWait("REF1");
+        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
+
+        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
+        robot.MoveL(jointREF0A, descREF0A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
+        robot.MoveL(jointREF0B, descREF0B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
+        rtn1 = robot.WireSearchWait("RES0");
+        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
+
+        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
+        robot.MoveL(jointREF1A, descREF1A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
+        robot.MoveL(jointREF1B, descREF1B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
+        rtn1 = robot.WireSearchWait("RES1");
+        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
+
+        String[] varNameRef = {"REF0", "REF1", "#", "#", "#", "#"};
+        String[] varNameRes = {"RES0", "RES1", "#", "#", "#", "#"};
+        int offectFlag = 0;
+        //DescPose offectPos = new DescPose(0, 0, 0, 0, 0, 0);
+        DescOffset offset = new DescOffset();
+        rtn0 = robot.GetWireSearchOffset(0, 0, varNameRef, varNameRes, offset);
+        robot.PointsOffsetEnable(0, offset.offset);
+        robot.MoveL(jointStart, descStart, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);
+        robot.MoveL(jointEnd, descEnd, 1, 0, 100, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);
+        robot.PointsOffsetDisable();
+    }
+
 焊絲尋位開始
 ++++++++++++++++++++++++++++++++++
 .. code-block:: Java

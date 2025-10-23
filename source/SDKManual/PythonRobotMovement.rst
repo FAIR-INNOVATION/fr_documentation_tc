@@ -261,7 +261,7 @@ jog點動立即停止
 
 笛卡爾空間螺旋線運動
 ++++++++++++++++++++++
-.. versionadded:: python SDK-v2.1.5
+.. versionadded:: python SDK-v2.1.7
 
 .. csv-table:: 
     :stub-columns: 1
@@ -272,7 +272,7 @@ jog點動立即停止
     "必選參數", "- ``desc_pos``:目標笛卡爾位姿，單位[mm][°];
     - ``tool``:工具號，[0~14];
     - ``user``:工件號，[0~14];
-    - ``param=[circle_num, circle_angle, rad_init, rad_add, rotaxis_add, rot_direction]``：circle_num: 螺旋圈數;circle_angle: 螺旋傾角;rad_init: 螺旋初始半徑;rad_add: 半徑增量;rotaxis_add: 轉軸方向增量;rot_direction: 旋轉方向，0-順時針，1-逆時針;"
+    - ``param=[circle_num, circle_angle, rad_init, rad_add, rotaxis_add, rot_direction, velAccMode]``：circle_num: 螺旋圈數;circle_angle: 螺旋傾角;rad_init: 螺旋初始半徑;rad_add: 半徑增量;rotaxis_add: 轉軸方向增量;rot_direction: 旋轉方向，0-順時針，1-逆時針, velAccMode速度加速度參數模式：0-角速度恆定，1-線速度恆定;"
     "默認參數", "- ``joint_pos``:目標關節位置，單位 [°] 默認初值爲[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
     - ``vel``:速度百分比，[0~100] 默認20.0;
     - ``acc``:加速度百分比，[0~100] 默認100.0;
@@ -292,25 +292,26 @@ jog點動立即停止
     from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    joint_pos = [-11.904, -99.669, 117.473, -108.616, -91.726, 74.256]
-    desc_pos = [-419.524, -13.000, 351.569, -178.118, 0.314, 3.833]
-    offset_pos1 = [50, 0, 0, -30, 0, 0]
-    offset_pos2 = [50, 0, 0, -5, 0, 0]
-    epos = [0, 0, 0, 0]
-    sp = [5,5.0,50.0,10.0,10.0,0]
+    j = [67.957, -81.482, 87.595, -95.691, -94.899, -9.727]
+    desc_pos = [-123.142, -551.735, 430.549, 178.753, -4.757, 167.754]
+    offset_pos1 = [50.0, 0.0, 0.0, -30.0, 0.0, 0.0]
+    offset_pos2 = [50.0, 0.0, 0.0, -30.0, 0.0, 0.0]
+    epos = [0.0] * 4
+    sp = [2, 30.0, 50.0, 10.0, 10.0, 0, 1]  # [circle_num, circle_angle, rad_init, rad_add, rotaxis_add, rot_direction, velAccMode]
     tool = 0
     user = 0
-    vel = 100.0
-    acc = 100.0
+    vel = 30.0
+    acc = 60.0
     ovl = 100.0
-    blendT = 0.0
+    blendT = -1.0
     flag = 2
     robot.SetSpeed(20)
-    rtn = robot.MoveJ(joint_pos=joint_pos, tool=tool, user=user, exaxis_pos=epos, blendT=blendT, offset_flag=flag, offset_pos=offset_pos1)
-    print(f"MoveJ error code: {rtn}")
-    rtn = robot.NewSpiral(desc_pos=desc_pos, tool=tool, user=user, param=sp, exaxis_pos=epos, offset_flag=flag, offset_pos=offset_pos2)
-    print(f"NewSpiral error code: {rtn}")
+    rtn = robot.MoveJ(joint_pos=j, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, exaxis_pos=epos, blendT=blendT, offset_flag=flag, offset_pos=offset_pos1)
+    print(f"movej errcode:{rtn}")
+    rtn = robot.NewSpiral(desc_pos=desc_pos, tool=tool, user=user, vel=vel, acc=acc, exaxis_pos=epos, ovl=ovl, offset_flag=flag, offset_pos=offset_pos2, param=sp)
+    print(f"newspiral errcode:{rtn}")
     robot.CloseRPC()
+    return 0
 
 伺服運動開始
 ++++++++++++++++++++++
@@ -366,8 +367,8 @@ jog點動立即停止
     from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    joint_pos = [0.0,0.0,0.0,0.0,0.0,0.0]
-    epos = [0.0,0.0,0.0,0.0]
+    j = [0.0] * 6
+    epos = [0.0] * 4
     vel = 0.0
     acc = 0.0
     cmdT = 0.008
@@ -376,17 +377,27 @@ jog點動立即停止
     flag = 0
     count = 500
     dt = 0.1
-    ret, joint_pos = robot.GetActualJointPosDegree(0)
+    cmdID = 0
+    ret, j = robot.GetActualJointPosDegree(flag)
     if ret == 0:
-        print("開始伺服關節運動...")
+        cmdID += 1
         robot.ServoMoveStart()
-        while count > 0:
-            robot.ServoJ(joint_pos=joint_pos, axisPos=epos, cmdT=cmdT, filterT=filterT, gain=gain)
-            joint_pos[0] += dt
+        while count:
+            robot.ServoJ(joint_pos=j,axisPos= epos,acc= acc,vel= vel, cmdT=cmdT, filterT=filterT, gain=gain, id=cmdID)
+            j[4] += dt
             count -= 1
             time.sleep(cmdT)
+            rtn,pkg = robot.GetRobotRealTimeState()
+            print(f"Servoj Count {pkg.servoJCmdNum}; last pos is {pkg.lastServoTarget[0]},{pkg.lastServoTarget[1]},{pkg.lastServoTarget[2]},{pkg.lastServoTarget[3]},{pkg.lastServoTarget[4]},{pkg.lastServoTarget[5]}")
+
+            if count < 50:
+                robot.MotionQueueClear()
+                print(f"After queue clear, Servoj Count {pkg.servoJCmdNum}; last pos is {pkg.lastServoTarget[0]},{pkg.lastServoTarget[1]},{pkg.lastServoTarget[2]},{pkg.lastServoTarget[3]},{pkg.lastServoTarget[4]},{pkg.lastServoTarget[5]}")
+                break
         robot.ServoMoveEnd()
-        robot.CloseRPC()
+    else:
+        print(f"GetActualJointPosDegree errcode:{ret}")
+    robot.CloseRPC()
 
 關節扭矩控制開始
 +++++++++++++++++++++++++
@@ -1134,3 +1145,17 @@ FIR濾波代碼示例
     rtn = robot.SingularAvoidEnd()
     print(f"SingularAvoidEnd rtn is {rtn}")
     robot.CloseRPC()
+
+清空運動指令隊列
++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MotionQueueClear()``"
+    "描述", "清空運動指令隊列"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode"

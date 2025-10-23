@@ -384,18 +384,23 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``FT_Control(flag,sensor_num,select,force_torque,gain,adj_sign,ILC_sign,max_dis,max_ang)``"
+    "原型", "``FT_Control(flag, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M=None, B=None, polishRadio=0, filter_Sign=0, posAdapt_sign=0, isNoBlock=0)``"
     "描述", "恆力控制"
     "必選參數", "- ``flag``：恆力控制開啓標誌，0-關，1-開；
-    - ``sensor_num``：力傳感器編號；
+    - ``sensor_id``：力傳感器編號；
     - ``select``：六個自由度是否檢測 [fx,fy,fz,mx,my,mz]，0-不生效，1-生效；
-    - ``force_torque``：檢測力/力矩，單位N或Nm；
-    - ``gain``：[f_p,f_i,f_d,m_p,m_i,m_d],力PID參數，力矩PID參數；
+    - ``ft``：檢測力/力矩，單位N或Nm；
+    - ``ft_pid``：[f_p,f_i,f_d,m_p,m_i,m_d],力PID參數，力矩PID參數；
     - ``adj_sign``：自適應啓停狀態，0-關閉，1-開啓；
     - ``ILC_sign``: ILC控制啓停狀態，0-停止，1-訓練，2-實操；
     - ``max_dis``：最大調整距離；
     - ``max_ang``：最大調整角度；"
-    "默認參數", "無"
+    "默認參數", "- ``M``：質量參數；
+    - ``B``：阻尼參數；
+    - ``polishRadio``：打磨盤半徑，單位mm；
+    - ``filter_Sign``：濾波開啓標誌 0-關；1-開，默認 0-關閉；
+    - ``posAdapt_sign``：姿態順應開啓標誌 0-關；1-開，默認 0-關閉；
+    - ``isNoBlock``：阻塞標誌，0-阻塞；1-非阻塞 默認0-阻塞；"
     "返回值", "錯誤碼 成功-0  失敗- errcode "
 
 恆力控制代碼示例
@@ -440,6 +445,45 @@
     robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang)
     rtn = robot.MoveJ(joint_pos=j2,tool= 0,user= 0,vel= 100.0)
     robot.FT_Control(0, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang)
+    robot.CloseRPC()
+
+具有阻尼的恆力控制代碼示例
+++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    sensor_id = 10
+    select = [0, 0, 1, 0, 0, 0]
+    ft_pid = [0.0008, 0.0, 0.0, 0.0, 0.0, 0.0]
+    adj_sign = 0
+    ILC_sign = 0
+    max_dis = 100.0
+    max_ang = 20.0
+    ft = [0.0] * 6  # [fx, fy, fz, tx, ty, tz]
+    ft[2] = -10.0  # fz = -10.0
+    epos = [0.0] * 4
+    j1 = [-118.985, -86.882, -118.139, -65.019, 90.002, 54.951]
+    j2 = [-77.055, -77.218, -126.219, -66.591, 90.028, 96.881]
+    desc_p1 = [-300.856, -332.618, 309.240, 179.976, -0.031, 96.065]
+    desc_p2 = [-16.399, -383.760, 309.312, 179.975, -0.031, 96.064]
+    offset_pos = [0.0] * 6
+    M = [2.0, 2.0]
+    B = [8.0, 8.0]
+    polishRadio = 0.0
+    filter_Sign = 0
+    posAdapt_sign = 0
+    isNoBlock = 0
+    ftCoord = [0.0] * 6
+    robot.FT_SetRCS(2, ftCoord)
+    rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0)
+    print(f"FT_Control start rtn is {rtn}")
+    rtn = robot.MoveL(desc_pos=desc_p1, tool=0, user=0, vel=100.0, acc=100.0, ovl=20.0, blendR=-1.0, exaxis_pos=epos, search=0, offset_flag=0, offset_pos=offset_pos)
+    rtn = robot.MoveL(desc_pos=desc_p2, tool=0, user=0, vel=100.0, acc=100.0, ovl=20.0, blendR=-1.0, exaxis_pos=epos, search=0, offset_flag=0, offset_pos=offset_pos)
+    rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0)
+    print(f"FT_Control end rtn is {rtn}")
     robot.CloseRPC()
 
 螺旋線探索
@@ -952,109 +996,6 @@
     robot.DragTeachSwitch(0)
     rtn = robot.ForceAndJointImpedanceStartStop(0, 0, lamde_dain, k_gain, b_gain, 1000, 180)
     print(f"ForceAndJointImpedanceStartStop rtn is {rtn}")
-    robot.CloseRPC()
-
-設置焊絲尋位擴展IO端口
-++++++++++++++++++++++++++++++++++
-.. versionadded:: python SDK-v2.0.5
-
-.. csv-table:: 
-    :stub-columns: 1
-    :widths: 10 30
-
-    "原型", "``SetWireSearchExtDIONum(searchDoneDINum, searchStartDONum)``"
-    "描述", "設置焊絲尋位擴展IO端口"
-    "必選參數", "- ``searchDoneDINum``：焊絲尋位成功DO端口(0-127)
-    - ``searchStartDONum``：焊絲尋位啓停控制DO端口(0-127)"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode" 
-
-代碼示例
-++++++++++++++++++++++++++++++++++++++
-.. code-block:: python
-    :linenos:
-
-    from fairino import Robot
-    import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = Robot.RPC('192.168.58.2')
-    toolCoord = [0, 0, 200, 0, 0, 0]
-    robot.SetToolCoord(1, toolCoord, 0, 0, 1, 0)
-    wobjCoord = [0, 0, 0, 0, 0, 0]
-    robot.SetWObjCoord(1, wobjCoord, 0)
-    robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 50, 5, 50, 1, 50, 10)
-    robot.ExtDevLoadUDPDriver()
-    robot.SetWireSearchExtDIONum(0, 0)
-    exaxisPos = [0, 0, 0, 0]
-    offdese = [0, 0, 0, 0, 0, 0]
-    descStart = [216.543, 445.175, 93.465, 179.683, 1.757, -112.641]
-    jointStart = [-128.345, -86.660, 114.679, -119.625, -89.219, 74.303]
-    descEnd = [111.143, 523.384, 87.659, 179.703, 1.835, -97.750]
-    jointEnd = [-113.454, -81.060, 109.328, -119.954, -89.218, 74.302]
-    error = robot.MoveL(desc_pos=descStart,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    error = robot.MoveL(desc_pos=descEnd,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    descREF0A = [142.135, 367.604, 86.523, 179.728, 1.922, -111.089]
-    jointREF0A = [-126.794, -100.834, 128.922, -119.864, -89.218, 74.302]
-    descREF0B = [254.633, 463.125, 72.604, 179.845, 2.341, -114.704]
-    jointREF0B = [-130.413, -81.093, 112.044, -123.163, -89.217, 74.303]
-    descREF1A = [92.556, 485.259, 47.476, -179.932, 3.130, -97.512]
-    jointREF1A = [-113.231, -83.815, 119.877, -129.092, -89.217, 74.303]
-    descREF1B = [203.103, 583.836, 63.909, 179.991, 2.854, -103.372]
-    jointREF1B = [-119.088, -69.676, 98.692, -121.761, -89.219, 74.303]
-    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchStart return: {error}")
-    error = robot.MoveL(desc_pos=descREF0A,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    error = robot.MoveL(desc_pos=descREF0B,tool= 1,user= 1,vel= 100,search=1)
-    print(f"MoveL return: {error}")
-    error = robot.WireSearchWait("REF0")
-    print(f"WireSearchWait return: {error}")
-    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchEnd return: {error}")
-    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchStart return: {error}")
-    error = robot.MoveL(desc_pos= descREF1A,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    error = robot.MoveL(desc_pos= descREF1B,tool= 1,user= 1,vel= 100,search=1)
-    print(f"MoveL return: {error}")
-    error = robot.WireSearchWait("REF1")
-    print(f"WireSearchWait return: {error}")
-    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
-    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchStart return: {error}")
-    error = robot.MoveL(desc_pos= descREF0A,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    error = robot.MoveL(desc_pos= descREF0B,tool= 1,user= 1,vel= 100,search=1)
-    print(f"MoveL return: {error}")
-    error = robot.WireSearchWait("RES0")
-    print(f"WireSearchWait return: {error}")
-    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchEnd return: {error}")
-    error = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchStart return: {error}")
-    error = robot.MoveL(desc_pos= descREF1A,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    error = robot.MoveL(desc_pos= descREF1B,tool= 1,user= 1,vel= 100,search=1)
-    print(f"MoveL return: {error}")
-    error = robot.WireSearchWait("RES1")
-    print(f"WireSearchWait return: {error}")
-    error = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0)
-    print(f"WireSearchEnd return: {error}")
-    varNameRef = ["REF0", "REF1", "#", "#", "#", "#"]
-    varNameRes = ["RES0", "RES1", "#", "#", "#", "#"]
-    offectFlag = 0
-    offectPos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    error, offectFlag, offectPos = robot.GetWireSearchOffset(0, 0, varNameRef, varNameRes)
-    print(f"GetWireSearchOffset return: {error}")
-    error = robot.PointsOffsetEnable(0, offectPos)
-    print(f"PointsOffsetEnable return: {error}")
-    error = robot.MoveL(desc_pos= descStart,tool= 1,user= 1,vel= 100)
-    print(f"MoveL return: {error}")
-    error = robot.MoveL(desc_pos= descEnd,tool= 1,user= 1,vel= 100,search=1)
-    print(f"MoveL return: {error}")
-    error = robot.PointsOffsetDisable()
     robot.CloseRPC()
 
 阻抗啓停控制

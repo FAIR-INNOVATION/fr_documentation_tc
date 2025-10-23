@@ -196,23 +196,24 @@
     /**
     * @brief  螺旋參數數據類型
     */
-    public class SpiralParam
     {
-      public int circle_num;              /* 螺旋圈數  */
-      public double circle_angle;         /* 螺旋傾角  */
-      public double rad_init;             /* 螺旋初始半徑，單位mm  */
-      public double rad_add;              /* 半徑增量  */
-      public double rotaxis_add;          /* 轉軸方向增量  */
-      public int rot_direction;           /* 旋轉方向，0-順時針，1-逆時針  */
-      public SpiralParam(int circleNum, double circleAngle, double radInit, double radAdd, double rotaxisAdd, int rotDirection)
-      {
-        circle_num = circleNum;
-        circle_angle = circleAngle;
-        rad_init = radInit;
-        rad_add = radAdd;
-        rotaxis_add = rotaxisAdd;
-        rot_direction = rotDirection;
-      }
+        public int circle_num;           /* 螺旋圈數  */
+        public double circle_angle;         /* 螺旋傾角  */
+        public double rad_init;             /* 螺旋初始半徑，單位mm  */
+        public double rad_add;              /* 半徑增量  */
+        public double rotaxis_add;          /* 轉軸方向增量  */
+        public int rot_direction;  /* 旋轉方向，0-順時針，1-逆時針  */
+        public int velAccMode;     /* 速度加速度參數模式：0-角速度恆定；1-線速度恆定 */
+        public SpiralParam(int circleNum, double circleAngle, double radInit, double radAdd, double rotaxisAdd, int rotDirection,int vel_AccMode)
+        {
+            circle_num = circleNum;
+            circle_angle = circleAngle;
+            rad_init = radInit;
+            rad_add = radAdd;
+            rotaxis_add = rotaxisAdd;
+            rot_direction = rotDirection;
+            velAccMode=vel_AccMode;
+        }
     }
 
 擴展軸狀態類型

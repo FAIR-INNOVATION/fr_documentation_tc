@@ -399,77 +399,62 @@
 
     /**
     * @brief  恆力控制
-    * @param  [in] flag 0-關閉恆力控制，1-開啓恆力控制
-    * @param  [in] sensor_id 力傳感器編號
-    * @param  [in] select  選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
-    * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
-    * @param  [in] ft_pid 力pid參數，力矩pid參數
-    * @param  [in] adj_sign 自適應啓停控制，0-關閉，1-開啓
-    * @param  [in] ILC_sign ILC啓停控制， 0-停止，1-訓練，2-實操
-    * @param  [in] max_dis 最大調整距離，單位mm
-    * @param  [in] max_ang 最大調整角度，單位deg
-    * @param  [in] filter_Sign 濾波開啓標誌 0-關；1-開，默認關閉
-    * @param  [in] posAdapt_sign 姿態順應開啓標誌 0-關；1-開，默認關閉
-    * @param  [in] isNoBlock 阻塞標誌，0-阻塞；1-非阻塞
+    * @param  flag 0-關閉恆力控制，1-開啓恆力控制
+    * @param  sensor_id 力傳感器編號
+    * @param  select  選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
+    * @param  ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
+    * @param  ft_pid 力pid參數，力矩pid參數
+    * @param  adj_sign 自適應啓停控制，0-關閉，1-開啓
+    * @param  ILC_sign ILC啓停控制， 0-停止，1-訓練，2-實操
+    * @param  max_dis 最大調整距離，單位mm
+    * @param  max_ang 最大調整角度，單位deg
+    * @param  M 質量參數
+    * @param  B 阻尼參數
+    * @param  polishRadio 打磨半徑，單位mm
+    * @param  filter_Sign 濾波開啓標誌 0-關；1-開，默認關閉
+    * @param  posAdapt_sign 姿態順應開啓標誌 0-關；1-開，默認關閉
+    * @param  isNoBlock 阻塞標誌，0-阻塞；1-非阻塞
     * @return  錯誤碼
-    */   
-    int FT_Control(int flag, int sensor_id, Object[] select, ForceTorque ft, Object[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang, int filter_Sign, int posAdapt_sign, int isNoBlock);   
+    */
+    public int FT_Control(int flag, int sensor_id, int[] select, ForceTorque ft, double[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang,double[] M,double[] B, double polishRadio,int filter_Sign, int posAdapt_sign, int isNoBlock)
 
-恆力控制代碼示例
+具有阻尼的恆力控制代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    public static int TestFTControl(Robot robot)
+    public static void TestFTControlWithDamping(Robot robot)
     {
-        DescTran tr1=new DescTran(0,0,0);
-        robot.SetForceSensorPayload(0);
-        robot.SetForceSensorPayloadCog(tr1);
-
-        int company = 24;
-        int device = 0;
-        int softversion = 0;
-        int bus = 1;
-        int index = 1;
-        DeviceConfig con=new DeviceConfig(company, device, softversion, bus);
-
-        robot.FT_SetConfig(con);
-        robot.Sleep(1000);
-        robot.FT_GetConfig(con);
-        robot.Sleep(1000);
-
-        robot.FT_Activate(0);
-        robot.Sleep(1000);
-        robot.FT_Activate(1);
-        robot.Sleep(1000);
-
-        robot.Sleep(1000);
-        robot.FT_SetZero(0);
-        robot.Sleep(1000);
-
-        int sensor_id = 1;
-        Object[] select =new Object[] { 0,0,1,0,0,0 };
-        Object[] ft_pid =new Object[]{ 0.0005,0.0,0.0,0.0,0.0,0.0 };
+        int sensor_id = 10;
+        int[] select = { 0,0,1,0,0,0 };
+        double[] ft_pid = { 0.0008, 0.0, 0.0, 0.0, 0.0, 0.0 };
         int adj_sign = 0;
         int ILC_sign = 0;
         double max_dis = 100.0;
-        double max_ang = 0.0;
-
-        ForceTorque ft=new ForceTorque(0,0,0,0,0,0);
-        ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
-        JointPos j1=new JointPos(-11.904, -99.669, 117.473, -108.616, -91.726, 74.256);
-        JointPos j2=new JointPos(-45.615, -106.172, 124.296, -107.151, -91.282, 74.255);
-        DescPose desc_p1=new DescPose(-419.524, -13.000, 351.569, -178.118, 0.314, 3.833);
-        DescPose desc_p2=new DescPose(-321.222, 185.189, 335.520, -179.030, -1.284, -29.869);
-        DescPose offset_pos=new DescPose(0, 0, 0, 0, 0, 0);
-
+        double max_ang = 20;
+        ForceTorque ft =new ForceTorque(0,0,0,0,0,0);
         ft.fz = -10.0;
-
-        int rtn = robot.MoveJ(j1, desc_p1, 0, 0, 100.0, 180.0, 100.0, epos, -1.0, 0, offset_pos);
-        robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang,0,0,0);
-        rtn = robot.MoveJ(j2, desc_p2, 0, 0, 100.0, 180.0, 100.0, epos, -1.0, 0, offset_pos);
-        robot.FT_Control(0, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang,0,0,0);
-        return 0;
+        ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
+        JointPos j1=new JointPos(-118.985, -86.882, -118.139, -65.019, 90.002, 54.951);
+        JointPos j2=new JointPos(-77.055, -77.218, -126.219, -66.591, 90.028, 96.881);
+        DescPose desc_p1=new DescPose(-300.856, -332.618, 309.240, 179.976, -0.031, 96.065);
+        DescPose desc_p2=new DescPose(-16.399, -383.760, 309.312, 179.975, -0.031, 96.064);
+        DescPose offset_pos=new DescPose(0, 0, 0, 0, 0, 0);
+        double[] M = {2.0, 2.0};
+        double[] B = {8.0, 8.0};
+        double polishRadio;
+        int filter_Sign;
+        int posAdapt_sign;
+        int isNoBlock;
+        DescPose ftCoord =new DescPose();
+        robot.FT_SetRCS(2, ftCoord);
+        int rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0);
+        System.out.printf("FT_Control start rtn is %d\n", rtn);
+        rtn = robot.MoveL(j1, desc_p1, 0, 0, 100.0, 100.0, 20.0, -1.0,0, epos, 0, 0, offset_pos,0,0,10);
+        rtn = robot.MoveL(j2, desc_p2, 0, 0, 100.0, 100.0, 20.0, -1.0, 0,epos, 0, 0, offset_pos,0,0,10);
+        rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0);
+        System.out.printf("FT_Control end rtn is %d\n", rtn);
+        robot.CloseRPC();
     }
 
 柔順控制開啓
@@ -765,92 +750,6 @@
 
         robot.CloseRPC();
         return 0;
-    }
-
-設置焊絲尋位擴展IO端口
-++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    /** 
-    * @brief 設置焊絲尋位擴展IO端口
-    * @param [in] searchDoneDINum 焊絲尋位成功DO端口(0-127)
-    * @param [in] searchStartDONum 焊絲尋位啓停控制DO端口(0-127)
-    * @return 錯誤碼
-    */
-    int SetWireSearchExtDIONum(int searchDoneDINum, int searchStartDONum);
-
-示例程序
-++++++++++++++++++++++++++++++++++
-.. code-block:: Java
-    :linenos:
-
-    private static void TestUDPWireSearch(Robot robot)
-    {
-        UDPComParam param = new UDPComParam("192.168.58.88", 2021, 2, 100, 3, 100, 1, 100, 10,0);
-        robot.ExtDevSetUDPComParam(param);//udp擴展軸通訊
-
-        robot.SetWireSearchExtDIONum(0, 0);
-
-        int rtn0, rtn1, rtn2 = 0;
-        ExaxisPos exaxisPos = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
-        DescPose offdese = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-        DescPose descStart = new DescPose(-158.767, -510.596, 271.709, -179.427, -0.745, -137.349);
-        JointPos jointStart = new JointPos(61.667, -79.848, 108.639, -119.682, -89.700, -70.985);
-
-        DescPose descEnd = new DescPose(0.332, -516.427, 270.688, 178.165, 0.017, -119.989);
-        JointPos jointEnd = new JointPos(79.021, -81.839, 110.752, -118.298, -91.729, -70.981);
-
-        robot.MoveL(jointStart, descStart, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);
-        robot.MoveL(jointEnd, descEnd, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);
-
-        DescPose descREF0A = new DescPose(-66.106, -560.746, 270.381, 176.479, -0.126, -126.745);
-        JointPos jointREF0A = new JointPos(73.531, -75.588, 102.941, -116.250, -93.347, -69.689);
-
-        DescPose descREF0B = new DescPose(-66.109, -528.440, 270.407, 176.479, -0.129, -126.744);
-        JointPos jointREF0B = new JointPos(72.534, -79.625, 108.046, -117.379, -93.366, -70.687);
-
-        DescPose descREF1A = new DescPose(72.975, -473.242, 270.399, 176.479, -0.129, -126.744);
-        JointPos jointREF1A = new JointPos(87.169, -86.509, 115.710, -117.341, -92.993, -56.034);
-
-        DescPose descREF1B = new DescPose(31.355, -473.238, 270.405, 176.480, -0.130, -126.745);
-        JointPos jointREF1B = new JointPos(82.117, -87.146, 116.470, -117.737, -93.145, -61.090);
-
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF0A, descREF0A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
-        robot.MoveL(jointREF0B, descREF0B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
-        rtn1 = robot.WireSearchWait("REF0");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF1A, descREF1A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
-        robot.MoveL(jointREF1B, descREF1B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
-        rtn1 = robot.WireSearchWait("REF1");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF0A, descREF0A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
-        robot.MoveL(jointREF0B, descREF0B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
-        rtn1 = robot.WireSearchWait("RES0");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-        rtn0 = robot.WireSearchStart(0, 10, 100, 0, 10, 100, 0);
-        robot.MoveL(jointREF1A, descREF1A, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);  //起點
-        robot.MoveL(jointREF1B, descREF1B, 1, 0, 10, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);  //方向點
-        rtn1 = robot.WireSearchWait("RES1");
-        rtn2 = robot.WireSearchEnd(0, 10, 100, 0, 10, 100, 0);
-
-        String[] varNameRef = {"REF0", "REF1", "#", "#", "#", "#"};
-        String[] varNameRes = {"RES0", "RES1", "#", "#", "#", "#"};
-        int offectFlag = 0;
-        //DescPose offectPos = new DescPose(0, 0, 0, 0, 0, 0);
-        DescOffset offset = new DescOffset();
-        rtn0 = robot.GetWireSearchOffset(0, 0, varNameRef, varNameRes, offset);
-        robot.PointsOffsetEnable(0, offset.offset);
-        robot.MoveL(jointStart, descStart, 1, 0, 100, 100, 100, -1, exaxisPos, 0, 0, offdese, 0, 100);
-        robot.MoveL(jointEnd, descEnd, 1, 0, 100, 100, 100, -1, exaxisPos, 1, 0, offdese, 0, 100);
-        robot.PointsOffsetDisable();
     }
 
 阻抗啓停控制

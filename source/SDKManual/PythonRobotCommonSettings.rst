@@ -883,3 +883,249 @@
     robot.MoveL(desc_pos=p6Desc,tool=1,user=0,vel=10,acc=100,ovl=100,blendR=-1,blendMode=0,exaxis_pos=exaxisPos,search=0,offset_flag=1,offset_pos=offdese)
     robot.FocusEnd()
     robot.CloseRPC()
+
+關節扭矩傳感器靈敏度標定功能開啓
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``JointSensitivityEnable(status)``"
+    "描述", "關節扭矩傳感器靈敏度標定功能開啓"
+    "必選參數", "- ``status``：0-關閉；1-開啓"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取關節扭矩傳感器靈敏度標定結果
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``JointSensitivityCalibration()``"
+    "描述", "獲取關節扭矩傳感器靈敏度標定結果"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``calibResult``：j1~j6關節靈敏度[0-1]"
+
+關節扭矩傳感器靈敏度數據採集
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``JointSensitivityCollect()``"
+    "描述", "關節扭矩傳感器靈敏度數據採集"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+關節扭矩傳感器靈敏度自動標定代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    rtn = robot.JointSensitivityEnable(1)
+    print(f"JointSensitivityEnable rtn is {rtn}")
+    curJPos = [0.0] * 6
+    rtn, curJPos = robot.GetActualJointPosDegree(0)
+    jointPos1 = [curJPos[0], 0.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos1 = [0.0] * 6
+    rtn , descPos1 = robot.GetForwardKin(jointPos1)
+    epos = [0.0] * 4
+    offset_pos = [0.0] * 6
+    robot.MoveJ(joint_pos=jointPos1, desc_pos=descPos1,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.2)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 1 rtn is {rtn}")
+    time.sleep(0.1)
+    jointPos2 = [curJPos[0], -30.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos2 = [0.0] * 6
+    rtn, descPos2 = robot.GetForwardKin(jointPos2)
+    robot.MoveJ(joint_pos=jointPos2, desc_pos=descPos2,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.1)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 2 rtn is {rtn}")
+    time.sleep(0.1)
+    jointPos3 = [curJPos[0], -60.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos3 = [0.0] * 6
+    rtn, descPos3 = robot.GetForwardKin(jointPos3)
+    robot.MoveJ(joint_pos=jointPos3,desc_pos= descPos3,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.1)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 3 rtn is {rtn}")
+    time.sleep(0.1)
+    jointPos4 = [curJPos[0], -90.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos4 = [0.0] * 6
+    rtn, descPos4 = robot.GetForwardKin(jointPos4)
+    robot.MoveJ(joint_pos=jointPos4, desc_pos= descPos4,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.1)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 4 rtn is {rtn}")
+    time.sleep(0.1)
+    jointPos5 = [curJPos[0], -120.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos5 = [0.0] * 6
+    rtn, descPos5 = robot.GetForwardKin(jointPos5)
+    robot.MoveJ(joint_pos=jointPos5, desc_pos= descPos5,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.1)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 5 rtn is {rtn}")
+    time.sleep(0.1)
+    jointPos6 = [curJPos[0], -150.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos6 = [0.0] * 6
+    rtn, descPos6 = robot.GetForwardKin(jointPos6)
+    robot.MoveJ(joint_pos=jointPos6, desc_pos= descPos6,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.1)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 6 rtn is {rtn}")
+    time.sleep(0.1)
+    jointPos7 = [curJPos[0], -180.0, 0.0, -90.0, 0.02, curJPos[5]]
+    descPos7 = [0.0] * 6
+    rtn, descPos7 = robot.GetForwardKin(jointPos7)
+    robot.MoveJ(joint_pos=jointPos7, desc_pos= descPos7,tool= 0,user= 0,vel= 100,acc= 100,ovl= 100,exaxis_pos= epos,blendT= -1,offset_flag= 0,offset_pos= offset_pos)
+    time.sleep(0.1)
+    rtn = robot.JointSensitivityCollect()
+    print(f"JointSensitivityCollect 7 rtn is {rtn}")
+    time.sleep(0.1)
+    calibResult = [0.0] * 6
+    rtn,calibResult = robot.JointSensitivityCalibration()
+    print(f"JointSensitivityCalibration rtn is {rtn}")
+    rtn = robot.JointSensitivityEnable(0)
+    print(f"JointSensitivityEnable rtn is {rtn}")
+    print(f"jointSensor Calib result is {calibResult[0]},{calibResult[1]},{calibResult[2]},{calibResult[3]},{calibResult[4]},{calibResult[5]}")
+    robot.CloseRPC()
+
+獲取機器人8個從站端口錯誤幀數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetSlavePortErrCounter()``"
+    "描述", "獲取機器人8個從站端口錯誤幀數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``inRecvErr``：輸入接收錯誤幀數
+    - ``inCRCErr``：輸入CRC錯誤幀數
+    - ``inTransmitErr``：輸入轉發錯誤幀數
+    - ``inLinkErr``：輸入鏈接錯誤幀數
+    - ``outRecvErr``：輸出接收錯誤幀數
+    - ``outCRCErr``：輸出CRC錯誤幀數
+    - ``outTransmitErr``：輸出轉發錯誤幀數
+    - ``outLinkErr``：輸出鏈接錯誤幀數"
+
+從站端口錯誤幀清零
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``JointSensitivityEnable(slaveID)``"
+    "描述", "從站端口錯誤幀清零"
+    "必選參數", "- ``slaveID``：從站編號0~7"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取從站端口錯誤幀代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    inRecvErr = [0] * 8
+    inCRCErr = [0] * 8
+    inTransmitErr = [0] * 8
+    inLinkErr = [0] * 8
+    outRecvErr = [0] * 8
+    outCRCErr = [0] * 8
+    outTransmitErr = [0] * 8
+    outLinkErr = [0] * 8
+    rtn,inRecvErr, inCRCErr, inTransmitErr, inLinkErr, outRecvErr, outCRCErr, outTransmitErr, outLinkErr = robot.GetSlavePortErrCounter()
+    for i in range(8):
+        if inRecvErr[i] != 0:
+            print(f"inRecvErr {i} is {inRecvErr[i]}")
+        if inCRCErr[i] != 0:
+            print(f"inCRCErr {i} is {inCRCErr[i]}")
+        if inTransmitErr[i] != 0:
+            print(f"inTransmitErr {i} is {inTransmitErr[i]}")
+        if inLinkErr[i] != 0:
+            print(f"inLinkErr {i} is {inLinkErr[i]}")
+        if outRecvErr[i] != 0:
+            print(f"outRecvErr {i} is {outRecvErr[i]}")
+        if outCRCErr[i] != 0:
+            print(f"outCRCErr {i} is {outCRCErr[i]}")
+        if outTransmitErr[i] != 0:
+            print(f"outTransmitErr {i} is {outTransmitErr[i]}")
+        if outLinkErr[i] != 0:
+            print(f"outLinkErr {i} is {outLinkErr[i]}")
+    print("others has no err!")
+    for i in range(8):
+        robot.SlavePortErrCounterClear(i)
+    robot.CloseRPC()
+
+設置各軸速度前饋係數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetVelFeedForwardRatio(radio)``"
+    "描述", "設置各軸速度前饋係數"
+    "必選參數", "- ``radio``：各軸速度前饋係數"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取各軸速度前饋係數
++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.7
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetVelFeedForwardRatio()``"
+    "描述", "獲取各軸速度前饋係數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``radio``：各軸速度前饋係數"
+
+機器人速度前饋係數代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    import threading
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    setRadio = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+    robot.SetVelFeedForwardRatio(setRadio)
+    getRadio = [0.0] * 6
+    rtn,getRadio = robot.GetVelFeedForwardRatio()
+    print(f"{getRadio[0]},{getRadio[1]},{getRadio[2]},{getRadio[3]},{getRadio[4]},{getRadio[5]}")
+    robot.CloseRPC()

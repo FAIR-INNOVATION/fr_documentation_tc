@@ -114,7 +114,8 @@
         float  rad_init;             /* 螺旋初始半徑，單位mm  */
         float  rad_add;              /* 半徑增量  */
         float  rotaxis_add;          /* 轉軸方向增量  */
-        unsigned int rot_direction;  /* 旋轉方向，0-順時針，1-逆時針  */
+        int rot_direction;  /* 旋轉方向，0-順時針，1-逆時針  */
+        int velAccMode;      /* 速度加速度參數模式：0-角速度恆定；1-線速度恆定 */
     }SpiralParam;
 
 控制器狀態回饋資料包
@@ -237,12 +238,13 @@
         int smartToolState;            //SmartTool手柄按鈕狀態
         float wideVoltageCtrlBoxTemp;        //寬電壓控制箱溫度
         uint16_t wideVoltageCtrlBoxFanCurrent;   //寬電壓控制箱風扇電流(mA)
-        uint16_t check_sum;            /* 和校驗 */
         double toolCoord[6];      //工具座標系
         double wobjCoord[6];      //工件座標系
         double extoolCoord[6];     //外部工具座標系
         double exAxisCoord[6];     //擴充軸座標系
         double load;          //負載質量
         double loadCog[3];       //負載質心
+        double lastServoTarget[6];  //队列中最后一个ServoJ目标位置
+        int servoJCmdNum;           //servoJ指令計數
         uint16_t check_sum;      /* 和校驗 */
     }ROBOT_STATE_PKG;

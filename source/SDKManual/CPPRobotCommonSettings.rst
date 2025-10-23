@@ -984,3 +984,292 @@
       robot.CloseRPC();
       return 0;
     }
+
+
+關節扭矩傳感器靈敏度標定功能開啓
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 關節扭矩傳感器靈敏度標定功能開啓
+    * @param [in] status 0-關閉；1-開啓
+    * @return  錯誤碼
+    */
+    errno_t JointSensitivityEnable(int status);
+
+關節扭矩傳感器靈敏度數據採集
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 關節扭矩傳感器靈敏度數據採集
+    * @return 錯誤碼
+    */
+    errno_t JointSensitivityCollect();
+    
+
+獲取關節扭矩傳感器靈敏度標定結果
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取關節扭矩傳感器靈敏度標定結果
+    * @param [out] calibResult j1~j6關節靈敏度[0-1]
+    * @return 錯誤碼
+    */
+    errno_t JointSensitivityCalibration(double result[6]);
+
+關節扭矩傳感器靈敏度自動標定代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int TestSensitivityCalib()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        robot.SetReConnectParam(true, 30000, 500);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return 0;
+        }
+        rtn = robot.JointSensitivityEnable(1);
+        printf("JointSensitivityEnable rtn is %d\n", rtn);
+        JointPos curJPos = {};
+        robot.GetActualJointPosDegree(0, &curJPos);
+        JointPos jointPos1 = { curJPos.jPos[0], 0, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos1 = {};
+        robot.GetForwardKin(&jointPos1, &descPos1);
+        ExaxisPos epos = { 0,0,0,0 };
+        DescPose offset_pos = { 0,0,0,0,0,0 };
+        robot.MoveJ(&jointPos1, &descPos1, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(200);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 1 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        JointPos jointPos2 = { curJPos.jPos[0], -30, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos2 = {};
+        robot.GetForwardKin(&jointPos2, &descPos2);
+        robot.MoveJ(&jointPos2, &descPos2, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 2 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        JointPos jointPos3 = { curJPos.jPos[0], -60, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos3 = {};
+        robot.GetForwardKin(&jointPos3, &descPos3);
+        robot.MoveJ(&jointPos3, &descPos3, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 3 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        JointPos jointPos4 = { curJPos.jPos[0], -90, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos4 = {};
+        robot.GetForwardKin(&jointPos4, &descPos4);
+        robot.MoveJ(&jointPos4, &descPos4, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 4 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        JointPos jointPos5 = { curJPos.jPos[0], -120, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos5 = {};
+        robot.GetForwardKin(&jointPos5, &descPos5);
+        robot.MoveJ(&jointPos5, &descPos5, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 5 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        JointPos jointPos6 = { curJPos.jPos[0], -150, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos6 = {};
+        robot.GetForwardKin(&jointPos6, &descPos6);
+        robot.MoveJ(&jointPos6, &descPos6, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 6 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        JointPos jointPos7 = { curJPos.jPos[0], -180, 0, -90, 0.02, curJPos.jPos[5] };
+        DescPose descPos7 = {};
+        robot.GetForwardKin(&jointPos7, &descPos7);
+        robot.MoveJ(&jointPos7, &descPos7, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        printf("JointSensitivityCollect 7 rtn is %d\n", rtn);
+        robot.Sleep(100);
+        double calibResult[6] = { 0.0 };
+        rtn = robot.JointSensitivityCalibration(calibResult);
+        printf("JointSensitivityCalibration rtn is %d\n", rtn);
+        rtn = robot.JointSensitivityEnable(0);
+        printf("JointSensitivityEnable rtn is %d\n", rtn);
+        printf("jointSensor Calib result is %f %f %f %f %f %f\n", calibResult[0], calibResult[1], calibResult[2], 
+            calibResult[3], calibResult[4], calibResult[5]);
+        robot.CloseRPC();
+    }
+
+獲取機器人8個從站端口錯誤幀數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取機器人8個從站端口錯誤幀數
+    * @param [out] inRecvErr 輸入接收錯誤幀數 
+    * @param [out] inCRCErr 輸入CRC錯誤幀數 
+    * @param [out] inTransmitErr 輸入轉發錯誤幀數 
+    * @param [out] inLinkErr 輸入鏈接錯誤幀數 
+    * @param [out] outRecvErr 輸出接收錯誤幀數
+    * @param [out] outCRCErr 輸出CRC錯誤幀數
+    * @param [out] outTransmitErr 輸出轉發錯誤幀數
+    * @param [out] outLinkErr 輸出鏈接錯誤幀數
+    * @return 錯誤碼
+    */
+    errno_t GetSlavePortErrCounter(int inRecvErr[8], int inCRCErr[8], int inTransmitErr[8], int inLinkErr[8], int outRecvErr[8], int outCRCErr[8], int outTransmitErr[8], int outLinkErr[8]);
+
+從站端口錯誤幀清零
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 從站端口錯誤幀清零
+    * @param [in] slaveID 從站編號0~7
+    * @return 錯誤碼
+    */
+    errno_t SlavePortErrCounterClear(int slaveID);
+    
+獲取從站端口錯誤幀代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int TestSlavePortErr()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return 0;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        int inRecvErr[8] = {0.0}; 
+        int inCRCErr[8] = { 0.0 };
+        int inTransmitErr[8] = { 0.0 };
+        int inLinkErr[8] = { 0.0 };
+        int outRecvErr[8] = { 0.0 };
+        int outCRCErr[8] = { 0.0 };
+        int outTransmitErr[8] = { 0.0 };
+        int outLinkErr[8] = { 0.0 };
+        robot.GetSlavePortErrCounter(inRecvErr,  inCRCErr, inTransmitErr, inLinkErr,
+            outRecvErr, outCRCErr, outTransmitErr, outLinkErr);
+        for (int i = 0; i < 8; i++)
+        {
+            if (inRecvErr[i] != 0)
+            {
+                printf("inRecvErr %d is %d\n", i, inRecvErr[i]);
+            }
+            if (inCRCErr[i] != 0)
+            {
+                printf("inRecvErr %d is %d\n", i, inCRCErr[i]);
+            }
+            if (inTransmitErr[i] != 0)
+            {
+                printf("inRecvErr %d is %d\n", i, inTransmitErr[i]);
+            }
+            if (inLinkErr[i] != 0)
+            {
+                printf("inRecvErr %d is %d\n", i, inLinkErr[i]);
+            }
+            if (outRecvErr[i] != 0)
+            {
+                printf("outRecvErr %d is %d\n", i, outRecvErr[i]);
+            }
+            if (outCRCErr[i] != 0)
+            {
+                printf("outCRCErr %d is %d\n", i, outCRCErr[i]);
+            }
+            if (outTransmitErr[i] != 0)
+            {
+                printf("outTransmitErr %d is %d\n", i, outTransmitErr[i]);
+            }
+            if (outLinkErr[i] != 0)
+            {
+                printf("outLinkErr %d is %d\n", i, outLinkErr[i]);
+            }
+        }
+        printf("others has no err!\n");
+        for (int i = 0; i < 8; i++)
+        {
+            robot.SlavePortErrCounterClear(i);
+        }
+        robot.CloseRPC();
+        return 0;
+    }
+
+設置各軸速度前饋係數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置各軸速度前饋係數
+    * @param [in] radio 各軸速度前饋係數
+    * @return 錯誤碼
+    */
+    errno_t SetVelFeedForwardRatio(double radio[6]);
+
+獲取各軸速度前饋係數
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取各軸速度前饋係數
+    * @param [out] radio 各軸速度前饋係數
+    * @return 錯誤碼
+    */
+    errno_t GetVelFeedForwardRatio(double radio[6]);
+
+機器人速度前饋係數代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c++
+    :linenos:
+
+    int TestVelFeedForwardRatio()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return 0;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        double setRadio[6] = { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+        robot.SetVelFeedForwardRatio(setRadio);
+        double getRadio[6] = { 0.0 };
+        robot.GetVelFeedForwardRatio(getRadio);
+        printf(" %f %f %f %f %f %f\n", getRadio[0], getRadio[1], getRadio[2], getRadio[3], getRadio[4], getRadio[5]);
+        robot.CloseRPC();
+        return 0;
+    }
+    

@@ -957,3 +957,250 @@
         robot.MoveL(p6Joint, p6Desc, 1, 0, 10, 100, 100, -1, 0, exaxisPos, 0, 1, offdese,0,100);
         robot.FocusEnd();
     }
+
+
+關節扭矩傳感器靈敏度標定功能開啓
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關節扭矩傳感器靈敏度標定功能開啓
+    * @param status 0-關閉；1-開啓
+    * @return 錯誤碼
+    */
+    public int JointSensitivityEnable(int status)
+
+關節扭矩傳感器靈敏度數據採集
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關節扭矩傳感器靈敏度數據採集
+    * @return 錯誤碼
+    */
+    public int JointSensitivityCollect()
+
+獲取關節扭矩傳感器靈敏度標定結果
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取關節扭矩傳感器靈敏度標定結果
+    * @param calibResult j1~j6關節靈敏度[0-1]
+    * @return 錯誤碼
+    */
+    public int JointSensitivityCalibration(double[] calibResult)
+
+關節扭矩傳感器靈敏度自動標定代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void TestSensitivityCalib(Robot robot)
+    {
+        int rtn = robot.JointSensitivityEnable(1);
+        System.out.println("JointSensitivityEnable rtn is " + rtn);
+        JointPos curJPos = new JointPos();
+        robot.GetActualJointPosDegree(curJPos);
+        JointPos jointPos1 = new JointPos(curJPos.J1, 0, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos1 = new DescPose();
+        robot.GetForwardKin(jointPos1, descPos1);
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+        robot.MoveJ(jointPos1, descPos1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(200);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 1 rtn is " + rtn);
+        robot.Sleep(100);
+        JointPos jointPos2 = new JointPos(curJPos.J1, -30, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos2 = new DescPose();
+        robot.GetForwardKin(jointPos2, descPos2);
+        robot.MoveJ(jointPos2, descPos2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 2 rtn is " + rtn);
+        robot.Sleep(100);
+        JointPos jointPos3 = new JointPos(curJPos.J1, -60, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos3 = new DescPose();
+        robot.GetForwardKin(jointPos3, descPos3);
+        robot.MoveJ(jointPos3, descPos3, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 3 rtn is " + rtn);
+        robot.Sleep(100);
+        JointPos jointPos4 = new JointPos(curJPos.J1, -90, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos4 = new DescPose();
+        robot.GetForwardKin(jointPos4, descPos4);
+        robot.MoveJ(jointPos4, descPos4, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 4 rtn is " + rtn);
+        robot.Sleep(100);
+        JointPos jointPos5 = new JointPos(curJPos.J1, -120, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos5 = new DescPose();
+        robot.GetForwardKin(jointPos5, descPos5);
+        robot.MoveJ(jointPos5, descPos5, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 5 rtn is " + rtn);
+        robot.Sleep(100);
+        JointPos jointPos6 = new JointPos(curJPos.J1, -150, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos6 = new DescPose();
+        robot.GetForwardKin(jointPos6, descPos6);
+        robot.MoveJ(jointPos6, descPos6, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 6 rtn is " + rtn);
+        robot.Sleep(100);
+        JointPos jointPos7 = new JointPos(curJPos.J1, -180, 0, -90, 0.02, curJPos.J6);
+        DescPose descPos7 = new DescPose();
+        robot.GetForwardKin(jointPos7, descPos7);
+        robot.MoveJ(jointPos7, descPos7, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.Sleep(100);
+        rtn = robot.JointSensitivityCollect();
+        System.out.println("JointSensitivityCollect 7 rtn is " + rtn);
+        robot.Sleep(100);
+        double[] calibResult = new double[6];
+        rtn = robot.JointSensitivityCalibration(calibResult);
+        System.out.println("JointSensitivityCalibration rtn is " + rtn);
+        rtn = robot.JointSensitivityEnable(0);
+        System.out.println("JointSensitivityEnable rtn is " + rtn);
+        System.out.println("jointSensor Calib result is " +
+                calibResult[0] + " " + calibResult[1] + " " + calibResult[2] + " " +
+                calibResult[3] + " " + calibResult[4] + " " + calibResult[5]);
+        robot.CloseRPC();
+    }
+
+獲取機器人8個從站端口錯誤幀數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取機器人8個從站端口錯誤幀數
+    * @param  inRecvErr 輸入接收錯誤幀數
+    * @param  inCRCErr 輸入CRC錯誤幀數
+    * @param  inTransmitErr 輸入轉發錯誤幀數
+    * @param  inLinkErr 輸入鏈接錯誤幀數
+    * @param  outRecvErr 輸出接收錯誤幀數
+    * @param  outCRCErr 輸出CRC錯誤幀數
+    * @param  outTransmitErr 輸出轉發錯誤幀數
+    * @param  outLinkErr 輸出鏈接錯誤幀數
+    * @return 錯誤碼
+    */
+    public int GetSlavePortErrCounter(int[] inRecvErr, int[] inCRCErr, int[] inTransmitErr, int[] inLinkErr, int[] outRecvErr, int[] outCRCErr, int[] outTransmitErr, int[] outLinkErr)
+
+從站端口錯誤幀清零
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 從站端口錯誤幀清零
+    * @param slaveID 從站編號0~7
+    * @return 錯誤碼
+    */
+    public int SlavePortErrCounterClear(int slaveID)
+
+獲取從站端口錯誤幀代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void TestSlavePortErr(Robot robot)
+    {
+        ROBOT_STATE_PKG pkg =new ROBOT_STATE_PKG();
+        int[] inRecvErr =new int[8];
+        int[] inCRCErr =new int[8];
+        int[] inTransmitErr =new int[8];
+        int[] inLinkErr =new int[8];
+        int[] outRecvErr =new int[8];
+        int[] outCRCErr =new int[8];
+        int[] outTransmitErr =new int[8];
+        int[] outLinkErr =new int[8];
+        robot.GetSlavePortErrCounter(inRecvErr,  inCRCErr, inTransmitErr, inLinkErr,
+                outRecvErr, outCRCErr, outTransmitErr, outLinkErr);
+        for (int i = 0; i < 8; i++)
+        {
+            if (inRecvErr[i] != 0)
+            {
+                System.out.printf("inRecvErr %d is %d\n", i, inRecvErr[i]);
+            }
+            if (inCRCErr[i] != 0)
+            {
+                System.out.printf("inRecvErr %d is %d\n", i, inCRCErr[i]);
+            }
+            if (inTransmitErr[i] != 0)
+            {
+                System.out.printf("inRecvErr %d is %d\n", i, inTransmitErr[i]);
+            }
+            if (inLinkErr[i] != 0)
+            {
+                System.out.printf("inRecvErr %d is %d\n", i, inLinkErr[i]);
+            }
+            if (outRecvErr[i] != 0)
+            {
+                System.out.printf("outRecvErr %d is %d\n", i, outRecvErr[i]);
+            }
+            if (outCRCErr[i] != 0)
+            {
+                System.out.printf("outCRCErr %d is %d\n", i, outCRCErr[i]);
+            }
+            if (outTransmitErr[i] != 0)
+            {
+                System.out.printf("outTransmitErr %d is %d\n", i, outTransmitErr[i]);
+            }
+            if (outLinkErr[i] != 0)
+            {
+                System.out.printf("outLinkErr %d is %d\n", i, outLinkErr[i]);
+            }
+        }
+        System.out.printf("others has no err!\n");
+        for (int i = 0; i < 8; i++)
+        {
+            robot.SlavePortErrCounterClear(i);
+        }
+        robot.CloseRPC();
+    }
+
+設置各軸速度前饋係數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 設置各軸速度前饋係數
+    * @param  radio 各軸速度前饋係數
+    * @return 錯誤碼
+    */
+    public int SetVelFeedForwardRatio(double[] radio)
+
+獲取各軸速度前饋係數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取各軸速度前饋係數
+    * @param  radio 各軸速度前饋係數
+    * @return 錯誤碼
+    */
+    public int GetVelFeedForwardRatio(double[] radio)
+
+機器人速度前饋係數代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void TestVelFeedForwardRatio(Robot robot)
+    {
+        double[] setRadio =new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+        robot.SetVelFeedForwardRatio(setRadio);
+        double[] getRadio = new double[]{ 0.0 };
+        robot.GetVelFeedForwardRatio(getRadio);
+        System.out.printf(" %f %f %f %f %f %f\n", getRadio[0], getRadio[1], getRadio[2], getRadio[3], getRadio[4], getRadio[5]);
+        robot.CloseRPC();
+    }

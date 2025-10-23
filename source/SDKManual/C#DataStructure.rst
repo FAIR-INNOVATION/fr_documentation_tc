@@ -99,17 +99,25 @@
 .. code-block:: c#
     :linenos:
 
-    /**
-    * @brief  螺旋參數數據類型
-    */
-    struct SpiralParam
+    public struct SpiralParam
     {
-        public int circle_num;         	  /* 螺旋圈數  */
+        public int circle_num;           /* 螺旋圈數  */
         public float circle_angle;         /* 螺旋傾角  */
         public float rad_init;             /* 螺旋初始半徑，單位mm  */
         public float rad_add;              /* 半徑增量  */
         public float rotaxis_add;          /* 轉軸方向增量  */
-        public uint rot_direction;         /* 旋轉方向，0-順時針，1-逆時針  */
+        public uint rot_direction;  /* 旋轉方向，0-順時針，1-逆時針  */
+        public int velAccMode;      // 速度加速度參數模式：0-角速度恆定；1-線速度恆定
+        public SpiralParam(int num, float angle, float initRad, float addRad, float axisAdd, uint direction, int mode)
+        {
+            circle_num = num;
+            circle_angle = angle;
+            rad_init = initRad;
+            rad_add = addRad;
+            rotaxis_add = axisAdd;
+            rot_direction = direction;
+            velAccMode = mode;
+        }
     }
 
 擴展軸狀態類型
@@ -176,17 +184,17 @@
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
         public double[] actual_qd;                              //機器人當前關節速度
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] actual_qdd;                             //機器人當前關節加速度  16 + 8 * 6 * 5 = 256
+        public double[] actual_qdd;                             //機器人當前關節加速度  
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public double[] target_TCP_CmpSpeed;                    //機器人TCP合成指令速度                         //256 + 8* 2 = 272
+        public double[] target_TCP_CmpSpeed;                    //機器人TCP合成指令速度                         
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] target_TCP_Speed;                       //機器人TCP指令速度                        //272 + 8 * 6 = 320 
+        public double[] target_TCP_Speed;                       //機器人TCP指令速度                        
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public double[] actual_TCP_CmpSpeed;                    //機器人TCP合成實際速度                        //320 + 16 = 336
+        public double[] actual_TCP_CmpSpeed;                    //機器人TCP合成實際速度                        
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] actual_TCP_Speed;                       //機器人TCP實際速度                      //336 + 8 * 6 = 384
+        public double[] actual_TCP_Speed;                       //機器人TCP實際速度                     
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] jt_cur_tor;                             //當前扭矩         //384 + 8 * 6 = 432 
+        public double[] jt_cur_tor;                             //當前扭矩         
         public int tool;                        //工具號
         public int user;                        //工件號
         public byte cl_dgt_output_h;            //數字輸出15-8
@@ -194,14 +202,14 @@
         public byte tl_dgt_output_l;            //工具數字輸出7-0(僅bit0-bit1有效)
         public byte cl_dgt_input_h;             //數字輸入15-8
         public byte cl_dgt_input_l;             //數字輸入7-0
-        public byte tl_dgt_input_l;             //工具數字輸入7-0(僅bit0-bit1有效)                    // + 14 = 446
+        public byte tl_dgt_input_l;             //工具數字輸入7-0(僅bit0-bit1有效)                    
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public UInt16[] cl_analog_input;        //控制箱模擬量輸入
-        public UInt16 tl_anglog_input;          //工具模擬量輸入                              // + 6 = 452
+        public UInt16 tl_anglog_input;          //工具模擬量輸入                              
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
         public double[] ft_sensor_raw_data;     //力/扭矩傳感器原始數據
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] ft_sensor_data;         //力/扭矩傳感器數據                           // + 8 * 12 = 548
+        public double[] ft_sensor_data;         //力/扭矩傳感器數據                           
         public byte ft_sensor_active;           //力/扭矩傳感器激活狀態， 0-復位，1-激活
         public byte EmergencyStop;              //急停標誌
         public int motion_done;                 //到位信號
@@ -211,15 +219,15 @@
         public int trajectory_pnum;             //軌跡點編號
         public byte safety_stop0_state;  /* 安全停止信號SI0 */
         public byte safety_stop1_state;  /* 安全停止信號SI1 */
-        public byte gripper_fault_id;    /* 錯誤夾爪號 */               // + 19 = 567
+        public byte gripper_fault_id;    /* 錯誤夾爪號 */               
         public UInt16 gripper_fault;     /* 夾爪故障 */
         public UInt16 gripper_active;    /* 夾爪激活狀態 */
         public byte gripper_position;    /* 夾爪位置 */
         public byte gripper_speed;       /* 夾爪速度 */
         public byte gripper_current;     /* 夾爪電流 */
         public int gripper_tmp;          /* 夾爪溫度 */
-        public int gripper_voltage;      /* 夾爪電壓 */                 // + 15 = 582
-        public ROBOT_AUX_STATE auxState; /* 485擴展軸狀態 */            // + 25 = 607
+        public int gripper_voltage;      /* 夾爪電壓 */                 
+        public ROBOT_AUX_STATE auxState; /* 485擴展軸狀態 */            
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public EXT_AXIS_STATUS[] extAxisStatus;  /* UDP擴展軸狀態 */
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
@@ -239,11 +247,11 @@
         public int softwareUpgradeState; //軟件升級狀態  0-空閒中或上傳升級包中；1~100：升級完成百分比；-1:升級軟件失敗；-2：校驗失敗；-3：版本校驗失敗；-4：解壓失敗；-5：用戶配置升級失敗；-6：外設配置升級失敗；-7：擴展軸配置升級失敗；-8：機器人配置升級失敗；-9：DH參數配置升級失敗
         public UInt16 endLuaErrCode;    //末端LUA運行狀態 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public  UInt16[] cl_analog_output;  //控制箱模擬量輸出				  Control box analog output
-        public UInt16 tl_analog_output;     //工具模擬量輸出				  Tool analog output
-        public float gripperRotNum;           //旋轉夾爪當前旋轉圈數			  The current number of turns of the rotating clamp
-        public byte gripperRotSpeed;       //旋轉夾爪當前旋轉速度百分比	  Percentage of the current rotation speed of the rotary clamp
-        public byte gripperRotTorque;	   //旋轉夾爪當前旋轉力矩百分比	  Percentage of the current rotating torque of the rotating clamp
+        public  UInt16[] cl_analog_output;  //控制箱模擬量輸出				  
+        public UInt16 tl_analog_output;     //工具模擬量輸出				  
+        public float gripperRotNum;           //旋轉夾爪當前旋轉圈數			  
+        public byte gripperRotSpeed;       //旋轉夾爪當前旋轉速度百分比	  
+        public byte gripperRotTorque;	   //旋轉夾爪當前旋轉力矩百分比	  
         public WELDING_BREAKOFF_STATE weldingBreakOffState;//焊接中斷狀態
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
         public double[] jt_tgt_tor;//關節指令力矩
@@ -251,15 +259,20 @@
         public float wideVoltageCtrlBoxTemp;        //寬電壓控制箱溫度
         public UInt16 wideVoltageCtrlBoxFanVel;   //寬電壓控制箱風扇電流（mA）
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] toolCoord; // Tool coordinate system
+        public double[] toolCoord;         //工具座標系
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] wobjCoord; // Workpiece coordinate system
+        public double[] wobjCoord;         //工件座標系
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] extoolCoord; // External tool coordinate system
+        public double[] extoolCoord;        //外部工具座標系
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
-        public double[] exAxisCoord; // Extended axis coordinate system
-        public double load; // Load mass
+        public double[] exAxisCoord;          //擴展軸座標系
+        public double load;                   //負載質量
+
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-        public double[] loadCog;           // Load center of gravity
-        public UInt16 check_sum;         /* 和校驗 */                          
+        public double[] loadCog;           //負載質心
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+        public double[] lastServoTarget;//隊列中最後一個servoJ目標位置
+
+        public int servoJCmdNum;// servoJ指令計數
+        public UInt16 check_sum;         /* 和校驗 */        
     }

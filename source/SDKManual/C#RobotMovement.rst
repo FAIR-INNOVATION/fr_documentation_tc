@@ -1693,3 +1693,16 @@ FIR濾波代碼示例
     * @return 錯誤碼
     */
     int GetSafetyCode();
+
+清空運動指令隊列
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 清空運動指令隊列
+    * @return 錯誤碼
+    */
+    public int MotionQueueClear();

@@ -732,18 +732,6 @@
         Console.WriteLine($"robot maincode is{maincode};  subcode is{subcode}");
     }
 
-等待指定時間
-+++++++++++++++++++++++++++++++
-.. code-block:: c#
-    :linenos:
-
-    /**
-    * @brief  等待指定時間
-    * @param  [in]  t_ms  單位ms
-    * @return  錯誤碼
-    */
-    int WaitMs(int t_ms);
-
 設置寬電壓控制箱溫度及風扇轉速監控參數
 ++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C#SDK-V1.1.4  Web-3.8.3
@@ -931,106 +919,262 @@
         robot.FocusEnd();
     }
 
-設置編碼器升級
+關節扭矩傳感器靈敏度標定功能開啓
 ++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-V1.1.5  Web-3.8.4
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
     
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 設置編碼器升級
-    * @param [in] path 本地升級包全路徑(D://zUP/XXXXX.bin)
-    * @return 錯誤碼
+    * @brief 關節扭矩傳感器靈敏度標定功能開啓
+    * @param [in] status 0-關閉；1-開啓
+    * @return  錯誤碼
     */
-    int SetEncoderUpgrade(string path);
+    public int JointSensitivityEnable(int status);
 
-設置關節固件升級
+關節扭矩傳感器靈敏度數據採集
 ++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-V1.1.5  Web-3.8.4
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
     
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 設置關節固件升級
-    * @param [in] type 升級文件類型；1-升級固件；2-升級從站配置文件
-    * @param [in] path 本地升級包全路徑(D://zUP/XXXXX.bin)
+    * @brief 關節扭矩傳感器靈敏度數據採集
     * @return 錯誤碼
     */
-    int SetJointFirmwareUpgrade(int type, string path);
+    public int JointSensitivityCollect();
 
-設置控制箱固件升級
+獲取關節扭矩傳感器靈敏度標定結果
 ++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-V1.1.5  Web-3.8.4
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
     
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 設置控制箱固件升級
-    * @param [in] type 升級文件類型；1-升級固件；2-升級從站配置文件
-    * @param [in] path 本地升級包全路徑(D://zUP/XXXXX.bin)
+    * @brief 獲取關節扭矩傳感器靈敏度標定結果
+    * @param [out] calibResult j1~j6關節靈敏度[0-1]
     * @return 錯誤碼
     */
-    int SetCtrlFirmwareUpgrade(int type, string path);
+    public int JointSensitivityCalibration(ref double[] calibResult);
 
-設置末端固件升級
+關節扭矩傳感器靈敏度自動標定代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-V1.1.5  Web-3.8.4
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
     
 .. code-block:: c#
     :linenos:
 
-    /**
-    * @brief 設置末端固件升級
-    * @param [in] type 升級文件類型；1-升級固件；2-升級從站配置文件
-    * @param [in] path 本地升級包全路徑(D://zUP/XXXXX.bin)
-    * @return 錯誤碼
-    */
-    int SetEndFirmwareUpgrade(int type, string path);
-
-關節全參數配置文件升級
-++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-V1.1.5  Web-3.8.4
-    
-.. code-block:: c#
-    :linenos:
-
-    /**
-    * @brief 關節全參數配置文件升級
-    * @param [in] path 本地升級包全路徑(D://zUP/XXXXX.bin)
-    * @return 錯誤碼
-    */
-    int JointAllParamUpgrade(string path);
-
-機器人從站固件升級代碼示例
-++++++++++++++++++++++++++++++++++++++++++++++++++
-.. versionadded:: C#SDK-V1.1.5  Web-3.8.4
-    
-.. code-block:: c#
-    :linenos:
-
-    private void button83_Click(object sender, EventArgs e)
+    public void TestSensitivityCalib()
     {
-        robot.RobotEnable(0);
-        Thread.Sleep(200);
-        int rtn = robot.JointAllParamUpgrade("D://zUP/upgrade/jointallparameters.db");
-        Console.WriteLine($"robot JointAllParamUpgrade rtn is{rtn}");
-        rtn = robot.SetCtrlFirmwareUpgrade(2, "D://zUP/upgrade/FAIR_Cobot_Cbd_Asix_V2.0.bin");
-        Console.WriteLine($"robot SetCtrlFirmwareUpgrade rtn is{rtn}");
-        rtn = robot.SetEndFirmwareUpgrade(2, "D://zUP/upgrade/FAIR_Cobot_Axle_Asix_V2.4.bin");
-        Console.WriteLine($"robot SetEndFirmwareUpgrade rtn is {rtn}");
-        robot.SetSysServoBootMode();
-        rtn = robot.SetCtrlFirmwareUpgrade(1, "D://zUP/upgrade/FR_CTRL_PRIMCU_FV201212_MAIN_U4_T01_20250428(MT).bin");
-        Console.WriteLine($"robot SetCtrlFirmwareUpgrade rtn is{rtn}");
-        rtn = robot.SetEndFirmwareUpgrade(1, "D://zUP/upgrade/FR_END_FV201009_MAIN_U1_T01_20250428.bin");
-        Console.WriteLine($"robot SetEndFirmwareUpgrade rtn is {rtn}");
-        rtn = robot.SetJointFirmwareUpgrade(1, "D://zUP/upgrade/FR_SERVO_FV504214_MAIN_U7_T07_20250519.bin");
-        Console.WriteLine($"robot SetJointFirmwareUpgrade rtn is{rtn}");
+    int rtn = robot.JointSensitivityEnable(1);
+        Console.WriteLine($"JointSensitivityEnable rtn is {rtn}");
+
+        JointPos curJPos = new JointPos(0, 0, 0, 0, 0, 0);
+        rtn = robot.GetActualJointPosDegree(0, ref curJPos);
+        if (rtn != 0)
+        {
+            Console.WriteLine("Failed to get actual joint position.");
+            robot.CloseRPC();
+            return;
+        }
+
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+
+        double[] j2Angles = { 0, -30, -60, -90, -120, -150, -180 };
+
+        foreach (double j2 in j2Angles)
+        {
+            JointPos jointPos = new JointPos(
+                curJPos.jPos[0], j2, 0, -90, 0.02, curJPos.jPos[5]
+            );
+
+            DescPose descPos = new DescPose(0, 0, 0, 0, 0, 0);
+            rtn = robot.GetForwardKin( jointPos, ref descPos);
+            if (rtn != 0)
+            {
+                Console.WriteLine($"GetForwardKin failed at J2={j2}.");
+                continue;
+            }
+
+            rtn = robot.MoveJ( jointPos,  descPos, 0, 0, 100, 100, 100,  epos, -1, 0,  offset_pos);
+            if (rtn != 0)
+            {
+                Console.WriteLine($"MoveJ failed to J2={j2}, rtn={rtn}");
+                continue;
+            }
+            Thread.Sleep(200); 
+            rtn = robot.JointSensitivityCollect();
+            Console.WriteLine($"JointSensitivityCollect at J2={j2} rtn is {rtn}");
+            Thread.Sleep(100);
+        }
+
+        double[] calibResult = new double[6];
+        rtn = robot.JointSensitivityCalibration(ref calibResult);
+        Console.WriteLine($"JointSensitivityCalibration rtn is {rtn}");
+
+        rtn = robot.JointSensitivityEnable(0);
+        Console.WriteLine($"JointSensitivityEnable (disable) rtn is {rtn}");
+
+        Console.WriteLine($"Joint Sensor Calib result: " +
+            $"{calibResult[0]:F6} {calibResult[1]:F6} {calibResult[2]:F6} " +
+            $"{calibResult[3]:F6} {calibResult[4]:F6} {calibResult[5]:F6}");
+        robot.CloseRPC();
     }
 
+獲取機器人8個從站端口錯誤幀數
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
 
+    /**
+    * @brief 獲取機器人8個從站端口錯誤幀數
+    * @param [out] inRecvErr 輸入接收錯誤幀數 
+    * @param [out] inCRCErr 輸入CRC錯誤幀數 
+    * @param [out] inTransmitErr 輸入轉發錯誤幀數 
+    * @param [out] inLinkErr 輸入鏈接錯誤幀數 
+    * @param [out] outRecvErr 輸出接收錯誤幀數
+    * @param [out] outCRCErr 輸出CRC錯誤幀數
+    * @param [out] outTransmitErr 輸出轉發錯誤幀數
+    * @param [out] outLinkErr 輸出鏈接錯誤幀數
+    * @return 錯誤碼
+    */
+    public int GetSlavePortErrCounter(ref int[] inRecvErr,ref int[] inCRCErr,ref int[] inTransmitErr,ref int[] inLinkErr,ref int[] outRecvErr,ref int[] outCRCErr,ref int[] outTransmitErr,ref int[] outLinkErr);
 
+從站端口錯誤幀清零
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
 
+    /**
+    * @brief 從站端口錯誤幀清零
+    * @param [in] slaveID 從站編號0~7
+    * @return 錯誤碼
+    */
+    public int SlavePortErrCounterClear(int slaveID);
+
+獲取從站端口錯誤幀代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
+
+    public void TestSlavePortErr()
+    {
+        int[] inRecvErr = new int[8];
+        int[] inCRCErr = new int[8];
+        int[] inTransmitErr = new int[8];
+        int[] inLinkErr = new int[8];
+        int[] outRecvErr = new int[8];
+        int[] outCRCErr = new int[8];
+        int[] outTransmitErr = new int[8];
+        int[] outLinkErr = new int[8];
+
+        robot.GetSlavePortErrCounter(ref inRecvErr, ref inCRCErr, ref inTransmitErr, ref inLinkErr,
+            ref outRecvErr, ref outCRCErr, ref outTransmitErr, ref outLinkErr);
+
+        for (int i = 0; i < 8; i++)
+        {
+            if (inRecvErr[i] != 0)
+            {
+                Console.WriteLine($"inRecvErr {i} is {inRecvErr[i]}");
+            }
+
+            if (inCRCErr[i] != 0)
+            {
+                Console.WriteLine($"inCRCErr {i} is {inCRCErr[i]}");
+            }
+
+            if (inTransmitErr[i] != 0)
+            {
+                Console.WriteLine($"inTransmitErr {i} is {inTransmitErr[i]}");
+            }
+
+            if (inLinkErr[i] != 0)
+            {
+                Console.WriteLine($"inLinkErr {i} is {inLinkErr[i]}");
+            }
+
+            if (outRecvErr[i] != 0)
+            {
+                Console.WriteLine($"outRecvErr {i} is {outRecvErr[i]}");
+            }
+
+            if (outCRCErr[i] != 0)
+            {
+                Console.WriteLine($"outCRCErr {i} is {outCRCErr[i]}");
+            }
+
+            if (outTransmitErr[i] != 0)
+            {
+                Console.WriteLine($"outTransmitErr {i} is {outTransmitErr[i]}");
+            }
+
+            if (outLinkErr[i] != 0)
+            {
+                Console.WriteLine($"outLinkErr {i} is {outLinkErr[i]}");
+            }
+        }
+        Console.WriteLine("others has no err!");
+
+        for (int i = 0; i < 8; i++)
+        {
+            robot.SlavePortErrCounterClear(i);
+        }
+
+        robot.CloseRPC();
+    }
+
+設置各軸速度前饋係數
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 設置各軸速度前饋係數
+    * @param [in] radio 各軸速度前饋係數
+    * @return 錯誤碼
+    */
+    public int SetVelFeedForwardRatio(double radio[6]);
+
+獲取各軸速度前饋係數
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取各軸速度前饋係數
+    * @param [out] radio 各軸速度前饋係數
+    * @return 錯誤碼
+    */
+    public int GetVelFeedForwardRatio(ref double radio[6]);
+
+獲取從站端口錯誤幀代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: C#SDK-V1.1.9  Web-3.8.7
+    
+.. code-block:: c#
+    :linenos:
+
+    public void TestVelFeedForwardRatio()
+    {
+
+        double[] setRadio = new double[6] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+        robot.SetVelFeedForwardRatio(setRadio);
+        double[] getRadio = new double[6] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        robot.GetVelFeedForwardRatio(ref getRadio);
+        Console.WriteLine($" {getRadio[0]:F6} {getRadio[1]:F6} {getRadio[2]:F6} {getRadio[3]:F6} {getRadio[4]:F6} {getRadio[5]:F6}");
+    }
 

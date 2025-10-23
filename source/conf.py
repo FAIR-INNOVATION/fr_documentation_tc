@@ -9,7 +9,7 @@
 project = '法奧意威協作機器人使用手冊'
 copyright = '2022-2025, 法奧意威（蘇州）機器人系統有限公司'
 author = '法奧意威（蘇州）機器人系統有限公司'
-release = '3.8.6'
+release = '3.8.7'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -49,5 +49,6 @@ latex_elements = {
     'preamble': r'''
     \addto\captionsenglish{\renewcommand{\chaptername}{}}
     \usepackage[UTF8, scheme = plain]{ctex}
+    \setlength{\headheight}{12.1pt}
     ''',
 }
