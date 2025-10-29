@@ -44,6 +44,7 @@ PDF下載
     points
     status
     application
+    process
     system
     teach_pendant
     custom_protocol_slave
