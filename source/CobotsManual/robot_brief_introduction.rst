@@ -136,12 +136,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -207,12 +207,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -278,12 +278,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -349,12 +349,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -420,12 +420,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -491,12 +491,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **运动学**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **动力学**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -562,12 +562,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -633,12 +633,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -704,12 +704,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -775,12 +775,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
@@ -846,12 +846,12 @@ FR系列協作機器人DH參數顯示如下：
 
    * - **運動學**
      - **theta[rad]**
-     - **a[m]**
-     - **d[m]**
+     - **a[mm]**
+     - **d[mm]**
      - **alpha[rad]**
      - **動力學**
      - **Mass[kg]**
-     - **Center of Mass[m]**
+     - **Center of Mass[mm]**
 
    * - Joint1
      - 0
