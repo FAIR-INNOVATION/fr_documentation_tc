@@ -902,11 +902,18 @@ jog點動立即停止
 
     /**
     * @brief 關節扭矩控制
-    * @param  [in] torque j1~j6關節扭矩，單位Nm
-    * @param  [in] interval 指令週期，單位s，範圍[0.001~0.008]
-    * @return  錯誤碼
+    * @param [in] torque j1~j6關節扭矩，單位Nm
+    * @param [in] interval 指令週期，單位s，範圍[0.001~0.008]
+    * @param [in] checkFlag 檢測策略
+    *                       0-不限制；
+    *                       1-限制功率；
+    *                       2-限制速度；
+    *                       3-功率和速度同時限制
+    * @param [in] jPowerLimit 關節最大功率限制(W)
+    * @param [in] jVelLimit 關節最大速度(°/s)
+    * @return 錯誤碼
     */
-    int ServoJT(double[] torque, double interval);
+    public int ServoJT(double[] torque, double interval, int checkFlag, double[] jPowerLimit, double[] jVelLimit)
 
 關節扭矩控制結束
 ++++++++++++++++++++++++++++++++++
@@ -990,6 +997,59 @@ jog點動立即停止
         count -= 1;
         robot.WaitMs((int)(cmdT * 1000));
         }
+    }
+
+具有超速保護的關節扭矩控制程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    public int ServoJTWithSafety()
+    {
+        robot.ResetAllError();
+        Thread.Sleep(500);
+
+        double[] torques = new double[6] { 0, 0, 0, 0, 0, 0 };
+        robot.GetJointTorques(1, torques);
+
+        robot.ServoJTStart();
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+        robot.DragTeachSwitch(1);
+
+        int checkFlag = 0;
+        double[] jPowerLimit = new double[6] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+        //double[] jPowerLimit = new double[6] { 10.0, 10.0, 10.0, 10.0, 10.0, 10.0 };
+        // double[] jVelLimit = new double[6] { 10.0, 10.0, 10.0, 10.0, 10.0, 10.0 };
+        double[] jVelLimit = new double[6] {50, 50, 50, 50, 50, 50 };
+        int count = 80000;
+        int errorNum = 0;
+        int error = 0;
+        while (count > 0)
+        {
+            
+            torques[2] = torques[2] + 0.01; 
+            error = robot.ServoJT(torques, 0.008, checkFlag, jPowerLimit, jVelLimit); 
+
+            Console.WriteLine($"ServoJT rtn is {error}");
+            count = count - 1;
+            Thread.Sleep(1);
+                
+            robot.GetRobotRealTimeState(ref pkg);
+            Console.WriteLine($"maincode {pkg.main_code}, subcode {pkg.sub_code}");
+            if (error != 0)
+            {
+                errorNum++;
+                if (errorNum > 5)
+                {
+                    break;
+                }
+
+            }
+        }
+        robot.DragTeachSwitch(0);
+        error = robot.ServoJTEnd();
+
+        return 0;
     }
 
 樣條運動開始

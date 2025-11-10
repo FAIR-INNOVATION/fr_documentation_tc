@@ -419,12 +419,15 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoJT(torque, interval)``"
+    "原型", "``ServoJT(torque, interval, checkFlag=0, jPowerLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], jVelLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])``"
     "描述", "關節扭矩控制"
-    "必選參數", "- ``torque``:j1~j6關節扭矩，單位Nm
-    - ``interval``:指令週期，單位s，範圍[0.001~0.008]"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "必選參數", "- ``torque``: j1~j6關節扭矩，單位Nm
+                - ``interval``: 指令週期，單位s，範圍[0.001~0.008]
+                - ``checkFlag``: 檢測策略 0-不限制；1-限制功率；2-限制速度；3-功率和速度同時限制, 預設0
+                - ``jPowerLimit``: 預設參數 jPowerLimit 關節最大功率限制(W)，預設[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                - ``jVelLimit``: 關節最大速度(°/s)，預設[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
 關節扭矩控制結束
 +++++++++++++++++++++++++
@@ -460,6 +463,37 @@ jog點動立即停止
     error = robot.ServoJTEnd()
     robot.DragTeachSwitch(0)
     robot.CloseRPC()
+
+具有超速保護的關節扭矩控制程式碼範例
+++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    robot = Robot.RPC('192.168.58.2')
+    robot.ResetAllError()
+    time.sleep(0.5)
+    torques = [0.0] * 6
+    rtn, torques = robot.GetJointTorques(1)
+    robot.ServoJTStart()
+    robot.DragTeachSwitch(1)
+    checkFlag = 3
+    jPowerLimit = [10.0, 10.0, 10.0, 10.0, 10.0, 10.0]
+    jVelLimit = [181,80,80,80,80,80]
+    count = 800000
+    error = 0
+    while count > 0:
+        torques[2] = torques[2] + 0.01
+        error = robot.ServoJT(torques, 0.008, checkFlag, jPowerLimit, jVelLimit)
+        print(f"ServoJT rtn is {error}")
+        count = count - 1
+        time.sleep(0.001)
+        rtn,pkg = robot.GetRobotRealTimeState()
+        print(f"maincode {pkg.main_code},subcode {pkg.sub_code}")
+    robot.DragTeachSwitch(0)
+    error = robot.ServoJTEnd()
 
 笛卡爾空間伺服模式運動
 ++++++++++++++++++++++++

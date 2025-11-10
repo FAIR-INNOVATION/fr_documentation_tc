@@ -52,7 +52,7 @@
 -------------
 如果您已有FRCap專案資料夾，且符合FRCap專案結構，請直接閱讀\ `建構FRCap <frcap_quick_start.html#id3>`__\。
 
-如果您已有檔案字尾名稱為「.frcap」的完整外掛程式包，請直接閱讀\ `Hello FRCap <frcap_quick_start.html#hello-frcap>`__\。
+如果您已有檔案字尾名稱為「.plugin」的完整外掛程式包，請直接閱讀\ `Hello FRCap <frcap_quick_start.html#hello-frcap>`__\。
 
 建構FRCap
 -------------
@@ -74,7 +74,7 @@
 
    ./build.sh
 
-建置完成後，在FRCap專案目錄下產生檔案名稱為FRCap名稱的，檔案後綴為「.frcap」的套件檔案。
+建置完成後，在FRCap專案目錄下產生檔案名稱為FRCap名稱的，檔案後綴為「.plugin」的套件檔案。
 
 .. image:: frcap_pictures/006.png
    :width: 6in
@@ -84,7 +84,7 @@
 
 Hello FRCap
 -------------
-FRCap專案建置完成後，在本機電腦中開啟瀏覽器並輸入機器人預設IP位址（http://192.168.58.2）並登入進入WebApp，依序點擊“系統設定”->“FRCap管理”->“匯入” 。選擇建置完成的「.frcap」字尾的FRCap包文件，開啟即可上傳。上傳成功後在下方的插件資訊清單中展示導入的FRCap資訊。
+FRCap專案建置完成後，在本機電腦中開啟瀏覽器並輸入機器人預設IP位址（http://192.168.58.2）並登入進入WebApp，依序點擊“系統設定”->“FRCap管理”->“匯入” 。選擇建置完成的「.plugin」字尾的FRCap包文件，開啟即可上傳。上傳成功後在下方的插件資訊清單中展示導入的FRCap資訊。
 
 透過清單中的操作列控制FRCap啟用與否和刪除，在啟動停止狀態列查看FRCap的啟用狀態。
 

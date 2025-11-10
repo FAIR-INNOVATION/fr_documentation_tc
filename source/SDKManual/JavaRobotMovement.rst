@@ -790,12 +790,19 @@ jog點動立即停止
     :linenos:
 
     /**
-    * @brief  關節扭矩控制
-    * @param  [in] torque j1~j6關節扭矩，單位Nm
-    * @param  [in] interval 指令週期，單位s，範圍[0.001~0.008]
-    * @return  錯誤碼
+    * @brief 關節扭矩控制
+    * @param torque j1~j6關節扭矩，單位Nm
+    * @param interval 指令週期，單位s，範圍[0.001~0.008]
+    * @param checkFlag 檢測策略
+    *                  0-不限制；
+    *                  1-限制功率；
+    *                  2-限制速度；
+    *                  3-功率和速度同時限制
+    * @param jPowerLimit 各關節最大功率限制(W)
+    * @param jVelLimit 各關節最大速度(°/s)
+    * @return 錯誤碼
     */
-    int ServoJT(Object[] torque, double interval)
+    public int ServoJT(double[] torque, double interval, int checkFlag, double[] jPowerLimit, double[] jVelLimit)
 
 關節扭矩控制結束
 +++++++++++++++++++++++++++++
@@ -834,6 +841,42 @@ jog點動立即停止
 
         robot.CloseRPC();
         return 0;
+    }
+
+具有超速保護的關節扭矩控制程式碼範例
++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void ServoJTWithSafety(Robot robot)
+    {
+        robot.ResetAllError();
+        robot.Sleep(500);
+        List<Number> torques;
+        torques = robot.GetJointTorques(1);
+        robot.ServoJTStart(); // 開始servoJT
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+        robot.DragTeachSwitch(1);
+        int checkFlag = 3; // -1,3 - 功率和速度同時限制
+        // double[] jPowerLimit = {1.0,1.0,1.0,1.0,1.0,1.0}; // 5001
+        double[] jPowerLimit = { 10.0, 10.0, 10.0, 10.0, 10.0, 10.0 }; // 各關節功率限制(W)
+        double[] jVelLimit = { 50, 50, 50, 50, 50, 50 }; // 180.1,-1 - 各關節速度限制(°/s)
+        int count = 800000;
+        int error = 0;
+        double[] tor = new double[]{(double)torques.get(1), (double)torques.get(2), (double)torques.get(3),
+                                   (double)torques.get(4), (double)torques.get(5), (double)torques.get(6)};
+        while (count > 0)
+        {
+            tor[2] = tor[2] + 0.01; // 每次1軸增加0.01NM，運動100次
+            error = robot.ServoJT(tor, 0.01, checkFlag, jPowerLimit, jVelLimit);  // 關節空間伺服模式運動
+            System.out.printf("ServoJT 返回值為 %d\n", error);
+            count = count - 1;
+            robot.Sleep(1);
+            pkg = robot.GetRobotRealTimeState();
+            System.out.printf("主代碼 %d, 子代碼 %d\n", pkg.main_code, pkg.sub_code);
+        }
+        robot.DragTeachSwitch(0);
+        error = robot.ServoJTEnd();  // 伺服運動結束
     }
 
 笛卡爾空間伺服模式運動

@@ -7,7 +7,7 @@ FRCap案例
 FAIRINO Palletizer（碼垛機）
 -----------------------------
 
-將專案中的build資料夾下的「碼垛機Palletizer.frcap」在WebApp中上傳註冊啟用後即可使用。
+將專案中的build資料夾下的「碼垛機Palletizer.plugin」在WebApp中上傳註冊啟用後即可使用。
 
 .. image:: frcap_pictures/011.png
    :width: 6in

@@ -594,9 +594,12 @@ jog點動立即停止
 
     /**
     * @brief 關節扭矩控制
-    * @param [in] torque j1~j6關節扭矩，單位Nm
-    * @param [in] interval 指令週期，單位s，範圍[0.001~0.008]
-    * @return 錯誤碼
+    * @param  [in] torque j1~j6關節扭矩，單位Nm
+    * @param  [in] interval 指令週期，單位s，範圍[0.001~0.008]
+    * @param  [in] checkFlag 檢測策略 0-不限制；1-限制功率；2-限制速度；3-功率和速度同時限制
+    * @param  [in] jPowerLimit 關節最大功率限制(W)
+    * @param  [in] jVelLimit 關節最大速度(°/s)
+    * @return  錯誤碼
     */
     errno_t ServoJT(float torque[], double interval);
 
@@ -649,6 +652,46 @@ jog點動立即停止
          robot.CloseRPC();
          return 0;
      }
+
+具有超速保護的關節扭矩控制程式碼範例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int ServoJTWithSafety(FRRobot* robot)
+    {
+        robot->ResetAllError();
+        robot->Sleep(500);
+        float torques[] = { 0, 0, 0, 0, 0, 0 };
+        robot->GetJointTorques(1, torques);
+        robot->ServoJTStart(); 
+        ROBOT_STATE_PKG pkg = {};
+        robot->DragTeachSwitch(1);
+        int checkFlag = 3;
+        //double jPowerLimit[6] = {1, 1, 1, 1, 1, 1}; 
+        double jPowerLimit[6] = { 10.0, 10.0, 10.0, 10.0, 10.0, 10.0 };
+        double jVelLimit[6] = { 181, 80, 80, 80, 80, 80 };
+        int count = 800000;
+        int error = 0;
+        while (count > 0)
+        {
+            torques[2] = torques[2] + 0.01;
+            error = robot->ServoJT(torques, 0.008, checkFlag, jPowerLimit, jVelLimit); 
+            if (error != 0)
+            {
+                robot->ServoJTEnd();
+            }
+            printf("ServoJT rtn is %d\n", error);
+            count = count - 1;
+            robot->Sleep(1);
+            robot->GetRobotRealTimeState(&pkg);
+            printf("maincode %d, subcode %d\n", pkg.main_code, pkg.sub_code);
+        }
+        robot->DragTeachSwitch(0);
+        error = robot->ServoJTEnd();  
+        return 0;
+    }
 
 笛卡爾空間伺服模式運動
 ++++++++++++++++++++++++++++++++++
