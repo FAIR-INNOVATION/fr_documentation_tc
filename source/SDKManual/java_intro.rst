@@ -22,6 +22,7 @@ Java
     :numbered: 5
     :maxdepth: 5
 
+    JavaVersionIntro
     JavaDataStructure
     JavaRobotBase
     JavaRobotMovement

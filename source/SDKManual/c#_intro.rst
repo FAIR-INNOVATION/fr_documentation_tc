@@ -19,6 +19,7 @@ C#
     :numbered: 5
     :maxdepth: 5
 
+    C#VersionIntro
     C#DataStructure
     C#RobotBase
     C#RobotMovement

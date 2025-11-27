@@ -22,6 +22,7 @@ Python
     :numbered: 5
     :maxdepth: 5
 
+    PythonVersionIntro
     PythonRobotStatusFeedback
     PythonRobotBase
     PythonRobotMovement

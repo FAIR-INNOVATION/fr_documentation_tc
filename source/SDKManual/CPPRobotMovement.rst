@@ -1537,3 +1537,122 @@ FIR濾波代碼示例
     * @return 錯誤碼
     */
     errno_t MotionQueueClear();
+
+移動到相貫線起始點
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 移動到相貫線起始點
+    * @param [in] mainPoint 主管6個示教點的笛卡爾位姿
+    * @param [in] mainExaxisPos 主管6個示教點擴展軸位置
+    * @param [in] piecePoint 支管6個示教點的笛卡爾位姿
+    * @param [in] pieceExaxisPos 支管6個示教點擴展軸位置
+    * @param [in] extAxisFlag 是否啟用擴展軸；0-不啟用；1-啟用
+    * @param [in] exaxisPos 起點擴展軸位置
+    * @param [in] tool 工具座標系編號
+    * @param [in] wobj 工件座標系編號
+    * @param [in] vel 速度百分比
+    * @param [in] acc 加速度百分比
+    * @param [in] ovl 速度縮放因子
+    * @param [in] oacc 加速度縮放因子
+    * @param [in] moveType 運動類型; 0-PTP；1-LIN
+    * @param [in] moveDirection 運動方向；0-順時針；1-逆時針
+    * @param [in] offset 偏移量
+    * @return 錯誤碼
+    */
+    errno_t MoveToIntersectLineStart(DescPose mainPoint[6], ExaxisPos mainExaxisPos[6], DescPose piecePoint[6], ExaxisPos pieceExaxisPos[6], int extAxisFlag, ExaxisPos exaxisPos, int tool, int wobj, double vel, double acc, double ovl, double oacc, int moveType, int moveDirection, DescPose offset);
+            
+相貫線運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 相貫線運動
+    * @param [in] mainPoint 主管6個示教點的笛卡爾位姿
+    * @param [in] mainExaxisPos 主管6個示教點擴展軸位置
+    * @param [in] piecePoint 支管6個示教點的笛卡爾位姿
+    * @param [in] pieceExaxisPos 支管6個示教點擴展軸位置
+    * @param [in] extAxisFlag 是否啟用擴展軸；0-不啟用；1-啟用
+    * @param [in] exaxisPos 起點擴展軸位置
+    * @param [in] tool 工具座標系編號
+    * @param [in] wobj 工件座標系編號
+    * @param [in] vel 速度百分比
+    * @param [in] acc 加速度百分比
+    * @param [in] ovl 速度縮放因子
+    * @param [in] oacc 加速度縮放因子
+    * @param [in] moveDirection 運動方向; 0-順時針；1-逆時針
+    * @param [in] offset 偏移量
+    * @return 錯誤碼
+    */
+    errno_t MoveIntersectLine(DescPose mainPoint[6], ExaxisPos mainExaxisPos[6], DescPose piecePoint[6], ExaxisPos pieceExaxisPos[6], int extAxisFlag, ExaxisPos exaxisPos[4], int tool, int wobj, double vel, double acc, double ovl, double oacc, int moveDirection, DescPose offset);
+                
+機器人相貫線運動程式碼範例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    void TestIntersectLineMove()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(3);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return ;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        DescPose mainPoint[6] = {};
+        DescPose piecePoint[6] = {};
+        ExaxisPos mainExaxisPos[6] = {};
+        ExaxisPos pieceExaxisPos[6] = {};
+        int extAxisFlag = 1;
+        ExaxisPos exaxisPos[4] = {};
+        DescPose offset = { 0.0, 2.0 ,30.0, -2.0, 0.0, 0.0 };
+        mainPoint[0] = {490.004, -383.194, 402.735, -9.332, -1.528, 69.594};
+        mainPoint[1] = {444.950, -407.117, 389.011, -5.546, -2.196, 65.279};
+        mainPoint[2] = {445.168, -463.605, 355.759, -1.544, -10.886, 57.104};
+        mainPoint[3] = {507.529, -485.385, 343.013, -0.786, -4.834, 61.799};
+        mainPoint[4] = {554.390, -442.647, 367.701, -4.761, -10.181, 64.925};
+        mainPoint[5] = {532.552, -394.003, 396.467, -13.732, -13.592, 67.411};
+        mainExaxisPos[0] = { -29.996, 0.000, 0.000, 0.000 };
+        mainExaxisPos[1] = { -29.996, 0.000, 0.000, 0.000 };
+        mainExaxisPos[2] = { -29.996, 0.000, 0.000, 0.000 };
+        mainExaxisPos[3] = { -29.996, 0.000, 0.000, 0.000 };
+        mainExaxisPos[4] = { -29.996, 0.000, 0.000, 0.000 };
+        mainExaxisPos[5] = { -29.996, 0.000, 0.000, 0.000 };
+        piecePoint[0] = { 505.571, -192.408, 316.759, 38.098, 37.051, 139.447 };
+        piecePoint[1] = {533.837, -201.558, 332.340, 34.644, 42.339, 137.748};
+        piecePoint[2] = {530.386, -225.085, 373.808, 35.431, 45.111, 137.560};
+        piecePoint[3] = {485.646, -229.195, 383.778, 33.870, 45.173, 137.064};
+        piecePoint[4] = {460.551, -212.161, 354.256, 28.856, 45.602, 135.930};
+        piecePoint[5] = {474.217, -197.124, 324.611, 42.469, 41.133, 148.167};
+        pieceExaxisPos[0] = { -29.996, -0.000, 0.000, 0.000 };
+        pieceExaxisPos[1] = { -29.996, -0.000, 0.000, 0.000 };
+        pieceExaxisPos[2] = { -29.996, -0.000, 0.000, 0.000 };
+        pieceExaxisPos[3] = { -29.996, -0.000, 0.000, 0.000 };
+        pieceExaxisPos[4] = { -29.996, -0.000, 0.000, 0.000 };
+        pieceExaxisPos[5] = { -29.996, -0.000, 0.000, 0.000 };
+        exaxisPos[0] = {-29.996, -0.000, 0.000, 0.000};
+        exaxisPos[1] = {-44.994, 90.000, 0.000, 0.000};
+        exaxisPos[2] = {-59.992, 0.002, 0.000, 0.000};
+        exaxisPos[3] = {-44.994, -89.997, 0.000, 0.000};
+        int tool = 2;
+        int wobj = 0;
+        double vel = 100.0;
+        double acc = 100.0;
+        double ovl = 12.0;
+        double oacc = 12.0; 
+        int moveType = 1;
+        int moveDirection = 1;
+        rtn = robot.MoveToIntersectLineStart(mainPoint, mainExaxisPos, piecePoint, pieceExaxisPos, extAxisFlag, exaxisPos[0], tool, wobj, vel, acc, ovl, oacc, moveType, moveDirection, offset);
+        printf("MoveToIntersectLineStart rtn is %d\n", rtn);
+        rtn = robot.MoveIntersectLine(mainPoint, mainExaxisPos, piecePoint, pieceExaxisPos, extAxisFlag, exaxisPos, tool, wobj, vel, acc, 5.0, 5.0, moveDirection, offset);
+        printf("MoveIntersectLine rtn is %d\n", rtn);
+        robot.CloseRPC();
+        return ;
+    }

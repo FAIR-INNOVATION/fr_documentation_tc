@@ -22,6 +22,7 @@ C++
     :numbered: 5
     :maxdepth: 5
 
+    CPPVersionIntro
     CPPDataStructure
     CPPRobotBase
     CPPRobotMovement
