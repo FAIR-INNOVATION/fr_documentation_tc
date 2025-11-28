@@ -303,9 +303,9 @@
 FAIRINO SimMachine
 -----------------------
 
-    :download:`FAIRINO SimMachine VMware <https://drive.google.com/file/d/1g_6i5CyYniOvjFxxVvTiIewqsq31hPCi/view?usp=drive_link>`
+    :download:`FAIRINO SimMachine VMware <https://drive.google.com/file/d/1H4MoETDawhJTKhN4uqn0KB1l4d6uXyc0/view?usp=drive_link>`
     
-    :download:`FAIRINO SimMachine Docker <https://drive.google.com/file/d/16uGlEqjda2cGqxOy072LiY6FWNnwJm4t/view?usp=drive_link>`
+    :download:`FAIRINO SimMachine Docker <https://drive.google.com/file/d/17SuxHmpq9M4js7pqowebgwKVJ5JG6lRL/view?usp=drive_link>`
 
 碼高機frcap
 ---------------------------------
@@ -351,9 +351,8 @@ Java SDK
 
 機器人軟體下載
 ---------------------------------
-    :download:`FAIRINO-CobotSoftware-QX-V3.9.0-20251126.zip <https://drive.google.com/file/d/1YsKf46y7lFB3kyYlNxI0pMZjCanz2feQ/view?usp=sharing>`
+    :download:`FAIRINO-CobotSoftware-QX-V3.9.0-20251127.zip <https://drive.google.com/file/d/1Xq5unkF5Q4uVPBqaI_twQhyo9WmTf9Qu/view?usp=sharing>`
    
-    :download:`FAIRINO-CobotSoftware-LA-V3.9.0-20251126.zip <https://drive.google.com/file/d/1YsKf46y7lFB3kyYlNxI0pMZjCanz2feQ/view?usp=sharing>`
     
 
     

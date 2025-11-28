@@ -15,12 +15,12 @@
 
    * - V3.9.0
      - 2025-11-26
-     - | 1. JointSensitivityCalibration() 介面增加 j1~j6 關節線性度回傳；
-       | 2. 增加 JointHysteresisError() 介面；
-       | 3. 增加 JointRepeatability() 介面；
-       | 4. 增加 SetAdmittanceParams() 介面；
-       | 5. 增加 MoveToIntersectLineStart() 介面；
-       | 6. 增加 MoveIntersectLine() 介面；
+     - | 1. JointSensitivityCalibration() 介面增加 j1~j6 關節線性度回傳
+       | 2. 增加 JointHysteresisError() 介面
+       | 3. 增加 JointRepeatability() 介面
+       | 4. 增加 SetAdmittanceParams() 介面
+       | 5. 增加 MoveToIntersectLineStart() 介面
+       | 6. 增加 MoveIntersectLine() 介面
 
    * - V3.8.7
      - 2025-10-21
