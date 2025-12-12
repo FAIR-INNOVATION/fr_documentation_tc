@@ -481,7 +481,7 @@ FR系列協作機器人DH參數顯示如下：
      - 0.36
      - [0.93, 0.81, -20.05]
 
-.. centered:: 表格 2.4-6 FR5L 協作機器人DH參數表
+.. centered:: 表格 2.4-6 FR5-WML 協作機器人DH參數表
 
 .. list-table::
    :widths: 70 50 50 50 50 70 50 120
@@ -489,12 +489,12 @@ FR系列協作機器人DH參數顯示如下：
    :align: center
    :class: no-padding sheet-center
 
-   * - **运动学**
+   * - **運動學**
      - **theta[rad]**
      - **a[mm]**
      - **d[mm]**
      - **alpha[rad]**
-     - **动力学**
+     - **動力學**
      - **Mass[kg]**
      - **Center of Mass[mm]**
 

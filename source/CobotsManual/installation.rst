@@ -92,35 +92,41 @@
 
 .. centered:: 圖表 3.1-5 FR5型號協作機器人
 
+.. figure:: installation/126.png
+	:align: center
+	:width: 6in
+
+.. centered:: 圖表 3.1-6 FR5-WML型號協作機器人
+
 .. figure:: installation/004.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.1-6 FR10型號協作機器人
+.. centered:: 圖表 3.1-7 FR10型號協作機器人
 
 .. figure:: installation/005.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.1-7 FR16型號協作機器人
+.. centered:: 圖表 3.1-8 FR16型號協作機器人
 
 .. figure:: installation/006.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.1-8 FR20型號協作機器人
+.. centered:: 圖表 3.1-9 FR20型號協作機器人
 
 .. figure:: installation/007.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.1-9 FR30型號協作機器人
+.. centered:: 圖表 3.1-10 FR30型號協作機器人
 
 .. figure:: installation/125.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.1-10 FR30L型號協作機器人
+.. centered:: 圖表 3.1-11 FR30L型號協作機器人
 
 有效性和責任
 ~~~~~~~~~~~~~~~~
