@@ -20,6 +20,8 @@
 
     \ `日本語 <https://fairino-doc-ja.readthedocs.io/latest/>`__\ 
 
+   \ `Italiano <https://fairino-doc-it.readthedocs.io/latest/>`__\ 
+
 .. toctree::
    :maxdepth: 6
    :caption: 使用者手冊
