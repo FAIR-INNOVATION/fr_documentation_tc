@@ -408,53 +408,57 @@
     * @param  ILC_sign ILC啓停控制， 0-停止，1-訓練，2-實操
     * @param  max_dis 最大調整距離，單位mm
     * @param  max_ang 最大調整角度，單位deg
-    * @param  M 質量參數
-    * @param  B 阻尼參數
+    * @param  M rx、ry質量參數[0.1-10], 預設2
+    * @param  B rx、ry阻尼參數[0.1-50], 預設8
+    * @param  threshold rx、ry啟動閾值[0-10], 預設0.2
+    * @param  adjustCoeff rx、ry力矩調節係數[0-1], 預設1
     * @param  polishRadio 打磨半徑，單位mm
     * @param  filter_Sign 濾波開啓標誌 0-關；1-開，默認關閉
     * @param  posAdapt_sign 姿態順應開啓標誌 0-關；1-開，默認關閉
     * @param  isNoBlock 阻塞標誌，0-阻塞；1-非阻塞
     * @return  錯誤碼
     */
-    public int FT_Control(int flag, int sensor_id, int[] select, ForceTorque ft, double[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang,double[] M,double[] B, double polishRadio,int filter_Sign, int posAdapt_sign, int isNoBlock)
+    public int FT_Control(int flag, int sensor_id, int[] select, ForceTorque ft, double[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang,double[] M,double[] B, double[] threshold, double[] adjustCoeff, double polishRadio,int filter_Sign, int posAdapt_sign, int isNoBlock)
 
 具有阻尼的恆力控制代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    public static void TestFTControlWithDamping(Robot robot)
+    public static int TestFTControlWithAdjustCoeff(Robot robot)
     {
         int sensor_id = 10;
         int[] select = { 0,0,1,0,0,0 };
         double[] ft_pid = { 0.0008, 0.0, 0.0, 0.0, 0.0, 0.0 };
         int adj_sign = 0;
         int ILC_sign = 0;
-        double max_dis = 100.0;
+        double max_dis = 1000.0;
         double max_ang = 20;
-        ForceTorque ft =new ForceTorque(0,0,0,0,0,0);
-        ft.fz = -10.0;
+        ForceTorque ft = new ForceTorque(0.0,0,0,0,0,0);
         ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
-        JointPos j1=new JointPos(-118.985, -86.882, -118.139, -65.019, 90.002, 54.951);
-        JointPos j2=new JointPos(-77.055, -77.218, -126.219, -66.591, 90.028, 96.881);
-        DescPose desc_p1=new DescPose(-300.856, -332.618, 309.240, 179.976, -0.031, 96.065);
-        DescPose desc_p2=new DescPose(-16.399, -383.760, 309.312, 179.975, -0.031, 96.064);
+        JointPos j1=new JointPos(80.765, -98.795, 106.548, -97.734, -89.999, 94.842);
+        JointPos j2=new JointPos(43.067, -84.429, 92.620, -98.175, -90.011, 57.144);
+        DescPose desc_p1=new DescPose(5.009, -547.463, 262.053, -179.999, -0.019, 75.923);
+        DescPose desc_p2=new DescPose(-347.966, -547.463, 262.048, -180.000, -0.019, 75.923);
         DescPose offset_pos=new DescPose(0, 0, 0, 0, 0, 0);
-        double[] M = {2.0, 2.0};
-        double[] B = {8.0, 8.0};
-        double polishRadio;
-        int filter_Sign;
-        int posAdapt_sign;
+        double[] M = { 2.0, 2.0 };
+        double[] B = { 15.0, 15.0 };
+        double[] threshold = {1.0, 1.0};
+        double[] adjustCoeff = {1.0, 0.8};
+        double polishRadio = 0.0;
+        int filter_Sign = 0;
+        int posAdapt_sign = 1;
         int isNoBlock;
-        DescPose ftCoord =new DescPose();
-        robot.FT_SetRCS(2, ftCoord);
-        int rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0);
-        System.out.printf("FT_Control start rtn is %d\n", rtn);
-        rtn = robot.MoveL(j1, desc_p1, 0, 0, 100.0, 100.0, 20.0, -1.0,0, epos, 0, 0, offset_pos,0,0,10);
-        rtn = robot.MoveL(j2, desc_p2, 0, 0, 100.0, 100.0, 20.0, -1.0, 0,epos, 0, 0, offset_pos,0,0,10);
-        rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, 0, 0, 1, 0);
-        System.out.printf("FT_Control end rtn is %d\n", rtn);
-        robot.CloseRPC();
+        ft.fz = -10.0;
+        while(true)
+        {
+            int rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, threshold, adjustCoeff, 0, 0, 1, 0);
+            System.out.printf("FT_Control start rtn is %d\n", rtn);
+            robot.MoveL(j1, desc_p1, 1, 0, 100.0, 100.0, 100.0, -1.0, 0, epos, 0, 0, offset_pos, 0,0, 0,10);
+            robot.MoveL(j2, desc_p2, 1, 0, 100.0, 100.0, 100.0, -1.0, 0, epos, 0, 0, offset_pos, 0,0, 0,10);
+            rtn = robot.FT_Control(0, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, threshold, adjustCoeff, 0, 0, 1, 0);
+            System.out.printf("FT_Control end rtn is %d\n", rtn);
+        }
     }
 
 柔順控制開啓
@@ -833,3 +837,16 @@
         robot.CloseRPC();
         return 0;
     }
+
+開啟力矩補償功能及補償係數
++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 開啟力矩補償功能及補償係數
+    * @param  status 開關，0-關閉；1-開啟
+    * @param  torqueCoeff J1-J6力矩補償係數[0-1]
+    * @return 錯誤碼
+    */
+    public int SerCoderCompenParams(int status, double[] torqueCoeff)

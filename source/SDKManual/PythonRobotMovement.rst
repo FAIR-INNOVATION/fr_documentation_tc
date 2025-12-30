@@ -109,12 +109,12 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``MoveL(desc_pos, tool, user, joint_pos = [0.0,0.0,0.0,0.0,0.0,0.0], vel = 20.0, acc = 0.0 , ovl = 100.0, blendR = -1.0, blendMode = 0, exaxis_pos = [0.0,0.0,0.0,0.0], search = 0, offset_flag = 0, offset_pos = [0.0,0.0,0.0,0.0,0.0,0.0],config=-1,velAccParamMode=0,overSpeedStrategy=0,speedPercent=10)``"
+    "原型", "``MoveL(desc_pos, tool, user, joint_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], vel=20.0, acc=0.0, ovl=100.0,blendR=-1.0, blendMode = 0,exaxis_pos=[0.0, 0.0, 0.0, 0.0], search=0, offset_flag=0,offset_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],oacc = 100.0,config=-1,velAccParamMode=0,overSpeedStrategy=0,speedPercent=10)``"
     "描述", "笛卡爾空間直線運動"
     "必選參數", "- ``desc_pos``:目標笛卡爾位姿，單位[mm][°]；
     - ``tool``:工具號，[0~14]；
     - ``user``:工件號，[0~14]；"
-    "默認參數", "- ``joint_pos``:目標關節位置，單位 [°] 默認初值爲[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
+    "默認參數", "- ``joint_pos``:目標關節位置，單位 [°] 默認初值為[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
     - ``vel``:速度百分比，[0~100] 默認20.0；
     - ``acc``:加速度百分比，[0~100]，暫不開放 默認0.0；
     - ``ovl``:速度縮放因子，[0~100] 默認100.0；
@@ -124,9 +124,10 @@ jog點動立即停止
     - ``search``:[0]-不焊絲尋位，[1]-焊絲尋位；
     - ``offset_flag``:[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0;
     - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0];
+    - ``oacc``:加速度縮放因子[0-100]/物理加速度(mm/s2) 默認 100;
     - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1
     - ``velAccParamMode``:速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2) 默認0
-    - ``overSpeedStrategy``:超速處理策略，0-策略關閉；1-標準；2-超速時報錯停止；3-自適應降速，默認爲0
+    - ``overSpeedStrategy``:超速處理策略，0-策略關閉；1-標準；2-超速時報錯停止；3-自適應降速，默認為0
     - ``speedPercent``:允許降速閾值百分比[0-100]，默認10%
     "
     "返回值", "錯誤碼 成功-0  失敗- errcode"
@@ -139,7 +140,7 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``MoveC(desc_pos_p, tool_p, user_p, desc_pos_t, tool_t, user_t, joint_pos_p =[0.0,0.0,0.0, 0.0,0.0,0.0],joint_pos_t=[0.0,0.0,0.0,0.0,0.0,0.0], vel_p = 20.0,acc_p=100.0, exaxis_pos_p =[0.0,0.0,0.0,0.0], offset_flag_p = 0, offset_pos_p = [0.0,0.0,0.0,0.0,0.0,0.0], vel_t= 20.0, acc_t=100.0,exaxis_pos_t=[0.0,0.0,0.0,0.0], offset_flag_t = 0, offset_pos_t = [0.0,0.0,0.0, 0.0,0.0,0.0], ovl = 100.0, blendR = -1.0, config=-1,velAccParamMode=0)``"
+    "原型", "``MoveC(desc_pos_p, tool_p, user_p, desc_pos_t, tool_t, user_t, joint_pos_p=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], joint_pos_t=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],vel_p=20.0, acc_p=100.0, exaxis_pos_p=[0.0, 0.0, 0.0, 0.0], offset_flag_p=0,offset_pos_p=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],vel_t=20.0, acc_t=100.0, exaxis_pos_t=[0.0, 0.0, 0.0, 0.0], offset_flag_t=0,offset_pos_t=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],ovl=100.0, blendR=-1.0,oacc=100.0,config=-1,velAccParamMode=0)``"
     "描述", "笛卡爾空間圓弧運動"
     "必選參數", "- ``desc_pos_p``:路徑點笛卡爾位姿，單位[mm][°]；
     - ``tool_p``:路徑點工具號，[0~14];
@@ -147,8 +148,8 @@ jog點動立即停止
     - ``desc_pos_t``:目標點笛卡爾位姿，單位 [mm][°];
     - ``tool_t``:工具號，[0~14]；
     - ``user_t``:工件號，[0~14]；"
-    "默認參數", "- ``joint_pos_p``:路徑點關節位置，單位 [°] 默認初值爲[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
-    - ``joint_pos_t``:目標點關節位置，單位 [°] 默認初值爲[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
+    "默認參數", "- ``joint_pos_p``:路徑點關節位置，單位 [°] 默認初值為[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
+    - ``joint_pos_t``:目標點關節位置，單位 [°] 默認初值為[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
     - ``vel_p``:路徑點速度百分比，[0~100] 默認20.0;
     - ``acc_p``:路徑點加速度百分比，[0~100] 暫不開放,默認0.0;
     - ``exaxis_pos_p``:路徑點外部軸 1位置 ~ 外部軸 4 位置 默認[0.0,0.0,0.0,0.0];
@@ -160,6 +161,7 @@ jog點動立即停止
     - ``offset_pos_t``:目標點位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0];
     - ``ovl:``:速度縮放因子，[0~100] 默認100.0;
     - ``blendR``:[-1.0]-運動到位 (阻塞)，[0~1000]-平滑半徑 (非阻塞)，單位 [mm] 默認-1.0;
+    - ``oacc``:加速度縮放因子[0-100]/物理加速度(mm/s2) 默認 100;
     - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1;
     - ``velAccParamMode``:速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2) 默認0"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
@@ -172,7 +174,7 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``Circle(desc_pos_p,tool_p,user_p,desc_pos_t,tool_t,user_t,joint_pos_p=[0.0,0.0,0.0,0.0,0.0,0.0], joint_pos_t = [0.0,0.0,0.0,0.0,0.0,0.0], vel_p = 20.0, acc_p=0.0, exaxis_pos_p= [0.0,0.0, 0.0,0.0], vel_t=20.0, acc_t = 0.0, exaxis_pos_t =[0.0,0.0,0.0,0.0], ovl=100.0, offset_flag=0, offset_pos= [0.0,0.0,0.0,0.0,0.0,0.0],oacc=100.0,blendR=-1,config=-1,velAccParamMode=0)``"
+    "原型", "``Circle(desc_pos_p, tool_p, user_p, desc_pos_t, tool_t, user_t, joint_pos_p=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],joint_pos_t=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],vel_p=20.0, acc_p=0.0, exaxis_pos_p=[0.0, 0.0, 0.0, 0.0], vel_t=20.0, acc_t=0.0,exaxis_pos_t=[0.0, 0.0, 0.0, 0.0],ovl=100.0, offset_flag=0, offset_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], oacc=100.0, blendR=-1,config=-1,velAccParamMode=0)``"
     "描述", "笛卡爾空間整圓運動"
     "必選參數", "- ``desc_pos_p``:路徑點笛卡爾位姿，單位[mm][°]；
     - ``tool_p``:工具號，[0~14]；
@@ -180,8 +182,8 @@ jog點動立即停止
     - ``desc_pos_t``:目標點笛卡爾位姿，單位[mm][°]；
     - ``tool_t``:工具號，[0~14]；
     - ``user_t``:工件號，[0~14]；"
-    "默認參數", "- ``joint_pos_p``:路徑點關節位置，單位 [°] 默認初值爲[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
-    - ``joint_pos_t``:目標點關節位置，單位 [°] 默認初值爲[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
+    "默認參數", "- ``joint_pos_p``:路徑點關節位置，單位 [°] 默認初值為[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
+    - ``joint_pos_t``:目標點關節位置，單位 [°] 默認初值為[0.0,0.0,0.0,0.0,0.0,0.0]，默認值調用逆運動學求解返回值;
     - ``vel_p``:速度百分比，[0~100] 默認20.0;
     - ``acc_p``:路徑點加速度百分比，[0~100] 暫不開放 默認0.0;
     - ``exaxis_pos_p``:路徑點外部軸 1 位置 ~ 外部軸 4 位置 默認[0.0,0.0,0.0,0.0];
@@ -191,7 +193,7 @@ jog點動立即停止
     - ``ovl``:速度縮放因子，[0~100] 默認100.0;
     - ``offset_flag``:是否偏移[0]-不偏移，[1]-工件/基座標系下偏移，[2]-工具座標系下偏移 默認 0;
     - ``offset_pos``:位姿偏移量，單位 [mm][°] 默認[0.0,0.0,0.0,0.0,0.0,0.0]
-    - ``oacc``:加速度百分比，默認：100；
+    - ``oacc``:加速度縮放因子[0-100]/物理加速度(mm/s2)，默認：100；
     - ``blendR``:-1：阻塞；0~1000：平滑半徑,默認：-1；
     - ``config``:逆解關節空間配置，[-1]-參考當前關節位置解算，[0~7]-依據特定關節空間配置求解，默認-1;
     - ``velAccParamMode``:速度加速度參數模式；0-百分比；1-物理速度(mm/s)加速度(mm/s2) 默認0"
@@ -223,7 +225,7 @@ jog點動立即停止
     :linenos:
 
     from fairino import Robot
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    import time
     robot = Robot.RPC('192.168.58.2')
     j1 = [-11.904, -99.669, 117.473, -108.616, -91.726, 74.256]
     j2 = [-45.615, -106.172, 124.296, -107.151, -91.282, 74.255]
@@ -233,31 +235,45 @@ jog點動立即停止
     desc_pos2 = [-321.222, 185.189, 335.520, -179.030, -1.284, -29.869]
     desc_pos3 = [-487.434, 154.362, 308.576, 176.600, 0.268, -14.061]
     desc_pos4 = [-443.165, 147.881, 480.951, 179.511, -0.775, -15.409]
-    offset_pos = [0, 0, 0, 0, 0, 0]
-    epos = [0, 0, 0, 0]
+    offset_pos = [0.0] * 6
+    epos = [0.0] * 4
     tool = 0
     user = 0
     vel = 100.0
     acc = 100.0
     ovl = 100.0
+    oacc = 100.0
     blendT = 0.0
     blendR = 0.0
     flag = 0
     search = 0
+    blendMode = 0
+    velAccMode = 0
     robot.SetSpeed(20)
-    rtn = robot.MoveJ(joint_pos=j1, tool=tool, user=user, vel=vel, blendT=blendT)
-    print(f"movej errcode: {rtn}")
-    rtn = robot.MoveL(desc_pos=desc_pos2, tool=tool, user=user, vel=vel, blendR=blendR)
-    print(f"movel errcode: {rtn}")
-    rtn = robot.MoveC(desc_pos_p=desc_pos3, tool_p=tool, user_p=user, desc_pos_t=desc_pos4, tool_t=tool, user_t=user, blendR=blendR)
-    print(f"movec errcode: {rtn}")
-    rtn = robot.MoveJ(joint_pos=j2, tool=tool, user=user, vel=vel, blendT=blendT)
-    print(f"movej errcode: {rtn}")
-    rtn = robot.Circle(desc_pos_p=desc_pos3, tool_p=tool, user_p=user, desc_pos_t=desc_pos1, tool_t=tool, user_t=user)
-    print(f"circle errcode: {rtn}")
-    rtn = robot.MoveCart(desc_pos=desc_pos4, tool=tool, user=user, blendT=blendT)
-    print(f"MoveCart errcode: {rtn}")
+    rtn = robot.MoveJ(joint_pos=j1, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, exaxis_pos=epos, blendT=blendT, offset_flag=flag, offset_pos=offset_pos)
+    print(f"movej errcode:{rtn}")
+    rtn = robot.MoveL(desc_pos=desc_pos2, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, blendR=blendR, blendMode=blendMode, exaxis_pos=epos, search=search, offset_flag=flag, offset_pos=offset_pos,oacc=oacc, velAccParamMode=velAccMode)
+    print(f"movel errcode:{rtn}")
+    rtn = robot.MoveC(desc_pos_p=desc_pos3, tool_p=tool, user_p=user, vel_p=vel, acc_p=acc, exaxis_pos_p=epos, offset_flag_p=flag, offset_pos_p=offset_pos, desc_pos_t=desc_pos4, tool_t=tool, user_t=user, vel_t=vel,acc_t=acc, exaxis_pos_t=epos, offset_flag_t=flag, offset_pos_t=offset_pos, ovl=ovl, blendR=blendR, oacc=oacc, velAccParamMode=velAccMode)
+    print(f"movec errcode:{rtn}")
+    rtn = robot.MoveJ(joint_pos=j2, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, exaxis_pos=epos, blendT=blendT, offset_flag=flag, offset_pos=offset_pos)
+    print(f"movej errcode:{rtn}")
+    rtn = robot.Circle(desc_pos_p=desc_pos3, tool_p=tool, user_p=user, vel_p=vel, acc_p=acc, exaxis_pos_p=epos, desc_pos_t=desc_pos1, tool_t=tool, user_t=user, vel_t=vel, acc_t=acc, exaxis_pos_t=epos, ovl=ovl,offset_flag=flag, offset_pos=offset_pos, oacc=oacc, blendR=-1, velAccParamMode=velAccMode)
+    print(f"circle errcode:{rtn}")
+    rtn = robot.MoveCart(desc_pos=desc_pos4, tool=tool, user=user, vel=vel, acc=acc,ovl=ovl, blendT=blendT, config=-1)
+    print(f"MoveCart errcode:{rtn}")
+    rtn = robot.MoveJ(joint_pos=j1, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, exaxis_pos=epos, blendT=blendT, offset_flag=flag, offset_pos=offset_pos)
+    print(f"movej errcode:{rtn}")
+    rtn = robot.MoveL(desc_pos=desc_pos2, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, blendR=blendR, blendMode=blendMode, exaxis_pos=epos, search=search, offset_flag=flag, offset_pos=offset_pos, config=-1,velAccParamMode=velAccMode)
+    print(f"movel errcode:{rtn}")
+    rtn = robot.MoveC(desc_pos_p=desc_pos3, tool_p=tool, user_p=user, vel_p=vel, acc_p=acc, exaxis_pos_p=epos, offset_flag_p=flag, offset_pos_p=offset_pos, desc_pos_t=desc_pos4, tool_t=tool, user_t=user, vel_t=vel, acc_t=acc,exaxis_pos_t=epos, offset_flag_t=flag, offset_pos_t=offset_pos, ovl=ovl, blendR=blendR, config=-1, velAccParamMode=velAccMode)
+    print(f"movec errcode:{rtn}")
+    rtn = robot.MoveJ(joint_pos=j2, tool=tool, user=user, vel=vel, acc=acc, ovl=ovl, exaxis_pos=epos, blendT=blendT, offset_flag=flag, offset_pos=offset_pos)
+    print(f"movej errcode:{rtn}")
+    rtn = robot.Circle(desc_pos_p=desc_pos3, tool_p=tool, user_p=user, vel_p=vel, acc_p=acc, exaxis_pos_p=epos, desc_pos_t=desc_pos1, tool_t=tool, user_t=user, vel_t=vel, acc_t=acc, exaxis_pos_t=epos, ovl=ovl, offset_flag=flag,offset_pos=offset_pos, oacc=oacc, blendR=-1, velAccParamMode=velAccMode)
+    print(f"circle errcode:{rtn}")
     robot.CloseRPC()
+    return 0
 
 笛卡爾空間螺旋線運動
 ++++++++++++++++++++++

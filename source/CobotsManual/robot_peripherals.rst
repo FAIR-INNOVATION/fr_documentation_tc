@@ -10,7 +10,7 @@
 概述
 ~~~~~~~~
 
-末端Lua自定義開放協議支援力感測器、夾爪和焊接手柄使用，同時支援力感測器和夾爪配合使用。
+在機器人末端提供了硬體介面用於連接485通信的外設，目前支援的外設包括夾爪、旋轉夾爪、力感測器、焊接手柄等設備。以上末端設備均可通過撰寫lua開放協定實現協定適配，實現控制外設及取得外設狀態。
 
 操作步驟
 ~~~~~~~~~~~
@@ -28,18 +28,23 @@
 
 .. centered:: 圖表 8.1‑1 升級末端韌體
 
-**Step2**：進入外設->夾爪/力感測器/焊接手柄的內容介面，點擊“自定義協議”卡片進入介面，上傳Lua末端開放協議，選擇需要上傳的Lua末端開放協議，進行上傳操作。
+**Step2**：打開WebApp，依序點擊「初始設置」、「外設」，選擇需要配置的末端外設（如夾爪）；外設的控制類型有已適配設備和外設開放協定兩種：
 
-.. important::
-  上傳末端協議之前，需要進入boot模式。同時，檔案名需要以AXLE_LUA_開頭命名。
+- **已適配設備**：採用機器人控制器進行通信，不需要上傳和應用。
+- **外設開放協定**：使用者基於Lua撰寫需要適配的末端開放協定實現通信控制其中末端協定分為兩類，一類為使用者自行上傳的協定，另一類為機器人預設內建協定。
 
 .. figure:: robot_peripherals/002.png
    :align: center
-   :width: 4in
+   :width: 6in
 
-.. centered:: 圖表 8.1‑2 上傳Lua末端開放協議
+.. centered:: 圖表 8.1‑2 夾爪控制類型
 
-**Step3**：配置末端通訊參數，通訊參數包含鮑率、資料位、停止位等，配置完成後，點擊“配置”按鈕。
+**Step3**：進入外設->夾爪/力感測器/焊接手柄的內容介面，點擊「自訂協定」卡片進入介面，上傳Lua末端開放協定，選擇需要上傳的Lua末端開放協定，進行上傳操作。
+
+.. important:: 
+  上傳檔案名需要以 `AXLE_LUA_` 開頭命名。
+
+**Step4**：配置末端通訊參數，通訊參數包含鮑率、資料位、停止位等，配置完成後，點擊“配置”按鈕。
 
 .. figure:: robot_peripherals/003.png
    :align: center
@@ -57,7 +62,7 @@
 - **超時次數**：1~10，主要進行超時重發，減少偶發異常提高使用者體驗；
 - **週期性指令時間間隔**：1~1000ms，主要用於週期性指令每次下發的時間間隔；
 
-**Step4**：末端Lua啟用，點擊“開啟”按鈕。
+**Step5**：末端Lua啟用，點擊“開啟”按鈕。
 
 .. figure:: robot_peripherals/004.png
    :align: center
@@ -157,10 +162,222 @@
      - MoveGripper(1,0,255,0,1000,0)
      - #夾爪開啟
 
-自定義開放協議
-~~~~~~~~~~~~~~~~~~~~~~
+夾爪 Lua 末端執行器通訊協定配置
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+開啟 WebApp，依序點擊「初始設定」、「週邊設備」、「夾爪」、「自訂通訊協定」。點擊「通訊協定管理」以配置末端執行器通訊協定。
 
-夾爪自定義協議上傳步驟參考末端Lua自定義開放協議內容。
+使用者上傳的檔案名稱必須以「AXLE_LUA_End」開頭。上傳後，列表中的通訊協定名稱將變更為以「Custom_End」開頭。此類通訊協定可下載及刪除。使用者上傳的檔案若名稱重複，將自動被最新的 Lua 檔案覆蓋。
+
+.. figure:: robot_peripherals/277.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖 8.2‑4-1 夾爪自訂通訊協定上傳
+
+機器人預設的內建通訊協定以`End_`為前綴。這些通訊協定僅可下載，不可刪除。週邊設備（夾爪、旋轉夾爪、吸盤）的內建通訊協定如下圖所示。
+
+.. figure:: robot_peripherals/278.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖 8.2‑4-2 夾爪（旋轉夾爪、吸盤）預設內建通訊協定
+
+確保選擇正確的通訊協定後，您可以禁用機器人並套用開啟通訊協定。套用後，機器人將自動進入引導模式，並將選定的通訊協定應用至末端執行器。當頁面提示「升級成功，請重啟控制箱」時，即可對控制箱進行斷電重啟。
+
+.. figure:: robot_peripherals/279.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖 8.2‑4-3 將末端執行器開啟通訊協定應用至末端執行器板
+
+重啟並進入 WebApp 頁面後，頁面將顯示目前套用的通訊協定名稱。點擊啟用末端執行器通訊協定並啟用設備後，末端執行器通訊協定將開始運行。設備 ID 是末端執行器週邊設備的 Modbus 從站地址，需與通訊協定中的內容配合使用。
+
+.. figure:: robot_peripherals/280.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖 8.2‑4-4 夾爪末端執行器通訊協定配置顯示與啟用
+
+末端執行器板會驗證上傳的 Lua 通訊協定。當 Lua 檔案出現問題時，將顯示「末端執行器 Lua 檔案異常」警告。您可以選擇「不恢復/恢復」。關閉 Lua 啟用按鈕以關閉警告提示。
+
+.. figure:: robot_peripherals/005.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖 8.2‑4-5 夾爪末端執行器通訊協定配置顯示與啟用
+
+夾爪週邊設備的 Lua 末端執行器週邊設備通訊協定範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: console
+
+  function Getbit(X,Bit)--Getbit()，從一個位元組中提取對應的位元。參數：X：要從中提取位元的位元組；Bit：要提取的位元位置（範圍 0-7）
+  return ((X&(1<<Bit))>>Bit)
+  end
+
+  function GetOneByte(U32)--GetOneByte()，提取資料 0x1234，取得其低位元組，返回 0x34
+  return ((U32>>0)&0xFF)
+  end
+
+  function GetTwoByte(U32)--GetTwoByte()，提取資料 0x1234，取得其高位元組，返回 0x12
+  return ((U32>>8)&0xFF)
+  end
+  function GetThreeByte(U32)--GetThreeByte()，提取資料 0x56781234，提取並返回 0x78
+  return ((U32>>16)&0xFF)
+  end
+  function GetFourByte(U32)--GetFourByte()，提取資料 0x56781234，提取並返回 0x56
+  return ((U32>>24)&0xFF)
+  end
+  X,Speed,Torque=0,0,0
+  while(1)
+  do
+  IwdgTaskHandle()
+  MainLoop()
+  UpDownLoadHandle()
+  SdoRwPara()
+  EndErrClear()
+  local BFlag=LuaBreak()
+  if(BFlag==1)then
+  break
+  end--從這裡到檔案結尾 LuaGc()，end 是固定語法
+
+  T1={0x01,0x06,0x03,0xE8,0x00,0x09,0xC9,0xBC}--填入夾爪指令（Modbus RTU 指令）。T1-T5 分別為：夾爪動作執行指令、夾爪初始化指令、夾爪位置指令、夾爪速度指令、夾爪扭矩指令
+  --/指令解析：T1[1]=0X01，是夾爪位址；T1[2]=0x06，寫入單一保持暫存器功能碼；T1[3], T1[4]：0x03,0xE8，動作執行指令要操作的暫存器位址；T1[5],T1[6]：0x00,0x09，要寫入暫存器的資料；T1[7],T1[8]：0xC9,0xBC，CRC 校驗和，需根據夾爪使用者手冊修改
+  T2={}
+  T3={}
+  T4={}
+  T5={}
+
+  T7={0x01,0x03,0x07,0xD0,0x00,0x01,0x84,0x87}--T7-T12，夾爪狀態讀取指令，分別為：讀取夾爪狀態指令、讀取夾爪初始化指令、讀取夾爪錯誤碼指令、讀取夾爪位置指令、讀取夾爪速度指令、讀取夾爪扭矩指令
+  T8={}
+  T9={}
+  T10={}
+  T11={}
+  T12={}
+  Rcmd1,Rcmd2,Rcmd3,Rcmd4=GetGripCmd()--固定用法，無需修改。Rcm2 是控制器發送的夾爪位址，Rcmd4 是控制器發送的資料
+  if(Rcmd1==1) then
+  T1[1]=Rcmd2                   
+  T2[1]=Rcmd2
+  T3[1]=Rcmd2
+  T4[1]=Rcmd2
+  T5[1]=Rcmd2
+
+  T7[1]=Rcmd2
+  T8[1]=Rcmd2
+  T9[1]=Rcmd2
+  T10[1]=Rcmd2
+  T11[1]=Rcmd2
+  T12[1]=Rcmd2                    --**夾爪位址更新
+  if (Rcmd3==1) then              --夾爪動作執行指令
+  T1[7],T1[8]=CrcValue(T1[1],T1[2],T1[3],T1[4],T1[5],T1[6])--計算 Modbus RTU 指令 CRC 值，兩個位元組
+  EndTxGripData(T1[1],T1[2],T1[3],T1[4],T1[5],T1[6],T1[7],T1[8])--末端執行器發送指令至夾爪
+  DelayMs(10)                                                   --延遲 10ms
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()--末端執行器將接收到的夾爪回饋資料返回給 Lua。具體回饋內容需查閱夾爪使用者手冊
+  GripStateBack(Rxd3)
+  end
+  if (Rcmd3==2) then
+  T2[7],T2[8]=CrcValue(T2[1],T2[2],T2[3],T2[4],T2[5],T2[6])
+  EndTxGripData(T2[1],T2[2],T2[3],T2[4],T2[5],T2[6],T2[7],T2[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  GripStateBack(Rxd3)
+  end
+  if(Rcmd3==3) then
+  X=Rcmd4
+  T3[5]=0x00
+  T3[6]=X
+  T3[7],T3[8]=CrcValue(T3[1],T3[2],T3[3],T3[4],T3[5],T3[6])
+  EndTxGripData(T3[1],T3[2],T3[3],T3[4],T3[5],T3[6],T3[7],T3[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  GripStateBack(Rxd3)
+  end
+  if (Rcmd3==4) then
+  Speed=Rcmd4
+  T4[5]=Torque
+  T4[6]=Speed
+  T4[7],T4[8]=CrcValue(T4[1],T4[2],T4[3],T4[4],T4[5],T4[6])
+  EndTxGripData(T4[1],T4[2],T4[3],T4[4],T4[5],T4[6],T4[7],T4[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  GripStateBack(Rxd3)
+  end
+  if(Rcmd3==5) then
+  Torque=Rcmd4
+  T5[5]=Torque
+  T5[6]=Speed
+  T5[7],T5[8]=CrcValue(T5[1],T5[2],T5[3],T5[4],T5[5],T5[6])
+  EndTxGripData(T5[1],T5[2],T5[3],T5[4],T5[5],T5[6],T5[7],T5[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  GripStateBack(Rxd3)
+  end
+  if(Rcmd3 == 7) then
+  T7[7],T7[8]=CrcValue(T7[1],T7[2],T7[3],T7[4],T7[5],T7[6])
+  EndTxGripData(T7[1],T7[2],T7[3],T7[4],T7[5],T7[6],T7[7],T7[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  RxdCrcH,RxdCrcL = CrcValue(Rxd1,Rxd2,Rxd3,Rxd4,Rxd5)
+  if((A==8)and(Rxd1==Rcmd2)and(Rxd2==0x03)and(Rxd3==0x02)and(Rxd6==RxdCrcH)and(Rxd7==RxdCrcL))then
+  GripStateBack(Rxd4)
+  end
+  end
+  if(Rcmd3==8) then
+  T8[7],T8[8]=CrcValue(T8[1],T8[2],T8[3],T8[4],T8[5],T8[6])
+  EndTxGripData(T8[1],T8[2],T8[3],T8[4],T8[5],T8[6],T8[7],T8[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  RxdCrcH,RxdCrcL = CrcValue(Rxd1,Rxd2,Rxd3,Rxd4,Rxd5)
+  if((A==8)and(Rxd1==Rcmd2)and(Rxd2==0x03)and(Rxd3==0x02)and(Rxd6==RxdCrcH)and(Rxd7 ==RxdCrcL)) then
+  GripStateBack(Rxd5)
+  end
+  end
+  if(Rcmd3 == 9) then
+  T9[7],T9[8]=CrcValue(T9[1],T9[2],T9[3],T9[4],T9[5],T9[6])
+  EndTxGripData(T9[1],T9[2],T9[3],T9[4],T9[5],T9[6],T9[7],T9[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  RxdCrcH,RxdCrcL = CrcValue(Rxd1,Rxd2,Rxd3,Rxd4,Rxd5)
+  if((A==8)and(Rxd1==Rcmd2)and(Rxd2==0x03)and(Rxd3==0x02)and(Rxd6==RxdCrcH)and(Rxd7==RxdCrcL)) then
+  GripStateBack(Rxd5)
+  end
+  end
+  if(Rcmd3 == 10) then
+  T10[7],T10[8]=CrcValue(T10[1],T10[2],T10[3],T10[4],T10[5],T10[6])
+  EndTxGripData(T10[1],T10[2],T10[3],T10[4],T10[5],T10[6],T10[7],T10[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  RxdCrcH,RxdCrcL = CrcValue(Rxd1,Rxd2,Rxd3,Rxd4,Rxd5)
+  if((A==8)and(Rxd1==Rcmd2)and(Rxd2==0x03)and(Rxd3==0x02)and(Rxd6==RxdCrcH)and(Rxd7==RxdCrcL)) then
+  GripStateBack(Rxd4)
+  end
+  end
+  if(Rcmd3 == 11) then
+  T11[7],T11[8]=CrcValue(T11[1],T11[2],T11[3],T11[4],T11[5],T11[6])
+  EndTxGripData(T11[1],T11[2],T11[3],T11[4],T11[5],T11[6],T11[7],T11[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  RxdCrcH,RxdCrcL = CrcValue(Rxd1,Rxd2,Rxd3,Rxd4,Rxd5)
+  if((A==8)and(Rxd1==Rcmd2)and(Rxd2==0x03)and(Rxd3==0x02)and(Rxd6==RxdCrcH)and(Rxd7==RxdCrcL)) then
+  GripStateBack(Rxd5)
+  end
+  end
+  if(Rcmd3 == 12) then
+  T12[7],T12[8]=CrcValue(T12[1],T12[2],T12[3],T12[4],T12[5],T12[6])
+  EndTxGripData(T12[1],T12[2],T12[3],T12[4],T12[5],T12[6],T12[7],T12[8])
+  DelayMs(10)
+  A,Rxd1,Rxd2,Rxd3,Rxd4,Rxd5,Rxd6,Rxd7=EndRxGripData()
+  RxdCrcH,RxdCrcL = CrcValue(Rxd1,Rxd2,Rxd3,Rxd4,Rxd5)
+  if((A==8)and(Rxd1==Rcmd2)and(Rxd2==0x03)and(Rxd3==0x02)and(Rxd6==RxdCrcH)and(Rxd7==RxdCrcL)) then
+  GripStateBack(Rxd4)
+  end
+  end
+  end
+  LuaGc()
+  end
+
+設備啟用
++++++++++++++++++++++++++++++
 
 **Step1**：啟用夾爪->選擇夾爪ID->勾選夾爪配適的功能碼->點擊配置，已配置設備中顯示夾爪的ID及功能碼。
 
@@ -279,6 +496,17 @@
 **Step3**：選擇配置完成的力感測器編號，點擊“復位”按鈕，頁面彈出命令發送成功後，再點擊“啟動”按鈕，可查看力感測器資訊表中的啟動狀態，來判斷是否啟動成功；此外，力感測器會有初始值，使用者根據使用需求選擇“零點校正”和“去除零點”。力感測器零點校正需要確保力感測器水平垂直向下，且機器人未配置負載。
 
 **Step4**：力感測器配置完成後，需要配置感測器類型工具座標系，可根據感測器與末端工具中心的距離直接輸入感測器工具座標系值並應用。
+
+力感測器末端Lua協定
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+打開WebApp，依序點擊「初始設置」、「外設」、「力感測器」、「自訂協定」。點擊「協定管理」，則可以進行末端協定的配置。目前力感測器預設內嵌的協定如下圖所示。
+
+.. figure:: robot_peripherals/281.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.3‑2-2 力感測器預設內嵌協定
 
 感測器負載辨識
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -657,24 +885,32 @@
 
 A-E鍵位功能：
 
-- 新增程式
-- 保持程式
-- PTP
-- Lin
-- ARC
-- 擺焊開始
-- 擺焊結束
-- IO端口
+- **運動指令：** 選擇 PTP、LIN、ARC 運動指令時，需要輸入對應點速度。其中 LIN、ARC 指令可選擇「百分比」或「物理速度」：
+    - **百分比：** 輸入調試速度百分比，機械人按照最大速度的百分比進行運動。實際機械人運動速度換算為：V = 機械人最大速度 × 全域速度百分比 × 點速度百分比。將滑鼠移至「點速度」輸入框右側的小眼睛圖示上，將顯示當前設定速度下，機械人在手動模式和自動模式下的實際物理速度（單位：mm/s）。
 
--  **運動指令**：選擇PTP、LIN、ARC運動指令時，需要輸入對應點速度。配置成功後，示教程式新增一條相關運動指令。配置ARC運動指令時，需先配置PTP/LIN指令。
-  
--  **DO輸出**：選擇「DO輸出」時，顯示下拉式選單可選擇輸出DO0⁓DO7選項。
-
-.. image:: robot_peripherals/030.png
-   :width: 4in
+.. image:: coding/469.png
+   :width: 6in
    :align: center
 
-.. centered:: 圖表 8.4‑2 A-E鍵位
+.. centered:: 圖表 8.4‑2-1 輸入百分比顯示實際物理速度值
+
+- **物理速度：** 輸入速度即為機械人實際運行速度，單位 mm/s；輸入加速度通常設置為速度的 2 倍。（LIN 指令的最大物理速度受全域速度百分比限制。若機械人最大運行速度為 1000 mm/s，全域速度為 50%，則 LIN 指令的最大物理速度為 1000 × 50% = 500 mm/s）。
+
+.. image:: coding/470.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 8.4‑2-2 輸入實際物理速度
+
+配置成功後，示教程式將新增一條相關運動指令。配置 ARC 運動指令時，需先配置 PTP 或 LIN 指令。
+
+- **DO 輸出：** 選擇「DO 輸出」時，顯示下拉選單可選擇輸出 DO0⁓DO7 選項。
+
+.. image:: coding/471.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 8.4‑2-3 Smart Tool 配置（A-E 鍵位）
 
 IO鍵位功能：
 
@@ -699,31 +935,75 @@ IO鍵位功能：
 
 .. centered:: 圖表 8.4‑3 IO鍵位
 
-自訂協定
-~~~~~~~~~~~~~~~~~~~~~~
+焊接手柄末端Lua協定
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-點選「自訂協定」進入末端Lua開放協定配適焊接手柄功能介面。
+點擊「自訂協定」進入末端Lua開放協定適配焊接手柄功能介面。
 
-協定配置
-+++++++++++++++
+協定管理
++++++++++++++++++++++++++++++++++++++++++++
 
-使用開放協定配適焊接手柄時，在機器人上電啟動後需要先進入web頁面進行開放協定上傳配置。
-
-點選「自訂協定上傳」，點選「進入Boot」，點選「上傳」開放協定，上傳完成後重啟設備，即可使用末端lua開放協定配適焊接手柄。
+打開WebApp，依序點擊「初始設置」、「外設」、「焊接手柄」、「自訂協定」。點擊「協定管理」，則可以進行末端協定的配置。目前焊接手柄預設內嵌的協定如下圖所示。
 
 .. figure:: robot_peripherals/032.png
    :align: center
    :width: 4in
 
-.. centered:: 圖表 8.4‑4 末端開放協定上傳
+.. centered:: 圖表 8.4‑4 焊接手柄預設內嵌協定
 
-開啟「末端協定啟用」滑塊即可配適焊接手柄，啟用後斷電重啟參數保持。
+打開「末端協定啟用」滑塊即可適配焊接手柄，啟用後斷電重啟參數保持。
 
 .. figure:: robot_peripherals/033.png
    :align: center
    :width: 4in
 
 .. centered:: 圖表 8.4‑5 末端開放協定啟用
+
+組合設備Lua末端外設協定示例
++++++++++++++++++++++++++++++++
+
+A、B、C、D、E五個按鍵功能可透過代碼中的30行的key值進行修改定義，其中K38=Getbit(R[7],1)、K0=Getbit(R[7],2)為清空程式和撤銷按鍵，不可修改，後續5個K值可按照《末端全外設協定》文件中的定義進行修改。
+
+本次示例（內嵌SmartTool協定）中對應的按鍵功能為，A:MoveL, B:ArcStart, C:ArcEnd, D:rewelding start, E:rewelding quit。
+
+.. code-block:: console
+
+  function Getbit(X,Bit)
+  return ((X&(1<<Bit))>>Bit)
+  end
+
+  if(Getbit(GetRobotState(),0)==1)then
+  local SetParams={A3=2000,B6=3}--設置焊接參數，A3-起、收弧超時時間為2000ms，B6-操作DO端口號為3，如需配置焊接參數請查閱《RD36-焊接手柄自訂參數表-V0.2-20250903》
+  SetWeldParams(SetParams)
+  while(1)
+  do
+  IwdgTaskHandle()
+  MainLoop()
+  UpDownLoadHandle()
+  SdoRwPara()
+  EndErrClear()
+  local BFlag=LuaBreak()
+  if(BFlag==1)then
+  break
+  end
+  local R={0}
+  local T={0x7D,0x01,0x30,0xC0,0x00,0x04,0x00,0x00,0x00,0x00}
+  DelayMs(100)
+  T[7],T[8],T[9],T[10]=GetIoCmd()
+  T[7]=Getbit(T[7],3)
+  T[12],T[11]=WeldToolCrcValue(T)
+  T[13]=0x0E
+  WeldToolSlaveSetCmd(T)
+  DelayMs(3)
+  Len=EndRxWeldData(R)
+  if((Len==13)and(R[1]==0x7D)and(R[2]==0x01)and(R[3]==0x30))then
+  local key={K38=Getbit(R[7],1),K0=Getbit(R[7],2),K3=Getbit(R[7],3),K32=Getbit(R[7],4),K33=Getbit(R[7],5),K27=Getbit(R[7],6),K28=Getbit(R[7],7),
+  K6=Getbit(R[8],1),K7=Getbit(R[8],2)}--smarttool焊接手柄按鍵設置，撤銷按鍵-K38撤銷程式；清空按鍵-K0清空程式；A按鍵-K3直線；B按鍵-K32起弧ArcStart；C按鍵-K33收弧ArcEnd；D按鍵-K27焊接中斷恢復；E按鍵-K28焊接中斷退出；手/自動按鍵-K6手/自動；運行/暫停按鍵-K7運行/暫停
+  SetWeldToolKeys(key)
+  end
+  LuaGc()
+  end
+  end
 
 開放協定範本
 ++++++++++++++++++++++++++++++
@@ -4696,6 +4976,23 @@ FR對應的類型為「SmartTool 」與力感測器組合使用，協作機器�
    :align: center
 
 .. centered:: 圖表 8.11‑10 測量力的大小及受力方向
+
+組合設備末端Lua協定
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+目前末端可支援兩個設備的組合協定應用，可通過一分二的通信線或法奧的SmartTool 485介面連接第二個設備。
+
+操作步驟如下：
+
+打開WebApp，依序點擊「初始設置」、「外設」，選擇需要組合的某一個設備類型（如焊接手柄），選擇「自訂協定」。點擊「協定管理」，則可以進行末端協定的配置。
+
+目前預設內嵌的組合設備協定包括：鈞舵夾爪+鑫精誠力感測、SmartTool+鈞舵夾爪、SmartTool +鑫精誠力感測器，組合設備預設協定屬於使用者自訂協定，以「Custom_End」開頭，可以下載和刪除，如下圖所示。
+
+.. image:: robot_peripherals/282.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 8.11‑11 焊接手柄預設內嵌協定
 
 陣列式吸盤
 -----------------

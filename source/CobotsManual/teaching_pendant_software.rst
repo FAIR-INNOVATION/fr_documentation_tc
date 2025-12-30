@@ -278,54 +278,24 @@
 ~~~~~~~~~~~~
 
 .. note:: 
+   .. image:: teaching_pendant_software/011.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**機器人運行錯誤狀態**
+   
+    作用：當前機器人運行有錯誤，無錯誤時隱藏
+
+.. note:: 
    .. image:: teaching_pendant_software/007.png
       :width: 0.75in
       :height: 0.75in
       :align: left
 
-   名稱：**機器人狀態**
+    名稱：**機器人狀態**
    
-   作用：Stopped-停止，Running-執行，Pause-暫停，Drag-拖動
-
-.. note:: 
-   .. image:: teaching_pendant_software/008.png
-      :width: 0.75in
-      :height: 0.75in
-      :align: left
-
-   名稱：**工具座標系編號**
-   
-   作用：展示當前應用的工具座標系編號
-
-.. note:: 
-   .. image:: teaching_pendant_software/027.png
-      :width: 0.75in
-      :height: 0.75in
-      :align: left
-
-   名稱：**工件座標系編號**
-   
-   作用：展示當前應用的工件座標系編號
-   
-.. note:: 
-   .. image:: teaching_pendant_software/028.png
-      :width: 0.75in
-      :height: 0.75in
-      :align: left
-
-   名稱：**擴充套件軸座標系編號**
-   
-   作用：展示當前應用的擴充套件軸座標系編號
-   
-.. note:: 
-   .. image:: teaching_pendant_software/009.png
-      :width: 0.75in
-      :height: 0.75in
-      :align: left
-
-   名稱：**執行速度百分比**
-   
-   作用：機器人當前模式執行時速度
+    作用：Stopped-停止，Running-運行，Pause-暫停，Drag-拖動
 
 .. note:: 
    .. image:: teaching_pendant_software/010.png
@@ -333,19 +303,19 @@
       :height: 0.75in
       :align: left
 
-   名稱：**機器人執行正常狀態**
+    名稱：**機器人工具座標系、工件座標系、擴展軸座標系和負載編號**
    
-   作用：當前機器人正常執行
+    作用：左上——當前工具座標系編號、右上——當前工件座標系編號、左下——當前擴展軸座標系編號、右下——當前負載編號
 
 .. note:: 
-   .. image:: teaching_pendant_software/011.png
+   .. image:: teaching_pendant_software/009.png
       :width: 0.75in
       :height: 0.75in
       :align: left
 
-   名稱：**機器人執行錯誤狀態**
+    名稱：**運行速度百分比**
    
-   作用：當前機器人執行有錯誤
+    作用：機器人當前模式運行時速度
 
 .. note:: 
    .. image:: teaching_pendant_software/012.png
@@ -353,9 +323,9 @@
       :height: 0.75in
       :align: left
 
-   名稱：**自動模式**
+    名稱：**自動模式**
    
-   作用：機器人自動執行模式，開啟手動切自動模式全域性速度調整並指定速度時，全域性速度會自動調整為指定速度
+    作用：機器人自動運行模式，開啟「手動切自動模式全域速度調整」並指定速度時，全域速度會自動調整為指定速度
 
 .. note:: 
    .. image:: teaching_pendant_software/013.png
@@ -363,9 +333,61 @@
       :height: 0.75in
       :align: left
 
-   名稱：**示教模式**
+    名稱：**手動模式**
    
-   作用：機器人示教執行模式
+    作用：機器人手動模式，進行機器人示教操作
+
+.. note:: 
+   .. image:: teaching_pendant_software/065.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**機器人狀態折疊/展開按鈕**
+   
+    作用：折疊/展開工具座標系、工件座標系、擴展軸座標系、負載、機器人拖動狀態、本機/遠端模式、機器人連接狀態、BOOT模式和帳戶資訊內容
+
+點擊折疊按鈕，查看以下狀態資訊內容。
+
+.. note:: 
+   .. image:: teaching_pendant_software/008.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**工具座標系編號**
+   
+    作用：展示當前應用的工具座標系編號
+
+.. note:: 
+   .. image:: teaching_pendant_software/027.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**工件座標系編號**
+   
+    作用：展示當前應用的工件座標系編號
+   
+.. note:: 
+   .. image:: teaching_pendant_software/028.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**擴展軸座標系編號**
+   
+    作用：展示當前應用的擴展軸座標系編號
+
+.. note:: 
+   .. image:: teaching_pendant_software/066.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**負載**
+   
+    作用：展示當前應用的負載重量和質心座標X、Y、Z
 
 .. note:: 
    .. image:: teaching_pendant_software/014.png
@@ -373,9 +395,9 @@
       :height: 0.75in
       :align: left
 
-   名稱：**機器人拖動狀態**
+    名稱：**機器人拖動狀態**
    
-   作用：當前機器人可拖動
+    作用：當前機器人可拖動
 
 .. note:: 
    .. image:: teaching_pendant_software/015.png
@@ -383,9 +405,29 @@
       :height: 0.75in
       :align: left
 
-   名稱：**機器人拖動狀態**
+    名稱：**機器人拖動狀態**
    
-   作用：當前機器人不可拖動
+    作用：當前機器人不可拖動
+
+.. note:: 
+   .. image:: teaching_pendant_software/068.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**機器人本機模式**
+   
+    作用：當前機器人通過控制箱控制
+
+.. note:: 
+   .. image:: teaching_pendant_software/067.png
+      :width: 0.75in
+      :height: 0.75in
+      :align: left
+
+    名稱：**機器人遠端模式**
+   
+    作用：當前機器人只能通過PLC控制
 
 .. note:: 
    .. image:: teaching_pendant_software/017.png

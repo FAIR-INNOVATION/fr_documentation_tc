@@ -396,21 +396,26 @@
 
     /**
     * @brief  恆力控制
-    * @param  [in] flag 0-關閉恆力控制，1-開啓恆力控制
-    * @param  [in] sensor_id 力傳感器編號
+    * @param  [in] flag 0-關閉恆力控制，1-開啟恆力控制
+    * @param  [in] sensor_id 力感測器編號
     * @param  [in] select  選擇六個自由度是否檢測碰撞，0-不檢測，1-檢測
     * @param  [in] ft  碰撞力/扭矩，fx,fy,fz,tx,ty,tz
     * @param  [in] ft_pid 力pid參數，力矩pid參數
-    * @param  [in] adj_sign 自適應啓停控制，0-關閉，1-開啓
-    * @param  [in] ILC_sign ILC啓停控制， 0-停止，1-訓練，2-實操
+    * @param  [in] adj_sign 自適應啟停控制，0-關閉，1-開啟
+    * @param  [in] ILC_sign ILC啟停控制， 0-停止，1-訓練，2-實操
     * @param  [in] max_dis 最大調整距離，單位mm
     * @param  [in] max_ang 最大調整角度，單位deg
-    * @param  [in] filter_Sign 濾波開啓標誌 0-關；1-開，默認關閉
-    * @param  [in] posAdapt_sign 姿態順應開啓標誌 0-關；1-開，默認關閉
+    * @param  [in] M rx、ry質量參數[0.1-10],預設2
+    * @param  [in] B rx、ry阻尼參數[0.1-50],預設8
+    * @param  [in] threshold rx、ry啟動閾值[0-10],預設0.2
+    * @param  [in] adjustCoeff rx、ry力矩調節係數[0-1],預設1
+    * @param  [in] polishRadio 打磨半徑，單位mm
+    * @param  [in] filter_Sign 濾波開啟標誌 0-關；1-開，預設關閉
+    * @param  [in] posAdapt_sign 姿態順應開啟標誌 0-關；1-開，預設關閉
     * @param  [in] isNoBlock 阻塞標誌，0-阻塞；1-非阻塞
     * @return  錯誤碼
     */
-    public int FT_Control(int flag, int sensor_id, int[] select, ForceTorque ft, double[] ft_pid, int adj_sign, int ILC_sign, double max_dis, double max_ang, int filter_Sign = 0, int posAdapt_sign = 0, int isNoBlock = 0);
+    public int FT_Control(byte flag, int sensor_id, byte[] select, ForceTorque ft, float[] ft_pid,byte adj_sign, byte ILC_sign, float max_dis, float max_ang,double[] M, double[] B, double[] threshold, double[] adjustCoeff,double polishRadio, int filter_Sign, int posAdapt_sign, int isNoBlock)
 
 具有阻尼的恆力控制代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -419,7 +424,7 @@
 .. code-block:: c#
     :linenos:
 
-    public void TestFTControlWithDamping()
+    public void TestFTControlWithAdjustCoeff()
     {
         int rtn;
         int sensor_id = 10;
@@ -427,38 +432,33 @@
         float[] ft_pid = new float[6] { 0.0008f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
         byte adj_sign = 0;
         byte ILC_sign = 0;
-        float max_dis = 100.0f;
+        float max_dis = 1000.0f;
         float max_ang = 20.0f;
         ForceTorque ft = new ForceTorque();
-        ft.fz = -10.0;
+        ft.fz = -10.0f;
         ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
-        JointPos j1 = new JointPos(-118.985, -86.882, -118.139, -65.019, 90.002, 54.951);
-        JointPos j2 = new JointPos(-77.055, -77.218, -126.219, -66.591, 90.028, 96.881);
-        DescPose desc_p1 = new DescPose(-300.856, -332.618, 309.240, 179.976, -0.031, 96.065);
-        DescPose desc_p2 = new DescPose(-16.399, -383.760, 309.312, 179.975, -0.031, 96.064);
+        JointPos j1 = new JointPos(80.765f, -98.795f, 106.548f, -97.734f, -89.999f, 94.842f);
+        JointPos j2 = new JointPos(43.067f, -84.429f, 92.620f, -98.175f, -90.011f, 57.144f);
+        DescPose desc_p1 = new DescPose(5.009f, -547.463f, 262.053f, -179.999f, -0.019f, 75.923f);
+        DescPose desc_p2 = new DescPose(-347.966f, -547.463f, 262.048f, -180.000f, -0.019f, 75.923f);
         DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
         double[] M = new double[2] { 2.0, 2.0 };
-        double[] B = new double[2] { 8.0, 8.0 };
+        double[] B = new double[2] { 15.0, 15.0 };
+        double[] threshold = new double[2] { 1.0, 1.0 };
+        double[] adjustCoeff = new double[2] { 1.0, 0.8 };
         double polishRadio = 0.0;
         int filter_Sign = 0;
         int posAdapt_sign = 1;
         int isNoBlock = 0;
-        DescPose ftCoord = new DescPose();
-        robot.FT_SetRCS(2, ftCoord);
-        rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, polishRadio, filter_Sign, posAdapt_sign, isNoBlock);
-        Console.WriteLine($"FT_Control start rtn is {rtn}");
-        int tool = 0;
-        int user = 0;
-        float vel = 100.0f;
-        float acc = 100.0f;
-        float ovl = 20.0f;
-        float blendT = -1.0f;
-        byte offset_flag = 0;
-        rtn = robot.MoveL(j1, desc_p1, tool, user, vel, acc, ovl, blendT, epos, offset_flag, 0, offset_pos, 0, 0, 10);
-        rtn = robot.MoveL(j2, desc_p2, tool, user, vel, acc, ovl, blendT, epos, offset_flag, 0, offset_pos, 0, 0, 10);
-        rtn = robot.FT_Control(0, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, polishRadio, filter_Sign, posAdapt_sign, isNoBlock);
-        Console.WriteLine($"FT_Control end rtn is {rtn}");
-        robot.CloseRPC();
+        while (true)
+        {
+            rtn = robot.FT_Control(1, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, threshold, adjustCoeff, 0, 0, 1, 0);
+            Console.WriteLine($"FT_Control start rtn is {rtn}");
+            robot.MoveL(j1, desc_p1, 1, 0, 100, 100, 100, -1, 0, epos, 0, 0, offset_pos, 0, 0, 10);
+            robot.MoveL(j2, desc_p2, 1, 0, 100, 100, 100, -1, 0, epos, 0, 0, offset_pos, 0, 0, 10);
+            rtn = robot.FT_Control(0, sensor_id, select, ft, ft_pid, adj_sign, ILC_sign, max_dis, max_ang, M, B, threshold, adjustCoeff, 0, 0, 1, 0);
+            Console.WriteLine($"FT_Control end rtn is {rtn}");
+        }
     }
 
 柔順控制開啓
@@ -848,7 +848,19 @@
         robot.ImpedanceControlStartStop(0, 1, forceThreshold, m, b, k, 1000, 500, 100, 100);
     }
 
+開啟力矩補償功能及補償係數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+.. code-block:: c#
+    :linenos:
+    
+    /**
+    * @brief 開啟力矩補償功能及補償係數
+    * @param [in] status 開關，0-關閉；1-開啟
+    * @param [in] torqueCoeff J1-J6力矩補償係數[0-1]
+    * @return 錯誤碼
+    */
+    public int SerCoderCompenParams(int status, double[] torqueCoeff)
 
 
 
