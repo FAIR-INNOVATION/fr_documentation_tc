@@ -175,6 +175,18 @@ FRJ-PCIeN板卡硬體環境搭建
 
 當協議切換為Profinet時，並且從站裝置名稱與主站一致時，主站會自動配置從站的 IP 地址。
 
+5. FRJ-PCIeN-EC-RJ-V10 板卡韌體升級
+
+網址輸入 192.169.58.2 進入機器人介面，點選「初始設定」->「外設」->「板卡通訊」介面，可以取得 FRJ-PCIeN-EC-RJ-V10 板卡韌體版本號。選擇待升級的 bin 檔案，點選上傳，等待韌體升級成功後，重啟控制箱即可。
+
+.. image:: custom_protocol_slave/064.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 17.2-13 板卡韌體升級
+
+.. note:: 1、僅 V3.9.2 及以上版本支援 Ethercat 協定韌體升級；2、升級 Ethercat 協定韌體需卸載已執行的開放協定。
+
 軟體環境搭建
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -184,7 +196,7 @@ FRJ-PCIeN板卡硬體環境搭建
    :width: 6in
    :align: center
 
-.. centered:: 圖表 17.2-13 Web登入介面
+.. centered:: 圖表 17.2-14 Web登入介面
 
 2. 點選系統設定->關於介面，點選軟體升級按鈕，選擇software.tar.gz檔案，上傳升級包。
 
@@ -192,7 +204,7 @@ FRJ-PCIeN板卡硬體環境搭建
    :width: 6in
    :align: center
 
-.. centered:: 圖表 17.2-14 軟體升級
+.. centered:: 圖表 17.2-15 軟體升級
 
 .. note:: QX控制箱web版本需要3.8.0及以上，LA控制箱web版本需要3.8.0及以上。
 
@@ -202,7 +214,7 @@ FRJ-PCIeN板卡硬體環境搭建
    :width: 4in
    :align: center
 
-.. centered:: 圖表 17.2-15 切換遠端模式
+.. centered:: 圖表 17.2-16 切換遠端模式
 
 4. 選擇控制器從站協議，以及是否需要自啟動功能，點選「設定」按鈕。注意：切換不同的協議，需要先點選「卸載」按鈕，再進行其他協議的配置。
 
@@ -210,7 +222,7 @@ FRJ-PCIeN板卡硬體環境搭建
    :width: 6in
    :align: center
 
-.. centered:: 圖表 17.2-16 配置通訊協議
+.. centered:: 圖表 17.2-17 配置通訊協議
 
 .. note:: 切換不同的協議，需要重啟控制箱再進行協議的配置。
 
@@ -683,6 +695,33 @@ HMI設置（Profinet仿真）
 .. centered:: 圖表 17.3-5 板卡生成板卡lua指令
 
 :download:`附件一：從站模式地址映射表 <../_static/_doc/控制箱从站模式地址对照表.xlsx>`
+
+板卡通訊周期配置
+---------------------------------------------------------
+
+透過上位機可以配置板卡的通訊周期，目前僅提供PN協議韌體，後續相容EIP、CClink ie basic、ECAT協議。
+
+(1) 將PC（Win11系統）網口與板卡網口直連，打開Device Assistant v1.1.0，雙擊「乙太網路」，點選左上角「重新整理」按鈕，可以掃描到目前連接的板卡設備。
+
+.. image:: custom_protocol_slave/060.png
+   :width: 6in
+   :align: center
+
+.. image:: custom_protocol_slave/061.png
+   :width: 6in
+   :align: center
+
+(2) 在韌體更新介面，上傳新版本PN韌體，點選「更新」按鈕，左下角提示「升級成功」列印即可。
+
+.. image:: custom_protocol_slave/062.png
+   :width: 6in
+   :align: center
+
+(3) 輸入需要的通訊周期（支援1~100ms），點選「設定」按鈕，左下角提示「周期設定成功」列印即可。
+
+.. image:: custom_protocol_slave/063.png
+   :width: 6in
+   :align: center
 
 附錄
 -------------------

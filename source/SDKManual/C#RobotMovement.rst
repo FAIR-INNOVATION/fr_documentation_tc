@@ -1897,3 +1897,29 @@ FIR濾波代碼示例
         robot.CloseRPC();
         return ;
     }
+
+原地空運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 原地空運動
+    * @return 錯誤碼
+    */
+    public int MoveStationary()
+
+原地空運動程式碼範例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    public void LaserSensorRecordandReplay()
+    {
+        int rtn = robot.LaserSensorRecordandReplay(0, 10, 1, 0, 0.1, 1, 1, 10, 100);
+        Console.WriteLine($"LaserSensorRecordandReplay rtn is {rtn}");
+        rtn = robot.MoveStationary();
+        Console.WriteLine($"MoveStationary rtn is {rtn}");
+        rtn = robot.LaserSensorRecord1(0, 10);
+        Console.WriteLine($"LaserSensorRecord1 rtn is {rtn}"); 
+    }

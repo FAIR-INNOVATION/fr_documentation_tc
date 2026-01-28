@@ -1233,3 +1233,108 @@
         Console.WriteLine($" {getRadio[0]:F6} {getRadio[1]:F6} {getRadio[2]:F6} {getRadio[3]:F6} {getRadio[4]:F6} {getRadio[5]:F6}");
     }
 
+光電感測器TCP標定-計算工具RPY
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 光電感測器TCP標定-計算工具RPY
+    * @param [in] Btool 機器人笛卡爾位置
+    * @param [in] Etool 目前工具座標系數值
+    * @param [in] sensor 目前感測器座標系數值(暫未開放)
+    * @param [in] radius 圓周運動半徑mm(暫未開放)
+    * @param [in] dz 沿基座標系z軸負方向運動距離；當dz = 10000時，函數直接回傳工具RPY
+    * @param [out] TCPRPY 工具RPY數值
+    * @return 錯誤碼
+    */
+    public int TCPComputeRPY(DescPose Btool, DescPose Etool, DescPose sensor, double radius, double dz, out Rpy TCPRPY);
+
+光電感測器TCP標定-計算工具XYZ
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 光電感測器TCP標定-計算工具XYZ
+    * @param [in] select 0-計算工具TCP；1-計算感測器原點；2-計算感測器姿態；3-直接回傳工具TCP；4-記錄目前工件座標系和工具座標系
+    * @param [in] originDirection 0-X方向；1-Y方向；2-Z方向
+    * @param [in] pos1 機器人笛卡爾位置1
+    * @param [in] pos2 機器人笛卡爾位置2
+    * @param [in] pos3 機器人笛卡爾位置3
+    * @param [in] pos4 機器人笛卡爾位置4
+    * @param [out] TCP 工具XYZ數值
+    * @return 錯誤碼
+    */
+    public int TCPComputeXYZ(int select, double originDirection, DescTran pos1, DescTran pos2,DescTran pos3, DescTran pos4, out DescTran TCP);
+
+光電感測器TCP標定-開始記錄末端法蘭中心位置
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 光電感測器TCP標定-開始記錄末端法蘭中心位置
+    * @return 錯誤碼
+    */
+    public int TCPRecordFlangePosStart();
+
+光電感測器TCP標定-停止記錄末端法蘭中心位置
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 光電感測器TCP標定-停止記錄末端法蘭中心位置
+    * @return 錯誤碼
+    */
+    public int TCPRecordFlangePosEnd();
+
+光電感測器TCP標定-取得末端工具中心點位置
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 光電感測器TCP標定-取得末端工具中心點位置
+    * @param [out] TCP 工具中心點位置(x,y,z)
+    * @return 錯誤碼
+    */
+    public int TCPGetRecordFlangePos(out DescTran TCP);
+
+光電感測器TCP標定
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 光電感測器TCP標定
+    * @param [in] luaPath 自動標定lua程式路徑：QX版本機器人-"/fruser/FR_CalibrateTheToolTcp.lua";LA版本機器人-"/usr/local/etc/controller/lua/FR_CalibrateTheToolTcp.lua"
+    * @param [in] offsetX 示教點偏移(x,y,z)mm
+    * @param [out] TCP 標定後的工具座標系(x,y,z,rx,ry,rz)
+    * @return 錯誤碼
+    */
+    public int PhotoelectricSensorTCPCalibration(string luaPath, DescTran offset, out DescPose TCP);
+
+光電感測器TCP標定程式碼範例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    public void TestPhotoelectricSensorTCPCalib()
+    {
+        ROBOT_STATE_PKG pkg =new ROBOT_STATE_PKG();
+        DescTran offset = new DescTran( 10.0, 10.0, 3.0 );
+        DescPose TCP = new DescPose();
+        int rtn = robot.PhotoelectricSensorTCPCalibration("/fruser/FR_CalibrateTheToolTcp.lua", offset, out TCP);
+        Console.WriteLine($"PhotoelectricSensorTCPCalibration : {rtn}");
+        Console.WriteLine($"工具TCP座標: X={TCP.tran.x:F3}, Y={TCP.tran.y:F3}, Z={TCP.tran.z:F3}");
+        Console.WriteLine($"工具RPY姿態: RX={TCP.rpy.rx:F3}, RY={TCP.rpy.ry:F3}, RZ={TCP.rpy.rz:F3}");
+    }

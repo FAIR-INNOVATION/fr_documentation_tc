@@ -13,6 +13,19 @@
      - **日期**
      - **更新描述**
 
+
+   * - V3.9.2
+     - 2026-01-26
+     - | 1. FT_RotInsertion() 介面增加未偵測到力/力矩的處理策略參數
+       | 2. LaserSensorRecordandReplay() 介面增加機器人定點追蹤相關參數
+       | 3. 新增 MoveStationary() 介面
+       | 4. 新增 TCPComputeRPY() 介面
+       | 5. 新增 TCPComputeXYZ() 介面
+       | 6. 新增 TCPRecordFlangePosStart() 介面
+       | 7. 新增 TCPRecordFlangePosEnd() 介面
+       | 8. 新增 TCPGetRecordFlangePos() 介面
+       | 9. 新增 PhotoelectricSensorTCPCalibration() 介面
+
    * - V3.9.1
      - 2025-12-25
      - | 1. MoveL() 介面增加 oacc 速度縮放因子參數 / 物理加速度參數；

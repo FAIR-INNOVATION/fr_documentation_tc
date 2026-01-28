@@ -1323,3 +1323,35 @@ FIR濾波代碼示例
     rtn = robot.MoveIntersectLine(mainPoint=mainPoint, mainExaxisPos=mainExaxisPos, piecePoint=piecePoint, pieceExaxisPos=pieceExaxisPos, extAxisFlag=extAxisFlag, exaxisPos=exaxisPos, tool=tool,wobj=wobj, vel=vel, acc=acc, ovl=5.0, oacc=5.0, moveDirection=moveDirection, offset=offset)
     print(f"MoveIntersectLine rtn is {rtn}")
     robot.CloseRPC()
+
+原地空運動
++++++++++++++++++++++++++++++++++
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``MoveStationary()``"
+    "描述", "原地空運動"
+    "必選參數", "無"
+    "預設參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode"
+ 
+原地空運動程式碼範例
++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    import time
+    robot = Robot.RPC('192.168.58.2')
+    rtn = robot.LaserSensorRecordandReplay(0, 10, 1, 0, 0.1, 1, 0, 10, 100)
+    print(f"LaserSensorRecordandReplay rtn is {rtn}")
+    rtn = robot.MoveStationary()
+    print(f"MoveStationary rtn is {rtn}")
+    rtn = robot.LaserSensorRecord1(0, 10)
+    print(f"LaserSensorRecordandReplay rtn is {rtn}")
+    robot.CloseRPC()
+    return 0
+

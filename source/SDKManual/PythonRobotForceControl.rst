@@ -467,16 +467,73 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``FT_RotInsertion(rcs, ft, orn, angVelRot=3, angleMax=45, angAccmax=0, rotorn=1)``"
+    "原型", "``FT_RotInsertion(rcs, ft, orn, angVelRot=3, angleMax=45, angAccmax=0, rotorn=1, strategy=0)``"
     "描述", "旋轉插入"
     "必選參數", "- ``rcs``：參考座標系，0-工具座標系，1-基座標系；
     - ``ft``：力或力矩閾值 (0~100)，單位 N 或 Nm;
     - ``orn``：力/扭矩方向，1-沿z軸方向，2-繞z軸方向;"
-    "默認參數", "- ``angVelRot``：旋轉角速度，單位°/s,默認 3;
-    - ``angleMax``：最大旋轉角度，單位 ° 默認 45;
-    - ``angAccmax``：最大旋轉加速度，單位 °/s^2，暫不使用 默認0;
-    - ``rotorn``：旋轉方向，1-順時針，2-逆時針 默認1"
+    "預設參數", "- ``angVelRot``：旋轉角速度，單位°/s,預設 3;
+    - ``angleMax``：最大旋轉角度，單位 ° 預設 45;
+    - ``angAccmax``：最大旋轉加速度，單位 °/s^2，暫不使用 預設0;
+    - ``rotorn``：旋轉方向，1-順時針，2-逆時針 預設1;
+    - ``strategy``：未偵測到力/力矩的處理策略，0-報錯；1-警告，繼續運動"
     "返回值", "錯誤碼 成功-0  失敗- errcode "
+
+螺旋探索、直線插入等指令程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    robot = Robot.RPC('192.168.58.2')
+    j1=[-11.904,-99.669,117.473,-108.616,-91.726,74.256]
+    j2=[-45.615,-106.172,124.296,-107.151,-91.282,74.255]
+    j3=[-29.777,-84.536,109.275,-114.075,-86.655,74.257]
+    j4=[-31.154,-95.317,94.276,-88.079,-89.740,74.256]
+    desc_pos1=[-419.524,-13.000,351.569,-178.118,0.314,3.833]
+    desc_pos2=[-321.222,185.189,335.520,-179.030,-1.284,-29.869]
+    desc_pos3=[-487.434,154.362,308.576,176.600,0.268,-14.061]
+    desc_pos4=[-443.165,147.881,480.951,179.511,-0.775,-15.409]
+    offset_pos=[0.0]*6
+    epos=[0.0]*4
+    tool=0
+    user=0
+    vel=100.0
+    acc=100.0
+    ovl=100.0
+    oacc=100.0
+    blendT=0.0
+    blendR=0.0
+    flag=0
+    search=0
+    blendMode=0
+    velAccMode=0
+    robot.SetSpeed(20)
+    rtn=robot.MoveJ(joint_pos=j1,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,exaxis_pos=epos,blendT=blendT,offset_flag=flag,offset_pos=offset_pos)
+    print(f"movejerrcode:{rtn}")
+    rtn=robot.MoveL(desc_pos=desc_pos2,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,blendR=blendR,blendMode=blendMode,exaxis_pos=epos,search=search,offset_flag=flag,offset_pos=offset_pos,oacc=oacc,velAccParamMode=velAccMode)
+    print(f"movelerrcode:{rtn}")
+    rtn=robot.MoveC(desc_pos_p=desc_pos3,tool_p=tool,user_p=user,vel_p=vel,acc_p=acc,exaxis_pos_p=epos,offset_flag_p=flag,offset_pos_p=offset_pos,desc_pos_t=desc_pos4,tool_t=tool,user_t=user,vel_t=vel,acc_t=acc,exaxis_pos_t=epos,offset_flag_t=flag,offset_pos_t=offset_pos,ovl=ovl,blendR=blendR,oacc=oacc,velAccParamMode=velAccMode)
+    print(f"movecerrcode:{rtn}")
+    rtn=robot.MoveJ(joint_pos=j2,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,exaxis_pos=epos,blendT=blendT,offset_flag=flag,offset_pos=offset_pos)
+    print(f"movejerrcode:{rtn}")
+    rtn=robot.Circle(desc_pos_p=desc_pos3,tool_p=tool,user_p=user,vel_p=vel,acc_p=acc,exaxis_pos_p=epos,desc_pos_t=desc_pos1,tool_t=tool,user_t=user,vel_t=vel,acc_t=acc,exaxis_pos_t=epos,ovl=ovl,offset_flag=flag,offset_pos=offset_pos,oacc=oacc,blendR=-1,velAccParamMode=velAccMode)
+    print(f"circleerrcode:{rtn}")
+    rtn=robot.MoveCart(desc_pos=desc_pos4,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,blendT=blendT,config=-1)
+    print(f"MoveCarterrcode:{rtn}")
+    rtn=robot.MoveJ(joint_pos=j1,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,exaxis_pos=epos,blendT=blendT,offset_flag=flag,offset_pos=offset_pos)
+    print(f"movejerrcode:{rtn}")
+    rtn=robot.MoveL(desc_pos=desc_pos2,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,blendR=blendR,blendMode=blendMode,exaxis_pos=epos,search=search,offset_flag=flag,offset_pos=offset_pos,config=-1,velAccParamMode=velAccMode)
+    print(f"movelerrcode:{rtn}")
+    rtn=robot.MoveC(desc_pos_p=desc_pos3,tool_p=tool,user_p=user,vel_p=vel,acc_p=acc,exaxis_pos_p=epos,offset_flag_p=flag,offset_pos_p=offset_pos,desc_pos_t=desc_pos4,tool_t=tool,user_t=user,vel_t=vel,acc_t=acc,exaxis_pos_t=epos,offset_flag_t=flag,offset_pos_t=offset_pos,ovl=ovl,blendR=blendR,config=-1,velAccParamMode=velAccMode)
+    print(f"movecerrcode:{rtn}")
+    rtn=robot.MoveJ(joint_pos=j2,tool=tool,user=user,vel=vel,acc=acc,ovl=ovl,exaxis_pos=epos,blendT=blendT,offset_flag=flag,offset_pos=offset_pos)
+    print(f"movejerrcode:{rtn}")
+    rtn=robot.Circle(desc_pos_p=desc_pos3,tool_p=tool,user_p=user,vel_p=vel,acc_p=acc,exaxis_pos_p=epos,desc_pos_t=desc_pos1,tool_t=tool,user_t=user,vel_t=vel,acc_t=acc,exaxis_pos_t=epos,ovl=ovl,offset_flag=flag,offset_pos=offset_pos,oacc=oacc,blendR=-1,velAccParamMode=velAccMode)
+    print(f"circleerrcode:{rtn}")
+    robot.CloseRPC()
+    return 0
 
 直線插入
 ++++++++++++++++++++++++++++++++++

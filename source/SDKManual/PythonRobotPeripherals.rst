@@ -1197,13 +1197,16 @@ SmartTool按鈕代碼示例
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``LaserSensorRecordandReplay(delayMode, delayTime, delayDisExAxisNum, delayDis, sensitivePara, speed)``"
-    "描述", "激光焊縫軌跡復現"
+    "原型", "``LaserSensorRecordandReplay(delayMode, delayTime, delayDisExAxisNum, delayDis, sensitivePara, int trackMode, int triggerMode, double runTime, speed)``"
+    "描述", "雷射焊縫軌跡重現"
     "必選參數", "- ``delayMode``：模式 0-延時時間 1-延時距離
     - ``delayTime``：延時時間 單位ms
     - ``delayDisExAxisNum``：擴展軸編號
     - ``delayDis``：延時距離 單位mm
     - ``sensitivePara``：補償靈敏係數
+    - ``trackMode``：定點追蹤類型。0-擴展軸非同步運動；1-機器人
+    - ``triggerMode``：定點追蹤觸發方式。0-追蹤時長；1-IO
+    - ``runTime``：機器人定點追蹤時長(s)
     - ``speed``：速度 單位%"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"

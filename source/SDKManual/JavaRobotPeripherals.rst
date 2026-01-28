@@ -1386,16 +1386,19 @@ SmartTool按鈕代碼示例
     :linenos:
 
     /**
-     * @brief 激光焊縫軌跡復現
-     * @param [in] delayMode 模式 0-延時時間 1-延時距離
-     * @param [in] delayTime 延時時間 單位ms
-     * @param [in] delayDisExAxisNum 擴展軸編號
-     * @param [in] delayDis 延時距離 單位mm
-     * @param [in] sensitivePara 補償靈敏係數
-     * @param [in] speed 速度 單位%
-     * @return 錯誤碼
-     */
-    public int LaserSensorRecordandReplay(int delayMode, int delayTime, int delayDisExAxisNum, double delayDis, double sensitivePara, double speed)
+    * @brief 雷射焊縫軌跡重現
+    * @param delayMode 模式 0-延時時間 1-延時距離
+    * @param delayTime 延時時間 單位ms
+    * @param delayDisExAxisNum 擴展軸編號
+    * @param delayDis 延時距離 單位mm
+    * @param sensitivePara 補償靈敏係數
+    * @param trackMode 定點追蹤類型。0-擴展軸非同步運動；1-機器人
+    * @param triggerMode 定點追蹤觸發方式。0-追蹤時長；1-IO
+    * @param runTime 機器人定點追蹤時長(s)
+    * @param speed 速度 單位%
+    * @return 錯誤碼
+    */
+    public int LaserSensorRecordandReplay(int delayMode, int delayTime, int delayDisExAxisNum, double delayDis, double sensitivePara, int trackMode, int triggerMode, double runTime, double speed)
     
 運動到焊縫記錄的起點
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++

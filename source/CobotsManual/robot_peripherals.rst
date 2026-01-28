@@ -10,7 +10,7 @@
 概述
 ~~~~~~~~
 
-在機器人末端提供了硬體介面用於連接485通信的外設，目前支援的外設包括夾爪、旋轉夾爪、力感測器、焊接手柄等設備。以上末端設備均可通過撰寫lua開放協定實現協定適配，實現控制外設及取得外設狀態。
+在機器人末端提供了硬體介面用於連接485通信的外設，目前支援的外設包括夾爪、旋轉夾爪、力感測器、焊接手柄等設備。以上末端設備均可通過撰寫lua開放協定實現協定適配，實現控制外設及取得外設狀態。針對SmartTool焊接手柄，使用者還可以選擇透過登入網頁配置按鍵功能自動生成開放協議文件，生成後的協議會自動應用到末端。
 
 操作步驟
 ~~~~~~~~~~~
@@ -31,7 +31,7 @@
 **Step2**：打開WebApp，依序點擊「初始設置」、「外設」，選擇需要配置的末端外設（如夾爪）；外設的控制類型有已適配設備和外設開放協定兩種：
 
 - **已適配設備**：採用機器人控制器進行通信，不需要上傳和應用。
-- **外設開放協定**：使用者基於Lua撰寫需要適配的末端開放協定實現通信控制其中末端協定分為兩類，一類為使用者自行上傳的協定，另一類為機器人預設內建協定。
+- **外設開放協定**：使用者基於Lua撰寫需要適配的末端開放協定實現通信控制其中末端協定分為兩類，一類為使用者自行上傳的協定，另一類為機器人預設內建協定。自3.9.2版本開始，使用者無需對需要上傳到末端的lua協議透過額外的軟體進行校驗加密操作，直接上傳即可，並且之前已校驗加密的協議仍然可以正常上傳使用，機器人會主動區分檔案是否進行了校驗加密，如果未校驗則會進行校驗加密後上傳應用到末端，如果已加密則直接上傳應用到末端。
 
 .. figure:: robot_peripherals/002.png
    :align: center
@@ -500,13 +500,122 @@
 力感測器末端Lua協定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-打開WebApp，依序點擊「初始設置」、「外設」、「力感測器」、「自訂協定」。點擊「協定管理」，則可以進行末端協定的配置。目前力感測器預設內嵌的協定如下圖所示。
+打開WebApp，依序點擊「初始設置」、「外設」、「力感測器」、「自訂協定」。點擊「協定管理」，則可以進行末端協定的配置。目前力感測器預設內嵌的協定如下圖所示。3.9.2版本新增內嵌End_JD_XJC_V1.0.lua、End_JD_GZCX_V1.0.lua兩個夾爪+力感測器的組合協議。
 
 .. figure:: robot_peripherals/281.png
    :align: center
    :width: 6in
 
 .. centered:: 圖表 8.3‑2-2 力感測器預設內嵌協定
+
+焊接手柄末端Lua協議
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+打開WebApp，依序點選「初始設定」、「外設」、「焊接手柄」、「自訂協議」。點選「協議管理」，則可以進行末端協議的配置。目前焊接手柄預設內嵌的協議如下圖所示。3.9.2版本新增內嵌End_SM_JD_V1.3.lua、End_SM_GZCX_V1.3.lua、End_SM_XJC_V1.3.lua三個SmartTool+夾爪或力感測器的組合協議。
+
+.. figure:: robot_peripherals/283.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.3‑2-3 焊接手柄預設內嵌協議
+
+末端lua協議自動生成
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+本次新增功能，可對內嵌SmartTool焊接手柄外設相關的協議（目前僅支援End_SmartTool_V1.3.lua、End_SM_JD_V1.3.lua、End_SM_GZCX_V1.3.lua、End_SM_XJC_V1.3.lua四種協議可配置自動生成），透過Web頁面配置後自動生成末端lua協議並上傳應用到末端，無需使用者撰寫。使用者按照需求對SmartTool焊接手柄的A、B、C、D、E、IO鍵進行配置，配置完成後需要去使能機器人，並點選「應用」， 此時頁面會提示「是否進入boot並應用開放協議」，點選確認後機器人進入boot狀態並自動上傳自動生成的末端lua協議，重啟機器人後則可以按照配置的按鍵進行SmartTool的使用。
+
+.. figure:: robot_peripherals/284.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.3‑2-4 SmartTool焊接手柄配置協議自動生成
+
+.. figure:: robot_peripherals/285.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.3‑2-5 頁面提示「是否進入boot並應用開放協議」
+
+SmartTool程式生成範本程式導入
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+如果SmartTool按鍵配置了程式生成的功能，則基於開放協議可提供兩種生成的程式，預設生成空白的lua程式，或者使用者可以選擇上傳template_開頭的範本作為新建程式的範本，當新建程式選擇範本程式時，SmartTool觸發「新建程式」生成的lua檔案包含上傳的範本檔案內容，後續新增的指令均在範本內容之後新增新增。
+
+.. figure:: robot_peripherals/286.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.3‑2-6 SmartTool程式生成範本程式導入
+
+SmartTool運動指令點配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+SmartTool在配置「PTP」、「LIN」、「ARC」三條指令時，可選擇生成指令點的儲存資料庫為「全域示教點」還是「局部示教點」。當選擇「全域示教點」時，生成的指令點可透過「示教程式」、「示教點」查看；當選擇為「局部示教點」時，生成的指令點可透過「示教程式」、「程式設計」、「局部示教點」查看。
+
+.. figure:: robot_peripherals/287.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.3‑2-7 SmartTool運動指令點「全域示教點」、「局部示教點」配置
+
+SmartTool防誤觸模式
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+基於開放協議的SmartTool新增了防誤觸模式，依序點選「初始設定」、「外設」、「焊接手柄」、「自訂協議」。在啟用末端協議後，可看到「防誤觸模式」的開關，當啟用該功能時，SmartTool的「撤銷程式」、「清空程式」兩個按鍵功能需要按兩次才能觸發。
+
+.. figure:: robot_peripherals/288.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.3‑2-8 SmartTool「防誤觸模式」功能
+
+焊接手柄的Lua末端外設協議示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+A、B、C、D、E、IO鍵六個按鍵功能可透過程式碼中的31行的key值進行修改定義，其中K38=Getbit(R[7],1)，K0=Getbit(R[7],2)為「清空程式」和「撤銷按鍵」，不可修改，後續5個K值可按照《末端全外設協議》文件中的定義進行修改。本次示例（內嵌SmartTool協議）中對應的按鍵功能為，A:LIN、B:PTP、C:建立程式、D:焊接中斷恢復、E:焊接中斷退出、IO：LIN+焊接+擺動。
+
+.. centered:: 焊接手柄的Lua末端外設協議示例（SmartTool）
+  
+.. code-block:: 
+   :linenos:
+
+   function Getbit(X,Bit)
+   return ((X&(1<<Bit))>>Bit)
+   end
+
+   if(Getbit(GetRobotState(),0)==1)then
+   local SetParams={B6=3}-- B6-操作DO連接埠號為DO3
+   SetWeldParams(SetParams)
+   while(1)
+   do
+   IwdgTaskHandle()
+   MainLoop()
+   UpDownLoadHandle()
+   SdoRwPara()
+   EndErrClear()
+   local BFlag=LuaBreak()
+   if(BFlag==1)then
+   break
+   end
+   local R={0}
+   local T={0x7D,0x01,0x30,0xC0,0x00,0x04,0x00,0x00,0x00,0x00}
+   DelayMs(100)
+   T[7],T[8],T[9],T[10]=GetIoCmd()
+   Dword=GetRobotState()
+   T[7]=Getbit(Dword,4)
+   T[12],T[11]=WeldToolCrcValue(T)
+   T[13]=0x0E
+   WeldToolSlaveSetCmd(T)
+   DelayMs(3)
+   Len=EndRxWeldData(R)
+   if((Len==13)and(R[1]==0x7D)and(R[2]==0x01)and(R[3]==0x30))then
+   local key={K38=Getbit(R[7],1),K0=Getbit(R[7],2),K3=Getbit(R[7],3),K25=Getbit(R[7],4),K39=Getbit(R[7],5),K27=Getbit(R[7],6),K28=Getbit(R[7],7), K44=Getbit(R[8],0),
+   K6=Getbit(R[8],1),K7=Getbit(R[8],2)}--smarttool焊接手柄按鍵設定，撤銷按鍵-K38撤銷程式；清空按鍵-K0清空程式；A按鍵-K3 LIN；B按鍵-K25 PTP；C按鍵-K39 建立程式；D按鍵-K27焊接中斷恢復；E按鍵-K28焊接中斷退出；IO鍵-K44 LIN+焊接+擺動 手/自動按鍵-K6手/自動；執行/暫停按鍵-K7執行/暫停
+   SetWeldToolKeys(key)
+   end
+   LuaGc()
+   end
+   end
 
 感測器負載辨識
 ~~~~~~~~~~~~~~~~~~~~~~~~
