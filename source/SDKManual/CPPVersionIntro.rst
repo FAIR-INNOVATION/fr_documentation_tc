@@ -13,6 +13,18 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.3
+     - 2026-02-11
+     - | 1.ServoCart()介面增加擴展軸參數
+       | 2.SetOutputResetCtlBoxDO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 3.SetOutputResetCtlBoxAO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 4.SetOutputResetAxleDO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 5.SetOutputResetAxleAO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 6.SetOutputResetExtDO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 7.SetOutputResetExtAO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 8.SetOutputResetSmartToolDO()介面增加暫停恢復後是否重載復位前DO狀態參數
+       | 9.增加GetInverseKinExaxis()包含擴展軸位置的逆運動學求解介面
+
    * - V3.9.2
      - 2026-01-26
      - | 1. FT_RotInsertion() 介面增加未偵測到力/力矩的處理策略參數

@@ -390,6 +390,56 @@
     */   
     errno_t  GetInverseKinRef(int type, DescPose *desc_pos, JointPos *joint_pos_ref, JointPos *joint_pos);
 
+逆運動學求解，笛卡爾空間包含擴展軸位置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 逆運動學求解，笛卡爾空間包含擴展軸位置
+    * @param [in] type 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    * @param [in] desc_pos 笛卡爾位姿
+    * @param [in] exaxis 擴展軸位置
+    * @param [in] tool 工具號
+    * @param [in] workPiece 工件號
+    * @param [out] joint_pos 關節位置
+    * @return 錯誤碼
+    */
+    errno_t GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, JointPos& joint_pos);
+
+逆運動學求解包含擴展軸位置程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c++
+    :linenos:
+
+    int TestInverseKinExaxis()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return 0;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        DescPose desc(99.957, -0.002, 29.994, -176.569, -6.757, -167.462);
+        ExaxisPos exaxis(100.0, 0.0, 0.0, 0.0);
+        JointPos jointPos = {};
+        DescPose offsetPos = {};
+        robot.GetRobotRealTimeState(&pkg);
+        int toolnum = pkg.tool;
+        int workPcsNum = pkg.user;
+        robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum, jointPos);
+        printf("GetInverseKinExaxis joint is %f, %f, %f, %f, %f, %f\n", jointPos.jPos[0], jointPos.jPos[1], jointPos.jPos[2], jointPos.jPos[3], jointPos.jPos[4], jointPos.jPos[5]);
+        robot.ExtAxisMove(exaxis, 100, -1);
+        robot.MoveJ(&jointPos, &desc, toolnum, workPcsNum, 100.0, 100.0, 100.0, &exaxis, -1, 0, &offsetPos);
+        robot.CloseRPC();
+        robot.Sleep(9999999);
+        return 0;
+    }
+
 獲取逆運動學是否有解
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c++

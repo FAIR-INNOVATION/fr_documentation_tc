@@ -367,115 +367,124 @@
         return 0;
     }
 
-設置控制箱DO停止/暫停後輸出是否復位
+設定控制箱DO停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置控制箱DO停止/暫停後輸出是否復位 
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetCtlBoxDO(int resetFlag);
+    /**
+    * @brief 設定控制箱DO停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetCtlBoxDO(int resetFlag, int reloadFlag)
 
-設置控制箱AO停止/暫停後輸出是否復位
+設定控制箱AO停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置控制箱AO停止/暫停後輸出是否復位 
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetCtlBoxAO(int resetFlag);
+    /**
+    * @brief 設定控制箱AO停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetCtlBoxAO(int resetFlag, int reloadFlag)
 
-設置末端工具DO停止/暫停後輸出是否復位
+設定末端工具DO停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置末端工具DO停止/暫停後輸出是否復位
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetAxleDO(int resetFlag);
+    /**
+    * @brief 設定末端工具DO停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetAxleDO(int resetFlag, int reloadFlag)
 
-設置末端工具AO停止/暫停後輸出是否復位
+設定末端工具AO停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置末端工具AO停止/暫停後輸出是否復位 
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetAxleAO(int resetFlag);
+    /**
+    * @brief 設定末端工具AO停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetAxleAO(int resetFlag, int reloadFlag)
     
-設置擴展DO停止/暫停後輸出是否復位
+設定擴展DO停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置擴展DO停止/暫停後輸出是否復位
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetExtDO(int resetFlag);
+    /**
+    * @brief 設定擴展DO停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetExtDO(int resetFlag, int reloadFlag)
     
-設置擴展AO停止/暫停後輸出是否復位
+設定擴展AO停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置擴展AO停止/暫停後輸出是否復位
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetExtAO(int resetFlag);
+    /**
+    * @brief 設定擴展AO停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetExtAO(int resetFlag, int reloadFlag)
 
-設置SmartTool停止/暫停後輸出是否復位
+設定SmartTool停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
-    * @brief 設置SmartTool停止/暫停後輸出是否復位
-    * @param [in] resetFlag  0-不復位；1-復位
-    * @return 錯誤碼 
-    */ 
-    int SetOutputResetSmartToolDO(int resetFlag)
+    /**
+    * @brief 設定SmartTool停止/暫停後輸出是否復位
+    * @param resetFlag 0-不復位；1-復位
+    * @param reloadFlag 暫停恢復後是否重載，0-不載入；1-載入
+    * @return 錯誤碼
+    */
+    public int SetOutputResetSmartToolDO(int resetFlag, int reloadFlag)
 
-設置LUA程序停止/暫停後輸出復位代碼示例
+設定LUA程式停止/暫停後輸出復位程式碼範例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    public static int TestDOReset(Robot robot)
+    public static void TestDOReset(Robot robot)
     {
-
-        int rtn=-1;
         for (int i = 0; i < 16; i++)
         {
             robot.SetDO(i, 1, 0, 0);
-            robot.Sleep(300);
+            robot.Sleep(200);
         }
-
         int resetFlag = 1;
-        rtn = robot.SetOutputResetCtlBoxDO(resetFlag);
-        robot.SetOutputResetCtlBoxAO(resetFlag);
-        robot.SetOutputResetAxleDO(resetFlag);
-        robot.SetOutputResetAxleAO(resetFlag);
-        robot.SetOutputResetExtDO(resetFlag);
-        robot.SetOutputResetExtAO(resetFlag);
-        robot.SetOutputResetSmartToolDO(resetFlag);
-
+        int resumeReloadFlag = 1;
+        int rtn = robot.SetOutputResetCtlBoxDO(resetFlag, resumeReloadFlag);
+        robot.SetOutputResetCtlBoxAO(resetFlag, resumeReloadFlag);
+        robot.SetOutputResetAxleDO(resetFlag, resumeReloadFlag);
+        robot.SetOutputResetAxleAO(resetFlag, resumeReloadFlag);
+        robot.SetOutputResetExtDO(resetFlag, resumeReloadFlag);
+        robot.SetOutputResetExtAO(resetFlag, resumeReloadFlag);
+        robot.SetOutputResetSmartToolDO(resetFlag, resumeReloadFlag);
         robot.ProgramLoad("/fruser/test.lua");
         robot.ProgramRun();
-        return 0;
+        robot.Sleep(2000);
+        robot.PauseMotion();
+        robot.Sleep(2000);
+        robot.ResumeMotion();
+        robot.Sleep(2000);
+        robot.CloseRPC();
     }

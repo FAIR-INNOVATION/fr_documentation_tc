@@ -374,6 +374,45 @@
     "返回值", "- 錯誤碼 成功-0  失敗- errcode
     - ``joint_pos=[j1,j2,j3,j4,j5,j6]``：逆運動學解，工具位姿求解關節位置"
 
+逆運動學求解，笛卡爾空間包含擴展軸位置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetInverseKinExaxis(type, desc_pos, exaxis, tool, workPiece)``"
+    "描述", "逆運動學求解，笛卡爾空間包含擴展軸位置"
+    "必選參數", "- ``type``: 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    - ``desc_pos``: 笛卡爾位姿
+    - ``exaxis``: 擴展軸位置
+    - ``tool``: 工具號
+    - ``workPiece``: 工件號"
+    "預設參數", "無"
+    "返回值", "- 錯誤碼 成功-0 失敗- errcode
+    - ``joint_pos``：關節位置"
+
+逆運動學求解包含擴展軸位置程式碼範例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+    robot = Robot.RPC('192.168.58.2')
+    desc = [99.957, -0.002, 29.994, -176.569, -6.757, -167.462]
+    exaxis = [100.0, 0.0, 0.0, 0.0]
+    jointPos = [0.0] * 6
+    offsetPos = [0.0] * 6
+    rtn,pkg = robot.GetRobotRealTimeState()
+    toolnum = pkg.tool
+    workPcsNum = pkg.user
+    rtn, jointPos = robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum)
+    print(f"GetInverseKinExaxis joint is {jointPos[0]},{jointPos[1]},{jointPos[2]},{jointPos[3]},{jointPos[4]},{jointPos[5]}")
+    robot.ExtAxisMove(exaxis, 100, -1)
+    robot.MoveJ(joint_pos=jointPos, desc_pos=desc, tool=toolnum, user=workPcsNum, vel=100.0, acc=100.0, ovl=100.0, exaxis_pos=exaxis, blendT=-1, offset_flag=0, offset_pos=offsetPos)
+    robot.CloseRPC()
+    return 0
+
 逆運動學求解-是否有解
 ++++++++++++++++++++++
 .. csv-table:: 

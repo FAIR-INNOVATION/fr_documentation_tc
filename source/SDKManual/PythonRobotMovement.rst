@@ -518,19 +518,20 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoCart(mode, desc_pos, pos_gain = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0] , acc = 0.0, vel = 0.0, cmdT = 0.008, filterT = 0.0, gain = 0.0)``"
+    "原型", "``ServoCart(mode, desc_pos, exaxis, pos_gain=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0], acc=0.0, vel=0.0, cmdT=0.008,filterT=0.0, gain=0.0)``"
     "描述", "笛卡爾空間伺服模式運動"
     "必選參數", "- ``mode``:[0]-絕對運動(基座標系)，[1]-增量運動(基座標系)，[2]-增量運動(工具座標系)；
+    - ``exaxis``:擴展軸位置；
     - ``desc_pos``:目標笛卡爾位置/目標笛卡爾位置增量；"
-    "默認參數", "- ``pos_gain``:位姿增量比例係數，僅在增量運動下生效，範圍 [0~1], 默認爲 [1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
-    - ``acc``:加速度，範圍 [0~100]，暫不開放，默認爲 0.0;
-    - ``vel``:速度，範圍 [0~100]，暫不開放，默認爲 0.0;
-    - ``cmdT``:指令下發週期，單位s，建議範圍[0.001~0.0016], 默認爲0.008;
-    - ``filterT``:濾波時間，單位 [s]，暫不開放， 默認爲0.0;
-    - ``gain``:目標位置的比例放大器，暫不開放， 默認爲0.0;"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "預設參數", "- ``pos_gain``:位姿增量比例係數，僅在增量運動下生效，範圍 [0~1], 預設為 [1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+    - ``acc``:加速度，範圍 [0~100]，暫不開放，預設為 0.0;
+    - ``vel``:速度，範圍 [0~100]，暫不開放，預設為 0.0;
+    - ``cmdT``:指令下發週期，單位s，建議範圍[0.001~0.0016], 預設為0.008;
+    - ``filterT``:濾波時間，單位 [s]，暫不開放， 預設為0.0;
+    - ``gain``:目標位置的比例放大器，暫不開放， 預設為0.0;"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-笛卡爾空間伺服模式運動代碼示例
+笛卡爾空間伺服模式運動程式碼範例
 +++++++++++++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: python
@@ -538,25 +539,27 @@ jog點動立即停止
 
     from fairino import Robot
     import time
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    desc_pos_dt = [0.0,0.0,0.0,0.0,0.0,0.0]  # [x, y, z, rx, ry, rz]
-    desc_pos_dt[2] = -0.5 
-    pos_gain = [0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
-    mode = 2
+    desc_pos_dt = [83.00800, 50.525000, 29.246, 179.629, -7.138, -166.975]
+    exaxis = [100.0, 0.0, 0.0, 0.0]
+    pos_gain = [0.0] * 6
+    mode = 0
     vel = 0.0
     acc = 0.0
-    cmdT = 0.008
-    filterT = 0.0 
-    gain = 0.0 
+    cmdT = 0.001
+    filterT = 0.0
+    gain = 0.0
     flag = 0
-    count = 100 
+    count = 5000
     robot.SetSpeed(20)
-    while count > 0:
-        robot.ServoCart(mode=mode, desc_pos=desc_pos_dt, pos_gain=pos_gain, acc=acc, vel=vel, cmdT=cmdT, filterT=filterT, gain=gain)
+    while count:
+        rtn = robot.ServoCart(mode, desc_pos_dt, exaxis, pos_gain, acc, vel, cmdT, filterT, gain)
+        print(f"ServoCart rtn is {rtn}")
         count -= 1
-        time.sleep(cmdT)
+        desc_pos_dt[0] += 0.01
+        exaxis[0] += 0.01
     robot.CloseRPC()
+    return 0
 
 樣條運動開始
 ++++++++++++++++

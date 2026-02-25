@@ -351,7 +351,7 @@
     print(f"WaitDI over; rtn is: {rtn}")
     robot.CloseRPC()
 
-設置控制箱DO停止/暫停後輸出是否復位
+設定控制箱DO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -359,13 +359,15 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetCtlBoxDO(resetFlag)``"
-    "描述", "設置控制箱DO停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "原型", "``SetOutputResetCtlBoxDO(resetFlag,reloadFlag)``"
+    "描述", "設定控制箱DO停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置控制箱AO停止/暫停後輸出是否復位
+設定控制箱AO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -373,13 +375,15 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetCtlBoxDO(resetFlag)``"
-    "描述", "設置控制箱AO停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "原型", "``SetOutputResetCtlBoxAO(resetFlag,reloadFlag)``"
+    "描述", "設定控制箱AO停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置末端工具DO停止/暫停後輸出是否復位
+設定末端工具DO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -387,13 +391,15 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetAxleDO(resetFlag)``"
-    "描述", "設置末端工具DO停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "原型", "``SetOutputResetAxleDO(resetFlag,reloadFlag)``"
+    "描述", "設定末端工具DO停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置末端工具AO停止/暫停後輸出是否復位
+設定末端工具AO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -401,13 +407,15 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetAxleAO(resetFlag)``"
-    "描述", "設置末端工具AO停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "原型", "``SetOutputResetAxleAO(resetFlag,reloadFlag)``"
+    "描述", "設定末端工具AO停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置擴展DO停止/暫停後輸出是否復位
+設定擴展DO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -415,13 +423,15 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetExtDO (resetFlag)``"
-    "描述", "設置擴展DO停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "原型", "``SetOutputResetExtDO (resetFlag,reloadFlag)``"
+    "描述", "設定擴展DO停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置擴展AO停止/暫停後輸出是否復位
+設定擴展AO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -429,13 +439,15 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetExtAO (resetFlag)``"
-    "描述", "設置擴展AO停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：0-不復位；1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    "原型", "``SetOutputResetExtAO (resetFlag,reloadFlag)``"
+    "描述", "設定擴展AO停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置SmartTool停止/暫停後輸出是否復位
+設定SmartTool停止/暫停後輸出是否復位
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -443,33 +455,40 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetOutputResetSmartToolDO(resetFlag)``"
-    "描述", "設置SmartTool停止/暫停後輸出是否復位"
-    "必選參數", "- ``resetFlag``：是否復位，0-不復位，1-復位"
-    "默認參數", "無"
-    "返回值", "錯誤碼 成功-0  失敗- errcode "
+    "原型", "``SetOutputResetSmartToolDO(resetFlag,reloadFlag)``"
+    "描述", "設定SmartTool停止/暫停後輸出是否復位"
+    "必選參數", "
+    - ``resetFlag``：0-不復位；1-復位
+    - ``reloadFlag``：暫停恢復後是否重載，0-不載入；1-載入"
+    "預設參數", "無"
+    "返回值", "錯誤碼 成功-0 失敗- errcode"
 
-設置LUA程序停止/暫停後輸出復位代碼示例
+設定LUA程式停止/暫停後輸出復位程式碼範例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: python
     :linenos:
 
     from fairino import Robot
     import time
-    import threading
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
     for i in range(16):
         robot.SetDO(i, 1, 0, 0)
-        time.sleep(0.3)
-    resetFlag = 1
-    robot.SetOutputResetCtlBoxDO(resetFlag)    
-    robot.SetOutputResetCtlBoxAO(resetFlag)    
-    robot.SetOutputResetAxleDO(resetFlag)      
-    robot.SetOutputResetAxleAO(resetFlag)      
-    robot.SetOutputResetExtDO(resetFlag)       
-    robot.SetOutputResetExtAO(resetFlag)       
-    robot.SetOutputResetSmartToolDO(resetFlag) 
-    robot.ProgramLoad("/fruser/test0610.lua")
+        time.sleep(0.2)
+    resetFlag = 0
+    resumeReloadFlag = 0
+    rtn = robot.SetOutputResetCtlBoxDO(resetFlag, resumeReloadFlag)
+    robot.SetOutputResetCtlBoxAO(resetFlag, resumeReloadFlag)
+    robot.SetOutputResetAxleDO(resetFlag, resumeReloadFlag)
+    robot.SetOutputResetAxleAO(resetFlag, resumeReloadFlag)
+    robot.SetOutputResetExtDO(resetFlag, resumeReloadFlag)
+    robot.SetOutputResetExtAO(resetFlag, resumeReloadFlag)
+    robot.SetOutputResetSmartToolDO(resetFlag, resumeReloadFlag)
+    robot.ProgramLoad("/fruser/test.lua")
     robot.ProgramRun()
+    time.sleep(2)
+    robot.PauseMotion()
+    time.sleep(2)
+    robot.ResumeMotion()
+    time.sleep(2)
     robot.CloseRPC()
+    return 0

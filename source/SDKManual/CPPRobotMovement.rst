@@ -706,58 +706,60 @@ jog點動立即停止
     :linenos:
 
     /**
-    * @brief  笛卡爾空間伺服模式運動
-    * @param  [in]  mode  0-絕對運動(基座標系)，1-增量運動(基座標系)，2-增量運動(工具座標系)
-    * @param  [in]  desc_pos  目標笛卡爾位姿或位姿增量
-    * @param  [in]  pos_gain  位姿增量比例係數，僅在增量運動下生效，範圍[0~1]
-    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放，默認爲0
-    * @param  [in] vel  速度百分比，範圍[0~100]，暫不開放，默認爲0
-    * @param  [in] cmdT  指令下發週期，單位s，建議範圍[0.001~0.0016]
-    * @param  [in] filterT 濾波時間，單位s，暫不開放，默認爲0
-    * @param  [in] gain  目標位置的比例放大器，暫不開放，默認爲0
-    * @return  錯誤碼
+    * @brief 笛卡爾空間伺服模式運動
+    * @param [in] mode 0-絕對運動(基座標系)，1-增量運動(基座標系)，2-增量運動(工具座標系)
+    * @param [in] desc_pos 目標笛卡爾位姿或位姿增量
+    * @param [in] exaxis 擴展軸位置
+    * @param [in] pos_gain 位姿增量比例係數，僅在增量運動下生效，範圍[0~1]
+    * @param [in] acc 加速度百分比，範圍[0~100],暫不開放，預設為0
+    * @param [in] vel 速度百分比，範圍[0~100]，暫不開放，預設為0
+    * @param [in] cmdT 指令下發週期，單位s，建議範圍[0.001~0.016]
+    * @param [in] filterT 濾波時間，單位s，暫不開放，預設為0
+    * @param [in] gain 目標位置的比例放大器，暫不開放，預設為0
+    * @return 錯誤碼
     */
-    errno_t  ServoCart(int mode, DescPose *desc_pose, float pos_gain[6], float acc, float vel, float cmdT, float filterT, float gain);
+    errno_t ServoCart(int mode, DescPose *desc_pose, ExaxisPos exaxis, float pos_gain[6], float acc, float vel, float cmdT, float filterT, float gain);
 
-笛卡爾空間伺服模式運動代碼示例
+笛卡爾空間伺服模式運動程式碼範例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c++
     :linenos:
 
     int TestServoCart(void)
-     {
-         ROBOT_STATE_PKG pkg = {};
-         FRRobot robot;
-         robot.LoggerInit();
-         robot.SetLoggerLevel(1);
-         int rtn = robot.RPC("192.168.58.2");
-         if (rtn != 0)
-         {
-             return -1;
-         }
-         robot.SetReConnectParam(true, 30000, 500);
-         DescPose desc_pos_dt;
-         memset(&desc_pos_dt, 0, sizeof(DescPose));
-         desc_pos_dt.tran.z = -0.5;
-         float pos_gain[6] = { 0.0,0.0,1.0,0.0,0.0,0.0 };
-         int mode = 2;
-         float vel = 0.0;
-         float acc = 0.0;
-         float cmdT = 0.008;
-         float filterT = 0.0;
-         float gain = 0.0;
-         uint8_t flag = 0;
-         int count = 100;
-         robot.SetSpeed(20);
-         while (count)
-         {
-             robot.ServoCart(mode, &desc_pos_dt, pos_gain, acc, vel, cmdT, filterT, gain);
-             count -= 1;
-             robot.WaitMs(cmdT * 1000);
-         }
-         robot.CloseRPC();
-         return 0;
-     }
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return -1;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        DescPose desc_pos_dt = { 83.00800, 50.525000 , 29.246 , 179.629 , -7.138 , -166.975 };
+        ExaxisPos exaxis = { 100.0, 0.0, 0.0, 0.0 };
+        float pos_gain[6] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        int mode = 0;
+        float vel = 0.0;
+        float acc = 0.0;
+        float cmdT = 0.001;
+        float filterT = 0.0;
+        float gain = 0.0;
+        uint8_t flag = 0;
+        int count = 5000;
+        robot.SetSpeed(20);
+        while (count)
+        {
+            rtn = robot.ServoCart(mode, &desc_pos_dt, exaxis, pos_gain, acc, vel, cmdT, filterT, gain);
+            printf("ServoCart rtn is %d\n", rtn);
+            count -= 1;
+            desc_pos_dt.tran.x += 0.01;
+            exaxis.ePos[0] += 0.01;
+        }
+        robot.CloseRPC();
+        return 0;
+    }
 
 樣條運動開始
 ++++++++++++++++++++++++++++++++++

@@ -407,6 +407,54 @@
     */   
     int GetInverseKinRef(int posMode, DescPose desc_pos, JointPos joint_pos_ref, ref JointPos joint_pos); 
 
+逆運動學求解，笛卡爾空間包含擴展軸位置
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 逆運動學求解，笛卡爾空間包含擴展軸位置
+    * @param [in] type 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
+    * @param [in] desc_pos 笛卡爾位姿
+    * @param [in] exaxis 擴展軸位置
+    * @param [in] tool 工具號
+    * @param [in] workPiece 工件號
+    * @param [out] joint_pos 關節位置
+    * @return 錯誤碼
+    */
+    public int GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, ref JointPos joint_pos);
+
+逆運動學求解包含擴展軸位置程式碼範例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    public void TestInverseKinExaxis()
+    {
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+        
+
+        DescPose desc = new DescPose(99.957f, -0.002f, 29.994f, -176.569f, -6.757f, -167.462f);
+        ExaxisPos exaxis = new ExaxisPos(100.0f, 0.0f, 0.0f, 0.0f);
+        JointPos jointPos = new JointPos(0,0,0,0,0,0);
+        DescPose offsetPos = new DescPose(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        int rtn;
+        robot.GetRobotRealTimeState(ref pkg);
+        int toolnum = pkg.tool;
+        int workPcsNum = pkg.user;
+
+        robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum, ref jointPos);
+        Console.WriteLine($"GetInverseKinExaxis joint is {jointPos.jPos[0]}, {jointPos.jPos[1]}, {jointPos.jPos[2]}, {jointPos.jPos[3]}, {jointPos.jPos[4]}, {jointPos.jPos[5]}");
+
+        robot.ExtAxisMove(exaxis, 100, -1);
+
+        int blendMode = 0;
+        int velAccMode = 0;
+        float oacc = 100.0f;
+        byte flag = 0;
+        robot.MoveJ(jointPos, desc, toolnum, workPcsNum, (float)100.0, (float)100.0, (float)100.0, exaxis, -1, 0, offsetPos);
+    }
+
 獲取逆運動學是否有解
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c#

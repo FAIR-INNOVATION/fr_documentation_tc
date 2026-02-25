@@ -375,108 +375,115 @@
     return 0;
     }
 
-設置控制箱 DO 停止 / 暫停後輸出是否復位
+設置控制箱DO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置控制箱 DO 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置控制箱DO停止/暫停後輸出是否復位
+    * @param [in] resetFlag 0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return 錯誤碼
     */
-    errno_t SetOutputResetCtlBoxDO (int resetFlag);
+    errno_t SetOutputResetCtlBoxDO(int resetFlag, int reloadFlag = 0);
 
-設置控制箱 AO 停止 / 暫停後輸出是否復位
+設置控制箱AO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置控制箱 AO 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置控制箱AO停止/暫停後輸出是否復位
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return 錯誤碼
     */
-    errno_t SetOutputResetCtlBoxAO (int resetFlag);
+    errno_t SetOutputResetCtlBoxAO(int resetFlag, int reloadFlag = 0);
 
-設置末端工具 DO 停止 / 暫停後輸出是否復位
+設置末端工具DO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置末端工具 DO 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置末端工具DO停止/暫停後輸出是否復位
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return 錯誤碼
     */
-    errno_t SetOutputResetAxleDO (int resetFlag);
+    errno_t SetOutputResetAxleDO(int resetFlag, int reloadFlag = 0);
 
-設置末端工具 AO 停止 / 暫停後輸出是否復位
+設置末端工具AO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置末端工具 AO 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置末端工具AO停止/暫停後輸出是否復位
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return  錯誤碼
     */
-    errno_t SetOutputResetAxleAO (int resetFlag);
+    errno_t SetOutputResetAxleAO(int resetFlag, int reloadFlag = 0);
 
-設置擴展 DO 停止 / 暫停後輸出是否復位
+設置擴展DO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置擴展 DO 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置擴展DO停止/暫停後輸出是否復位
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return  錯誤碼
     */
-    errno_t SetOutputResetExtDO (int resetFlag);
+    errno_t SetOutputResetExtDO(int resetFlag, int reloadFlag = 0);
 
-設置擴展 AO 停止 / 暫停後輸出是否復位
+設置擴展AO停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置擴展 AO 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置擴展AO停止/暫停後輸出是否復位
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return  錯誤碼
     */
-    errno_t SetOutputResetExtAO (int resetFlag);
+    errno_t SetOutputResetExtAO(int resetFlag, int reloadFlag = 0);
 
-設置 SmartTool 停止 / 暫停後輸出是否復位
+設置SmartTool停止/暫停後輸出是否復位
 ++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
     /**
-    @brief 設置 SmartTool 停止 / 暫停後輸出是否復位
-    @param [in] resetFlag 0 - 不復位；1 - 復位
-    @return 錯誤碼
+    * @brief 設置SmartTool停止/暫停後輸出是否復位
+    * @param [in] resetFlag  0-不復位；1-復位
+    * @param [in] reloadFlag 暫停恢復後是否重加載，0-不加載；1-加載
+    * @return  錯誤碼
     */
-    errno_t SetOutputResetSmartToolDO (int resetFlag);
+    errno_t SetOutputResetSmartToolDO(int resetFlag, int reloadFlag = 0);
 
-設置 LUA 程序停止 / 暫停後輸出復位代碼示例
+設置LUA程序停止/暫停後輸出復位程式碼範例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
-
+    
 .. code-block:: c++
     :linenos:
 
@@ -485,28 +492,34 @@
     ROBOT_STATE_PKG pkg = {};
     FRRobot robot;
     robot.LoggerInit();
-    robot.SetLoggerLevel(1);
+    robot.SetLoggerLevel(3);
     int rtn = robot.RPC("192.168.58.2");
     if (rtn != 0)
     {
-    return -1;
+        return -1;
     }
     robot.SetReConnectParam(true, 30000, 500);
     for (int i = 0; i < 16; i++)
     {
-    robot.SetDO(i, 1, 0, 0);
-    robot.Sleep(300);
+        robot.SetDO(i, 1, 0, 0);
+        robot.Sleep(200);
     }
-    int resetFlag = 1;
-    rtn = robot.SetOutputResetCtlBoxDO(resetFlag);
-    robot.SetOutputResetCtlBoxAO(resetFlag);
-    robot.SetOutputResetAxleDO(resetFlag);
-    robot.SetOutputResetAxleAO(resetFlag);
-    robot.SetOutputResetExtDO(resetFlag);
-    robot.SetOutputResetExtAO(resetFlag);
-    robot.SetOutputResetSmartToolDO(resetFlag);
+    int resetFlag = 0;
+    int resumeReloadFlag = 0;
+    rtn = robot.SetOutputResetCtlBoxDO(resetFlag, resumeReloadFlag);
+    robot.SetOutputResetCtlBoxAO(resetFlag, resumeReloadFlag);
+    robot.SetOutputResetAxleDO(resetFlag, resumeReloadFlag);
+    robot.SetOutputResetAxleAO(resetFlag, resumeReloadFlag);
+    robot.SetOutputResetExtDO(resetFlag, resumeReloadFlag);
+    robot.SetOutputResetExtAO(resetFlag, resumeReloadFlag);
+    robot.SetOutputResetSmartToolDO(resetFlag, resumeReloadFlag);
     robot.ProgramLoad("/fruser/test.lua");
     robot.ProgramRun();
+    robot.Sleep(2000);
+    robot.PauseMotion();
+    robot.Sleep(2000);
+    robot.ResumeMotion();
+    robot.Sleep(2000);
     robot.CloseRPC();
     return 0;
     }
