@@ -181,9 +181,9 @@
 .. code-block:: python
     :linenos:
 
-    import frrpc
+    from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = frrpc.RPC('192.168.58.2')
+    robot = Robot.RPC('192.168.58.2')
     company = 24
     device = 0
     softversion = 0
@@ -274,9 +274,9 @@
 .. code-block:: python
     :linenos:
 
-    import frrpc
+    from fairino import Robot
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
-    robot = frrpc.RPC('192.168.58.2')
+    robot = Robot.RPC('192.168.58.2')
     company = 24
     device = 0
     softversion = 0
