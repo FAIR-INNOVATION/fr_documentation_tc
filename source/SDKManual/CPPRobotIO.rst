@@ -523,3 +523,333 @@
     robot.CloseRPC();
     return 0;
     }
+
+設置控制箱可配置CI端口功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置控制箱可配置CI端口功能
+    * @param [in] config CI0-CI7功能編碼；
+    * 0-無;1-起弧成功;2-焊機準備;3-傳送帶檢測;4-暫停;5-恢復;6-啟動;7-停止;
+    8-暫停/恢復;9-啟動/停止;10-腳踏拖動;11-移至作業原點;12-手自動切換;
+    13-焊絲尋位成功;14-運動中斷;15-啟動主程序;16-啟動倒帶;17-啟動確認;
+    18-光電檢測信號X;19-光電檢測信號Y;20-外部急停輸入信號1;21-外部急停輸入信號2;
+    22-一級縮減模式;23-二級縮減模式;24-三級縮減模式(停止);25-恢復焊接;26-終止焊接;
+    27-輔助拖動開啟;28-輔助拖動關閉;29-輔助拖動開啟/關閉;30-清除所有錯誤;
+    31-手自動切換(高低電平);32-使能;33-去使能;34-使能/去使能(上升下降沿);35-定點跟蹤開始/結束
+    * @return 錯誤碼
+    */
+    errno_t SetDIConfig(int config[8]);
+
+獲取控制箱可配置CI端口功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱可配置CI端口功能
+    * @param [in] config CI0-CI7功能編碼；
+    * 0-無;1-起弧成功;2-焊機準備;3-傳送帶檢測;4-暫停;5-恢復;6-啟動;7-停止;
+    8-暫停/恢復;9-啟動/停止;10-腳踏拖動;11-移至作業原點;12-手自動切換;
+    13-焊絲尋位成功;14-運動中斷;15-啟動主程序;16-啟動倒帶;17-啟動確認;
+    18-光電檢測信號X;19-光電檢測信號Y;20-外部急停輸入信號1;21-外部急停輸入信號2;
+    22-一級縮減模式;23-二級縮減模式;24-三級縮減模式(停止);25-恢復焊接;26-終止焊接;
+    27-輔助拖動開啟;28-輔助拖動關閉;29-輔助拖動開啟/關閉;30-清除所有錯誤;
+    31-手自動切換(高低電平);32-使能;33-去使能;34-使能/去使能(上升下降沿);35-定點跟蹤開始/結束
+    * @return 錯誤碼
+    */
+    errno_t GetDIConfig(int config[8]);
+
+設置控制箱可配置CO端口功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置控制箱可配置CO端口功能
+    * @param [out] config CO0-CO7功能編碼；
+    * 0-無;1-機器人報錯;2-機器人運動中;3-噴塗啟停;4-噴塗清槍;5-送氣信號;6-起弧信號;7-點動送絲;
+    8-反向送絲;9-JOB輸入口1;10-JOB輸入口2;11-JOB輸入口3;12-傳送帶啟停控制;13-機器人暫停中;14-到達作業原點;
+    15-到達干涉區;16-焊絲尋位啟停控制;17-機器人啟動完成;18-程序啟動停止;19-自動手動模式;20-急停輸出信號1-安全;
+    21-急停輸出信號2-安全;22-LUA腳本程序運行停止;23-安全狀態輸出-安全;24-保護性停止狀態輸出-安全;
+    25-機器人運動中-安全;26-機器人縮減模式-安全;27-機器人非縮減模式-安全;28-機器人非停止;29-機器人報錯-指令點錯誤;
+    30-機器人報錯-驅動器錯誤;31-機器人報錯-超出軟限位錯誤;32-機器人報錯-碰撞錯誤;33-機器人報錯-活動從站數量錯誤;
+    34-機器人報錯-從站錯誤;35-機器人報錯-IO錯誤;36-機器人報錯-夾爪錯誤;37-機器人報錯-文件錯誤;38-機器人報錯-奇異位姿錯誤;
+    39-機器人報錯-驅動器通信錯誤;40-機器人報錯-參數錯誤;41-機器人報錯-外部軸超出軟限位錯誤;42-機器人警告-警告;
+    43-機器人警告-安全門警告;44-機器人警告-運動警告;45-機器人警告-干涉區警告;46-機器人警告-安全牆警告;
+    47-使能狀態;48-斷線自動抬升中;49-立方體1干涉警告;50-立方體2干涉警告;51-立方體3干涉警告;52-立方體4干涉警告;
+    * @return 錯誤碼
+    */
+    errno_t SetDOConfig(int config[8]);
+
+獲取控制箱可配置CO端口功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱可配置CO端口功能
+    * @param [out] config CO0-CO7功能編碼；
+    * 0-無;1-機器人報錯;2-機器人運動中;3-噴塗啟停;4-噴塗清槍;5-送氣信號;6-起弧信號;7-點動送絲;
+    8-反向送絲;9-JOB輸入口1;10-JOB輸入口2;11-JOB輸入口3;12-傳送帶啟停控制;13-機器人暫停中;14-到達作業原點;
+    15-到達干涉區;16-焊絲尋位啟停控制;17-機器人啟動完成;18-程序啟動停止;19-自動手動模式;20-急停輸出信號1-安全;
+    21-急停輸出信號2-安全;22-LUA腳本程序運行停止;23-安全狀態輸出-安全;24-保護性停止狀態輸出-安全;
+    25-機器人運動中-安全;26-機器人縮減模式-安全;27-機器人非縮減模式-安全;28-機器人非停止;29-機器人報錯-指令點錯誤;
+    30-機器人報錯-驅動器錯誤;31-機器人報錯-超出軟限位錯誤;32-機器人報錯-碰撞錯誤;33-機器人報錯-活動從站數量錯誤;
+    34-機器人報錯-從站錯誤;35-機器人報錯-IO錯誤;36-機器人報錯-夾爪錯誤;37-機器人報錯-文件錯誤;38-機器人報錯-奇異位姿錯誤;
+    39-機器人報錯-驅動器通信錯誤;40-機器人報錯-參數錯誤;41-機器人報錯-外部軸超出軟限位錯誤;42-機器人警告-警告;
+    43-機器人警告-安全門警告;44-機器人警告-運動警告;45-機器人警告-干涉區警告;46-機器人警告-安全牆警告;
+    47-使能狀態;48-斷線自動抬升中;49-立方體1干涉警告;50-立方體2干涉警告;51-立方體3干涉警告;52-立方體4干涉警告;
+    * @return 錯誤碼
+    */
+    errno_t GetDOConfig(int config[8]);
+
+設置末端可配置End-CI端口功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置末端可配置End-CI端口功能
+    * @param [in] config End CI0-CI1功能編碼；
+    * 0-無;1-拖動示教工具開關;2-點記錄信號;3-手自動切換（脈衝信號）;4-TPD記錄啟動/停止;5-暫停運動;
+    6-恢復運動;7-啟動;8-停止;9-暫停/恢復;10-啟動/停止;11-力傳感器輔助拖動開啟;12-力傳感器輔助拖動關閉;
+    13-力傳感器輔助拖動開啟/關閉;14-激光檢測信號X;15-激光檢測信號Y;16-PTP運動至作業原點;17-運動中斷，根據信號停止當前運動;
+    18-啟動主程序;19-啟動倒帶;20-啟動確認;21-恢復焊接;22-終止焊接;23-清除錯誤;24-手自動切換（高低電平）
+    25-使能;26-去使能;27-使能/去使能;28-激光伺服跟蹤啟停信號;
+    * @return 錯誤碼
+    */
+    errno_t SetToolDIConfig(int config[2]);
+
+獲取末端可配置End-CI端口功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取末端可配置End-CI端口功能
+    * @param [out] config End CI0-CI1功能編碼；
+    * 0-無;1-拖動示教工具開關;2-點記錄信號;3-手自動切換（脈衝信號）;4-TPD記錄啟動/停止;5-暫停運動;
+    6-恢復運動;7-啟動;8-停止;9-暫停/恢復;10-啟動/停止;11-力傳感器輔助拖動開啟;12-力傳感器輔助拖動關閉;
+    13-力傳感器輔助拖動開啟/關閉;14-激光檢測信號X;15-激光檢測信號Y;16-PTP運動至作業原點;17-運動中斷，根據信號停止當前運動;
+    18-啟動主程序;19-啟動倒帶;20-啟動確認;21-恢復焊接;22-終止焊接;23-清除錯誤;24-手自動切換（高低電平）
+    25-使能;26-去使能;27-使能/去使能;28-激光伺服跟蹤啟停信號;
+    * @return 錯誤碼
+    */
+    errno_t GetToolDIConfig(int config[2]);
+    
+設置控制箱可配置CI有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置控制箱可配置CI有效狀態
+    * @param [in] config CI0-CI7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t SetDIConfigLevel(int config[8]);
+        
+獲取控制箱可配置CI有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱可配置CI有效狀態
+    * @param [out] config CI0-CI7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t GetDIConfigLevel(int config[8]);
+        
+設置控制箱可配置CO有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置控制箱可配置CO有效狀態
+    * @param [in] config CO0-CO7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t SetDOConfigLevel(int config[8]);
+
+獲取控制箱可配置CO有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱可配置CO有效狀態
+    * @param [out] config CO0-CO7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t GetDOConfigLevel(int config[8]);
+    
+設置末端可配置CI有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置末端可配置CI有效狀態
+    * @param [in] config CI0-CI1端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t SetToolDIConfigLevel(int config[2]);
+    
+獲取末端可配置CI有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取末端可配置CI有效狀態
+    * @param [out] config CI0-CI1端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t GetToolDIConfigLevel(int config[2]);
+    
+設置控制箱標準DI有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置控制箱標準DI有效狀態
+    * @param [in] config DI0-DI7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t SetStandardDILevel(int config[8]);
+    
+獲取控制箱標準DI有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱標準DI有效狀態
+    * @param [out] config DI0-DI7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t GetStandardDILevel(int config[8]);
+
+設置控制箱標準DO有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置控制箱標準DO有效狀態
+    * @param [in] config DO0-DO7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t SetStandardDOLevel(int config[8]);
+    
+獲取控制箱標準DO有效狀態
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取控制箱標準DO有效狀態
+    * @param [out] config DO0-DO7端口有效狀態；0-高電平有效；1-低電平有效
+    * @return 錯誤碼
+    */
+    errno_t GetStandardDOLevel(int config[8]);
+        
+機器人IO配置代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int TestIOConfig()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return -1;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        int setDIConfig[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        int getDIConfig[8] = { 0 };
+        rtn = robot.SetDIConfig(setDIConfig);
+        printf("SetDIConfig rtn is %d\n", rtn);
+        rtn = robot.GetDIConfig(getDIConfig);
+        printf("GetDIConfig rtn is %d, value is %d %d %d %d %d %d %d %d \n", rtn, 
+            getDIConfig[0], getDIConfig[1], getDIConfig[2], getDIConfig[3], getDIConfig[4], getDIConfig[5], getDIConfig[6], getDIConfig[7]);
+        int setDOConfig[8] = { 9, 10, 11, 12, 13, 14, 15, 16 };
+        int getDOConfig[8] = { 0 };
+        rtn = robot.SetDOConfig(setDOConfig);
+        printf("SetDOConfig rtn is %d\n", rtn);
+        rtn = robot.GetDOConfig(getDOConfig);
+        printf("GetDOConfig rtn is %d, value is %d %d %d %d %d %d %d %d \n", rtn,
+            getDOConfig[0], getDOConfig[1], getDOConfig[2], getDOConfig[3], getDOConfig[4], getDOConfig[5], getDOConfig[6], getDOConfig[7]);
+        int setToolDIConfig[2] = { 17, 18 };
+        int getToolDIConfig[2] = { 0 };
+        rtn = robot.SetToolDIConfig(setToolDIConfig);
+        printf("SetToolDIConfig rtn is %d\n", rtn);
+        rtn = robot.GetToolDIConfig(getToolDIConfig);
+        printf("GetToolDIConfig rtn is %d, value is %d %d \n", rtn, getToolDIConfig[0], getToolDIConfig[1]);
+        int setDIConfigLevel[8] = { 1, 1, 1, 1, 0, 0, 0, 0 };
+        int getDIConfigLevel[8] = { 0 };
+        rtn = robot.SetDIConfigLevel(setDIConfigLevel);
+        printf("SetDIConfigLevel rtn is %d\n", rtn);
+        rtn = robot.GetDIConfigLevel(getDIConfigLevel);
+        printf("GetDIConfigLevel rtn is %d, value is %d %d %d %d %d %d %d %d \n", rtn,
+            getDIConfigLevel[0], getDIConfigLevel[1], getDIConfigLevel[2], getDIConfigLevel[3], getDIConfigLevel[4], getDIConfigLevel[5], getDIConfigLevel[6], getDIConfigLevel[7]);
+        int setDOConfigLevel[8] = { 0, 0, 0, 0, 1, 1, 1, 1 };
+        int getDOConfigLevel[8] = { 0 };
+        rtn = robot.SetDOConfigLevel(setDOConfigLevel);
+        printf("SetDOConfigLevel rtn is %d\n", rtn);
+        rtn = robot.GetDOConfigLevel(getDOConfigLevel);
+        printf("GetDOConfigLevel rtn is %d, value is %d %d %d %d %d %d %d %d \n", rtn,
+            getDOConfigLevel[0], getDOConfigLevel[1], getDOConfigLevel[2], getDOConfigLevel[3], getDOConfigLevel[4], getDOConfigLevel[5], getDOConfigLevel[6], getDOConfigLevel[7]);
+        int setToolDIConfigLevel[2] = { 1, 0 };
+        int getToolDIConfigLevel[2] = { 0 };
+        rtn = robot.SetToolDIConfigLevel(setToolDIConfigLevel);
+        printf("SetToolDIConfigLevel rtn is %d\n", rtn);
+        rtn = robot.GetToolDIConfigLevel(getToolDIConfigLevel);
+        printf("GetToolDIConfigLevel rtn is %d, value is %d %d \n", rtn, getToolDIConfigLevel[0], getToolDIConfigLevel[1]);
+        int setStandardDILevel[8] = { 1, 1, 1, 1, 0, 0, 0, 0 };
+        int getStandardDILevel[8] = { 0 };
+        rtn = robot.SetStandardDILevel(setStandardDILevel);
+        printf("SetStandardDILevel rtn is %d\n", rtn);
+        rtn = robot.GetStandardDILevel(getStandardDILevel);
+        printf("GetStandardDILevel rtn is %d, value is %d %d %d %d %d %d %d %d \n", rtn,
+            getStandardDILevel[0], getStandardDILevel[1], getStandardDILevel[2], getStandardDILevel[3], getStandardDILevel[4], getStandardDILevel[5], getStandardDILevel[6], getStandardDILevel[7]);
+        int setStandardDOLevel[8] = { 0, 0, 0, 0, 1, 1, 1, 1 };
+        int getStandardDOLevel[8] = { 0 };
+        rtn = robot.SetStandardDOLevel(setStandardDOLevel);
+        printf("SetStandardDOLevel rtn is %d\n", rtn);
+        rtn = robot.GetStandardDOLevel(getStandardDOLevel);
+        printf("GetStandsrdDOLevel rtn is %d, value is %d %d %d %d %d %d %d %d \n", rtn,
+            getStandardDOLevel[0], getStandardDOLevel[1], getStandardDOLevel[2], getStandardDOLevel[3], getStandardDOLevel[4], getStandardDOLevel[5], getStandardDOLevel[6], getStandardDOLevel[7]);
+        robot.Sleep(2000);
+        robot.CloseRPC();
+        robot.Sleep(1000);
+        return 0;
+    }

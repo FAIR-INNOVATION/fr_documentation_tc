@@ -336,9 +336,9 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoMoveStart()``"
+    "原型", "``ServoMoveStart(cmdType=0)``"
     "描述", "伺服運動開始，配合ServoJ、ServoCart指令使用"
-    "必選參數", "無"
+    "必選參數", "- ``cmdType``: 命令傳輸類型，0=XML-RPC，1=UDP透傳"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -349,9 +349,9 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoMoveEnd()``"
+    "原型", "``ServoMoveEnd(cmdType=0)``"
     "描述", "伺服運動結束，配合ServoJ、ServoCart指令使用"
-    "必選參數", "無"
+    "必選參數", "- ``cmdType``: 命令傳輸類型，0=XML-RPC，1=UDP透傳"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -362,17 +362,94 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoJ(joint_pos, axisPos, acc = 0.0, vel = 0.0, cmdT = 0.008, filterT = 0.0, gain = 0.0, id=0)``"
+    "原型", "``ServoJ(joint_pos, axisPos, acc = 0.0, vel = 0.0, cmdT = 0.008, filterT = 0.0, gain = 0.0, id=0, cmdType=0)``"
     "描述", "關節空間伺服模式運動"
     "必選參數", "- ``joint_pos``:目標關節位置，單位[°]；
     - ``axisPos``:外部軸位置,單位mm；"
-    "默認參數", "- ``acc``:加速度，範圍 [0~100]，暫不開放，默認爲 0.0;
-    - ``vel``:速度，範圍 [0~100]，暫不開放，默認爲 0.0;
-    - ``cmdT``:指令下發週期，單位s，建議範圍[0.001~0.0016], 默認爲0.008;
-    - ``filterT``:濾波時間，單位 [s]，暫不開放， 默認爲0.0;
-    - ``gain``:目標位置的比例放大器，暫不開放， 默認爲0.0;
-    - ``id``:servoJ指令ID,默認爲0;"
+    "默認參數", "- ``acc``:加速度，範圍 [0~100]，暫不開放，預設為 0.0;
+    - ``vel``:速度，範圍 [0~100]，暫不開放，預設為 0.0;
+    - ``cmdT``:指令下發週期，單位s，建議範圍[0.001~0.0016], 預設為0.008;
+    - ``filterT``:濾波時間，單位 [s]，暫不開放， 預設為0.0;
+    - ``gain``:目標位置的比例放大器，暫不開放， 預設為0.0;
+    - ``id``:servoJ指令ID,預設為0;
+    - ``cmdType``:命令傳輸類型，0=XML-RPC，1=UDP透傳;"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+基於UDP通訊的ServoJ、ServoMoveStart、ServoMoveEnd SDK代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos:
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def TestServoJUDP(self):
+        # 設置回調
+        def callback(src_type, count, cmd_id, data_len, content):
+            print("回調函數: cmd_id={} count={} data_len={} content={}".format(cmd_id, count, data_len, content))
+            return 0
+
+        robot.SetUDPCmdRpyCallback(callback)
+        # # 初始化關節位置和外部軸位置
+        j= [105, -108, 74, -66, -88.893, -1.621]
+        offset_pos = [0, 0, 0, 0, 0, 0]
+        epos = [0, 0, 0, 0]
+        # # 移動到初始位置
+        result=robot.MoveJ(joint_pos=j, tool=0, user=0, vel=100, acc=100, ovl=100,exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+        print("MoveJ返回結果: {}".format(result))
+        vel = 0.0
+        acc = 0.0
+        cmdT = 0.016
+        filterT = 0.0
+        gain = 0.0
+        flag = 0
+        dt = 0.1
+        cmdID = 0
+
+        # 獲取當前關節位置
+        ret, j = robot.GetActualJointPosDegree(flag)
+        if ret != 0:
+            print(f"GetActualJointPosDegree errcode:{ret}")
+        while 1:
+            count = 300
+            result = robot.ServoMoveStart(cmdType=1)
+            print("ServoMoveStart返回結果: {}".format(result))
+            while count > 0:
+                result = robot.ServoJ(joint_pos=j, axisPos=epos, acc=acc, vel=vel, cmdT=cmdT,filterT=filterT, gain=gain, id=cmdID, cmdType=1)
+                j[0] += dt
+                j[1] += dt
+                j[2] += dt
+                j[3] += dt
+                j[4] += dt
+                j[5] += dt
+                count -= 1
+                time.sleep(0.01)
+            result = robot.ServoMoveEnd(cmdType=1)
+            print("ServoMoveEnd返回結果: {}".format(result))
+
+            count = 300
+            result = robot.ServoMoveStart(cmdType=1)
+            print("ServoMoveStart返回結果: {}".format(result))
+            while count > 0:
+                result = robot.ServoJ(joint_pos=j, axisPos=epos, acc=acc, vel=vel, cmdT=cmdT,filterT=filterT, gain=gain, id=cmdID, cmdType=1)
+                j[0] -= dt
+                j[1] -= dt
+                j[2] -= dt
+                j[3] -= dt
+                j[4] -= dt
+                j[5] -= dt
+                count -= 1
+                time.sleep(0.01)
+            result = robot.ServoMoveEnd(cmdType=1)
+            print("ServoMoveEnd返回結果: {}".format(result))
+        robot.CloseRPC()
+        return 0
+    TestServoJUDP(robot)
 
 關節空間伺服模式運動代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -422,9 +499,9 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoJTStart()``"
+    "原型", "``ServoJTStart(cmdType=0)``"
     "描述", "關節扭矩控制開始"
-    "必選參數", "無"
+    "必選參數", "- ``cmdType``: 命令傳輸類型，0=XML-RPC，1=UDP透傳"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -435,15 +512,16 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoJT(torque, interval, checkFlag=0, jPowerLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], jVelLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])``"
+    "原型", "``ServoJT(torque, interval, checkFlag=0, jPowerLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],jVelLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], cmdType=0)``"
     "描述", "關節扭矩控制"
-    "必選參數", "- ``torque``: j1~j6關節扭矩，單位Nm
-                - ``interval``: 指令週期，單位s，範圍[0.001~0.008]
-                - ``checkFlag``: 檢測策略 0-不限制；1-限制功率；2-限制速度；3-功率和速度同時限制, 預設0
-                - ``jPowerLimit``: 預設參數 jPowerLimit 關節最大功率限制(W)，預設[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-                - ``jVelLimit``: 關節最大速度(°/s)，預設[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"
-    "預設參數", "無"
-    "返回值", "錯誤碼 成功-0 失敗- errcode"
+    "必選參數", "- ``torque``:j1~j6關節扭矩，單位Nm
+                - ``interval``:指令週期，單位s，範圍[0.001~0.008]
+                - ``checkFlag``:檢測策略 0-不限制；1-限制功率；2-限制速度；3-功率和速度同時限制,默認0
+                - ``jPowerLimit``:關節最大功率限制(W)，默認[0.0,0.0,0.0,0.0,0.0,0.0]
+                - ``jVelLimit``:關節最大速度(°/s)，默認[0.0,0.0,0.0,0.0,0.0,0.0]
+                - ``cmdType``:命令傳輸類型，0=XML-RPC，1=UDP透傳"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
 
 關節扭矩控制結束
 +++++++++++++++++++++++++
@@ -452,11 +530,100 @@ jog點動立即停止
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``ServoJTEnd()``"
+    "原型", "``ServoJTEnd(cmdType=0)``"
     "描述", "關節扭矩控制結束"
-    "必選參數", "無"
+    "必選參數", "- ``cmdType``: 命令傳輸類型，0=XML-RPC，1=UDP透傳"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+基於UDP通訊的ServoJT、ServoJTStart、ServoJTEnd SDK代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos:
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def TestServoJTUDP(self):
+        # 設置回調
+        def callback(src_type, count, cmd_id, data_len, content):
+            print("回調函數: cmd_id={} count={} data_len={} content={}".format(cmd_id, count, data_len, content))
+            return 0
+
+        robot.SetUDPCmdRpyCallback(callback)
+        while True:
+            # 初始化關節位置和外部軸位置
+            j = [0, -90, 90, 0, 0, 0]
+            epos = [0, 0, 0, 0]
+            offset_pos = [0, 0, 0, 0, 0, 0]
+
+            # 移動到初始位置
+            robot.MoveJ(joint_pos=j, tool=0, user=0, vel=100, acc=100, ovl=100,
+                        exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+            time.sleep(3)
+            # 開啟拖動示教
+            result=robot.DragTeachSwitch(1)
+            print("DragTeachSwitch返回結果: {}".format(result))
+            torques = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+            # 獲取關節力矩
+            ret, torques = robot.GetJointTorques(flag=1)
+            if ret != 0:
+                print(f"GetJointTorques errcode:{ret}")
+
+            count = 100
+            result = robot.ServoJTStart(cmdType=1)
+            print("ServoJTStart返回結果: {}".format(result))
+            # 正向力矩控制
+            while True:
+                torques[0] = 0.03
+                result = robot.ServoJT(
+                    torque=torques,
+                    interval=0.001,
+                    checkFlag=0,
+                    jPowerLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                    jVelLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                    cmdType=1
+                )
+                print("返回結果: {}".format(result))
+                time.sleep(1)
+
+                ret, pkg = robot.GetRobotRealTimeState()
+                if pkg.jt_cur_pos[0] > 30:
+                    break
+
+            # 反向力矩控制
+            while True:
+                torques[0] = -0.03
+                result = robot.ServoJT(
+                        torque=torques,
+                        interval=0.001,
+                        checkFlag=0,
+                        jPowerLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        jVelLimit=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        cmdType=1
+                    )
+                print("返回結果: {}".format(result))
+                time.sleep(1)
+
+                ret, pkg = robot.GetRobotRealTimeState()
+                if pkg.jt_cur_pos[0] < 0:
+                    break
+
+            # 結束力矩控制並關閉拖動示教
+            result = robot.ServoJTEnd(cmdType=1)
+            print("ServoJTEnd返回結果: {}".format(result))
+            result = robot.DragTeachSwitch(0)
+            print("DragTeachSwitch返回結果: {}".format(result))
+
+        robot.CloseRPC()
+        return 0
+    TestServoJTUDP(robot)
 
 關節扭矩控制代碼示例
 ++++++++++++++++++++++
@@ -1358,3 +1525,154 @@ FIR濾波代碼示例
     robot.CloseRPC()
     return 0
 
+定點擺動開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``OriginPointWeaveStart(weaveNum, mode, refPoint, weaveTime)``"
+    "描述", "定點擺動開始"
+    "必選參數", "
+    - ``weaveNum``:擺動編號[0-7]
+    - ``mode``:0-工具座標系；1-參考點
+    - ``refPoint``:參考點笛卡爾座標[x,y,z,a,b,c]
+    - ``weaveTime``:擺動時間[s]
+    - "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+定點擺動結束
++++++++++++++++++++++++++++++++++
+    
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``OriginPointWeaveEnd()``"
+    "描述", "定點擺動結束"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode"
+
+定點擺動的SDK代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos: 
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def TestOriginPointWeave(self):
+        time.sleep(2)
+        # 初始化關節位置、外部軸和偏移
+        j = [39.886, -98.580, -124.032, -47.393, 90.000, 40.842]
+        epos = [0, 0, 0, 0]
+        offset_pos = [0, 0, 0, 0, 0, 0]
+
+        # 參考點位置 [x, y, z, rx, ry, rz]
+        refPoint = [400.021, 300.022, 299.996, 179.997, -0.003, -90.956]
+
+        # 移動到起始位置
+        robot.MoveJ(joint_pos=j, tool=1, user=0, vel=100, acc=100, ovl=100,
+                    exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+
+        # 第一次擺動：絕對座標系（tool=0），模式0
+        robot.OriginPointWeaveStart(0, 0, refPoint, 3)
+        robot.MoveStationary()
+        robot.OriginPointWeaveEnd()
+
+        time.sleep(2)
+
+        # 再次移動到起始位置
+        robot.MoveJ(joint_pos=j, tool=1, user=0, vel=100, acc=100, ovl=100,
+                    exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+
+        # 第二次擺動：絕對座標系（tool=0），模式1
+        robot.OriginPointWeaveStart(0, 1, refPoint, 3)
+        robot.MoveStationary()
+        robot.OriginPointWeaveEnd()
+
+        # 關閉連接
+        robot.CloseRPC()
+        time.sleep(1)
+
+    TestOriginPointWeave(robot)
+
+定點擺動（包含雷射及擴展軸）的SDK代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos: 
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def TestOriginPointWeave(self):
+        time.sleep(2)
+        # 初始化關節位置、外部軸和偏移
+        j = [39.886, -98.580, -124.032, -47.393, 90.000, 40.842]
+        epos1 = [0, 0, 0, 0]
+        offset_pos = [0, 0, 0, 0, 0, 0]
+        epos2 = [5, 0.000, 0.000, 0.000]
+        # 參考點位置 [x, y, z, rx, ry, rz]
+        refPoint = [400.021, 300.022, 299.996, 179.997, -0.003, -90.956]
+
+        rtn = 0
+        robot.LaserTrackingSensorConfig("192.168.58.20", 5020)
+        robot.LaserTrackingSensorSamplePeriod(20)
+        robot.LoadPosSensorDriver(101)
+
+        # 載入 UDP 驅動
+        robot.ExtDevLoadUDPDriver()
+
+        # 設置外部軸命令完成時間
+        rtn = robot.SetExAxisCmdDoneTime(5000.0)
+        print(f"SetExAxisCmdDoneTime rtn is {rtn}")
+
+        # 使能外部軸 1 和 2
+        rtn = robot.ExtAxisServoOn(1, 1)
+        print(f"ExtAxisServoOn axis id 1 rtn is {rtn}")
+        rtn = robot.ExtAxisServoOn(2, 1)
+        print(f"ExtAxisServoOn axis id 2 rtn is {rtn}")
+        time.sleep(2)
+
+        # 設置外部軸回零
+        robot.ExtAxisSetHoming(1, 0, 10, 2)
+        robot.LaserTrackingLaserOnOff(1)
+
+        # 1---不帶擴展軸
+        robot.LaserTrackingTrackOnOff(1, 4)
+        time.sleep(0.2)
+        # 啟動定點擺動
+        robot.OriginPointWeaveStart(0, 0, refPoint, 10)
+        robot.MoveStationary()  # 執行固定運動（假設該方法存在）
+        robot.OriginPointWeaveEnd()
+        robot.LaserTrackingTrackOnOff(0, 4)
+
+        time.sleep(2)  # 等待2秒
+
+        # 2----帶擴展軸
+        robot.ExtAxisMove(epos1, 100, -1)
+        robot.LaserTrackingTrackOnOff(1, 4)
+        # 啟動定點擺動
+        robot.OriginPointWeaveStart(0, 0, refPoint, 20)
+        robot.ExtAxisMove(epos2, 100, -1)
+        robot.OriginPointWeaveEnd()
+        robot.LaserTrackingTrackOnOff(0, 4)
+
+        # 關閉連接
+        robot.CloseRPC()
+        time.sleep(1)
+
+    TestOriginPointWeave(robot)

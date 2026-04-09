@@ -100,19 +100,11 @@
 - 2. 使用實體示教器F1自訂按鍵功能配置IP復位（長按10秒）可進行控制箱網卡0、網卡1以及實體示教器的IP重設；
 - 3. 使用實體示教器F2和F4組合按鍵，同時長按10秒，可以在實體示教器未登入時進行實體示教器設備的IP重設。
 
-標準控制箱網卡示意圖和mini控制箱網卡示意圖如下所示。
-
-.. image:: teach_pendant/009.png
-   :width: 5in
-   :align: center
-
-.. centered:: 圖表 16.3‑1 標準控制箱網口示意圖
-
 .. image:: teach_pendant/010.png
    :width: 5in
    :align: center
 
-.. centered:: 圖表 16.3‑2 mini控制箱網口示意圖
+.. centered:: 圖表 16.3‑1 mini控制箱網口示意圖
 
 Webrecovery介面IP重設
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,7 +115,7 @@ Webrecovery介面IP重設
    :width: 5in
    :align: center
 
-.. centered:: 圖表 16.3‑3 Webrecovery介面IP重設功能
+.. centered:: 圖表 16.3‑2 Webrecovery介面IP重設功能
 
 二次確認後會提示重啟生效。重啟後控制器網卡0 IP恢復為預設192.168.57.2，網卡1 IP恢復為預設192.168.58.2。
 
@@ -131,7 +123,7 @@ Webrecovery介面IP重設
    :width: 6in
    :align: center
 
-.. centered:: 圖表 16.3‑4 Webrecovery介面IP重設二次確認
+.. centered:: 圖表 16.3‑3 Webrecovery介面IP重設二次確認
 
 實體示教器F1按鍵自訂IP重設
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,7 +134,7 @@ Webrecovery介面IP重設
    :width: 6in
    :align: center
 
-.. centered:: 圖表 16.3‑5 實體示教器F1按鍵自訂IP重設
+.. centered:: 圖表 16.3‑4 實體示教器F1按鍵自訂IP重設
 
 此功能僅在實體示教器登入webapp時生效，長按F1按鍵10秒後會提示重啟生效。重啟後控制器網卡0 IP恢復為預設192.168.57.2，網卡1 IP恢復為預設192.168.58.2，實體示教器IP恢復為預設192.168.58.77。
 

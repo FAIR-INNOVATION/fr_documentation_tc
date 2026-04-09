@@ -263,3 +263,157 @@ CNDE輔助功能
 +++++++++++++++++++++++++++++++++++++++++++++
 
 客戶端透過CNDE向機器人發送獲取軟韌體版本資訊指令，指令內容為空，機器人收到請求後會回饋一條字元提示訊息，訊息內容包括機器人型號、機器人軟體版本、機器人韌體版本、機器人硬體版本等相關資訊.
+
+末端透傳功能週期數據獲取（CNDE）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CNDE配置描述
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+末端透傳功能開啟後，可在CNDE中配置「axle_gen_com_data」選項及週期，從而獲取末端讀取的外設的週期數據，反饋的數據幀定義如下。
+
+.. centered:: 表3-8  末端透傳功能週期數據CNDE反饋協議定義
+
+.. list-table::
+   :widths: 30 30 40
+   :header-rows: 0
+   :align: center
+   :class: sheet-center
+
+   * - **Byte 1**
+     - **Byte 2**
+     - **Byte 3-130**
+
+   * - ErrorCode
+     - Len
+     - Data
+
+   * - 0-通訊正常
+     - 週期數據的長度
+     - 數據幀Buffer
+
+   * - 1-末端與機器人通訊異常
+     - 錯誤碼不為0時長度清零
+     - 錯誤碼不為0時Buffer清零
+
+   * - 2-末端485通訊異常	
+     - 
+     - 
+
+以倍益康艾灸頭外設週期數據配置為例，代碼顯示配置為獲取末端週期透傳數據，獲取週期50ms。
+
+末端透傳CNDE配置代碼示意:
+
+.. code-block:: 
+    :linenos:
+
+    tring outputCfg = "axle_gen_com_data";    //獲取末端透傳週期數據
+    byte[] sendBuffer = new byte[] { };
+    byte[] cfgBuffer = Encoding.UTF8.GetBytes(outputCfg);
+    CNDEPkg pkg  = new CNDEPkg();
+    pkg.type = 1;  //輸出配置
+    pkg.len = (ushort)(2 + outputCfg.Length);
+    pkg.data.Clear();
+    UInt16 period = 50;   //50ms update
+    byte[] periodBt = new byte[2] {0, 0};
+    Int16ToByte(period, ref periodBt);
+    pkg.data.AddRange(periodBt);  //通訊週期
+    pkg.data.AddRange(cfgBuffer); 
+    pkg.ToBytes(ref sendBuffer);
+
+基於CNDE的倍益康艾灸頭週期數據解包代碼示例:
+  
+.. code-block:: 
+    :linenos:
+
+    if (pkg.type == 4)
+    {
+        int size = Marshal.SizeOf(putDate);
+        IntPtr structPtr = Marshal.AllocHGlobal(size);
+        Marshal.Copy(pkg.data.ToArray(), 0, structPtr, size);
+        putDate = (OUTPKG)Marshal.PtrToStructure(structPtr, typeof(OUTPKG));
+
+        int errorcode = putDate.axle_gen_com_data[0];
+        int datalen = putDate.axle_gen_com_data[1];
+        // 過濾異常包
+        if ((errorcode != 0) || (datalen == 0) ||
+        (putDate.axle_gen_com_data[2] != 0xAB) || 
+        (putDate.axle_gen_com_data[3] != 0xBA))
+        {
+            Console.WriteLine($"rcv data is error");
+            continue;
+        }
+        // 按照倍益康艾灸頭協議進行組包
+        int curTem = putDate.axle_gen_com_data[6];
+        int targetTem = putDate.axle_gen_com_data[7];
+        int genData1 = putDate.axle_gen_com_data[8] << 8 | putDate.axle_gen_com_data[9];
+        int genData2 = putDate.axle_gen_com_data[10] << 8 | putDate.axle_gen_com_data[11];
+        int genData3 = putDate.axle_gen_com_data[12] << 8 | putDate.axle_gen_com_data[13];
+        int genData4 = putDate.axle_gen_com_data[14] << 8 | putDate.axle_gen_com_data[15];
+        int genData5 = putDate.axle_gen_com_data[16] << 8 | putDate.axle_gen_com_data[17];
+        int genData6 = putDate.axle_gen_com_data[18] << 8 | putDate.axle_gen_com_data[19];
+
+        Console.WriteLine($"the data is errorcode {errorcode};  datalen  {datalen}  curTem  {curTem}; targetTem  {targetTem}  genData1  {genData1}  genData2  {genData2}  genData3  {genData3}  genData4  {genData4}  genData5  {genData5}  genData6  {genData6}  ");
+        udpClient.Client.ReceiveTimeout = 100;
+        Marshal.FreeHGlobal(structPtr);
+    }
+
+基於末端透傳功能倍益康艾灸頭非週期數據通訊代碼示例:
+  
+.. code-block:: 
+    :linenos:
+
+    void testAxleGenCom()
+    {
+        int[] led_on = new int[6] { 0xAB, 0xBA, 0x12, 0x01, 0x01, 0x79 };
+        int[] led_off = new int[6] { 0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78 };
+        int[] version = new int[5]{ 0xAB, 0xBA, 0x11, 0x00, 0x76 };
+        int[] state = new int[6] { 0xAB, 0xBA, 0x1B,0x01, 0xAA, 0x2B };
+        int[] cycleState = new int[6] { 0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78 };
+
+        int[] rcvdata = new int[16];
+        int ret = 0;
+        int cnt = 1;
+
+        JointPos p1Joint = new JointPos(88.708, -86.178, 140.989, -141.825, -89.162, -49.879);
+        DescPose p1Desc = new DescPose(188.007, -377.850, 260.207, 178.715, 2.823, -131.466);
+
+        JointPos p2Joint = new JointPos(112.131, -75.554, 126.989, -139.027, -88.044, -26.477);
+        DescPose p2Desc = new DescPose(368.003, -377.848, 260.211, 178.715, 2.823, -131.465);
+
+        ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+
+        //開啟末端透傳功能
+        robot.SetAxleGenComEnable(1);
+        robot.SetAxleLuaEnable(1);
+
+        while(cnt<=10)
+        { 
+            //讀取版本號
+            ret = robot.SndRcvAxleGenComCmdData(5, version, 10, ref rcvdata);
+            Console.WriteLine($" hard version : {rcvdata[4]},hard code:{rcvdata[5]}, soft version:{rcvdata[6]} {rcvdata[7]}, soft code:{rcvdata[8]}");
+            if (ret != 0)
+            {
+                break;
+            }
+            Thread.Sleep(1000);
+            //讀取艾灸頭在位狀態
+            ret = robot.SndRcvAxleGenComCmdData(6, state, 6, ref rcvdata);
+            Console.WriteLine($" state : {rcvdata[4]}");
+            Thread.Sleep(1000);
+            //開啟艾灸頭激光
+            ret = robot.SndRcvAxleGenComCmdData(6, led_on, 6, ref rcvdata);
+            Console.WriteLine($"led on rcv data is: {rcvdata[0]},{rcvdata[1]}, {rcvdata[2]}, {rcvdata[3]}, {rcvdata[4]}, {rcvdata[5]}");
+            robot.MoveJ(p1Joint, p1Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+            Thread.Sleep(4000);
+            //關閉艾灸頭激光
+            ret = robot.SndRcvAxleGenComCmdData(6, led_off, 6, ref rcvdata);
+            Console.WriteLine($"led off rcv data is: {rcvdata[0]},{rcvdata[1]}, {rcvdata[2]}, {rcvdata[3]}, {rcvdata[4]}, {rcvdata[5]}");
+            robot.MoveJ(p2Joint, p2Desc, 0, 0, 100, 100, 100, exaxisPos, -1, 0, offdese);
+            Thread.Sleep(1000);
+            Console.WriteLine($"***********************complate No. {cnt}  SDK test*****************************");
+            cnt++;
+        }
+
+    }

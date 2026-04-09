@@ -6722,3 +6722,175 @@ GetDFCState ()指令返回2個數值，分別如下：
         end
         SetDO(0,0,0,0)
     end
+
+末端透傳功能
+----------------------------------------------------------
+
+概述
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+用戶可通過配置末端透傳功能，基於末端外設開放協議+CNDE+SDK接口，實現任意末端外設的非週期數據收發及週期數據獲取的功能。其中週期數據需要撰寫末端Lua開放協議並上傳應用到末端，實現週期性與外設交互讀取，並通過CNDE配置獲取外設反饋週期數據，非週期數據通過SDK接口實現數據幀的收發。
+
+使用說明
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Step1**：打開機器人頁面選擇「初始設置」->「外設」->「末端透傳」，上傳並應用需要適配外設的末端Lua開放協議。
+
+.. figure:: robot_peripherals/289.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.18‑1 末端透傳協議上傳
+
+**Step2**：重啟機器人後，打開「末端協議啟用」按鈕，即可開啟該功能。需要注意的是開啟該功能後，其他已適配末端設備將不可同時使用。
+
+.. figure:: robot_peripherals/290.png
+   :align: center
+   :width: 4in
+
+.. centered:: 圖表 8.18‑2 末端透傳協議開啟
+
+**Step3**：打開機器人頁面選擇「示教程式」->「外設指令」->「末端透傳」，即可在末端透傳開啟後，通過Lua接口進行末端非週期數據的收發及週期數據的獲取的調試測試，實際使用需要配合機器人的CNDE功能及SDK進行使用。其中非週期指令發送與接受數據長度最長16byte，週期數據最大128byte。
+
+.. figure:: robot_peripherals/291.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.18‑3 末端透傳非週期數據Lua接口
+
+.. figure:: robot_peripherals/292.png
+   :align: center
+   :width: 6in
+
+.. centered:: 圖表 8.18‑4 末端透傳週期數據Lua接口
+
+末端透傳功能Lua腳本
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+概述
+++++++++++++++++++++++++
+
+Lua開放協議功能新增通用數據透傳接口，根據約定的Lua C接口編寫Lua腳本，配合CNDE，實現對末端掛載設備的數據收發。
+
+末端Lua腳本編寫說明
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Rs485發送與接收Lua C註冊函數
+*********************************************************************
+（1）Rs485發送Lua C註冊函數：EndTxCustomData()。此函數將指令通過Rs485發送給掛載設備。
+
+.. code-block:: 
+    :linenos:
+
+    Tcmd={0}
+    EndTxCustomData(Tcmd)
+
+.. centered:: 代碼8.18-1 Lua腳本說明
+
+（2）Rs485接收Lua C註冊函數：EndRxCustomData()。此函數接收掛載設備通過Rs485反饋的響應指令。
+
+.. code-block:: 
+    :linenos:
+
+    Rcmd={0}
+    EndRxCustomData(Rcmd)
+
+.. centered:: 代碼8.18-2 Lua腳本說明
+
+非週期數據下發與反饋Lua C註冊函數
+*********************************************************************
+
+（1）非週期數據下發Lua C註冊函數：GetHostTransparentCmd()。通過此函數獲取控制器是否下發非週期數據指令，有下發指令後獲取非週期數據指令。非週期數據指令發送長度最大16Bytes。
+
+.. code-block:: 
+    :linenos:
+
+    Tcmd={0}
+    RxFlag=0
+    RxFlag = GetHostTransparentCmd(Tcmd)
+    if(RxFlag == 1)then
+    EndTxCustomData(Tcmd)
+
+.. centered:: 代碼8.18-3 Lua腳本說明
+
+（2）非週期數據指令反饋Lua C註冊函數：BackHostTransparentCmd()。通過此函數將掛載設備響應的非週期數據指令透傳給控制器。非週期數據指令接收長度最大16Bytes。
+
+.. code-block:: 
+    :linenos:
+
+    Rcmd={0}
+    EndRxCustomData(Rcmd)
+    BackHostTransparentCmd(Rcmd)
+
+.. centered:: 代碼8.18-4 Lua腳本說明
+
+週期數據反饋Lua C註冊函數
+*********************************************************************
+
+（1）週期數據反饋Lua C註冊函數：SetDWrodInputBack()。通過此函數將讀取到的掛載設備週期數據透傳給控制器。週期數據反饋最大128Bytes。
+
+.. code-block:: 
+    :linenos:
+
+    R = {0}
+    TotalNum =0
+    PacketNum=0
+    TotalNum,PacketNum=SetDWrodInputBack(R)
+
+.. centered:: 代碼8.18-5 Lua腳本說明
+
+以倍益康艾灸頭為例編寫的Lua腳本
+*********************************************************************
+
+.. code-block:: 
+    :linenos:
+
+    --***
+    --維持末端其他功能正常運行
+    while(1)
+    do
+    IwdgTaskHandle()
+    MainLoop()
+    UpDownLoadHandle()
+    SdoRwPara()
+    EndErrClear()
+    local BFlag=LuaBreak()
+    if(BFlag==1)then
+    break
+    end
+    --***
+    --***
+    --非週期數據下發示例
+    Rcmd = {0}       --存儲掛載設備響應的非週期數據
+    Tcmd = {0}       --存儲控制器下發的非週期數據
+    RxFlag=0         --控制器是否下發指令標誌位
+    RxFlag = GetHostTransparentCmd(Tcmd)
+    if(RxFlag == 1)then
+    EndTxCustomData(Tcmd)
+    DelayMs(35)
+    EndRxCustomData(Rcmd)
+    if((#Rcmd) > 1))and(R[1]==0xAB)and(R[2]==0xBA)) then
+    BackHostTransparentCmd(Rcmd)
+    end
+    end
+    --***
+    --***
+    --週期數據下發示例
+    R = {0}          --存儲掛載設備響應的週期數據
+    T = {0xAB,0xBA,0x14,0x01,0xAA,0x24}     --查詢掛載設備週期數據指令
+    if TotalNum==0 then
+    EndTxCustomData(T)
+    DelayMs(35)
+    EndRxCustomData(R)
+    end
+    TotalNum =0      --週期數據如需分包，總分包數
+    PacketNum=0     --當前包序號
+    if((#R==19)and(R[1]==0xAB)and(R[2]==0xBA)and(R[3]==0x14)and(R[4]==0x0E))then
+    TotalNum,PacketNum=SetDWrodInputBack(R)
+    if PacketNum>TotalNum then
+    PacketNum=0
+    TotalNum=0
+    end
+    end
+    --***
+    LuaGc()
+    end

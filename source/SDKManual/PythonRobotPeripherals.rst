@@ -1399,3 +1399,452 @@ SmartTool按鈕代碼示例
         i = i+1
         print(i)
     robot.CloseRPC()
+
+控制陣列式吸盤
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetSuckerCtrl(slaveID, len, ctrlValue)``"
+    "描述", "控制陣列式吸盤"
+    "必選參數", "- ``slaveID``：從站號
+    - ``len``：長度
+    - ``ctrlValue``：控制值 1-按最大真空度吸取 2-按設定真空度吸取 3-停止吸取"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取陣列式吸盤狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetSuckerState(slaveID)``"
+    "描述", "獲取陣列式吸盤狀態"
+    "必選參數", "- ``slaveID``：從站號"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``state``：吸附狀態 0-釋放物體 1-檢測到工件吸附成功 2-沒有吸附到物體 3-物體脫離
+    - ``pressValue``：當前真空度 單位kpa
+    - ``error``：吸盤當前的錯誤碼"
+
+等待吸盤狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``WaitSuckerState(slaveID, state, ms)``"
+    "描述", "等待吸盤狀態"
+    "必選參數", "- ``slaveID``：從站號
+    - ``state``：吸附狀態 0-釋放物體 1-檢測到工件吸附成功 2-沒有吸附到物體 3-物體脫離
+    - ``ms``：等待最大時間"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+陣列式吸盤控制指令代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.OpenLuaUpload("C://項目/外設SDK/CtrlDev_sucker.lua")
+    time.sleep(2)
+    robot.UnloadCtrlOpenLUA(1)
+    robot.LoadCtrlOpenLUA(1)
+    time.sleep(1)
+    ctrl = bytearray(20)
+    ctrl[0] = 1
+    robot.SetSuckerCtrl(0, 1, ctrl)
+    for i in range(100):
+        rtn, state, press_value, error = robot.GetSuckerState(1)
+        print(f"sucker1 state is {state}, pressValue is {press_value}, error num is {error}")
+        rtn, state, press_value, error = robot.GetSuckerState(12)
+        print(f"sucker12 state is {state}, pressValue is {press_value}, error num is {error}")
+        time.sleep(0.1)
+    ret = robot.WaitSuckerState(1, 1, 100)
+    print(f"WaitSuckerState result is {ret}")
+    ctrl[0] = 3
+    robot.SetSuckerCtrl(1, 1, ctrl)
+    robot.SetSuckerCtrl(12, 1, ctrl)
+    robot.CloseRPC()
+
+上傳開放協議的Lua文件
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``OpenLuaUpload(filePath)``"
+    "描述", "上傳開放協議的Lua文件"
+    "必選參數", "- ``filePath``：本地開放協議lua文件路徑名"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+獲取從站板卡參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetFieldBusConfig()``"
+    "描述", "獲取從站板卡參數"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``type``：0-Ethercat，1-CClink, 3-Ethercat, 4-EIP
+    - ``version``：協議版本
+    - ``connState``：0-未連接 1-已連接"
+
+寫入從站DO
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FieldBusSlaveWriteDO(DOIndex, writeNum, status)``"
+    "描述", "寫入從站DO"
+    "必選參數", "- ``DOIndex``：DO編號
+    - ``writeNum``：寫入的數量
+    - ``status``：寫入的數值，最多寫8個"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+寫入從站AO
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FieldBusSlaveWriteAO(AOIndex, writeNum, status)``"
+    "描述", "寫入從站AO"
+    "必選參數", "- ``AOIndex``：AO編號
+    - ``writeNum``：寫入的數量
+    - ``status``：寫入的數值，最多寫8個"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+讀取從站DI
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FieldBusSlaveReadDI(DIIndex, readNum)``"
+    "描述", "讀取從站DI"
+    "必選參數", "- ``DIIndex``：DI編號
+    - ``readNum``：讀取的數量"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``status[8]``：讀取到的數值，最多讀8個"
+
+讀取從站AI
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FieldBusSlaveReadAI(AIIndex, readNum)``"
+    "描述", "讀取從站AI"
+    "必選參數", "- ``AIIndex``：AI編號
+    - ``readNum``：讀取的數量"
+    "默認參數", "無"
+    "返回值", "- 錯誤碼 成功-0  失敗- errcode
+    - ``status[8]``：讀取到的數值，最多讀8個"
+
+等待擴展DI輸入
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FieldBusSlaveWaitDI(DIIndex, status, waitMs)``"
+    "描述", "等待擴展DI輸入"
+    "必選參數", "- ``DIIndex``：DI編號
+    - ``status``：0-低電平；1-高電平
+    - ``waitMs``：最大等待時間(ms)"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+等待擴展AI輸入
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``FieldBusSlaveWaitAI(AIIndex, waitType, value, waitMs)``"
+    "描述", "等待擴展AI輸入"
+    "必選參數", "- ``AIIndex``：AI編號
+    - ``waitType``：0-大於；1-小於
+    - ``value``：AI值
+    - ``waitMs``：最大等待時間(ms)"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+從站模式相關接口指令代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v2.1.5
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+    robot.OpenLuaUpload("D://zUP/外設/CtrlDev_field.lua")
+    time.sleep(2)
+    robot.SetCtrlOpenLUAName(3,"CtrlDev_field.lua")
+    robot.UnloadCtrlOpenLUA(3)
+    robot.LoadCtrlOpenLUA(3)
+    time.sleep(8)
+    rtn,type, version, conn_state = robot.GetFieldBusConfig()
+    print(f"type is {type}, version is {version}, connState is {conn_state}")
+    # Write digital outputs
+    ctrl = [1, 0, 1]  # DO0=1, DO1=0, DO2=1
+    robot.FieldBusSlaveWriteDO(0, 3, ctrl)
+    # Write analog output
+    ctrl_ao = [0x1000]  # AO2 = 0x1000
+    robot.FieldBusSlaveWriteAO(2, 1, ctrl_ao)
+    for i in range(100):
+        rtn,di = robot.FieldBusSlaveReadDI(0, 4)
+        print(f"DI0 is {di[0]}, DI1 is {di[1]}, DI2 is {di[2]}, DI3 is {di[3]}")
+        rtn, ai = robot.FieldBusSlaveReadAI(0, 3)
+        print(f"AI0 is {ai[0]}, AI1 is {ai[1]}, AI2 is {ai[2]}")
+        time.sleep(0.01)
+    ret = robot.FieldBusSlaveWaitDI(0, 1, 100)
+    print(f"FieldBusSlaveWaitDI result is {ret}")
+    ret = robot.FieldBusSlaveWaitAI(0, 0, 400.00, 100)
+    print(f"FieldBusSlaveWaitAI result is {ret}")
+    robot.CloseRPC()
+
+末端透傳功能打開關閉SDK接口
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetAxleGenComEnable(mode)``"
+    "描述", "開啟末端通用透傳功能"
+    "必選參數", "- ``mode``：使能，0-關閉，1-開啟"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+末端透傳功能非週期數據收發SDK接口
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SndRcvAxleGenComCmdData( len_snd, sndBuff, len_rcv)``"
+    "描述", "末端發送非週期數據並等待應答"
+    "必選參數", "
+    - ``len_snd``：發送的長度;
+    - ``sndBuff[]``：發送數據;
+    - ``len_rcv``：選擇接受的長度;
+    - ``rcvBuff[]``：應答的數據;"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+基於末端透傳功能倍益康艾灸頭非週期數據通信代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos: 
+
+    from time import sleep
+    from fairino import Robot
+    from ctypes import sizeof
+    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    robot = Robot.RPC('192.168.58.2')
+
+    import time
+
+
+    def testAxleGenCom(self):
+
+        led_on = [0xAB, 0xBA, 0x12, 0x01, 0x01, 0x79]
+        led_off = [0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78]
+        version = [0xAB, 0xBA, 0x11, 0x00, 0x76]
+        state = [0xAB, 0xBA, 0x1B, 0x01, 0xAA, 0x2B]
+        cycleState = [0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78]
+        cnt = 1
+
+        p1Joint = [88.708, -86.178, 140.989, -141.825, -89.162, -49.879]
+        p1Desc = [188.007, -377.850, 260.207, 178.715, 2.823, -131.466]
+        p2Joint = [112.131, -75.554, 126.989, -139.027, -88.044, -26.477]
+        p2Desc = [368.003, -377.848, 260.211, 178.715, 2.823, -131.465]
+
+        exaxisPos = [0, 0, 0, 0]
+        offdese = [0, 0, 0, 0, 0, 0]
+
+        #開啟末端透傳功能
+        robot.SetAxleGenComEnable(1)
+        robot.SetAxleLuaEnable(1)
+
+        while cnt <= 10000:
+            #讀取版本號
+            ret,rcvdata = robot.SndRcvAxleGenComCmdData(len_snd=5, sndBuff=version, len_rcv=10)
+            print(ret)
+            print(rcvdata)
+            print(f"hard version : {rcvdata[4]},hard code:{rcvdata[5]}, soft version:{rcvdata[6]} {rcvdata[7]}, soft code:{rcvdata[8]}")
+            if ret != 0:
+                break
+            time.sleep(1)
+            # 讀取艾灸頭在位狀態
+            ret,rcvdata = robot.SndRcvAxleGenComCmdData(6, state, 6)
+            print(f"state : {rcvdata[4]} ")
+            time.sleep(1)
+            # 開啟艾灸頭激光
+            ret,rcvdata = robot.SndRcvAxleGenComCmdData(6, led_on, 6)
+            print(f"led on rcv data is: {rcvdata[0]}, {rcvdata[1]}, {rcvdata[2]}, {rcvdata[3]}, {rcvdata[4]}, {rcvdata[5]}")
+            robot.MoveJ(joint_pos=p1Joint, tool=0, user=0, vel=100, acc=100, ovl=100, exaxis_pos=exaxisPos, blendT=-1,
+                            offset_flag=0, offset_pos=offdese)
+            time.sleep(4)
+            # 關閉艾灸頭激光
+            ret, rcvdata = robot.SndRcvAxleGenComCmdData(6, led_off, 6)
+            print(f"led off rcv data is: {rcvdata[0]}, {rcvdata[1]}, {rcvdata[2]}, {rcvdata[3]}, {rcvdata[4]}, {rcvdata[5]}")
+            robot.MoveJ(joint_pos=p2Joint, tool=0, user=0, vel=100, acc=100, ovl=100, exaxis_pos=exaxisPos, blendT=-1,offset_flag=0, offset_pos=offdese)
+            time.sleep(1)
+            print(f"***********************complate No. {cnt} SDK test*****************************")
+            cnt = cnt + 1
+
+        robot.CloseRPC()
+        return 0
+
+    testAxleGenCom(robot)
+    
+下載開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``OpenLuaDownload(fileName, savePath)``"
+    "描述", "下載開放協議Lua文件"
+    "必選參數", "
+    - ``fileName``：開放協議文件名稱“CtrlDev_XXX.lua”;
+    - ``savePath``：開放協議保存文件路徑;
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    
+刪除指定開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``OpenLuaDelete(fileName)``"
+    "描述", "刪除指定開放協議Lua文件"
+    "必選參數", "
+    - ``fileName``：要刪除的開放協議lua文件名“CtrlDev_XXX.lua”
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    
+刪除所有開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``AllOpenLuaDelete()``"
+    "描述", "刪除所有開放協議Lua文件"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+開放協議lua文件操作SDK代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos: 
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+
+    def TestCtrlOpenLuaOperate(self):
+        # 上傳Lua文件到機器人
+        rtn = robot.OpenLuaUpload("D://zUP/openlua/CtrlDev_WELDING_A.lua")
+        print(f"OpenLuaUpload rtn is {rtn}")
+        
+        rtn = robot.OpenLuaUpload("D://zUP/openlua/CtrlDev_SWDPOLISH.lua")
+        print(f"OpenLuaUpload rtn is {rtn}")
+        
+        # 從機器人下載Lua文件
+        rtn = robot.OpenLuaDownload("CtrlDev_WELDING_A.lua", "D://zDOWN/")
+        print(f"OpenLuaDownload rtn is {rtn}")
+        
+        rtn = robot.OpenLuaDownload("CtrlDev_SWDPOLISH.lua", "D://zDOWN/")
+        print(f"OpenLuaDownload rtn is {rtn}")
+        
+        # 設置控制開放的Lua文件名
+        rtn = robot.SetCtrlOpenLUAName(0, "CtrlDev_WELDING_A.lua")
+        print(f"SetCtrlOpenLUAName rtn is {rtn}")
+        
+        rtn = robot.SetCtrlOpenLUAName(1, "CtrlDev_SWDPOLISH.lua")
+        print(f"SetCtrlOpenLUAName rtn is {rtn}")
+        
+        # 獲取控制開放的Lua文件名
+        rtn, name = robot.GetCtrlOpenLUAName()
+        print(f"ctrl open lua names : {name[0]}, {name[1]}, {name[2]}, {name[3]}")
+        
+        # 加載控制開放的Lua
+        rtn = robot.LoadCtrlOpenLUA(1)
+        print(f"LoadCtrlOpenLUA rtn is {rtn}")
+        time.sleep(2)
+        
+        # 卸載控制開放的Lua
+        rtn = robot.UnloadCtrlOpenLUA(1)
+        print(f"UnloadCtrlOpenLUA rtn is {rtn}")
+        
+        # 刪除指定的Lua文件
+        rtn = robot.OpenLuaDelete("CtrlDev_WELDING_A.lua")
+        print(f"OpenLuaDelete rtn is {rtn}")
+        
+        # 刪除所有Lua文件
+        rtn = robot.AllOpenLuaDelete()
+        print(f"AllOpenLuaDelete rtn is {rtn}")
+        
+        # 關閉連接
+        robot.CloseRPC()
+        time.sleep(1)
+
+
+    # 調用測試函數
+    TestCtrlOpenLuaOperate(robot)

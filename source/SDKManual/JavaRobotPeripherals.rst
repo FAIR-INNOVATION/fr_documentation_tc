@@ -1627,3 +1627,180 @@ SmartTool按鈕代碼示例
         }
         robot.CloseRPC();
     }
+
+末端透傳功能打開關閉SDK接口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 開啟末端通用透傳功能
+    * @param 使能，0-關閉，1-開啟
+    * @return 錯誤碼
+    */
+    public int SetAxleGenComEnable(int mode)
+
+末端透傳功能非週期數據收發SDK接口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 末端發送非週期數據並等待應答
+    * @param lenSnd 發送的長度
+    * @param sndBuff 發送數據
+    * @param lenRcv 選擇接受的長度
+    * @param [out] rcvData 應答的數據
+    * @return 錯誤碼
+    */
+    public int SndRcvAxleGenComCmdData(int lenSnd, int[] sndBuff, int lenRcv, int[] rcvData)
+    
+基於末端透傳功能倍益康艾灸頭非週期數據通訊代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void testAxleGenCom(Robot robot) {
+    int[] led_on = {0xAB, 0xBA, 0x12, 0x01, 0x01, 0x79};
+    int[] led_off = {0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78};
+    int[] version = {0xAB, 0xBA, 0x11, 0x00, 0x76};
+    int[] state = {0xAB, 0xBA, 0x1B, 0x01, 0xAA, 0x2B};
+
+    int[] rcvdata = new int[16];
+    int ret = 0;
+    int cnt = 1;
+
+    JointPos p1Joint = new JointPos(88.708, -86.178, 140.989, -141.825, -89.162, -49.879);
+    DescPose p1Desc = new DescPose(188.007, -377.850, 260.207, 178.715, 2.823, -131.466);
+
+    JointPos p2Joint = new JointPos(112.131, -75.554, 126.989, -139.027, -88.044, -26.477);
+    DescPose p2Desc = new DescPose(368.003, -377.848, 260.211, 178.715, 2.823, -131.465);
+
+    ExaxisPos exaxisPos = new ExaxisPos(0, 0, 0, 0);
+    DescPose offdese = new DescPose(0, 0, 0, 0, 0, 0);
+
+    // 開啟末端透傳功能
+    robot.SetAxleGenComEnable(1);
+    robot.SetAxleLuaEnable(1);
+
+    while (cnt <= 10000) {
+        // 讀取版本號
+        ret = robot.SndRcvAxleGenComCmdData(5, version, 10, rcvdata);
+        if (ret == 0) {
+            System.out.printf(" hard version : %d,hard code:%d, soft version:%d %d, soft code:%d \n",
+                    rcvdata[4], rcvdata[5], rcvdata[6], rcvdata[7], rcvdata[8]);
+        } else {
+            System.out.println("SndRcvAxleGenComCmdData version fail: " + ret);
+            break;
+        }
+        robot.Sleep(1000);
+
+        // 讀取艾灸頭在位狀態
+        ret = robot.SndRcvAxleGenComCmdData(6, state, 6, rcvdata);
+        if (ret == 0) {
+            System.out.printf(" state : %d \n", rcvdata[4]);
+        }
+        robot.Sleep(1000);
+
+        // 開啟艾灸頭激光
+        ret = robot.SndRcvAxleGenComCmdData(6, led_on, 6, rcvdata);
+        if (ret == 0) {
+            System.out.printf("led on rcv data is: %d, %d, %d, %d, %d, %d\n",
+                    rcvdata[0], rcvdata[1], rcvdata[2], rcvdata[3], rcvdata[4], rcvdata[5]);
+        }
+        robot.MoveJ(p1Joint, p1Desc, 0, 0, 100.0, 100.0, 100.0, exaxisPos, -1.0, 0, offdese);
+        robot.Sleep(4000);
+
+        // 關閉艾灸頭激光
+        ret = robot.SndRcvAxleGenComCmdData(6, led_off, 6, rcvdata);
+        if (ret == 0) {
+            System.out.printf("led off rcv data is: %d, %d, %d, %d, %d, %d \n",
+                    rcvdata[0], rcvdata[1], rcvdata[2], rcvdata[3], rcvdata[4], rcvdata[5]);
+        }
+        robot.MoveJ(p2Joint, p2Desc, 0, 0, 100.0, 100.0, 100.0, exaxisPos, -1.0, 0, offdese);
+        robot.Sleep(1000);
+
+        System.out.println("***********************complete No. " + cnt + " SDK test*****************************");
+        cnt++;
+    }
+    }  
+    
+下載開放協議Lua文件
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 下載開放協議Lua文件
+    * @param fileName 開放協議文件名稱“CtrlDev_XXX.lua”
+    * @param savePath 開放協議保存文件路徑
+    * @return 錯誤碼
+    */
+    public int OpenLuaDownload(string fileName, string savePath)
+
+刪除開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 刪除開放協議Lua文件
+    * @param [in] fileName 要刪除的開放協議lua文件名“CtrlDev_XXX.lua”
+    * @return 錯誤碼
+    */
+    public int OpenLuaDelete(string fileName)
+        
+刪除所有開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 刪除所有開放協議Lua文件
+    * @return 錯誤碼
+    */
+    public int AllOpenLuaDelete()
+
+控制器外設開放協議上傳下載刪除代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    public static int TestCtrlOpenLuaOperate(Robot robot) {
+        int rtn;
+        rtn = robot.OpenLuaUpload("D://zUP/openlua/CtrlDev_WELDING_A.lua");
+        System.out.println("OpenLuaUpload rtn is " + rtn);
+        rtn = robot.OpenLuaUpload("D://zUP/openlua/CtrlDev_SWDPOLISH.lua");
+        System.out.println("OpenLuaUpload rtn is " + rtn);
+        rtn = robot.OpenLuaDownload("CtrlDev_WELDING_A.lua", "D://zDOWN/");
+        System.out.println("OpenLuaDownload rtn is " + rtn);
+        rtn = robot.OpenLuaDownload("CtrlDev_SWDPOLISH.lua", "D://zDOWN/");
+        System.out.println("OpenLuaDownload rtn is " + rtn);
+
+        rtn = robot.SetCtrlOpenLUAName(0, "CtrlDev_WELDING_A.lua");
+        System.out.println("SetCtrlOpenLUAName rtn is " + rtn);
+        rtn = robot.SetCtrlOpenLUAName(1, "CtrlDev_SWDPOLISH.lua");
+        System.out.println("SetCtrlOpenLUAName rtn is " + rtn);
+
+        String[] names = new String[4];
+        rtn = robot.GetCtrlOpenLUAName(names);
+        System.out.println("GetCtrlOpenLUAName rtn is " + rtn + ", names: " +
+                names[0] + ", " + names[1] + ", " + names[2] + ", " + names[3]);
+
+        rtn = robot.LoadCtrlOpenLUA(1);
+        System.out.println("LoadCtrlOpenLUA rtn is " + rtn);
+        robot.Sleep(2000);
+        rtn = robot.UnloadCtrlOpenLUA(1);
+        System.out.println("UnloadCtrlOpenLUA rtn is " + rtn);
+
+        rtn = robot.OpenLuaDelete("CtrlDev_WELDING_A.lua");
+        System.out.println("OpenLuaDelete rtn is " + rtn);
+        rtn = robot.AllOpenLuaDelete();
+        System.out.println("AllOpenLuaDelete rtn is " + rtn);
+
+        robot.Sleep(1000);
+        return 0;
+    }

@@ -13,6 +13,48 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.4
+     - 2026-03-25
+     - | 1.ServoJTStart()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
+       | 2.ServoJTEnd()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
+       | 3.ServoJT()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
+       | 4.ServoMoveStart()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
+       | 5.ServoMoveEnd()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
+       | 6.ServoJ()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
+       | 7.SetWeldMachineCtrlMode()接口新增控制模式選擇參數；
+       | 8.ExtDevGetUDPComParam()接口新增獲取UDP通信參數：重啟控制箱後是否自動重連；
+       | 9.新增SetAxleGenComEnable()開啟末端通用透傳功能接口；
+       | 10.新增SndRcvAxleGenComCmdData()末端發送非週期數據並等待應答接口；
+       | 11.新增SetRobotStopOnComDisc()設置端口通訊斷開時停止機器人運行接口；
+       | 12.新增GetRobotStopOnComDisc()獲取端口通訊斷開時停止機器人運行參數接口；
+       | 13.新增SetDIConfig()設置控制箱可配置 CI 端口功能接口；
+       | 14.新增GetDIConfig()獲取控制箱可配置 CI 端口功能接口；
+       | 15.新增SetDOConfig()設置控制箱可配置 CO 端口功能接口；
+       | 16.新增GetDOConfig()獲取控制箱可配置 CO 端口功能接口；
+       | 17.新增SetToolDIConfig()設置末端可配置 End-CI 端口功能接口；
+       | 18.新增GetToolDIConfig()獲取末端可配置 End-CI 端口功能接口；
+       | 19.新增SetDIConfigLevel()設置控制箱可配置 CI 有效狀態接口；
+       | 20.新增GetDIConfigLevel()獲取控制箱可配置 CI 有效狀態接口；
+       | 21.新增SetDOConfigLevel()設置控制箱可配置 CO 有效狀態接口；
+       | 22.新增GetDOConfigLevel()獲取控制箱可配置 CO 有效狀態接口；
+       | 23.新增SetToolDIConfigLevel()設置末端可配置 CI 有效狀態接口；
+       | 24.新增GetToolDIConfigLevel()獲取末端可配置 CI 有效狀態接口；
+       | 25.新增SetStandardDILevel()設置控制箱標準 DI 有效狀態接口；
+       | 26.新增GetStandardDILevel()獲取控制箱標準 DI 有效狀態接口；
+       | 27.新增SetStandardDOLevel()設置控制箱標準 DO 有效狀態接口；
+       | 28.新增GetStandardDOLevel()獲取控制箱標準 DO 有效狀態接口；
+       | 29.新增SetExAxisCmdDoneTimeUDP() 擴展軸定位完成時間設置接口；
+       | 30.新增SendUDPFrameUDP ()發送指令幀接口；
+       | 31.新增SetUDPCmdRpyCallback()設置 SDK 通過 UDP 發送指令的執行結果回調函數接口；
+       | 32.新增SetVelReducePara()設置安全速度參數接口；
+       | 33.新增OriginPointWeaveStart()定點擺動開始接口；
+       | 34.新增OriginPointWeaveEnd()定點擺動結束接口；
+       | 35.新增SetUserLEDColor()設置用戶自定義機器人末端燈色接口；
+       | 36.新增MoveToTPDStart()運動到 TPD 軌跡記錄起點接口；
+       | 37.新增OpenLuaDownload()下載開放協議 Lua 文件接口；
+       | 38.新增OpenLuaDelete()刪除開放協議 Lua 文件接口；
+       | 39.新增AllOpenLuaDelete()刪除開放協議 Lua 文件接口；
+
    * - V3.9.3
      - 2026-02-11
      - | 1.ServoCart()介面增加擴展軸參數

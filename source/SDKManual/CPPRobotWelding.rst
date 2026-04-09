@@ -376,10 +376,11 @@
 
     /**
     * @brief 設置焊機控制模式
-    * @param mode 焊機控制模式;0-一元化
+    * @param [in] mode 焊機控制模式;0-直流一元模式；1-脈衝一元模式；2-JOB模式；3-近控模式；4-分別模式；5-CC/CV模式；6-TIG；7-CMT
+    * @param [in] ioType 控制類型；0-控制箱IO;1-數字通信協議(UDP);2-數字通信協議(ModbusTCP)
     * @return 錯誤碼
     */
-    errno_t SetWeldMachineCtrlMode(int mode);
+    errno_t SetWeldMachineCtrlMode(int mode, int ioType = 1);
 
 焊接開始
 ++++++++++++++++++++++++++

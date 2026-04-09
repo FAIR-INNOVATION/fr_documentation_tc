@@ -440,3 +440,221 @@
     "必選參數", "無"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置端口通訊斷開時停止機器人運行
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetRobotStopOnComDisc(portID, enable, confirmTime)``"
+    "描述", "設置端口通訊斷開時停止機器人運行"
+    "必選參數", "
+    - ``portID``：端口編號 0-8080；1-8083；2-20002；3-20004
+    - ``enable``：0-關閉；1-開啟
+    - ``confirmTime``：通訊中斷確認時長(ms)[0-5000]"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+           
+獲取端口通訊斷開時停止機器人運行參數
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetRobotStopOnComDisc(portID)``"
+    "描述", "獲取端口通訊斷開時停止機器人運行參數"
+    "必選參數", "
+    - ``portID``：端口編號 0-8080；1-8083；2-20002；3-20004
+    - ``enable``：0-關閉；1-開啟
+    - ``confirmTime``：通訊中斷確認時長(ms)[0-5000]"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+端口通訊斷開時停止機器人運行參數代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from time import sleep
+    import time
+    from fairino import Robot
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def test_robot_stop_on_com_disc(self):
+        # 初始化參數
+        enable = False
+        confirm_time = 0
+
+        # 設置通信斷開時機器人停止功能
+        rtn = robot.SetRobotStopOnComDisc(0, True, 330)
+        print(f"SetRobotStopOnComDisc index0: {rtn}")
+
+        rtn = robot.SetRobotStopOnComDisc(1, True, 550)
+        print(f"SetRobotStopOnComDisc index1: {rtn}")
+
+        rtn = robot.SetRobotStopOnComDisc(2, True, 110)
+        print(f"SetRobotStopOnComDisc index2: {rtn}")
+
+        rtn = robot.SetRobotStopOnComDisc(3, True, 220)
+        print(f"SetRobotStopOnComDisc index3: {rtn}")
+
+        # 獲取通信斷開時機器人停止設置
+        rtn, enable, confirm_time = robot.GetRobotStopOnComDisc(0)
+        print(f"GetRobotStopOnComDisc 8080 rtn {rtn}; enable is {enable}; confirm time is {confirm_time}")
+
+        rtn, enable, confirm_time = robot.GetRobotStopOnComDisc(1)
+        print(f"GetRobotStopOnComDisc 80803 rtn {rtn}; enable is {enable}; confirm time is {confirm_time}")
+
+        rtn, enable, confirm_time = robot.GetRobotStopOnComDisc(2)
+        print(f"GetRobotStopOnComDisc 20002 rtn {rtn}; enable is {enable}; confirm time is {confirm_time}")
+
+        rtn, enable, confirm_time = robot.GetRobotStopOnComDisc(3)
+        print(f"GetRobotStopOnComDisc 20004 rtn {rtn}; enable is {enable}; confirm time is {confirm_time}")
+
+        # 關閉RPC連接
+        robot.CloseRPC()
+        return 0
+
+    test_robot_stop_on_com_disc(robot)
+
+UDP發送指令幀
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SendUDPFrame(frame)``"
+    "描述", "UDP發送指令幀"
+    "必選參數", "
+    - ``frame``：發送UDP數據，透傳，不封裝"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+基於UDP通訊的SDK代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    def TestSendUDPFrame(self):
+        # 設置回調
+        def callback(src_type, count, cmd_id, data_len, content):
+            print("收到回覆: cmd_id={} count={} data_len={} content={}".format(cmd_id, count, data_len, content))
+            return 0
+        robot.SetUDPCmdRpyCallback(callback)
+
+        rtn = robot.SendUDPFrame("/f/bIII20III303III7IIIMode(0)III/b/f")
+        print(f"SendUDPFrame Mode(0) rtn is {rtn}")
+        time.sleep(1)
+
+        rtn = robot.SendUDPFrame("/f/bIII21III303III7IIIMode(1)III/b/f")
+        print(f"SendUDPFrame Mode(1) rtn is {rtn}")
+        time.sleep(1)
+
+        rtn = robot.SendUDPFrame(
+            "/f/bIII49III201III184IIIMoveJ(-15.625, -82.680, 101.654, -110.950, -88.290, 0.017, -383.012, -2.325, 242.655, -178.024, 1.710, 74.416, 0, 0, 100, 100, 100, 0.000, 0.000, 0.000, 0.000, -1, 0, 0, 0, 0, 0, 0, 0)III/b/f")
+        print(f"SendUDPFrame MoveJ(-15.625) rtn is {rtn}")
+        time.sleep(1)
+
+        rtn = robot.SendUDPFrame(
+            "/f/bIII48III203III199IIIMoveL(-75.622, -82.680, 101.654, -110.950, -88.290, 0.017, -193.537, 330.525, 242.657, -178.024, 1.710, 14.420, 0, 0, 100, 100, 100, -1, 0, 0.000, 0.000, 0.000, 0.000, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0)III/b/f")
+        print(f"SendUDPFrame MoveL(-75.622) rtn is {rtn}")
+        time.sleep(1)
+
+        rtn = robot.SendUDPFrame("/f/bIII4III905III20IIIGetSoftwareVersion()III/b/f")
+        print(f"SendUDPFrame GetSoftwareVersion() rtn is {rtn}")
+
+        time.sleep(1)
+
+        # 發送UDP幀數據校驗測試
+        rtn = robot.SendUDPFrame("/f/bIII20III303III7IIIMode(0)III/b/f")
+        print(f"SendUDPFrame rtn is {rtn}")
+
+        rtn = robot.SendUDPFrame("III20III303III7IIIMode(0)III/b/f")
+        print(f"SendUDPFrame rtn is {rtn}")
+
+        rtn = robot.SendUDPFrame("/f/bIII20III303III7IIIMode(0)")
+        print(f"SendUDPFrame rtn is {rtn}")
+
+        rtn = robot.SendUDPFrame("/f/bIII20III303III6IIIMode(0)III/b/f")
+        print(f"SendUDPFrame rtn is {rtn}")
+
+        rtn = robot.SendUDPFrame("/f/b|||20|||303|||7|||Mode(0)|||/b/f")
+        print(f"SendUDPFrame rtn is {rtn}")
+
+        rtn = robot.SendUDPFrame("/f/bII20II303II7IIMode(0)II/b/f")
+        print(f"SendUDPFrame rtn is {rtn}")
+
+        robot.CloseRPC()
+        time.sleep(1)
+
+    TestSendUDPFrame(robot)
+    
+設置用戶自定義機器人末端燈色
++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetUserLEDColor(r, g, b)``"
+    "描述", "設置用戶自定義機器人末端燈色"
+    "必選參數", "
+    - ``r``：末端紅燈控制；0-滅；1-亮
+    - ``g``：末端綠燈控制；0-滅；1-亮
+    - ``b``：末端藍燈控制；0-滅；1-亮
+    - "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置用戶自定義機器人末端燈色的SDK代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+
+    def testled(self):
+        # 設置用戶LED燈顏色
+        # 參數順序: R, G, B (紅, 綠, 藍)
+
+        # 白色 (紅綠藍全亮)
+        robot.SetUserLEDColor(True, True, True)
+        time.sleep(1)
+
+        # 關閉所有燈
+        robot.SetUserLEDColor(False, False, False)
+        time.sleep(1)
+
+        # 紅色 (僅紅燈亮)
+        robot.SetUserLEDColor(True, False, False)
+        time.sleep(1)
+
+        # 綠色 (僅綠燈亮)
+        robot.SetUserLEDColor(False, True, False)
+        time.sleep(1)
+
+        # 藍色 (僅藍燈亮)
+        robot.SetUserLEDColor(False, False, True)
+
+        # 關閉連接
+        robot.CloseRPC()
+
+    testled(robot)

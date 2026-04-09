@@ -693,22 +693,24 @@ jog點動立即停止
 .. code-block:: Java
     :linenos:
 
-    /** 
+    /**
     * @brief 伺服運動開始，配合ServoJ、ServoCart指令使用
-    * @return 錯誤碼 
-    */ 
-    int ServoMoveStart();
+    * @param comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007端口)
+    * @return 錯誤碼
+    */
+    public int ServoMoveStart (int comType)
 
 伺服運動結束
 +++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
-    /** 
+    /**
     * @brief 伺服運動結束，配合ServoJ、ServoCart指令使用
-    * @return 錯誤碼 
-    */ 
-    int ServoMoveEnd();
+    * @param comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007端口)
+    * @return 錯誤碼
+    */
+    public int ServoMoveEnd (int comType)
 
 關節空間伺服模式運動
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -719,17 +721,91 @@ jog點動立即停止
 
     /**
     * @brief  關節空間伺服模式運動
-    * @param  [in] joint_pos  目標關節位置,單位deg
-    * @param  [in] axisPos  外部軸位置,單位mm
-    * @param  [in] acc  加速度百分比，範圍[0~100],暫不開放，默認爲0
-    * @param  [in] vel  速度百分比，範圍[0~100]，暫不開放，默認爲0
-    * @param  [in] cmdT  指令下發週期，單位s，建議範圍[0.001~0.0016]
-    * @param  [in] filterT 濾波時間，單位s，暫不開放，默認爲0
-    * @param  [in] gain  目標位置的比例放大器，暫不開放，默認爲0
-    * @param  [in] id  servoJ指令ID,默認爲0
-    * @return  錯誤碼
+    * @param  joint_pos  目標關節位置,單位deg
+    * @param  axisPos  外部軸位置,單位mm
+    * @param  acc  加速度百分比，範圍[0~100],暫不開放，預設為0
+    * @param  vel  速度百分比，範圍[0~100]，暫不開放，預設為0
+    * @param  cmdT  指令下發週期，單位s，建議範圍[0.001~0.0016]
+    * @param  filterT 濾波時間，單位s，暫不開放，預設為0
+    * @param  gain  目標位置的比例放大器，暫不開放，預設為0
+    * @param  id servoJ指令ID,預設為0
+    * @param comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007端口)
+    * @return 錯誤碼
     */
-    int ServoJ(JointPos joint_pos, ExaxisPos axisPos, double acc, double vel, double cmdT, double filterT, double gain, int id);
+    public int ServoJ(JointPos joint_pos, ExaxisPos axisPos, float acc, float vel, float cmdT, float filterT, float gain, int id, int comType)
+
+基於UDP通訊的ServoJ、ServoMoveStart、ServoMoveEnd SDK代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestServoJ(Robot robot)
+    {
+        robot.udpCmdClient.SetUDPCmdRpyCallback((srcType, count, cmdID, dataLen, content) -> {
+            System.out.println("\n[Received UDP reply from robot]");
+            System.out.println("srcType: " + srcType);
+            System.out.println("count: " + count);
+            System.out.println("cmdID: " + cmdID);
+            System.out.println("dataLen: " + dataLen);
+            System.out.println("內容 (content): " + content);
+            return 0;
+        });
+        int rtn=-1;
+
+        JointPos j=new JointPos(0, 0, 0, 0, 0, 0);
+        ExaxisPos epos=new ExaxisPos(0, 0, 0, 0);
+
+        double vel = 0.0;
+        double acc = 0.0;
+        double cmdT = 0.016;
+        double filterT = 0.0;
+        double gain = 0.0;
+        int flag = 0;
+        int count = 300;
+        double dt = 0.1;
+        int cmdID = 0;
+        int comType = 1;
+        int ret = robot.GetActualJointPosDegree(j);
+        if (ret == 0)
+        {
+            robot.ServoMoveStart(comType);
+            count = 300;
+            while (count>0)
+            {
+                robot.ServoJ(j, epos, acc, vel, cmdT, filterT, gain, cmdID, comType);
+                j.J1 += dt;
+                j.J2 += dt;
+                j.J4 += dt;
+                j.J5 += dt;
+                j.J6 += dt;
+                epos.axis1 += dt;
+                count -= 1;
+                robot.Sleep(10);
+            }
+            robot.ServoMoveEnd(comType);
+
+            robot.Sleep(1000);
+            robot.ServoMoveStart(comType);
+            count = 300;
+            while (count>0)
+            {
+                robot.ServoJ(j, epos, acc, vel, cmdT, filterT, gain, cmdID, comType);
+                j.J1 -= dt;
+                j.J2 -= dt;
+                j.J4 -= dt;
+                j.J5 -= dt;
+                j.J6 -= dt;
+                epos.axis1 -= dt;
+                count -= 1;
+                robot.Sleep(10);
+            }
+            robot.ServoMoveEnd(comType);
+        }
+        else
+        {
+            System.out.println("GetActualJointPosDegree errcode:"+ ret);
+        }
+    }
 
 關節空間伺服模式運動示例程序
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -774,9 +850,10 @@ jog點動立即停止
 
     /**
     * @brief  關節扭矩控制開始
+    * @param  comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007端口)
     * @return  錯誤碼
     */
-    int ServoJTStart()
+    public int ServoJTStart (int comType)
 
 關節扭矩控制
 +++++++++++++++++++++++++++++
@@ -787,16 +864,13 @@ jog點動立即停止
     * @brief 關節扭矩控制
     * @param torque j1~j6關節扭矩，單位Nm
     * @param interval 指令週期，單位s，範圍[0.001~0.008]
-    * @param checkFlag 檢測策略
-    *                  0-不限制；
-    *                  1-限制功率；
-    *                  2-限制速度；
-    *                  3-功率和速度同時限制
-    * @param jPowerLimit 各關節最大功率限制(W)
-    * @param jVelLimit 各關節最大速度(°/s)
+    * @param checkFlag 檢測策略 0-不限制；1-限制功率；2-限制速度；3-功率和速度同時限制
+    * @param jPowerLimit 關節最大功率限制(W)
+    * @param jVelLimit 關節最大速度(°/s)
+    * @param  comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007端口)
     * @return 錯誤碼
     */
-    public int ServoJT(double[] torque, double interval, int checkFlag, double[] jPowerLimit, double[] jVelLimit)
+    public int ServoJT(double[] torque, double interval, int checkFlag, double[] jPowerLimit, double[] jVelLimit, int comType)
 
 關節扭矩控制結束
 +++++++++++++++++++++++++++++
@@ -805,9 +879,10 @@ jog點動立即停止
 
     /**
     * @brief  關節扭矩控制結束
+    * @param comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007端口)
     * @return  錯誤碼
     */
-    int ServoJTEnd()
+    public int ServoJTEnd (int comType)
 
 關節空間伺服模式運動示例程序
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -835,6 +910,70 @@ jog點動立即停止
 
         robot.CloseRPC();
         return 0;
+    }
+
+基於UDP通訊的ServoJT、ServoJTStart、ServoJTEnd SDK代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static void ServoJTWithSafety(Robot robot)
+    {
+        robot.udpCmdClient.SetUDPCmdRpyCallback((srcType, count, cmdID, dataLen, content) -> {
+            System.out.println("\n[Received UDP reply from robot]");
+            System.out.println("srcType: " + srcType);
+            System.out.println("count: " + count);
+            System.out.println("cmdID: " + cmdID);
+            System.out.println("dataLen: " + dataLen);
+            System.out.println("content: " + content);
+            return 0;
+        });
+        while (true) {
+            robot.ResetAllError();
+            robot.Sleep(500);
+            List<Number> torques;
+            torques=robot.GetJointTorques(1);
+            robot.ServoJTStart(1); //   #servoJT開始
+            ROBOT_STATE_PKG pkg=new ROBOT_STATE_PKG();
+            robot.DragTeachSwitch(1);
+            int checkFlag = 3;//-1,3
+            double[] jPowerLimit = { 10.0, 10.0, 10.0, 10.0, 10.0, 10.0 };
+            double[] jVelLimit = { 50, 50, 50, 50, 50, 50};//180.1,-1
+            int count = 800000;
+            int error = 0;
+            int comType = 1;
+
+            double[] tor=new double[]{(double)torques.get(1),(double)torques.get(2),(double)torques.get(3),(double)torques.get(4),(double)torques.get(5),(double)torques.get(6)};
+
+            while (true) {
+                tor[0] = 0.08;//  #每次1軸增加0.01NM，運動100次
+                error = robot.ServoJT(tor, 0.01, checkFlag, jPowerLimit, jVelLimit, comType);  //# 關節空間伺服模式運動
+                System.out.printf("ServoJT rtn is %d\n", error);
+                count = count - 1;
+                robot.Sleep(1);
+                pkg = robot.GetRobotRealTimeState();
+                System.out.printf("maincode %d, subcode %d\n", pkg.main_code, pkg.sub_code);
+                if (pkg.jt_cur_pos[0] > 30)
+                    break;
+            }
+
+            tor = new double[]{(double) torques.get(1), (double) torques.get(2), (double) torques.get(3), (double) torques.get(4), (double) torques.get(5), (double) torques.get(6)};
+            while (true) {
+                tor[0] = -0.08;//  #每次1軸減少0.01NM，運動100次
+                error = robot.ServoJT(tor, 0.01, checkFlag, jPowerLimit, jVelLimit, 1);  //# 關節空間伺服模式運動
+                System.out.printf("ServoJT rtn is %d\n", error);
+                count = count - 1;
+                robot.Sleep(1);
+                pkg = robot.GetRobotRealTimeState();
+                System.out.printf("maincode %d, subcode %d\n", pkg.main_code, pkg.sub_code);
+                if (pkg.jt_cur_pos[0] < 0)
+                    break;
+            }
+
+            robot.DragTeachSwitch(0);
+
+            error = robot.ServoJTEnd(1);  //#伺服運動結束
+        }
     }
 
 具有超速保護的關節扭矩控制程式碼範例
@@ -1723,4 +1862,117 @@ FIR濾波代碼示例
         System.out.printf("LaserSensorRecordandReplay rtn is %d\n", rtn);
         robot.CloseRPC();
         robot.Sleep(9999999);
+    }
+    
+定點擺動開始
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 定點擺動開始
+    * @param [in] weaveNum 擺動編號[0-7]
+    * @param [in] mode 0-工具座標系；1-參考點
+    * @param [in] refPoint 參考點笛卡爾座標[x,y,z,a,b,c]
+    * @param [in] weaveTime 擺動時間[s]
+    * @return 錯誤碼
+    */
+    public int OriginPointWeaveStart(int weaveNum, int mode, DescPose refPoint, double weaveTime)
+    
+定點擺動結束
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 定點擺動結束
+    * @return 錯誤碼
+    */
+    public int OriginPointWeaveEnd();
+        
+定點擺動的SDK代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestOriginPointWeave(Robot robot) {
+        JointPos j = new JointPos(39.886, -98.580, -124.032, -47.393, 90.000, 40.842);
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+
+        DescPose refPoint = new DescPose(400.021, 300.022, 299.996, 179.997, -0.003, -90.956);
+        robot.MoveJ(j, 1, 0, 100, 100, 100.0, epos, -1.0, 0, offset_pos);
+        
+        robot.OriginPointWeaveStart(0, 0, refPoint, 3);
+        robot.MoveStationary();
+        robot.OriginPointWeaveEnd();
+
+        robot.Sleep(2000);
+
+        robot.MoveJ(j, 1, 0, 100, 100, 100.0, epos, -1.0, 0, offset_pos);
+        robot.OriginPointWeaveStart(0, 1, refPoint, 3);
+        robot.MoveStationary();
+        robot.OriginPointWeaveEnd();
+
+        robot.Sleep(1000);
+        return 0;
+    }
+
+定點擺動（包含雷射及擴展軸）的SDK代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestOriginPointWeave(Robot robot) {
+        JointPos j = new JointPos(39.886, -98.580, -124.032, -47.393, 90.000, 40.842);
+        ExaxisPos epos1 = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+        ExaxisPos epos2 = new ExaxisPos(5, 0, 0, 0);
+        DescPose refPoint = new DescPose(400.021, 300.022, 299.996, 179.997, -0.003, -90.956);
+
+        int rtn = 0;
+        robot.LaserTrackingSensorConfig("192.168.58.20", 5020);
+        robot.LaserTrackingSensorSamplePeriod(20);
+        robot.LoadPosSensorDriver(101);
+
+        // 載入 UDP 驅動
+        robot.ExtDevLoadUDPDriver();
+
+        // 設置外部軸命令完成時間
+        rtn = robot.SetExAxisCmdDoneTime(5000.0);
+        System.out.println("SetExAxisCmdDoneTime rtn is " + rtn);
+        // 使能外部軸 1 和 2
+        rtn = robot.ExtAxisServoOn(1, 1);
+        System.out.println("ExtAxisServoOn axis id 1 rtn is " + rtn);
+        rtn = robot.ExtAxisServoOn(2, 1);
+        System.out.println("ExtAxisServoOn axis id 2 rtn is " + rtn);
+        robot.Sleep(2000);
+
+        // 設置外部軸回零
+        robot.ExtAxisSetHoming(1, 0, 10, 2);
+        robot.LaserTrackingLaserOnOff(1,0);
+
+
+        // 1---不帶擴展軸
+        robot.LaserTrackingTrackOnOff(1, 4);
+        robot.Sleep(200);
+        // 啟動定點擺動
+        robot.OriginPointWeaveStart(0, 0, refPoint, 10);
+        robot.MoveStationary();   // 執行固定運動（假設該方法存在）
+        robot.OriginPointWeaveEnd();
+        robot.LaserTrackingTrackOnOff(0, 4);
+
+        robot.Sleep(2000);         // 等待2秒
+
+        // 2----帶擴展軸
+        robot.ExtAxisMove(epos1, 100, -1);
+        robot.LaserTrackingTrackOnOff(1, 4);
+        // 啟動定點擺動
+        robot.OriginPointWeaveStart(0, 0, refPoint, 20);
+        robot.ExtAxisMove(epos2, 100, -1);
+        robot.OriginPointWeaveEnd();
+        robot.LaserTrackingTrackOnOff(0, 4);
+
+        robot.Sleep(1000);
+        return 0;
     }

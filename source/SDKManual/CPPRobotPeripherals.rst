@@ -1861,3 +1861,183 @@ SmartTool按鈕代碼示例
         }
         robot.CloseRPC();
     } 
+
+末端透傳功能打開關閉
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 末端透傳功能打開關閉
+    * @param [in] 使能，0-關閉，1-開啟
+    * @return 錯誤碼
+    */
+    errno_t SetAxleGenComEnable(int mode);
+                                                            
+末端透傳功能非週期數據收發
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+    
+    /**
+    * @brief 末端透傳功能非週期數據收發
+    * @param [in] len_snd 發送的長度
+    * @param [in] sndBuff 發送數據
+    * @param [in] len_rcv 選擇接受的長度
+    * @param [out] rcvBuff 應答的數據
+    * @return 錯誤碼
+    */
+    errno_t SndRcvAxleGenComCmdData(int lenSnd, int sndBuff[130], int lenRcv, int rcvData[130]);
+                                                                
+基於末端透傳功能倍益康艾灸頭非週期數據通訊代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int testAxleGenCom()
+    {
+      ROBOT_STATE_PKG pkg = {};
+      FRRobot robot;
+      robot.LoggerInit();
+      robot.SetLoggerLevel(1);
+      int rtn = robot.RPC("192.168.58.2");
+      if (rtn != 0)
+      {
+        return -1;
+      }
+      robot.SetReConnectParam(true, 30000, 500);
+      int led_on[6] = { 0xAB, 0xBA, 0x12, 0x01, 0x01, 0x79 };
+      int led_off[6] = { 0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78 };
+      int version[5] = { 0xAB, 0xBA, 0x11, 0x00, 0x76 };
+      int state[6] = { 0xAB, 0xBA, 0x1B, 0x01, 0xAA, 0x2B };
+      int cycleState[6] = { 0xAB, 0xBA, 0x12, 0x01, 0x00, 0x78 };
+      int rcvdata[16] = {0};
+      int ret = 0;
+      int cnt = 1;
+      JointPos p1Joint(88.708, -86.178, 140.989, -141.825, -89.162, -49.879);
+      DescPose p1Desc(188.007, -377.850, 260.207, 178.715, 2.823, -131.466);
+      JointPos p2Joint(112.131, -75.554, 126.989, -139.027, -88.044, -26.477);
+      DescPose p2Desc(368.003, -377.848, 260.211, 178.715, 2.823, -131.465);
+      ExaxisPos exaxisPos(0, 0, 0, 0);
+      DescPose offdese(0, 0, 0, 0, 0, 0);
+      //開啟末端透傳功能
+      robot.SetAxleGenComEnable(1);
+      robot.SetAxleLuaEnable(1);
+      while (cnt <= 10000)
+      {
+        //讀取版本號
+        ret = robot.SndRcvAxleGenComCmdData(5, version, 10, rcvdata);
+        printf(" hard version : %d,hard code:%d, soft version:%d %d, soft code:%d \n", rcvdata[4], rcvdata[5], rcvdata[6] ,rcvdata[7], rcvdata[8]);
+        if (ret != 0)
+        {
+          break;
+        }
+        robot.Sleep(1000);
+        //讀取艾灸頭在位狀態
+        ret = robot.SndRcvAxleGenComCmdData(6, state, 6, rcvdata);
+        printf(" state : %d \n", rcvdata[4]);
+        robot.Sleep(1000);
+        //開啟艾灸頭激光
+        ret = robot.SndRcvAxleGenComCmdData(6, led_on, 6, rcvdata);
+        printf("led on rcv data is: %d, %d, %d, %d, %d, %d  \n", rcvdata[0], rcvdata[1], rcvdata[2], rcvdata[3], rcvdata[4], rcvdata[5]);
+        robot.MoveJ(&p1Joint, &p1Desc, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+        robot.Sleep(4000);
+        //關閉艾灸頭激光
+        ret = robot.SndRcvAxleGenComCmdData(6, led_off, 6, rcvdata);
+        printf("led off rcv data is: %d, %d, %d, %d, %d, %d \n", rcvdata[0], rcvdata[1], rcvdata[2], rcvdata[3], rcvdata[4], rcvdata[5]);
+        robot.MoveJ(&p2Joint, &p2Desc, 0, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+        robot.Sleep(1000);
+        printf("***********************complate No. %d SDK test*****************************\n", cnt);
+        cnt++;
+      }
+      robot.CloseRPC();
+    }
+
+下載開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 下載開放協議Lua文件
+    * @param [in] fileName 開放協議文件名稱“CtrlDev_XXX.lua”
+    * @param [in] savePath 開放協議保存文件路徑
+    * @return 錯誤碼
+    */
+    errno_t OpenLuaDownload(std::string fileName, std::string savePath);
+    
+刪除開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 刪除開放協議Lua文件
+    * @param [in] fileName 要刪除的開放協議lua文件名“CtrlDev_XXX.lua”
+    * @return 錯誤碼
+    */
+    errno_t OpenLuaDelete(std::string fileName);
+        
+刪除所有開放協議Lua文件
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 刪除所有開放協議Lua文件
+    * @return 錯誤碼
+    */
+    errno_t AllOpenLuaDelete();
+
+控制器外設開放協議上傳下載刪除代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int TestCtrlOpenLuaOperate()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return 0;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        rtn = robot.OpenLuaUpload("D://zUP/openlua/CtrlDev_WELDING_A.lua");
+        printf("OpenLuaUpload rtn is %d\n", rtn);
+        rtn = robot.OpenLuaUpload("D://zUP/openlua/CtrlDev_SWDPOLISH.lua");
+        printf("OpenLuaUpload rtn is %d\n", rtn);
+        rtn = robot.OpenLuaDownload("CtrlDev_WELDING_A.lua", "D://zDOWN/");
+        printf("OpenLuaDownload rtn is %d\n", rtn);
+        rtn = robot.OpenLuaDownload("CtrlDev_SWDPOLISH.lua", "D://zDOWN/");
+        printf("OpenLuaDownload rtn is %d\n", rtn);
+        rtn = robot.SetCtrlOpenLUAName(0, "CtrlDev_WELDING_A.lua");
+        printf("SetCtrlOpenLUAName rtn is %d\n", rtn);
+        rtn = robot.SetCtrlOpenLUAName(1, "CtrlDev_SWDPOLISH.lua");
+        printf("SetCtrlOpenLUAName rtn is %d\n", rtn);
+        std::string name[4] = {};
+        rtn = robot.GetCtrlOpenLUAName(name);
+        printf("ctrl open lua names : %s, %s, %s, %s\n", name[0].c_str(), name[1].c_str(), name[2].c_str(), name[3].c_str());
+        rtn = robot.LoadCtrlOpenLUA(1);
+        printf("LoadCtrlOpenLUA rtn is %d\n", rtn);
+        robot.Sleep(2000);
+        rtn = robot.UnloadCtrlOpenLUA(1);
+        printf("UnloadCtrlOpenLUA rtn is %d\n", rtn);
+        rtn = robot.OpenLuaDelete("CtrlDev_WELDING_A.lua");
+        printf("OpenLuaDelete rtn is %d\n", rtn);
+        rtn = robot.AllOpenLuaDelete();
+        printf("AllOpenLuaDelete rtn is %d\n", rtn);
+        robot.CloseRPC();
+        robot.Sleep(1000);
+        return 0;
+    }

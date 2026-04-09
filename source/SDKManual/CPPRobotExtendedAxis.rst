@@ -370,17 +370,18 @@ UDP擴展軸通訊參數配置
     /**
     * @brief 獲取UDP擴展軸通訊參數
     * @param [out] ip PLC IP地址
-    * @param [out] port	端口號
-    * @param [out] period	通訊週期(ms，默認為2，請勿修改此參數)
-    * @param [out] lossPkgTime	丟包檢測時間(ms)
-    * @param [out] lossPkgNum	丟包次數
-    * @param [out] disconnectTime	通訊斷開確認時長
-    * @param [out] reconnectEnable	通訊斷開自動重連使能 0-不使能 1-使能
-    * @param [out] reconnectPeriod	重連週期間隔(ms)
-    * @param [out] reconnectNum	重連次數
+    * @param [out] port 端口號
+    * @param [out] period 通訊週期(ms，默認為2，請勿修改此參數)
+    * @param [out] lossPkgTime 丟包檢測時間(ms)
+    * @param [out] lossPkgNum 丟包次數
+    * @param [out] disconnectTime 通訊斷開確認時長
+    * @param [out] reconnectEnable 通訊斷開自動重連使能 0-不使能 1-使能
+    * @param [out] reconnectPeriod 重連週期間隔(ms)
+    * @param [out] reconnectNum 重連次數
+    * @param [out] selfStart 重啟控制箱後是否自動重連；0-不重連；1-重連
     * @return 錯誤碼
     */
-    errno_t ExtDevGetUDPComParam(std::string& ip, int& port, int& period, int& lossPkgTime, int& lossPkgNum, int& disconnectTime, int& reconnectEnable, int& reconnectPeriod, int& reconnectNum);
+    errno_t ExtDevGetUDPComParam(std::string& ip, int& port, int& period, int& lossPkgTime, int& lossPkgNum, int& disconnectTime, int& reconnectEnable, int& reconnectPeriod, int& reconnectNum, int& selfConnect);
         
 加載UDP通信
 ++++++++++++++++++++++++++++++++++
@@ -1541,3 +1542,16 @@ UDP擴展軸與機器人圓弧運動同步運動代碼示例
       robot.CloseRPC();
       return 0;
     }
+
+UDP擴展軸定位完成時間設置
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief UDP擴展軸定位完成時間設置
+    * @param [in] time 定位完成時間[ms]
+    * @return 錯誤碼
+    */
+    errno_t SetExAxisCmdDoneTime(double time);
