@@ -23,6 +23,8 @@
     \ `Italiano <https://fairino-doc-it.readthedocs.io/latest/>`__\ 
     
     \ `Deutsch <https://fairino-doc-de.readthedocs.io/latest/>`__\ 
+    
+    \ `protugues <https://fairino-doc-pt.readthedocs.io/latest/>`__\ 
 
 .. toctree::
    :maxdepth: 6
