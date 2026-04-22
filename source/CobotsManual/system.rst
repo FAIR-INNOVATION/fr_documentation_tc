@@ -624,7 +624,11 @@
    * - 803
      - FRCustom(8)-V1-002(FR5-WML)
      - FR5-WML
-       
+        
+   * - 804
+     - FRCustom(8)-V1-003(FR5-C)
+     - FR5-C
+
    * - ...
      - 預留
      - /
