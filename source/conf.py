@@ -9,7 +9,7 @@
 project = '法奧協作機器人使用者手冊'
 copyright = '2022-2026， 法奧（蘇州）機器人技術股份有限公司'
 author = '法奧（蘇州）機器人技術股份有限公司'
-release = '3.9.4'
+release = '3.9.5'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

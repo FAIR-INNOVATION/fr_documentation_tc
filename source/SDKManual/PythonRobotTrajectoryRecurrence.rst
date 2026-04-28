@@ -203,16 +203,90 @@
     - ``pnum``：軌跡點編號"
 
 設置軌跡運行中的速度
-++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. csv-table:: 
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetTrajectoryJSpeed(ovl)``"
+    "原型", "``SetTrajectoryJSpeed(ovl,mode)``"
     "描述", "設置軌跡運行中的速度"
-    "必選參數", "``ovl``:速度縮放百分比，範圍[0~100]"
+    "必選參數", "
+    - ``ovl``:速度縮放百分比，範圍[0~100]
+    - ``mode``:0-降速模式；1-直接切換"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+設置軌跡運行中的速度代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+
+    def TestSetTrajectoryJSpeed(self):
+        # 上傳軌跡文件
+        rtn = robot.TrajectoryJUpLoad("C://Users/lenovo/Desktop/trajHelix_aima_1.txt")
+        print(f"Upload TrajectoryJ A {rtn}")
+
+        traj_file_name = "/fruser/traj/trajHelix_aima_1.txt"
+        # 加載軌跡文件，參數：文件名，速度百分比，是否循環（1:循環）
+        rtn = robot.LoadTrajectoryJ(name=traj_file_name, ovl=100, opt=1)
+        print(f"LoadTrajectoryJ {traj_file_name}, rtn is: {rtn}")
+
+        # 獲取軌跡起始點位姿
+        rtn, traj_start_pose = robot.GetTrajectoryStartPose(name=traj_file_name)
+        print(f"GetTrajectoryStartPose is: {rtn}")
+        print(
+            f"desc_pos:{traj_start_pose[0]},{traj_start_pose[1]},{traj_start_pose[2]},{traj_start_pose[3]},{traj_start_pose[4]},{traj_start_pose[5]}")
+
+        time.sleep(1)
+
+        # 設置基礎速度並移動到軌跡起始點
+        robot.SetSpeed(50)
+        robot.MoveCart(desc_pos=traj_start_pose, tool=0, user=0, vel=100, acc=100, ovl=100, blendT=-1, config=-1)
+
+        # 獲取軌跡點數
+        rtn, traj_num = robot.GetTrajectoryPointNum()
+        print(f"GetTrajectoryStartPose rtn is: {rtn}, traj num is: {traj_num}")
+
+        # 開始執行軌跡運動
+        rtn = robot.MoveTrajectoryJ()
+        print(f"MoveTrajectoryJ rtn is: {rtn}")
+
+        time.sleep(1)
+
+        # 獲取機器人即時狀態
+        trajspeedMode = 0
+        while True:
+            rtn, pkg = robot.GetRobotRealTimeState()
+            if pkg.motion_done != 0:
+                break
+
+            # 設置軌跡速度為10%
+            rtn = robot.SetTrajectoryJSpeed(ovl=10.0, mode=trajspeedMode)
+            print(f"SetTrajectoryJSpeed is: {rtn}")
+
+            time.sleep(1)
+
+            # 設置軌跡速度為80%
+            rtn = robot.SetTrajectoryJSpeed(ovl=80.0, mode=trajspeedMode)
+            print(f"SetTrajectoryJSpeed is: {rtn}")
+
+            time.sleep(1)
+
+        # 關閉連接
+        robot.CloseRPC()
+        time.sleep(1)
+
+
+    # 調用測試函數
+    TestSetTrajectoryJSpeed(robot)
 
 設置軌跡運行中的力和扭矩
 +++++++++++++++++++++++++

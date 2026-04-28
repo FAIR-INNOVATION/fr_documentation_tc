@@ -182,10 +182,10 @@
 
     /**
     * @brief  獲取系統時間
-    * @param  [out] t_ms 單位ms
+    * @param  [out] t_ms 單位ms,可按照UTC時間轉換,機器人故障狀態下獲取CLock為0並返回錯誤碼
     * @return  錯誤碼
     */
-    int GetSystemClock(ref double t_ms);
+    public int GetSystemClock(ref double t_ms)
 
 查詢機器人運動是否完成
 ++++++++++++++++++++++++++++++++++++
@@ -268,17 +268,17 @@
     */
     int GetJointDriverTorque(double torque[]);
 
-獲取機器人實時狀態結構體
-++++++++++++++++++++++++++++++++++++
+獲取最新一幀的機器人即時狀態數據（內部機制改動）
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
-    /** 
-    * @brief 獲取機器人實時狀態結構體
-    * @param [out] pkg 機器人實時狀態結構體 
-    * @return 錯誤碼 
+    /**
+    * @brief 獲取最新一幀的機器人即時狀態數據（內部執行緒持續更新，此介面直接返回快取數據）
+    * @param [out] pkg 引用參數，用於接收機器人狀態數據（ROBOT_STATE_PKG 結構體）
+    * @return 成功返回 0；失敗返回負錯誤碼（例如網路通訊錯誤）
     */
-    int GetRobotRealTimeState(ref ROBOT_STATE_PKG pkg);
+    public int GetRobotRealTimeState(ref ROBOT_STATE_PKG pkg)
 
 機器人狀態查詢代碼示例
 ++++++++++++++++++++++++++++++++++++

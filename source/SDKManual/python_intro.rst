@@ -36,5 +36,6 @@ Python
     PythonRobotForceControl
     PythonRoboExtendedAxis
     PythonRobotWeld
+    PythonRobotCnde
     PythonRobotOthers
     PythonAppendix

@@ -14,30 +14,42 @@
 
 板卡型號、軟體版本描述如下：
 
-.. list-table::
+.. list-table:: 
    :widths: 20 50 30
    :header-rows: 1
    :align: center
 
-   * - **協議類型**
+   * - **協定類型**
      - **板卡型號**
      - **機器人軟體版本**
 
    * - CC-Link IEF Basic
-     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
-     - V3.8.0及以上
+     - FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+     - V3.8.4及以上
+
+   * - CC-Link IEF Basic
+     - FRJ-PCIeN-EC-RJ-V10板卡
+     - V3.9.5及以上
 
    * - Profinet
-     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
-     - V3.8.0及以上
+     - FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+     - V3.8.4及以上
+
+   * - Profinet
+     - FRJ-PCIeN-EC-RJ-V10板卡
+     - V3.9.5及以上
 
    * - Ethernet/IP
-     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
-     - V3.8.0及以上
+     - FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+     - V3.8.4及以上
+
+   * - Ethernet/IP
+     - FRJ-PCIeN-EC-RJ-V10板卡
+     - V3.9.5及以上
 
    * - EtherCAT
-     - FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EC-RJ-V10板卡
-     - V3.8.4.1及以上
+     - FRJ-PCIeN-EC-RJ-V10板卡
+     - V3.9.5及以上
 
 FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡硬體環境搭建
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,7 +144,10 @@ FRJ-PCIeN板卡硬體環境搭建
     5：西門子PLC（Profinet網口）；
     6：匯川PLC（Ethernet/IP）；
 
-3. FRJ-PCIeN板卡進行協議切換時，需進行韌體升級。在進行韌體升級時，需將連接板卡PC的IP地址修改為「192.168.0.xxx」，然後開啟「閘道工具集」軟體->選擇需要連接的PC網卡裝置->點選右下角「開始」按鈕->點選右上角「搜尋」按鈕，搜尋板卡裝置。
+FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡韌體升級
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+板卡進行協定切換時，需進行韌體升級。在進行韌體升級時，需將板卡的IP位址和筆記本PC的IP位址配置在同一個網段，然後打開「閘道工具集」軟體->選擇需要連接的PC網卡設備->點擊右下角「開始」按鈕->點擊右上角「搜尋」按鈕，搜尋板卡設備。
 
 .. image:: custom_protocol_slave/045.png
    :width: 6in
@@ -140,7 +155,7 @@ FRJ-PCIeN板卡硬體環境搭建
 
 .. centered:: 圖表 17.2-11 連接板卡裝置
 
-4. 點選左下角「升級」按鈕->選中板卡裝置->點選右上角「…」按鈕，選擇需要的協議韌體->點選「升級」按鈕，等待韌體升級完成即可。
+點選左下角「升級」按鈕->選中板卡裝置->點選右上角「…」按鈕，選擇需要的協議韌體->點選「升級」按鈕，等待韌體升級完成即可。
 
 .. image:: custom_protocol_slave/046.png
    :width: 6in
@@ -175,9 +190,10 @@ FRJ-PCIeN板卡硬體環境搭建
 
 當協議切換為Profinet時，並且從站裝置名稱與主站一致時，主站會自動配置從站的 IP 地址。
 
-5. FRJ-PCIeN-EC-RJ-V10 板卡韌體升級
+FRJ-PCIeN-EC-RJ-V10板卡韌體升級
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-網址輸入 192.169.58.2 進入機器人介面，點選「初始設定」->「外設」->「板卡通訊」介面，可以取得 FRJ-PCIeN-EC-RJ-V10 板卡韌體版本號。選擇待升級的 bin 檔案，點選上傳，等待韌體升級成功後，重啟控制箱即可。
+網址輸入192.169.58.2進入機器人界面，點擊「初始設置」->「外設」->「板卡通訊」界面，可以獲取到FRJ-PCIeN-EC-RJ-V10板卡韌體版本號。選擇待升級的bin文件，點擊上傳，等待韌體升級成功後，重啟控制箱即可。
 
 .. image:: custom_protocol_slave/064.png
    :width: 6in
@@ -185,7 +201,7 @@ FRJ-PCIeN板卡硬體環境搭建
 
 .. centered:: 圖表 17.2-13 板卡韌體升級
 
-.. note:: 1、僅 V3.9.2 及以上版本支援 Ethercat 協定韌體升級；2、升級 Ethercat 協定韌體需卸載已執行的開放協定。
+.. note:: FRJ-PCIeN-EC-RJ-V10板卡升級韌體需卸載已運行的開放協議。
 
 軟體環境搭建
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -699,6 +715,9 @@ HMI設置（Profinet仿真）
 板卡通訊周期配置
 ---------------------------------------------------------
 
+FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 透過上位機可以配置板卡的通訊周期，目前僅提供PN協議韌體，後續相容EIP、CClink ie basic、ECAT協議。
 
 (1) 將PC（Win11系統）網口與板卡網口直連，打開Device Assistant v1.1.0，雙擊「乙太網路」，點選左上角「重新整理」按鈕，可以掃描到目前連接的板卡設備。
@@ -722,6 +741,17 @@ HMI設置（Profinet仿真）
 .. image:: custom_protocol_slave/063.png
    :width: 6in
    :align: center
+
+FRJ-PCIeN-EC-RJ-V10板卡
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+網址輸入192.169.58.2進入機器人界面，點擊「初始設置」->「外設」->「板卡通訊」界面，可以獲取到板卡通訊週期。輸入所需通訊週期（1~100ms），點擊「配置」按鈕，等待配置成功後，重啟控制箱即可。
+
+.. image:: custom_protocol_slave/064.png
+   :width: 6in
+   :align: center
+
+.. note:: FRJ-PCIeN-EC-RJ-V10板卡配置通訊週期需卸載已運行的開放協議。
 
 附錄
 -------------------

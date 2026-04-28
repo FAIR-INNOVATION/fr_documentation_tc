@@ -13,6 +13,18 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.5
+     - 2026-04-24
+     - | 1.SetTrajectoryJSpeed()接口新增模式降速模式、直接切换；
+       | 2.FieldBusSlaveWriteAO()接口更改写入数值类型为double类型，其中AO0~AO15为整型，AO16~AO31为浮点型；
+       | 3.FieldBusSlaveReadAI()接口更改读取数值类型为double类型，其中AI0~AI15为整形，AI16~AI31为浮点型；
+       | 4.更新机器人状态反馈结构体类型；
+       | 5.新增机器人状态反馈配置枚举类型；新增SetRobotRealtimeStateConfig()配置机器人CNDE状态反馈接口；
+       | 6.新增AddRobotRealtimeState()CNDE状态配置添加一个机器人状态接口；
+       | 7.新增DeleteRobotRealtimeState()CNDE状态配置删除一个机器人状态接口；
+       | 8.新增SetRobotRealtimeStatePeriod()设置CNDE状态反馈周期接口；
+       | 9.新增GetRobotRealtimeStateConfig()获取当前CNDE状态反馈所有状态集合和周期接口。
+
    * - V3.9.4
      - 2026-03-25
      - | 1.ServoJTStart()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；

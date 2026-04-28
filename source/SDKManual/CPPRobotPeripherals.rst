@@ -1228,7 +1228,7 @@ SmartTool按鈕代碼示例
     * @param  [in] status[8] 寫入的數值，最多寫8個
     * @return  錯誤碼
     */
-    errno_t FieldBusSlaveWriteAO(uint8_t AOIndex, uint8_t wirteNum, int status[8]);
+    errno_t FieldBusSlaveWriteAO(uint8_t AOIndex, uint8_t wirteNum, double status[8]);
 
 讀取從站DI
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1258,7 +1258,7 @@ SmartTool按鈕代碼示例
     * @param  [out] status[8] 讀取到的數值，最多讀8個
     * @return  錯誤碼
     */
-    errno_t FieldBusSlaveReadAI(uint8_t AIIndex, uint8_t readNum, int status[8]);
+    errno_t FieldBusSlaveReadAI(uint8_t AIIndex, uint8_t readNum, double status[8]);
 
 等待擴充DI輸入
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1303,9 +1303,9 @@ SmartTool按鈕代碼示例
         FRRobot robot;
         uint8_t type = 0, version = 0, connState = 0;
         uint8_t ctrl[8];
-        int ctrlAO[8];
+        double ctrlAO[8];
         static uint8_t DI[8];
-        static int AI[8];
+        static double AI[8];
 
         robot.LoggerInit();
         robot.SetLoggerLevel(1);

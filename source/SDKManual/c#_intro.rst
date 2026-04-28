@@ -33,5 +33,6 @@ C#
     C#RobotForceControl
     C#RobotExtendedAxis
     C#RobotWelding
+    C#RobotCnde
     C#RobotOther
     C#Appendix

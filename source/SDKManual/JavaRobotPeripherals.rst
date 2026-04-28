@@ -989,14 +989,14 @@ SmartTool按鈕代碼示例
 .. code-block:: Java
     :linenos:
 
-    /**
+    /*
     * @brief  寫入從站AO
-    * @param  AOIndex  AO編號
-    * @param  wirteNum  寫入的數量
-    * @param  status 寫入的數值，最多寫8個
+    * @param  AOIndex AO編號
+    * @param  writeNum 寫入數量
+    * @param  status 寫入數值的陣列（最多8個）,AO0~AO15為整數型,AO16~AO31為浮點型
     * @return  錯誤碼
     */
-    public int FieldBusSlaveWriteAO(int AOIndex, int wirteNum, int[] status)
+    public int FieldBusSlaveWriteAO(int AOIndex, int writeNum, double[] status)
 
 讀取從站DI
 ++++++++++++++++++++++++++++++++++++++++++++++++++++

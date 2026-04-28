@@ -36,5 +36,6 @@ Java
     JavaRobotForceControl
     JavaRobotExtendedAxis
     JavaRobotWeld
+    JavaRobotCnde
     JavaRobotOthers
     JavaAppendix

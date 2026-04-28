@@ -1117,12 +1117,12 @@
 
     /**
     * @brief  寫入從站AO
-    * @param  AOIndex  AO編號
-    * @param  wirteNum  寫入的數量
-    * @param  status 寫入的數值，最多寫8個
-    * @return  錯誤碼
+    * @param [in] AOIndex AO編號
+    * @param [in] writeNum 寫入數量
+    * @param [in] status 寫入數值陣列（最多8個）,AO0~AO15為整型，AO16~AO31為浮點
+    * @return 錯誤碼
     */
-    public int FieldBusSlaveWriteAO(int AOIndex, int wirteNum, int[] status)
+    public int FieldBusSlaveWriteAO(int AOIndex, int writeNum, double[] status)
 
 讀取從站DI
 ++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1200,7 +1200,7 @@
     
         int type = 0, version = 0, connState = 0;
         int[] ctrl = new int[8];
-        int[] ctrlAO = new int[8];
+        double[] ctrlAO = new double[8];
         int[] DI = new int[8];
         double[] AI = new double[8];
         if (rtn != 0)
@@ -1208,7 +1208,7 @@
             return;
         }
         // Upload and load open protocol file
-        robot.OpenLuaUpload("E://zup/CtrlDev_field.lua");
+        robot.OpenLuaUpload("E://temp/CtrlDev_field.lua");
         Thread.Sleep(2000);
         robot.SetCtrlOpenLUAName(3, "CtrlDev_field.lua");
         robot.UnloadCtrlOpenLUA(3);

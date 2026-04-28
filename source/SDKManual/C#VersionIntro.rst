@@ -13,6 +13,22 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.5
+     - 2026-04-24
+     - | 1.GetRobotRealTimeState()接口獲取最新一幀的機器人即時狀態數據內部機制變化，外特性無變化；
+       | 2.SetTrajectoryJSpeed()接口新增模式降速模式、直接切換；
+       | 3.GetSystemClock()接口新增錯誤碼反饋及函數描述；
+       | 4.FieldBusSlaveWriteAO()接口更改寫入數值類型為double類型，其中AO0~AO15為整型，AO16~AO31為浮點型；
+       | 5.更新機器人狀態反饋結構體類型，ROBOT_STATE_PKG由struct變為class；
+       | 6.新增機器人狀態反饋配置枚舉類型；
+       | 7.新增機器人設置軌跡運行中的速度代碼示例；
+       | 8.新增SetRobotRealtimeStateConfig()配置機器人CNDE狀態反饋接口；
+       | 9.新增AddRobotRealtimeState()CNDE狀態配置添加一個機器人狀態接口；
+       | 10.新增DeleteRobotRealtimeState()CNDE狀態配置刪除一個機器人狀態接口；
+       | 11.新增SetRobotRealtimeStatePeriod()設置CNDE狀態反饋週期接口；
+       | 12.新增GetRobotRealtimeStateConfig()獲取當前CNDE狀態反饋所有狀態集合和週期接口；
+       | 13.以下接口新增斷線重連狀態下阻塞邏輯：GetSafetyCode、GetAI、GetToolAI、GetAxlePointRecordBtnState、GetToolDO、GetDO、GetActualJointPosDegree、GetActualJointSpeedsDegree、GetActualJointAccDegree、GetTargetTCPCompositeSpeed、GetActualTCPCompositeSpeed、GetTargetTCPSpeed、GetActualTCPSpeed、GetActualTCPPose、GetActualTCPNum、GetActualWObjNum、GetActualToolFlangePose、GetJointTorques、GetRobotMotionDone、GetRobotErrorCode、GetError、GetMotionQueueLength、GetProgramState、GetGripperActivateStatus、GetGripperCurPosition、GetGripperCurSpeed、GetGripperCurCurrent、GetGripperVoltage、GetGripperTemp、FT_GetForceTorqueRCS、FT_GetForceTorqueOrigin、FT_Control、GetRobotEmergencyStopState、GetSDKComState、GetSafetyStopState、LuaUpload、LuaDownLoad、ForceSensorAutoComputeLoad、AxleLuaUpload、GetGripperRotNum、GetGripperRotSpeed、GetGripperRotTorque。
+
    * - V3.9.4
      - 2026-03-25
      - | 1.ServoJTStart()接口新增通信類型選擇參數，支持XMLRPC/UDP通信；
