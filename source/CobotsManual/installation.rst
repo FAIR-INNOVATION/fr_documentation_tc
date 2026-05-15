@@ -2249,19 +2249,19 @@ FR30型號協作機器人最大可攜帶負載為35kg，額定負載為30kg，�
 控制器I/O面板
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-您可以使用控制箱內的I/O 來控制各種設備，包括氣動繼電器、PLC 和緊限位裝置止按鈕。圖表3.5-2顯示了控制箱的電氣介面組，圖表3.5-3顯示了易製造控制箱的電氣介面組。
+您可以使用控制箱內的I/O來控制各種設備，包括氣動繼電器、PLC 和緊限位裝置止按鈕。圖表3.5-2顯示了控制箱的電氣接口組，圖表3.5-3顯示了集成式mini控制箱（mini BOX）的電氣接口組。
 
 .. figure:: installation/038.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.5-2 控制箱電氣介面示意圖
+.. centered:: 圖表 3.5-2 控制箱電氣接口示意圖
 
 .. figure:: installation/039.png
 	:align: center
 	:width: 6in
 
-.. centered:: 圖表 3.5-3 易製造控制箱電氣介面示意圖
+.. centered:: 圖表 3.5-3 集成式mini控制箱（mini BOX）電氣接口示意圖
 
 RJ45網路介面組
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2322,20 +2322,34 @@ RJ45網路介面組
 
 機器人必須依照電氣規範進行安裝。
 
-透過設定「電源通訊」接口，可以使用內部或外部24V電源為數位I/O供電。此介面中上面兩個端子（ex24V和exon）為外部電源的24V和接地，下面兩個端子（24V和GND）為內部電源的24V和接地。預設配置是使用內部電源，如下圖所示。
+通過配置「電源通訊」接口，可以使用內部或外部24V電源為數字I/O供電。該接口中上面兩個端子（ex24V和exon）為外部電源的24V和地，下面兩個端子（24V和GND）為內部電源的24V和地。默認配置是使用內部電源，控制箱及集成式mini控制箱（mini BOX）如下圖所示。
 
 .. figure:: installation/044.png
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/134.png
+	:align: center
+	:width: 3in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-8 電源通訊示意圖01
 
-如果負載功率較大，可以如下圖連接外部電源。
+如果負載功率較大，可以按如下圖連接外部電源。交流寬壓集成式mini控制箱（mini BOX）外部電源與內部電源共0V連接。
 
 .. figure:: installation/045.png
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/135.png
+	:align: center
+	:width: 3in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-9 電源通訊示意圖02
 
 內部和外部電源的電氣規格如下表格所示：
@@ -2574,6 +2588,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/136.png
+	:align: center
+	:width: 3in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-10 安全防護示意圖01
 
 **連接緊急停止按鈕**
@@ -2583,6 +2604,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/137.png
+	:align: center
+	:width: 3in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-11 安全防護示意圖02
 
 **連線安全停止按鈕**
@@ -2592,6 +2620,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/138.png
+	:align: center
+	:width: 3in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-12 安全防護示意圖03
 
 通用數字量I/O
@@ -2609,6 +2644,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/139.png
+	:align: center
+	:width: 3in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-13 通用數位量輸出示意圖01
 
 從按鈕進行的數字輸入
@@ -2620,6 +2662,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/140.png
+	:align: center
+	:width: 6in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-14 通用數位量輸出示意圖02
 
 與其他設備或PLC交互
@@ -2631,6 +2680,13 @@ RJ45網路介面組
 	:align: center
 	:width: 6in
 
+.. centered:: 控制箱
+
+.. figure:: installation/141.png
+	:align: center
+	:width: 6in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-15 與其他設備或PLC互動示意圖
 
 模擬量I/O
@@ -2773,6 +2829,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/142.png
+	:align: center
+	:width: 6in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-16 類比輸出示意圖
 
 **使用類比輸入**
@@ -2783,6 +2846,13 @@ RJ45網路介面組
 	:align: center
 	:width: 3in
 
+.. centered:: 控制箱
+
+.. figure:: installation/143.png
+	:align: center
+	:width: 6in
+
+.. centered:: 集成式mini控制箱（mini BOX）
 .. centered:: 圖表 3.5-17 類比輸入示意圖
 
 FR3MT&3C選配模組
