@@ -13,6 +13,29 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.6
+     - 2026-05-26
+     - | 1.更新機器人狀態反饋結構體，增加擴展軸座標系編號狀態；
+       | 2.更新機器人狀態反饋配置枚舉類型，增加擴展軸座標系編號配置枚舉；
+       | 3.新增ExtAxisGetParamConfig()獲取UDP擴展軸參數配置接口。
+       | 4.新增ServoJV()機器人關節空間速度伺服模式運動接口。
+       | 5.新增ServoMITStart()機器人關節MIT控制開始接口。
+       | 6.新增ServoMITEnd()機器人關節MIT控制結束接口。
+       | 7.新增ServoMIT()機器人關節MIT控制接口。
+       | 8.新增SetLaserWeldingParam()機器人雷射焊接參數配置接口。
+       | 9.新增SetLaserWeldingStartEnd()設置機器人雷射焊接開啟停止接口。
+       | 10.新增SetLaserWeldingEnable()設置雷射焊機使能去使能接口。
+       | 11.新增ResetLaserWeldingErr()設置雷射焊機故障復位接口。
+       | 12.新增GetLaserWeldingRunningState()獲取雷射焊機運行狀態接口。
+       | 13.新增GetLaserWeldingErrState()獲取雷射焊機故障狀態接口。
+       | 14.新增GetLaserWeldingParamTarget()獲取雷射焊接配置參數接口。
+       | 15.新增GetLaserWeldingParamActual()獲取當前雷射焊機生效的配置參數接口。
+       | 16.新增SetLaserWeldingEnableExtDoNum()配置雷射焊機擴展IO使能DO端口接口。
+       | 17.新增SetLaserWeldingStartExtDoNum()配置雷射焊機擴展IO啟動DO端口接口。
+       | 18.新增SetLaserWeldingErrResetExtDoNum()配置雷射焊機擴展IO故障復位DO端口接口。
+       | 19.新增SetLaserWeldingRunningStateExtDiNum()配置雷射焊機擴展IO運行狀態（出光狀態）DI端口接口。
+       | 20.新增SetLaserWeldingErrStateExtDiNum()配置雷射焊機擴展IO故障狀態DI端口接口。
+
    * - V3.9.5
      - 2026-04-24
      - | 1.GetRobotRealTimeState()接口獲取最新一幀的機器人即時狀態數據內部機制變化，外特性無變化；

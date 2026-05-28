@@ -303,6 +303,7 @@
       uint8_t socketConnTimeout;   //socket連接超時，bit0-bit4:socketID 1-4
       uint8_t socketReadTimeout;   //socket讀取超時，bit0-bit4:socketID 1-4
       uint8_t tsWebStateComErr;   //web-扭矩通訊失敗；0-正常；1-失敗
+      uint8_t exaxisCoordID;     //擴展軸坐標系編號
       uint16_t check_sum;     // 和校驗
     }ROBOT_STATE_PKG;
 
@@ -442,5 +443,6 @@
         AxleGenComData = 128,       // 機器人末端透傳反饋數據
         SocketConnTimeout = 129,    // socket連接超時，bit0-bit4對應socketID 1-4
         SocketReadTimeout = 130,    // socket讀取超時，bit0-bit4對應socketID 1-4
-        TsWebStateComErr = 131      // web-扭矩通訊失敗：0-正常，1-失敗
+        TsWebStateComErr = 131,     // web-扭矩通訊失敗：0-正常，1-失敗
+        ExaxisCoordID = 132          //擴展軸坐標系編號
     };

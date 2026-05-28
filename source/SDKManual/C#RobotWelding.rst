@@ -1514,3 +1514,299 @@
         robot.MoveL(j2, desc_p2, 3, 0, 100, 100, 10, -1, epos, 0, 0, offset_pos, 0, 0, 10);
         robot.WeaveEnd(0);
     }
+
+雷射焊機參數配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 寫入雷射焊機10個工藝組中某一個的配置參數並配置給焊機
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[in] num 需要設置的組號（1~10）
+    * @param[in] scanSpeed 掃描速度
+    * @param[in] scanWidth 掃描寬度
+    * @param[in] peakPower 峰值功率
+    * @param[in] dutyCycle 占空比
+    * @param[in] freq 頻率
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingParam(int io_type, int num, int scanSpeed, int scanWidth, int peakPower, int dutyCycle, int freq)
+
+設置雷射焊接開始停止
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 設置雷射焊機開啟關閉
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[in] status 控制字 0-收光 1-出光
+    * @param[in] max_waittime 最大等待時間
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingStartEnd(int io_type, int status, int max_waittime)
+
+雷射焊機使能去使能
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 雷射焊機使能去使能
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[in] status 0-去使能 1-使能
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingEnable(int io_type, int status)
+
+雷射焊機故障復位
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 雷射焊機故障復位
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[in] status 控制字 0-無效 1-故障復位
+    * @return 錯誤碼
+    */
+    public int ResetLaserWeldingErr(int io_type, int status)
+
+獲取雷射焊機運行狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取雷射焊機運行狀態
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[out] status 控制字 0-停機 1-運行
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingRunningState(int io_type, ref int status)
+
+獲取雷射焊機故障狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取雷射焊機故障狀態
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[out] status 0-無故障 1-存在故障
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingErrState(int io_type, ref int status)
+
+獲取雷射焊機配置參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取雷射焊機10個工藝組中某一個的配置參數
+    * @param[in] num 需要設置的組號（1~10）
+    * @param[out] scanSpeed 掃描速度
+    * @param[out] scanWidth 掃描寬度
+    * @param[out] peakPower 峰值功率
+    * @param[out] dutyCycle 占空比
+    * @param[out] freq 頻率
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingParamTarget(int num, ref int scanSpeed, ref int scanWidth, ref int peakPower, ref int dutyCycle, ref int freq)
+
+獲取當前雷射焊機生效的配置參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取當前雷射焊機生效的配置參數
+    * @param[in] io_type 通訊類型 0-IO 1-UDP
+    * @param[out] scanSpeed 掃描速度
+    * @param[out] scanWidth 掃描寬度
+    * @param[out] peakPower 峰值功率
+    * @param[out] dutyCycle 占空比
+    * @param[out] freq 頻率
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingParamActual(int io_type, ref int scanSpeed, ref int scanWidth, ref int peakPower, ref int dutyCycle, ref int freq)
+    
+配置雷射焊機擴展IO使能DO端口
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 雷射焊機設置擴展IO，使能的DO端口
+    * @param[in] ctrlModeDONum 雷射焊機使能的擴展DO端口號
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingEnableExtDoNum(int ctrlModeDONum)
+
+配置雷射焊機擴展IO啟動DO端口
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 雷射焊機設置擴展IO，啟動的DO端口
+    * @param[in] ctrlModeDONum 雷射焊機啟動（出光收光）的擴展DO端口號
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingStartExtDoNum(int ctrlModeDONum)
+
+雷射焊機設置擴展IO故障復位的DO端口
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 雷射焊機設置擴展IO，故障復位的DO端口
+    * @param[in] ctrlModeDONum 雷射焊機故障復位的擴展DO端口號
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingErrResetExtDoNum(int ctrlModeDONum)
+
+配置雷射焊機運行狀態（出光狀態）擴展DI
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 配置雷射焊機運行狀態（出光狀態）擴展DI
+    * @param[in] diNum 配置雷射焊機運行狀態（出光狀態）擴展DI端口
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingRunningStateExtDiNum(int diNum)
+    
+配置雷射焊機擴展IO故障狀態DI端口
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 配置雷射焊機故障狀態擴展DI
+    * @param[in] diNum 配置雷射焊機故障狀態擴展DI端口
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingErrStateExtDiNum(int diNum)
+        
+雷射焊接代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    private void btnLaserWeld_Click(object sender, EventArgs e)
+    {
+
+        int rtn = -1;
+        // 載入UDP驅動
+        rtn = robot.ExtDevLoadUDPDriver();
+        if (rtn != 0)
+        {
+            Console.WriteLine("Failed to load UDP driver, error code: " + rtn);
+        }
+        Thread.Sleep(1000);
+
+        // 設置雷射焊接參數: io_type=1, num=3, scanSpeed=2000, scanWidth=3, peakPower=1500, dutyCycle=100, freq=1000
+        rtn = robot.SetLaserWeldingParam(1, 3, 2000, 3, 1500, 100, 1000);
+        if (rtn != 0)
+        {
+            Console.WriteLine("SetLaserWeldingParam failed, error code: " + rtn);
+        }
+        else
+        {
+            Console.WriteLine("SetLaserWeldingParam success");
+        }
+
+        // 設置啟動的DO端口號
+        rtn = robot.SetLaserWeldingStartExtDoNum(1);
+        if (rtn != 0)
+        {
+            Console.WriteLine("SetLaserWeldingStartExtDoNum failed, error code: " + rtn);
+        }
+
+        // 設置為模式0（示教模式）
+        rtn = robot.Mode(0);
+        if (rtn != 0)
+        {
+            Console.WriteLine("Set mode 0 failed, error code: " + rtn);
+        }
+        Thread.Sleep(1000);
+
+
+        DescPose desc_pos1 = new DescPose(-303.721, -206.960, 297.105, 152.209, 19.857, 109.166);
+        DescPose desc_pos2 = new DescPose(-301.575, -254.888, 284.786, 155.919, 26.946, 111.629);
+        DescPose desc_safe = new DescPose(-344.386, -280.830, 435.073, 173.835, 15.333, 124.931);
+
+
+        ExaxisPos exaxis = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
+        DescPose offset = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+        // 移動到第一個焊接點
+        int error = robot.MoveL(desc_pos1, 0, 0, 100, 100, 100, -1, 0, exaxis, 0, 0, offset, -1, 0);
+        Console.WriteLine("MoveL to pos1 return: " + error);
+
+        // 開啟雷射（出光）
+        rtn = robot.SetLaserWeldingStartEnd(1, 1, 10000);
+        if (rtn != 0)
+        {
+            Console.WriteLine("SetLaserWeldingStartEnd (start) failed, error code: " + rtn);
+        }
+        else
+        {
+            Console.WriteLine("Laser started");
+        }
+
+        // 移動到第二個焊接點（焊接過程中）
+        rtn = robot.MoveL(desc_pos2, 0, 0, 30, 100, 100, -1, 0, exaxis, 0, 0, offset, -1, 0);
+        Console.WriteLine("MoveL to pos2 return: " + rtn);
+
+        Thread.Sleep(500);
+        // 關閉雷射（收光）
+        rtn = robot.SetLaserWeldingStartEnd(1, 0, 10000);
+        if (rtn != 0)
+        {
+            Console.WriteLine("SetLaserWeldingStartEnd (stop) failed, error code: " + rtn);
+        }
+        else
+        {
+            Console.WriteLine("Laser stopped");
+        }
+
+        // 移動到安全點
+        rtn = robot.MoveL(desc_safe, 0, 0, 100, 100, 100, -1, 0, exaxis, 0, 0, offset, -1, 0);
+        Console.WriteLine("MoveL to safe_pos return: " + rtn);
+
+        // 設置為模式1（遠程模式）
+        rtn = robot.Mode(1);
+        if (rtn != 0)
+        {
+            Console.WriteLine("Set mode 1 failed, error code: " + rtn);
+        }
+        Thread.Sleep(1000);
+
+        // 關閉連接
+        robot.CloseRPC();
+        Thread.Sleep(1000);
+
+        Console.WriteLine("Test completed");
+
+        return ;
+    }

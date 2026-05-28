@@ -9,7 +9,7 @@
 project = '法奧協作機器人使用者手冊'
 copyright = '2022-2026， 法奧（蘇州）機器人技術股份有限公司'
 author = '法奧（蘇州）機器人技術股份有限公司'
-release = '3.9.5'
+release = '3.9.6'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -35,7 +35,7 @@ html_css_files = ["custom.css"]
 html_logo = '_static/logo.svg'
 html_theme_options = {
     'logo_only': True,
-    'display_version': False,
+    # 'display_version': False,
 }
 
 # highlight_language = "c,c++,python"

@@ -1514,3 +1514,242 @@
 
         robot.CloseRPC();
     }
+
+雷射焊機參數配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 雷射焊機參數配置
+    * @param  io_type 通訊類型 0-IO 1-UDP
+    * @param  num 需要設置的組號（1~10）
+    * @param  scanSpeed 掃描速度
+    * @param  scanWidth 掃描寬度
+    * @param  peakPower 峰值功率
+    * @param  dutyCycle 佔空比
+    * @param  freq 頻率
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingParam(int io_type, int num, int scanSpeed, int scanWidth, int peakPower, int dutyCycle, int freq);
+
+設置雷射焊接開始停止
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 設置雷射焊接開始停止
+    * @param io_type 通訊類型 0-IO 1-UDP
+    * @param status 控制字 0-收光 1-出光
+    * @param max_waittime 最大等待時間，單位毫秒，默認10000
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingStartEnd(int io_type, int status, int max_waittime)
+
+雷射焊機使能去使能
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 雷射焊機使能去使能
+    * @param io_type 通訊類型 0-IO 1-UDP
+    * @param status 0-去使能 1-使能
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingEnable(int io_type, int status)
+
+雷射焊機故障復位
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 雷射焊機故障復位
+    * @param io_type 通訊類型 0-IO 1-UDP
+    * @param status 控制字 0-無效 1-故障復位
+    * @return 錯誤碼
+    */
+    public int ResetLaserWeldingErr(int io_type, int status)
+
+獲取雷射焊機運行狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取雷射焊機運行狀態
+    * @param io_type 通訊類型 0-IO 1-UDP
+    * @param  status 控制字 0-停機 1-運行
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingRunningState(int io_type, int[] status)
+
+獲取雷射焊機故障狀態
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取雷射焊機故障狀態
+    * @param io_type 通訊類型 0-IO 1-UDP
+    * @param  status 0-無故障 1-存在故障
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingErrState(int io_type, int[] status)
+
+獲取雷射焊機配置參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取雷射焊機10個工藝組中某一個的配置參數
+    * @param num 需要設置的組號（1~10）
+    * @param params 輸出參數數組：[scanSpeed, scanWidth, peakPower, dutyCycle, freq]
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingParamTarget(int num, int[] params)
+
+獲取當前雷射焊機生效的配置參數
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取當前雷射焊機生效的配置參數
+    * @param io_type 通訊類型 0-IO 1-UDP
+    * @param params 輸出參數數組：[scanSpeed, scanWidth, peakPower, dutyCycle, freq]
+    * @return 錯誤碼
+    */
+    public int GetLaserWeldingParamActual(int io_type, int[] params)
+
+配置雷射焊機擴展IO使能DO端口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 雷射焊機設置擴展IO，使能的DO端口
+    * @param ctrlModeDONum 雷射焊機使能的擴展DO端口號
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingEnableExtDoNum(int ctrlModeDONum)
+
+配置雷射焊機擴展IO啟動DO端口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 雷射焊機設置擴展IO，啟動的DO端口
+    * @param ctrlModeDONum 雷射焊機啟動（出光收光）的擴展DO端口號
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingStartExtDoNum(int ctrlModeDONum)
+
+配置雷射焊機擴展IO故障復位DO端口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 雷射焊機設置擴展IO，故障復位的DO端口
+    * @param ctrlModeDONum 雷射焊機故障復位的擴展DO端口號
+    * @return 錯誤碼
+    */
+    public int SetLaserWeldingErrResetExtDoNum(int ctrlModeDONum)
+
+配置雷射焊機擴展IO運行狀態（出光狀態）DI端口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 配置雷射焊機擴展IO運行狀態（出光狀態）DI端口
+    * @param diNum 配置雷射焊機運行狀態（出光狀態）擴展DI端口
+    * @return 錯誤碼，0表示成功，非0表示失敗
+    */
+    public int SetLaserWeldingRunningStateExtDiNum(int diNum);
+
+配置雷射焊機擴展IO故障狀態DI端口
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 配置雷射焊機擴展IO故障狀態DI端口
+    * @param diNum 配置雷射焊機故障狀態擴展DI端口
+    * @return 錯誤碼，0表示成功，非0表示失敗
+    */
+    public int SetLaserWeldingErrStateExtDiNum(int diNum);
+
+雷射焊接代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int testLsaerWeld(Robot robot) {
+        int rtn = -1;
+        rtn = robot.ExtDevLoadUDPDriver();
+        if (rtn != 0) {
+            System.out.println("加載UDP驅動失敗，錯誤碼：" + rtn);
+        }
+        robot.Sleep(1000);
+        rtn = robot.SetLaserWeldingParam(1, 3, 2000, 3, 1500, 100, 1000);
+        if (rtn != 0) {
+            System.out.println("SetLaserWeldingParam失敗，錯誤碼：" + rtn);
+        } else {
+            System.out.println("SetLaserWeldingParam成功");
+        }
+        rtn = robot.SetLaserWeldingStartExtDoNum(1);
+        if (rtn != 0) {
+            System.out.println("SetLaserWeldingStartExtDoNum失敗，錯誤碼：" + rtn);
+        }
+        rtn = robot.Mode(0);
+        if (rtn != 0) {
+            System.out.println("設置模式0失敗，錯誤碼：" + rtn);
+        }
+        robot.Sleep(1000);
+        DescPose desc_pos1 = new DescPose(-303.721, -206.960, 297.105, 152.209, 19.857, 109.166);
+        DescPose desc_pos2 = new DescPose(-301.575, -254.888, 284.786, 155.919, 26.946, 111.629);
+        DescPose desc_safe = new DescPose(-344.386, -280.830, 435.073, 173.835, 15.333, 124.931);
+
+        JointPos jointPos1 = new JointPos(9.827, -99.740, 120.088, -78.900, -77.241, -17.904);
+        JointPos jointPos2 = new JointPos(15.251, -96.456, 120.138, -84.664, -68.542, -17.843);
+        JointPos jointSafe = new JointPos(19.142, -98.078, 101.493, -83.078, -77.070, -17.794);
+
+        ExaxisPos exaxis = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
+        DescPose offset = new DescPose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        int error = robot.MoveL(desc_pos1, 0, 0, 100, 100, 100, -1, 0, exaxis, 0, 0, offset, -1, 0,0,0);
+        System.out.println("MoveL到pos1返回：" + error);
+        rtn = robot.SetLaserWeldingStartEnd(1, 1, 10000);
+        if (rtn != 0) {
+            System.out.println("SetLaserWeldingStartEnd（啟動）失敗，錯誤碼：" + rtn);
+        } else {
+            System.out.println("雷射已啟動");
+        }
+        rtn = robot.MoveL(desc_pos2, 0, 0, 30, 100, 100, -1, 0, exaxis, 0, 0, offset, -1, 0,0, 0);
+        System.out.println("MoveL到pos2返回：" + rtn);
+        rtn = robot.SetLaserWeldingStartEnd(1, 0, 10000);
+        if (rtn != 0) {
+            System.out.println("SetLaserWeldingStartEnd（停止）失敗，錯誤碼：" + rtn);
+        } else {
+            System.out.println("雷射已停止");
+        }
+        robot.Sleep(500);
+        rtn = robot.MoveL(desc_safe, 0, 0, 100, 100, 100, -1, 0, exaxis, 0, 0, offset, -1, 0,0,0);
+        System.out.println("MoveL到安全位置返回：" + rtn);
+        rtn = robot.Mode(1);
+        if (rtn != 0) {
+            System.out.println("設置模式1失敗，錯誤碼：" + rtn);
+        }
+        robot.Sleep(1000);
+        robot.CloseRPC();
+        robot.Sleep(1000);
+
+        System.out.println("測試完成");
+
+        return 0;
+    }

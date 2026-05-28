@@ -393,6 +393,31 @@ UDP擴展軸參數配置
     */
     int ExtAxisParamConfig(int axisID, int axisType, int axisDirection, double axisMax, double axisMin, double axisVel, double axisAcc, double axisLead, int encResolution, double axisOffect, int axisCompany, int axisModel, int axisEncType);
 
+UDP擴展軸參數獲取
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief UDP擴展軸參數獲取
+    * @param  axisID 擴展軸號[1-4]
+    * @param  params 輸出參數數組，長度為12，順序為：
+    *               [0] axisType 擴展軸類型 0-平移；1-旋轉
+    *               [1] axisDirection 擴展軸方向 0-正向；1-反向
+    *               [2] axisMax 擴展軸最大位置 mm
+    *               [3] axisMin 擴展軸最小位置 mm
+    *               [4] axisVel 速度 mm/s
+    *               [5] axisAcc 加速度 mm/s²
+    *               [6] axisLead 導程 mm
+    *               [7] encResolution 編碼器分辨率
+    *               [8] axisOffect 焊縫起始點擴展軸偏移量
+    *               [9] axisCompany 驅動器廠家 1-禾川；2-匯川；3-松下
+    *               [10] axisModel 驅動器型號
+    *               [11] axisEncType 編碼器類型 0-增量；1-絕對值
+    * @return 錯誤碼
+    */
+    public int ExtAxisGetParamConfig(int axisID, Object[] params)
+
 設置擴展軸安裝位置
 +++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
@@ -487,45 +512,81 @@ UDP擴展軸配置與點動代碼示例
 .. code-block:: Java
     :linenos:
 
-    public static int TestUDPAxis(Robot robot)//UDP
-    {
-        UDPComParam para1=new UDPComParam("192.168.58.88", 2021, 2, 100, 3, 200, 1, 100, 5, 1);
-        int rtn = robot.ExtDevSetUDPComParam(para1);
-        String ip = ""; int port = 0; int period = 0; int lossPkgTime = 0; int lossPkgNum = 0; int disconnectTime = 0; int reconnectEnable = 0; int reconnectPeriod = 0; int reconnectNum = 0;
-        UDPComParam para2=new UDPComParam(ip, port, period, lossPkgTime, lossPkgNum, disconnectTime, reconnectEnable, reconnectPeriod, reconnectNum,0);
-        rtn = robot.ExtDevGetUDPComParam(para2);
+    public static int TestUDPAxis(Robot robot) {
+        int rtn = -1;
+        
+        UDPComParam param = new UDPComParam("192.168.58.88", 2021, 2, 100, 3, 200, 1, 100, 5, 1);
+        rtn = robot.ExtDevSetUDPComParam(param);
+        System.out.println("ExtDevSetUDPComParam rtn is " + rtn);
+        
+        UDPComParam getParam = new UDPComParam();
+        rtn = robot.ExtDevGetUDPComParam(getParam);
+        String paramStr = "\nip " + getParam.ip + "\nport " + getParam.port + "\nperiod " + getParam.period + 
+                "\nlossPkgTime " + getParam.lossPkgTime + "\nlossPkgNum " + getParam.lossPkgNum + 
+                "\ndisconnectTime " + getParam.disconnectTime + "\nreconnectEnable " + getParam.reconnectEnable + 
+                "\nreconnectPeriod " + getParam.reconnectPeriod + "\nreconnectNum " + getParam.reconnectNum + 
+                "\nselfConnect " + getParam.selfConnect;
+        System.out.println("ExtDevGetUDPComParam rtn is " + rtn + paramStr);
 
         robot.ExtDevLoadUDPDriver();
 
+        rtn = robot.SetExAxisCmdDoneTime(5000.0);
+        System.out.println("SetExAxisCmdDoneTime rtn is " + rtn);
+        
         rtn = robot.ExtAxisServoOn(1, 1);
+        System.out.println("ExtAxisServoOn axis id 1 rtn is " + rtn);
         rtn = robot.ExtAxisServoOn(2, 1);
-        robot.Sleep(3000);
+        System.out.println("ExtAxisServoOn axis id 2 rtn is " + rtn);
+        robot.Sleep(2000);
 
         robot.ExtAxisSetHoming(1, 0, 10, 2);
-        robot.Sleep(3000);
+        robot.Sleep(2000);
         rtn = robot.ExtAxisSetHoming(2, 0, 10, 2);
+        System.out.println("ExtAxisSetHoming rtn is " + rtn);
 
         robot.Sleep(4000);
 
         rtn = robot.SetRobotPosToAxis(1);
+        System.out.println("SetRobotPosToAxis rtn is " + rtn);
+        
         rtn = robot.SetAxisDHParaConfig(10, 20, 0, 0, 0, 0, 0, 0, 0);
-        rtn = robot.ExtAxisParamConfig(1, 1, 1, 1000, -1000, 1000, 1000, 1.905, 262144, 200, 1, 0, 0);
-        rtn = robot.ExtAxisParamConfig(2, 1, 1, 1000, -1000, 1000, 1000, 4.444, 262144, 200, 1, 0, 0);
+        System.out.println("SetAxisDHParaConfig rtn is " + rtn);
 
-        robot.Sleep(4000);
+        rtn = robot.ExtAxisParamConfig(1, 1, 1, 1000, -1000, 1000, 1000, 1.905, 262144, 200, 1, 0, 0);
+        System.out.println("ExtAxisParamConfig axis 1 rtn is " + rtn);
+        
+        Object[] params1 = new Object[12];
+        rtn = robot.ExtAxisGetParamConfig(1, params1);
+        System.out.printf("axis id 1 ExtAxisGetParamConfig : axisType %d, axisDirection %d, axisMax %.2f, axisMin %.2f, axisVel %.2f, axisAcc %.2f, axisLead %.2f, encResolution %d, axisOffect %.2f, axisCompany %d, axisModel %d, axisEncType %d\n",
+                (int)params1[0], (int)params1[1], (double)params1[2], (double)params1[3], 
+                (double)params1[4], (double)params1[5], (double)params1[6], (int)params1[7], 
+                (double)params1[8], (int)params1[9], (int)params1[10], (int)params1[11]);
+        
+        rtn = robot.ExtAxisParamConfig(2, 1, 1, 1000, -1000, 1000, 1000, 4.444, 262144, 200, 1, 0, 0);
+        System.out.println("ExtAxisParamConfig axis 2 rtn is " + rtn);
+        
+        Object[] params2 = new Object[12];
+        rtn = robot.ExtAxisGetParamConfig(2, params2);
+        System.out.printf("axis id 2 ExtAxisGetParamConfig : axisType %d, axisDirection %d, axisMax %.2f, axisMin %.2f, axisVel %.2f, axisAcc %.2f, axisLead %.2f, encResolution %d, axisOffect %.2f, axisCompany %d, axisModel %d, axisEncType %d\n",
+                (int)params2[0], (int)params2[1], (double)params2[2], (double)params2[3], 
+                (double)params2[4], (double)params2[5], (double)params2[6], (int)params2[7], 
+                (double)params2[8], (int)params2[9], (int)params2[10], (int)params2[11]);
+
+        robot.Sleep(3000);
+        
         robot.ExtAxisStartJog(1, 0, 10, 10, 30);
-        robot.Sleep(4000);
+        robot.Sleep(1000);
         robot.ExtAxisStopJog(1);
-        robot.Sleep(4000);
+        robot.Sleep(3000);
         robot.ExtAxisServoOn(1, 0);
 
-        robot.Sleep(4000);
+        robot.Sleep(3000);
+        
         robot.ExtAxisStartJog(2, 0, 10, 10, 30);
-        robot.Sleep(4000);
+        robot.Sleep(1000);
         robot.ExtAxisStopJog(2);
-        robot.Sleep(4000);
+        robot.Sleep(3000);
         robot.ExtAxisServoOn(2, 0);
-        robot.Sleep(4000);
         robot.ExtDevUnloadUDPDriver();
 
         return 0;

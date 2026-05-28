@@ -454,6 +454,31 @@ UDP擴展軸參數配置
     int ExtAxisParamConfig(int axisID, int axisType, int axisDirection, double axisMax, double axisMin, double axisVel, double axisAcc, double axisLead, long encResolution, double axisOffect, int axisCompany, int axisModel, int axisEncType);
 
 設置擴展軸安裝位置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: C#
+    :linenos:
+
+    /**
+    * @brief UDP擴展軸參數獲取
+    * @param [in] axisID 擴展軸號[1-4]
+    * @param [out] axisType 擴展軸類型 0-平移；1-旋轉
+    * @param [out] axisDirection 擴展軸方向 0-正向；1-反向
+    * @param [out] axisMax 擴展軸最大位置 mm
+    * @param [out] axisMin 擴展軸最小位置 mm
+    * @param [out] axisVel 速度mm/s
+    * @param [out] axisAcc 加速度mm/s2
+    * @param [out] axisLead 導程mm
+    * @param [out] encResolution 編碼器解析度
+    * @param [out] axisOffect 焊縫起始點擴展軸偏移量
+    * @param [out] axisCompany 驅動器廠家 1-禾川；2-匯川；3-松下
+    * @param [out] axisModel 驅動器型號 1-禾川-SV-XD3EA040L-E，2-禾川-SV-X2EA150A-A，1-匯川-SV620PT5R4I，1-松下-MADLN15SG，2-松下-MSDLN25SG，3-松下-MCDLN35SG
+    * @param [out] axisEncType 編碼器類型  0-增量；1-絕對值
+    * @return 錯誤碼
+    */
+    public int ExtAxisGetParamConfig(int axisID, ref int axisType, ref int axisDirection, ref double axisMax, ref double axisMin, ref double axisVel, ref double axisAcc, ref double axisLead, ref int encResolution, ref double axisOffect, ref int axisCompany, ref int axisModel, ref int axisEncType)
+
+設置擴展軸安裝位置
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C#SDK-v1.0.7
 
@@ -559,13 +584,13 @@ UDP擴展軸配置與點動代碼示例
 .. code-block:: C#
     :linenos:
 
-    private void btnJog_Click(object sender, EventArgs e)
+    private void button65_Click(object sender, EventArgs e)
     {
-        int rtn = robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 100, 3, 200, 1, 100, 5,1);
+        int rtn = robot.ExtDevSetUDPComParam("192.168.58.88", 2021, 2, 100, 3, 200, 1, 100, 5, 1);
         Console.WriteLine("ExtDevSetUDPComParam rtn is " + rtn);
-        string ip = ""; int port = 0; int period = 0; int lossPkgTime = 0; int lossPkgNum = 0; int disconnectTime = 0; int reconnectEnable = 0; int reconnectPeriod = 0; int reconnectNum = 0;
-        rtn = robot.ExtDevGetUDPComParam(ref ip, ref port, ref period, ref lossPkgTime, ref lossPkgNum, ref disconnectTime, ref reconnectEnable, ref reconnectPeriod, ref reconnectNum);
-        string param = "\nip " + ip + "\nport " + port.ToString() + "\nperiod  " + period.ToString() + "\nlossPkgTime " + lossPkgTime.ToString() + "\nlossPkgNum  " + lossPkgNum.ToString() + "\ndisConntime  " + disconnectTime.ToString() + "\nreconnecable  " + reconnectEnable.ToString() + "\nreconnperiod  " + reconnectPeriod.ToString() + "\nreconnnun  " + reconnectNum.ToString();
+        string ip = ""; int port = 0; int period = 0; int lossPkgTime = 0; int lossPkgNum = 0; int disconnectTime = 0; int reconnectEnable = 0; int reconnectPeriod = 0; int reconnectNum = 0; int selfConnect = 0;
+        rtn = robot.ExtDevGetUDPComParam(ref ip, ref port, ref period, ref lossPkgTime, ref lossPkgNum, ref disconnectTime, ref reconnectEnable, ref reconnectPeriod, ref reconnectNum, ref selfConnect);
+        string param = "\nip " + ip + "\nport " + port.ToString() + "\nperiod  " + period.ToString() + "\nlossPkgTime " + lossPkgTime.ToString() + "\nlossPkgNum  " + lossPkgNum.ToString() + "\ndisConntime  " + disconnectTime.ToString() + "\nreconnecable  " + reconnectEnable.ToString() + "\nreconnperiod  " + reconnectPeriod.ToString() + "\nreconnnun  " + reconnectNum.ToString() + "\nselfConnect  " + selfConnect.ToString();
         Console.WriteLine("ExtDevGetUDPComParam rtn is " + rtn + param);
 
         robot.ExtDevLoadUDPDriver();
@@ -588,10 +613,32 @@ UDP擴展軸配置與點動代碼示例
         Console.WriteLine("SetRobotPosToAxis rtn is " + rtn);
         rtn = robot.SetAxisDHParaConfig(10, 20, 0, 0, 0, 0, 0, 0, 0);
         Console.WriteLine("SetAxisDHParaConfig rtn is " + rtn);
+
+
+        int axisType = -1;
+        int axisDirection = -1;
+        double axisMax = -1;
+        double axisMin = -1;
+        double axisVel = -1;
+        double axisAcc = -1;
+        double axisLead = -1;
+        int encResolution = -1;
+        double axisOffect = -1;
+        int axisCompany = -1;
+        int axisModel = -1;
+        int axisEncType = -1;
+
         rtn = robot.ExtAxisParamConfig(1, 1, 1, 1000, -1000, 1000, 1000, 1.905f, 262144, 200, 1, 0, 0);
         Console.WriteLine("ExtAxisParamConfig axis 1 rtn is " + rtn);
+        rtn = robot.ExtAxisGetParamConfig(1, ref axisType, ref axisDirection, ref axisMax, ref axisMin, ref axisVel, ref axisAcc, ref axisLead, ref encResolution, ref axisOffect, ref axisCompany, ref axisModel, ref axisEncType);
+        Console.WriteLine($"axis id 1 ExtAxisGetParamConfig : axisType {axisType}, axisDirection {axisDirection}, axisMax {axisMax}, axisMin {axisMin}, axisVel {axisVel}, axisAcc {axisAcc}, axisLead {axisLead}, encResolution {encResolution}, axisOffect {axisOffect}, axisCompany {axisCompany}, axisModel {axisModel}, axisEncType {axisEncType}\n");
+                                                                                                                                                                                    
+
         rtn = robot.ExtAxisParamConfig(2, 1, 1, 1000, -1000, 1000, 1000, 4.444f, 262144, 200, 1, 0, 0);
         Console.WriteLine("ExtAxisParamConfig axis 2 rtn is " + rtn);
+        rtn = robot.ExtAxisGetParamConfig(2, ref axisType, ref axisDirection, ref axisMax,  ref axisMin, ref axisVel, ref axisAcc, ref axisLead, ref encResolution, ref axisOffect, ref axisCompany, ref axisModel, ref axisEncType);
+        Console.WriteLine($"axis id 2 ExtAxisGetParamConfig : axisType {axisType}, axisDirection {axisDirection}, axisMax {axisMax}, axisMin {axisMin}, axisVel {axisVel}, axisAcc {axisAcc}, axisLead {axisLead}, encResolution {encResolution}, axisOffect {axisOffect}, axisCompany {axisCompany}, axisModel {axisModel}, axisEncType {axisEncType}\n");
+
 
         Thread.Sleep(3000);
         robot.ExtAxisStartJog(1, 0, 10, 10, 30);

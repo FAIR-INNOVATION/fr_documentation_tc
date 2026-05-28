@@ -1676,3 +1676,204 @@ FIR濾波代碼示例
         time.sleep(1)
 
     TestOriginPointWeave(robot)
+
+關節空間速度伺服模式運動
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ServoJV(self, joint_vel, exis_vel, acc=0.0, vel=0.0, cmdT=0.008, filterT=0.0, gain=0.0, id=0, comType=0)``"
+    "描述", "關節空間速度伺服模式運動"
+    "必選參數", "
+    - ``joint_vel``:6個目標關節速度，單位deg/s
+    - ``exis_vel``:4個外部軸速度，單位deg/s
+    - ``acc``: 加速度百分比，範圍[0~100]，暫不開放，預設為0
+    - ``vel``:速度百分比，範圍[0~100]，暫不開放，預設為0
+    - ``cmdT``:指令下發週期，單位s，建議範圍[0.001~0.0016]
+    - ``filterT``:濾波時間，單位s，暫不開放，預設為0
+    - ``gain``:目標位置的比例放大器，暫不開放，預設為0
+    - ``id``:servoJ指令ID，預設為0
+    - ``comType``:指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+關節空間速度伺服模式運動代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    import time
+
+    def main():
+        # 與機器人控制器建立連接
+        robot = Robot.RPC('192.168.58.2')
+        time.sleep(0.5)  # 等待連接和數據接收
+
+        # 初始化關節速度數組和擴展軸速度數組
+        joint_vel = [10.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        exis_vel = [0.0, 0.0, 0.0, 0.0]
+        acc = 0.0
+        vel = 0.0
+        cmdT = 0.008
+        filterT = 0.0
+        gain = 0.0
+        cnt = 0
+
+        # 循環調用ServoJV，共200次
+        while cnt < 200:
+            rtn = robot.ServoJV(joint_vel=joint_vel, exis_vel=exis_vel, acc=acc, vel=vel,
+                                cmdT=cmdT, filterT=filterT, gain=gain)
+            print(f"ServoJV rtn is {rtn}")
+            cnt += 1
+
+        # 關閉連接
+        robot.CloseRPC()
+
+
+    # 調用測試函數
+    main()
+
+關節MIT控制開始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ServoMITStart(self, comType=0)``"
+    "描述", "關節MIT控制開始"
+    "必選參數", "
+    - ``comType``:指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+關節MIT控制結束
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ServoMITEnd(self, comType=0)``"
+    "描述", "關節MIT控制結束"
+    "必選參數", "
+    - ``comType``:指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+關節MIT控制
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ServoMIT(self, posGain, desPos, velGain, desVel, torque_ff, interval, comType=0)``"
+    "描述", "關節MIT控制"
+    "必選參數", "
+    - ``posGain``:j1~j6關節位置增益
+    - ``desPos``:j1~j6關節期望位置 單位:deg
+    - ``velGain``:j1~j6關節速度增益
+    - ``desVel``:j1~j6關節期望速度 單位:deg/s
+    - ``torque_ff``:j1~j6前饋力矩 單位:Nm
+    - ``interval``:指令週期，單位s，範圍[0.001~0.008]
+    - ``comType``:指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+機器人關節MIT控制代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos: 
+
+    from time import sleep
+    import time
+    from fairino import Robot
+
+    # 與機器人控制器建立連接
+    robot = Robot.RPC('192.168.58.2')
+
+    # 定義回調函數
+    def udp_frame_callback(src_type, count, cmd_id, data_len, content):
+        """UDP命令響應回調函數"""
+        print(f"回調函數: cmd_id={cmd_id} count={count} data_len={data_len} content={content}")
+        return 0
+
+    def ServoMITtest(self):
+        # 設置UDP命令響應回調
+        robot.SetUDPCmdRpyCallback(udp_frame_callback)
+
+        while True:
+            # 復位所有錯誤
+            robot.ResetAllError()
+            time.sleep(0.5)
+
+            # 初始化參數數組
+            posGain = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            desPos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            velGain = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            desVel = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            torques = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+            # 獲取關節力矩
+            rtn, torques = robot.GetJointTorques(flag=1)
+            print(f"GetJointTorques rtn: {rtn}")
+            print("111111")
+
+            # 啟動Servo MIT模式
+            rtn = robot.ServoMITStart(0)
+            print(f"ServoMITStart rtn: {rtn}")
+
+            # 開啟拖動示教
+            rtn = robot.DragTeachSwitch(1)
+            print(f"DragTeachSwitch rtn: {rtn}")
+
+            intev = 0.008
+
+            # 正向運動：第6軸正向力矩，直到角度超過30度
+            while True:
+                torques[5] = 0.03
+                rtn = robot.ServoMIT(posGain, desPos, velGain,
+                                    desVel, torques, intev, comType=0)
+                print(f"ServoMIT call rtn is {rtn}")
+                time.sleep(0.001)  # 1ms
+
+                rtn, pkg = robot.GetRobotRealTimeState()
+                print(f"pkg.jt_cur_pos[5]: {pkg.jt_cur_pos[5]}")
+
+                if pkg.jt_cur_pos[5] > 30:
+                    break
+
+            # 反向運動：第6軸負向力矩，直到角度小於0度
+            while True:
+                torques[5] = -0.03
+                rtn = robot.ServoMIT(posGain, desPos, velGain,
+                                    desVel, torques, intev, comType=0)
+                print(f"ServoMIT call rtn is {rtn}")
+                time.sleep(0.001)  # 1ms
+
+                rtn, pkg = robot.GetRobotRealTimeState()
+                print(f"pkg.jt_cur_pos[5]: {pkg.jt_cur_pos[5]}")
+
+                if pkg.jt_cur_pos[5] < 0:
+                    break
+
+            # 關閉拖動示教
+            rtn = robot.DragTeachSwitch(0)
+            print(f"DragTeachSwitch off rtn: {rtn}")
+
+            # 結束Servo MIT模式
+            rtn = robot.ServoMITEnd(0)
+            print(f"ServoMITEnd rtn: {rtn}")
+
+    # 調用測試函數
+    ServoMITtest(robot)

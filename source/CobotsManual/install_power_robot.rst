@@ -308,6 +308,7 @@ C. 100-240VAC~50-60HZ
    * - 未安裝電池或電池裝反
      - 用戶未安裝備用電池，或安裝時正負極方向錯誤。
      - | 確認電池已安裝且極性正確（正極朝上）。
+      
        .. image:: installation/131.png
           :width: 2in
           :align: center

@@ -236,6 +236,7 @@
             ("socketConnTimeout", c_uint8),     # socket連接超時
             ("socketReadTimeout", c_uint8),     # socket讀取超時
             ("tsWebStateComErr", c_uint8),      # TS_WEB狀態通訊錯誤
+            ("exaxisCoordID", c_uint8),         # 外部擴展軸ID
             ("check_sum", c_uint16)          # 和校驗
         ]
 
@@ -739,4 +740,5 @@
         SocketConnTimeout = 129
         SocketReadTimeout = 130
         TsWebStateComErr = 131
-        CheckSum = 132
+        exaxisCoordID = 132
+        CheckSum = 133

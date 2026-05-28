@@ -7,7 +7,7 @@
 概述
 -------------------
 
-為了便於PLC透過不同的工業總線協議（CC-Link IEF Basic、Profinet、Ethernet/IP和EtherCAT）對機器人進行運動控制，在整合式mini控制箱上增加FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EC-RJ-V10板卡設備。
+為了便於PLC透過不同的工業總線協議（CC-Link IEF Basic、Profinet、Ethernet/IP和EtherCAT）對機器人進行運動控制，在整合式mini控制箱上增加FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡、FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡設備。
 
 環境配置
 --------------------------
@@ -28,7 +28,7 @@
      - V3.8.4及以上
 
    * - CC-Link IEF Basic
-     - FRJ-PCIeN-EC-RJ-V10板卡
+     - FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡
      - V3.9.5及以上
 
    * - Profinet
@@ -36,7 +36,7 @@
      - V3.8.4及以上
 
    * - Profinet
-     - FRJ-PCIeN-EC-RJ-V10板卡
+     - FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡
      - V3.9.5及以上
 
    * - Ethernet/IP
@@ -44,11 +44,11 @@
      - V3.8.4及以上
 
    * - Ethernet/IP
-     - FRJ-PCIeN-EC-RJ-V10板卡
+     - FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡
      - V3.9.5及以上
 
    * - EtherCAT
-     - FRJ-PCIeN-EC-RJ-V10板卡
+     - FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡
      - V3.9.5及以上
 
 FRH-PCIeN-EC/EIP/CC/PN-RJ-V10板卡硬體環境搭建
@@ -189,19 +189,6 @@ FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡韌體升級
 當協議配置為Ethernet/IP時，控制器會將板卡IP修改為「192.168.0.112」。
 
 當協議切換為Profinet時，並且從站裝置名稱與主站一致時，主站會自動配置從站的 IP 地址。
-
-FRJ-PCIeN-EC-RJ-V10板卡韌體升級
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-網址輸入192.169.58.2進入機器人界面，點擊「初始設置」->「外設」->「板卡通訊」界面，可以獲取到FRJ-PCIeN-EC-RJ-V10板卡韌體版本號。選擇待升級的bin文件，點擊上傳，等待韌體升級成功後，重啟控制箱即可。
-
-.. image:: custom_protocol_slave/064.png
-   :width: 6in
-   :align: center
-
-.. centered:: 圖表 17.2-13 板卡韌體升級
-
-.. note:: FRJ-PCIeN-EC-RJ-V10板卡升級韌體需卸載已運行的開放協議。
 
 軟體環境搭建
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -712,7 +699,7 @@ HMI設置（Profinet仿真）
 
 :download:`附件一：從站模式地址映射表 <../_static/_doc/控制箱从站模式地址对照表.xlsx>`
 
-板卡通訊周期配置
+板卡韌體升級及通訊週期配置
 ---------------------------------------------------------
 
 FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
@@ -742,16 +729,26 @@ FRJ-PCIeN-EIP/CC/PN-RJ-V10板卡
    :width: 6in
    :align: center
 
-FRJ-PCIeN-EC-RJ-V10板卡
+FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-網址輸入192.169.58.2進入機器人界面，點擊「初始設置」->「外設」->「板卡通訊」界面，可以獲取到板卡通訊週期。輸入所需通訊週期（1~100ms），點擊「配置」按鈕，等待配置成功後，重啟控制箱即可。
+此板卡支持在線升級，步驟如下：
+
+(1) 網址輸入192.168.58.2進入機器人界面，點擊「初始設置」->「外設」->「板卡通訊」界面，可以獲取到FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡韌體版本號。選擇待升級的bin文件，點擊上傳，等待韌體升級成功後，重啟控制箱即可。
 
 .. image:: custom_protocol_slave/064.png
    :width: 6in
    :align: center
 
-.. note:: FRJ-PCIeN-EC-RJ-V10板卡配置通訊週期需卸載已運行的開放協議。
+.. note:: FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡升級韌體需卸載已運行的開放協議。
+
+(2) 網址輸入192.168.58.2進入機器人界面，點擊「初始設置」->「外設」->「板卡通訊」界面，可以獲取到板卡通訊週期。輸入所需通訊週期（1~100ms），點擊「配置」按鈕，等待配置成功後，重啟控制箱即可。
+
+.. image:: custom_protocol_slave/064.png
+   :width: 6in
+   :align: center
+
+.. note:: FRJ-PCIeN-EC/PN/EIP/CC-RJ-V20板卡配置通訊週期需卸載已運行的開放協議。
 
 附錄
 -------------------

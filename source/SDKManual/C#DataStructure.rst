@@ -369,7 +369,7 @@
         public byte socketConnTimeout;     // socket連接超時標誌
         public byte socketReadTimeout;     // socket讀取超時標誌
         public byte tsWebStateComErr;      // ts_web_state_com_err
-
+        public byte exaxisCoordID;         // 擴展軸座標系編號
         public UInt16 check_sum;         /* 和校驗 */                 
 
         // 構造函數：初始化所有陣列欄位
@@ -420,17 +420,20 @@
         }
     }
 
-機器人可配置狀態列舉
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+機器人狀態反饋配置枚舉類型
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief  機器人可配置狀態列舉 範圍 3~131
+    * @brief  機器人可配置狀態枚舉 範圍 0~132
     */
     public enum RobotState
     {
+        FrameHead = 0,
+        FrameCnt = 1,
+        DataLen = 2,
         ProgramState = 3,
         RobotState = 4,
         MainCode = 5,
@@ -559,5 +562,6 @@
         AxleGenComData = 128,
         SocketConnTimeout = 129,     //socket連接超時，bit0-bit4:socketID 1-4
         SocketReadTimeout = 130,     //socket讀取超時，bit0-bit4:socketID 1-4
-        TsWebStateComErr = 131     //web-扭矩通訊失敗；0-正常；1-失敗
+        TsWebStateComErr = 131,     //web-扭矩通訊失敗；0-正常；1-失敗
+        ExaxisCoordID = 132          //擴展軸座標系編號
     }

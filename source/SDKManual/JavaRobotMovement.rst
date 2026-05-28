@@ -1976,3 +1976,171 @@ FIR濾波代碼示例
         robot.Sleep(1000);
         return 0;
     }
+
+關節空間速度伺服模式運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief  關節空間速度伺服模式運動
+    * @param   joint_vel  6個目標關節速度，單位deg/s
+    * @param   exis_vel  4個外部軸速度，單位deg/s
+    * @param   acc  加速度百分比，範圍[0~100]，暫不開放，預設為0
+    * @param   vel  速度百分比，範圍[0~100]，暫不開放，預設為0
+    * @param   cmdT  指令下發週期，單位s，建議範圍[0.001~0.0016]
+    * @param   filterT 濾波時間，單位s，暫不開放，預設為0
+    * @param   gain  目標位置的比例放大器，暫不開放，預設為0
+    * @param   id  servoJ指令ID，預設為0
+    * @param   comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    * @return  錯誤碼
+    */
+    public int ServoJV(double[] joint_vel, double[] exis_vel, double acc, double vel, double cmdT, double filterT, double gain, int id, int comType)
+
+關節空間速度伺服模式運動代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int ServoJVtest(Robot robot)
+    {
+        double[] joint_vel = new double[] { 10, 0, 0, 0, 0, 0 };
+        double[] exis_vel = new double[] { 0, 0, 0, 0 };
+        double acc = 0.0;
+        double vel = 0.0;
+        double cmdT = 0.008;
+        double filterT = 0.0;
+        double gain = 0.0;
+        int cnt = 0;
+        while (cnt < 200)
+        {
+            int error = robot.ServoJV(joint_vel, exis_vel, acc, vel, cmdT, filterT, gain);
+            System.out.println("MAIN ServoJV rtn is " + error);
+    //            robot.Sleep(10);
+            cnt++;
+        }
+
+        return 0;
+    }
+
+關節MIT控制開始
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關節MIT控制開始
+    * @param  comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    * @return 錯誤碼
+    */
+    errno_t ServoMITStart(int comType = 0);
+
+關節MIT控制結束
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關節MIT控制結束
+    * @param  comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    * @return 錯誤碼
+    */
+    public int ServoMITEnd(int comType);
+
+關節MIT控制
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 關節MIT控制
+    * @param  posGain j1~j6關節位置增益
+    * @param  desPos j1~j6關節期望位置 單位:deg
+    * @param  velGain j1~j6關節速度增益
+    * @param  desVel j1~j6關節期望速度 單位:deg/s
+    * @param  torque_ff j1~j6前饋力矩 單位:Nm
+    * @param  interval 指令週期，單位s，範圍[0.001~0.008]
+    * @param  comType 指令下發類型；0-xmlrpc；1-UDP(對應機器人20007埠)
+    * @return 錯誤碼
+    */
+    public int ServoMIT(double[] posGain, double[] desPos, double[] velGain, double[] desVel, double[] torque_ff, double interval, int comType)
+
+機器人關節MIT控制代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int ServoMITtest(Robot robot)
+    {
+            robot.udpCmdClient.SetUDPCmdRpyCallback((srcType, count, cmdID, dataLen, content) -> {
+            System.out.println("\n[Received UDP reply from robot]");
+            System.out.println("srcType: " + srcType);
+            System.out.println("count: " + count);
+            System.out.println("cmdID: " + cmdID);
+            System.out.println("dataLen: " + dataLen);
+            System.out.println("content: " + content);
+            return 0;
+        });
+        while (true)
+        {
+            robot.ResetAllError();
+            robot.Sleep(500);
+
+            double[] posGain = new double[] { 0, 0, 0, 0, 0, 0 };
+            double[] desPos = new double[] { 0, 0, 0, 0, 0, 0 };
+            double[] velGain = new double[] { 0, 0, 0, 0, 0, 0 };
+            double[] desVel = new double[] { 0, 0, 0, 0, 0, 0 };
+
+            List<Number> joint_toq=new ArrayList<>();
+            joint_toq=robot.GetJointTorques(1);
+            double[] torques=new double[]{(double)joint_toq.get(1),(double)joint_toq.get(2),(double)joint_toq.get(3),(double)joint_toq.get(4),(double)joint_toq.get(5),(double)joint_toq.get(6)};
+            System.out.println("111111");
+
+            robot.ServoMITStart(0);
+            System.out.println("ServoMITStart");
+
+            ROBOT_STATE_PKG pkg = robot.GetRobotRealTimeState();
+            robot.DragTeachSwitch(1);
+            System.out.println("DragTeachSwitch");
+
+            double intev = 0.008;
+            int error = 0;
+
+            while (true)
+            {
+                torques[5] = 0.03;
+                System.out.println("ServoMIT call");
+                error = robot.ServoMIT(posGain, desPos, velGain, desVel, torques, intev, 0);
+
+                System.out.println("ServoMIT111111 rtn is " + error);
+                robot.Sleep(1);
+
+                pkg = robot.GetRobotRealTimeState();
+                System.out.println("pkg.jt_cur_pos[5]:" + pkg.jt_cur_pos[5]);
+                if (pkg.jt_cur_pos[5] > 30)
+                {
+                    break;
+                }
+            }
+
+            while (true)
+            {
+                torques[5] = -0.03;
+                error = robot.ServoMIT(posGain, desPos, velGain, desVel, torques, intev, 0);
+
+                System.out.println("ServoJT222222 rtn is " + error);
+                robot.Sleep(1);
+
+                pkg = robot.GetRobotRealTimeState();
+                System.out.println("pkg.jt_cur_pos[5]:" + pkg.jt_cur_pos[5]);
+                if (pkg.jt_cur_pos[5] < 0)
+                {
+                    break;
+                }
+            }
+
+            robot.DragTeachSwitch(0);
+            error = robot.ServoMITEnd(0);
+        }
+        // return 0;
+    }
