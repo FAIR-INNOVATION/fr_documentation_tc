@@ -278,6 +278,20 @@
 
     :download:`FR30圖紙 <_static/_doc/FR30图纸.zip>`
 
+零位標識模型
+---------------------------------
+    :download:`FR3 <_static/_doc/FR3-V6.0-SW模型.zip>`
+    
+    :download:`FR5 <_static/_doc/FR5-V6.0-SW模型.zip>`
+
+    :download:`FR10 <_static/_doc/FR10-V6.0-SW模型.zip>`
+
+    :download:`FR16 <_static/_doc/FR16-V6.0-SW模型.zip>`
+
+    :download:`FR20 <_static/_doc/FR20-V6.0-SW模型.zip>`
+
+    :download:`FR30 <_static/_doc/FR30-V6.0-SW模型.zip>`
+
 2D CAD檔案
 ---------------------------------
     :download:`FRCobots-V6.0 DWG格式 <_static/_doc/FRCobots-V6.0 DWG Models.zip>`

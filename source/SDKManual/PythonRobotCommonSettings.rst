@@ -1309,10 +1309,10 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``PhotoelectricSensorTCPCalibration(luaPath, offsetX)``"
+    "原型", "``PhotoelectricSensorTCPCalibration(self, luaFile, offsetX)``"
     "描述", "光電感測器TCP標定"
     "必選參數", "
-    - ``luaPath``：自動標定lua程式路徑：QX版本機器人-'/fruser/FR_CalibrateTheToolTcp.lua';LA版本機器人-'/usr/local/etc/controller/lua/FR_CalibrateTheToolTcp.lua'
+    - ``luaFile``：自動標定lua程式路徑：'FR_CalibrateTheToolTcp.lua'
     - ``offsetX``：示教點偏移(x,y,z)mm"
     "預設參數", "無"
     "返回值", "
@@ -1330,7 +1330,7 @@
     robot = Robot.RPC('192.168.58.2')
     offset = [10.0, 10.0, 3.0]
     TCP = [0.0] * 6
-    rtn, TCP = robot.PhotoelectricSensorTCPCalibration("/fruser/FR_CalibrateTheToolTcp.lua", offset)
+    rtn, TCP = robot.PhotoelectricSensorTCPCalibration("FR_CalibrateTheToolTcp.lua", offset)
     print(f"PhotoelectricSensorTCPCalibration rtn is {rtn},{TCP[0]},{TCP[1]},{TCP[2]},{TCP[3]},{TCP[4]},{TCP[5]}")
     robot.CloseRPC()
     return 0

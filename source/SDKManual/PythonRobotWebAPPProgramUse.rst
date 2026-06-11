@@ -12,8 +12,9 @@
 
     "原型", "``LoadDefaultProgConfig(flag,program_name)``"
     "描述", "設置開機自動加載默認的作業程序"
-    "必選參數", "- ``flag``：1-開機自動加載默認程序，0-不自動加載默認程序
-    - ``program_name``：作業程序名及路徑，如“/fruser/movej.lua”，其中“/fruser/”爲固定路徑"
+    "必選參數", "
+    - ``flag``：1-開機自動加載默認程序，0-不自動加載默認程序
+    - ``program_name``：作業程序名及路徑，如“movej.lua”"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -25,7 +26,7 @@
 
     "原型", "``ProgramLoad(program_name)``"
     "描述", "加載指定的作業程序"
-    "必選參數", "- ``program_name``：作業程序名及路徑，如“/fruser/movej.lua”，其中“/fruser/”爲固定路徑"
+    "必選參數", "- ``program_name``：作業程序名及路徑，如“movej.lua”"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -125,7 +126,7 @@
     import time
     # 與機器人控制器建立連接，連接成功返回一個機器人對象
     robot = Robot.RPC('192.168.58.2')
-    program_name = "/fruser/test0610.lua"
+    program_name = "test0610.lua"
     loaded_name = ""
     state = 0
     line = 0
