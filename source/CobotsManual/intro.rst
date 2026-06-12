@@ -47,6 +47,7 @@ PDF下載
     process
     system
     teach_pendant
+    remote_mode
     custom_protocol_slave
     appendix
     term
