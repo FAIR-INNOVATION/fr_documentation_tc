@@ -257,7 +257,36 @@
    * - **核心板證書**
      - PETREL
      - :download:`下載 <_static/_doc/零部件-核心板认证.pdf>`
-  
+
+夾爪認證證書：
+
+.. list-table::
+   :widths: 35 35 30
+   :header-rows: 0
+   :class: sheet-center
+
+   * - **認證證書**
+     - **產品類型**
+     - **下載**
+   * - **電動二指夾爪CE-EMC證書**
+     - FE-MG2-3-E
+     - :download:`下載 <_static/_doc/FE-MG2-3-E电动二指夹爪CE-EMC认证证书-V1.0.pdf>`
+   * - **電動二指夾爪ROHS證書**
+     - FE-MG2-3-E
+     - :download:`下載 <_static/_doc/FE-MG2-3-E电动二指夹爪ROHS认证证书-V1.0.pdf>`
+   * - **電動真空執行器CE-EMC證書**
+     - FE-MS1-1-E
+     - :download:`下載 <_static/_doc/FE-MS1-1-E电动真空执行器CE-EMC认证证书-V1.0.pdf>`
+   * - **電動真空執行器ROHS證書**
+     - FE-MS1-1-E
+     - :download:`下載 <_static/_doc/FE-MS1-1-E电动真空执行器ROHS认证证书-V1.0.pdf>`
+   * - **氣動真空吸盤CE-EMC證書**
+     - FE-MS1-2-P
+     - :download:`下載 <_static/_doc/FE-MS1-2-P气动真空吸盘CE-EMC认证证书-V1.0.pdf>`
+   * - **氣動真空吸盤ROHS證書**
+     - FE-MS1-2-P
+     - :download:`下載 <_static/_doc/FE-MS1-2-P气动真空吸盘ROHS认证证书-V1.0.pdf>`
+
 二次開發
 ---------------------------------
     :download:`FAIRINO ROS1 <https://gitee.com/fair-innovation/frcobot_ros/repository/archive/master.zip>`
