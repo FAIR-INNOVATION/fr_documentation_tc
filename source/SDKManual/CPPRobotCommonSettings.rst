@@ -1452,7 +1452,7 @@
 
     /**
     * @brief 光電感測器TCP標定
-    * @param [in] luaPath 自動標定lua程式路徑：QX版本機器人-"/fruser/FR_CalibrateTheToolTcp.lua";LA版本機器人-"/usr/local/etc/controller/lua/FR_CalibrateTheToolTcp.lua"
+    * @param [in] luaPath 自動標定lua程式路徑："FR_CalibrateTheToolTcp.lua"
     * @param [in] offsetX 示教點偏移(x,y,z)mm
     * @param [out] TCP 標定後的工具座標系(x,y,z,rx,ry,rz)
     * @return 錯誤碼
@@ -1479,9 +1479,22 @@
         robot.SetReConnectParam(true, 30000, 500);
         DescTran offset = { 10.0, 10.0, 3.0 };
         DescPose TCP = {};
-        rtn = robot.PhotoelectricSensorTCPCalibration("/fruser/FR_CalibrateTheToolTcp.lua", offset, TCP);
+        rtn = robot.PhotoelectricSensorTCPCalibration("FR_CalibrateTheToolTcp.lua", offset, TCP);
         printf("PhotoelectricSensorTCPCalibration rtn is  %d %f %f %f %f %f %f \n", rtn, TCP.tran.x, TCP.tran.y, TCP.tran.z, TCP.rpy.rx, TCP.rpy.ry, TCP.rpy.rz);
         robot.CloseRPC();
         robot.Sleep(9999999);
         return 0;
     }
+
+即時設置全域速度
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 即時設置全域速度
+    * @param [in] vel 速度百分比，範圍[0~100]
+    * @return 錯誤碼
+    */
+    errno_t SetSpeedInstant(int vel);  

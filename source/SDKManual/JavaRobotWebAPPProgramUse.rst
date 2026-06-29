@@ -12,7 +12,7 @@
     /**
     * @brief  設置開機自動加載默認的作業程序
     * @param  [in] flag  0-開機不自動加載默認程序，1-開機自動加載默認程序
-    * @param  [in] program_name 作業程序名及路徑，如"/fruser/movej.lua"，其中“/fruser/”為QX固定路徑，“/usr/local/etc/controller/lua/”為LA固定路徑
+    * @param  [in] program_name 作業程序名及路徑，如"movej.lua"
     * @return  錯誤碼
     */
     int LoadDefaultProgConfig(int flag, String program_name); 
@@ -24,7 +24,7 @@
 
     /**
     * @brief  加載指定的作業程序
-    * @param  [in] program_name 作業程序名及路徑，如"/fruser/movej.lua"，其中“/fruser/”為QX固定路徑，“/usr/local/etc/controller/lua/”為LA固定路徑
+    * @param  [in] program_name 作業程序名及路徑，如"movej.lua"
     * @return  錯誤碼
     */
     int ProgramLoad(String program_name); 
@@ -36,7 +36,7 @@
 
     /**
     * @brief  獲取已加載的作業程序名
-    * @param  [out] program_name program_name[0]:作業程序名及路徑，如"/fruser/movej.lua"，其中“/fruser/”為QX固定路徑，“/usr/local/etc/controller/lua/”為LA固定路徑
+    * @param  [out] program_name program_name[0]:作業程序名及路徑，如"movej.lua"
     * @return  錯誤碼
     */
     int GetLoadedProgram(String[] program_name); 
@@ -116,7 +116,7 @@
 
     public static int TestLuaOp(Robot robot)
     {
-        String program_name = "/fruser/Text1.lua";
+        String program_name = "Text1.lua";
         String[] loaded_name = new String[]{""};
         int[] state=new int[]{0};
         List<Integer> line=new ArrayList<>();

@@ -481,6 +481,80 @@
     */
     public int FT_RotInsertion(int rcs, double angVelRot, double ft, double max_angle, int orn, double max_angAcc, int rotorn, int strategy)
 
+直線插入
++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  直線插入
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基座標系
+    * @param  [in] ft  力/扭矩閾值，fx,fy,fz,tx,ty,tz，範圍[0~100]
+    * @param  [in] lin_v 直線速度，單位mm/s
+    * @param  [in] lin_a 直線加速度，單位mm/s^2，暫不使用
+    * @param  [in] max_dis 最大插入距離，單位mm
+    * @param  [in] linorn  插入方向，0-負方向，1-正方向
+    * @return  錯誤碼
+    */
+    public int FT_LinInsertion(int rcs, float ft, float lin_v, float lin_a, float max_dis, byte linorn)
+
+力感測器旋轉插入代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    public void TestRotInsert()
+    {
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+        int rtn;
+
+        float forceInsertion = 5.0f; // 力或力矩閾值（0~100），單位N或Nm
+        int angleMax = 300; // 最大旋轉角度，單位°
+        byte orn = 1; // 力的方向，1-fz，2-mz
+        float angAccmax = 0; // 最大旋轉角加速度，單位°/s^2，暫不使用
+        byte status = 1;  // 恒力控制啟用標誌，0-關閉，1-啟用
+        int sensor_num = 11; // 力感測器編號
+        float[] gain = { 0.0001f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };  // 最大閾值
+        byte adj_sign = 0;  // 自適應啟動/停止狀態，0-關閉，1-啟用
+        byte ILC_sign = 0;  // ILC控制啟動/停止狀態，0-停止，1-訓練，2-運行
+        float max_dis = 1000.0f;  // 最大調整距離
+        float max_ang = 20.0f;  // 最大調整角度
+        ForceTorque ft = new ForceTorque();
+        int rcs = 0;  // 參考座標系，0-工具座標系，1-基座標系
+        float angVelRot = 1.0f;  // 旋轉角速度，單位°/s
+        byte rotorn = 1; // 旋轉方向，1-順時針，2-逆時針
+        JointPos j1 = new JointPos(100.968, -108.678, 126.166, -106.630, -93.253, 19.584);
+        DescPose desc_p1 = new DescPose(159.473, -316.570, 334.560, -179.718, -3.352, 171.400);
+        ExaxisPos epos = new ExaxisPos(0.0f, 0.0f, 0.0f, 0.0f);
+        DescPose offset_pos = new DescPose(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+
+        robot.MoveL(j1, desc_p1, 2, 0, 100.0f, 180.0f, 100.0f, -1.0f, 0, epos, (byte)0, (byte)1, offset_pos);
+
+        byte[] select3 = { 0, 0, 1, 0, 0, 0 };
+        ft.fz = -5.0f;
+        gain[0] = 0.0001f;
+        status = 1;
+        robot.FT_Control(status, sensor_num, select3, ft, gain, adj_sign, ILC_sign, max_dis, max_ang, 0, 0, 0);
+        rtn = robot.FT_LinInsertion(rcs, 10, 1, 1, 100, 1);
+        Console.WriteLine("FT_LinInsertion rtn is " + rtn);
+        robot.FT_Control(0, sensor_num, select3, ft, gain, adj_sign, ILC_sign, max_dis, max_ang, 0, 0, 0);
+
+        ft.fz = -30.0f;
+        robot.FT_Control(1, sensor_num, select3, ft, gain, adj_sign, ILC_sign, max_dis, max_ang, 0, 0, 0);
+        rtn = robot.FT_RotInsertion(rcs, angVelRot, forceInsertion, angleMax, orn, angAccmax, rotorn, 0);
+        Console.WriteLine("FT_RotInsertion rtn is " + rtn);
+        robot.FT_Control(0, sensor_num, select3, ft, gain, adj_sign, ILC_sign, max_dis, max_ang, 0, 0, 0);
+
+        rtn = robot.FT_LinInsertion(0, 40, 3, 0, 100, 1);
+        Console.WriteLine("FT_LinInsertion retract rtn is " + rtn);
+
+        Thread.Sleep(1000);
+        robot.GetRobotRealTimeState(ref pkg);
+        Console.WriteLine("robot errcode " + pkg.main_code + "  " + pkg.sub_code);
+    }
+
 機器人力感測器旋轉插入程式碼範例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
@@ -936,17 +1010,238 @@
     * @param [in] torqueCoeff J1-J6力矩補償係數[0-1]
     * @return 錯誤碼
     */
-    public int SerCoderCompenParams(int status, double[] torqueCoeff)
+    public int SetCoderCompenParams(int status, double[] torqueCoeff)
+
+表面定位
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  表面定位
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基座標系
+    * @param  [in] dir  移動方向，1-正方向，2-負方向
+    * @param  [in] axis 移動軸，1-x軸，2-y軸，3-z軸
+    * @param  [in] lin_v 探索直線速度，單位mm/s
+    * @param  [in] lin_a 探索直線加速度，單位mm/s^2，暫不使用，預設為0
+    * @param  [in] max_dis 最大探索距離，單位mm
+    * @param  [in] ft  動作終止力/扭矩閾值，fx,fy,fz,tx,ty,tz
+    * @return  錯誤碼
+    */
+    public int FT_FindSurface(int rcs, byte dir, byte axis, float lin_v, float lin_a, float max_dis, float ft)
+
+計算中間平面位置開始
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  計算中間平面位置開始
+    * @return  錯誤碼
+    */
+    public int FT_CalCenterStart()
+
+計算中間平面位置結束
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  計算中間平面位置結束
+    * @param  [out] pos 中間平面位姿
+    * @return  錯誤碼
+    */
+    public int FT_CalCenterEnd(ref DescPose pos)
+
+表面點位代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    private void button59_Click(object sender, EventArgs e)
+    {
+        int company = 22;
+        int device = 0;
+        int softversion = 0;
+        int bus = 1;
+
+        robot.FT_SetConfig(company, device, softversion, bus);
+        Thread.Sleep(1000);
+        robot.FT_GetConfig(ref company, ref device, ref softversion, ref bus);
+        Console.WriteLine("FT config:" + company + "," + device + "," + softversion + "," + bus);
+        Thread.Sleep(1000);
+
+        robot.FT_Activate(0);
+        Thread.Sleep(1000);
+        robot.FT_Activate(1);
+        Thread.Sleep(1000);
+
+        Thread.Sleep(1000);
+        robot.FT_SetZero(0);
+        Thread.Sleep(1000);
+
+        int rcs = 0;
+        byte dir = 1;
+        byte axis = 1;
+        float lin_v = 15.0f;
+        float lin_a = 0.0f;
+        float maxdis = 500.0f;
+        float ft_goal = 2.0f;
+        DescPose desc_pos = new DescPose(-419.524f, -13.000f, 351.569f, -178.118f, 0.314f, 3.833f);
+        DescPose xcenter = new DescPose(0, 0, 0, 0, 0, 0);
+        DescPose ycenter = new DescPose(0, 0, 0, 0, 0, 0);
+
+        ForceTorque ft = new ForceTorque();
+
+        ft.fx = -2.0f;
+
+        robot.MoveCart(desc_pos, 1, 0, 100.0f, 100.0f, 100.0f, -1.0f, -1);
+
+        robot.FT_CalCenterStart();
+        robot.FT_FindSurface(rcs, dir, axis, lin_v, lin_a, maxdis, ft_goal);
+        robot.MoveCart(desc_pos, 1, 0, 100.0f, 100.0f, 100.0f, -1.0f, -1);
+        robot.WaitMs(1000);
+
+        dir = 2;
+        robot.FT_FindSurface(rcs, dir, axis, lin_v, lin_a, maxdis, ft_goal);
+        robot.FT_CalCenterEnd(ref xcenter);
+        Console.WriteLine("xcenter:" + xcenter.tran.x + "," + xcenter.tran.y + "," + xcenter.tran.z + "," + xcenter.rpy.rx + "," + xcenter.rpy.ry + "," + xcenter.rpy.rz);
+        robot.MoveCart(xcenter, 1, 0, 60.0f, 50.0f, 50.0f, -1.0f, -1);
+
+        robot.FT_CalCenterStart();
+        dir = 1;
+        axis = 2;
+        lin_v = 6.0f;
+        maxdis = 150.0f;
+        robot.FT_FindSurface(rcs, dir, axis, lin_v, lin_a, maxdis, ft_goal);
+        robot.MoveCart(desc_pos, 1, 0, 100.0f, 100.0f, 100.0f, -1.0f, -1);
+        robot.WaitMs(1000);
+
+        dir = 2;
+        robot.FT_FindSurface(rcs, dir, axis, lin_v, lin_a, maxdis, ft_goal);
+        robot.FT_CalCenterEnd(ref ycenter);
+        Console.WriteLine("ycenter:" + ycenter.tran.x + "," + ycenter.tran.y + "," + ycenter.tran.z + "," + ycenter.rpy.rx + "," + ycenter.rpy.ry + "," + ycenter.rpy.rz);
+        robot.MoveCart(ycenter, 1, 0, 60.0f, 50.0f, 50.0f, 0.0f, -1);
+
+    }
+
+設置擺動實時偏移
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  設置擺動實時偏移
+    * @param [in] offset 實時偏移量[mm、°]
+    * @return  錯誤碼
+    */
+    public int SetWeaveOffsetRT(DescPose offset)
+
+擺動實時調速和偏移代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:   
+
+    public void TestWeaveSpeedAndOffset()
+    {
+        Console.WriteLine("============================================================");
+        Console.WriteLine("  Weave Speed and Offset Test");
+        Console.WriteLine("============================================================");
+
+        if (robot == null)
+        {
+            Console.WriteLine("ERROR: Robot not connected!");
+            return;
+        }
+
+        int rtn;
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+
+        JointPos j1 = new JointPos(5.027, -84.331, -75.139, -103.690, 86.379, 20.794);
+        DescPose d1 = new DescPose(324.752, -83.339, 366.314, -172.321, -0.936, -106.047);
+
+        JointPos j2 = new JointPos(-35.335, -117.598, -57.174, -95.234, 90.001, -19.560);
+        DescPose d2 = new DescPose(324.999, -355.439, 260.000, 179.995, 0.003, -105.775);
+
+        JointPos j3 = new JointPos(59.787, -117.594, -57.183, -95.222, 90.006, 75.562);
+        DescPose d3 = new DescPose(324.998, 355.441, 260.002, 179.995, 0.003, -105.775);
+
+        // ---- Step 1: MoveJ to start point ----
+        Console.WriteLine("\nStep 1: MoveJ to start point");
+        rtn = robot.MoveJ(j1, d1, 1, 0, 100, 100, 50, epos, -1, 0, offset_pos);
+        Console.WriteLine("  MoveJ(j1) rtn={0}", rtn);
+        Thread.Sleep(500);
+
+        // ---- Step 2: MoveJ to weave entry ----
+        Console.WriteLine("\nStep 2: MoveJ to weave entry point");
+        rtn = robot.MoveJ(j2, d2, 1, 0, 100, 100, 50, epos, -1, 0, offset_pos);
+        Console.WriteLine("  MoveJ(j2) rtn={0}", rtn);
+        Thread.Sleep(500);
+
+        // ---- Step 3: WeaveStart, launch weave MoveL thread ----
+        Console.WriteLine("\nStep 3: WeaveStart + MoveL in background thread");
+        robot.WeaveStart(0);
+
+        bool weaveRunning = true;
+        Thread weaveThread = new Thread(() =>
+        {
+            rtn = robot.MoveL(j3, d3, 1, 0, 100, 100, 5, -1, 0, epos, 0, 0, offset_pos, 5, 0, 0, 10);
+            Console.WriteLine("  MoveL(weave) thread finished, rtn={0}", rtn);
+            weaveRunning = false;
+        });
+        weaveThread.IsBackground = true;
+        weaveThread.Start();
+        Thread.Sleep(500);  // Wait for motion to start
+
+        // ---- Step 4: Speed test (main thread, weave MoveL in background) ----
+        Console.WriteLine("\nStep 4: SetSpeed test during weaving");
+        int[] speedValues = { 20, 50, 80, 30, 60, 10 };
+        foreach (int speed in speedValues)
+        {
+            if (!weaveRunning) break;
+            rtn = robot.SetSpeedInstant(speed);
+            robot.GetRobotRealTimeState(ref pkg);
+            Console.WriteLine("  SetSpeed({0}) -> rtn={1}, TCP_CmpSpeed={2}", speed, rtn, pkg.target_TCP_CmpSpeed);
+            Thread.Sleep(5000);
+        }
 
 
+        Thread.Sleep(5000);
+        // ---- Step 5: SetWeaveOffsetRT offset test (main thread, weave MoveL in background) ----
+        Console.WriteLine("\nStep 5: SetWeaveOffsetRT test (50 iterations, delta=0.1)");
+        double accumOffset = 0.0;
+        for (int i = 0; i < 50 && weaveRunning; i++)
+        {
+            accumOffset += 0.1;
+            DescPose weaveOffset = new DescPose(0, 0, accumOffset, 0, 0, 0);
+            rtn = robot.SetWeaveOffsetRT(weaveOffset);
+            robot.GetRobotRealTimeState(ref pkg);
+            Console.WriteLine("  [{0}/50] SetWeaveOffsetRT(x={1:F1}) -> rtn={2}, TCP_pos=({3:F2},{4:F2},{5:F2})",
+                i + 1, accumOffset, rtn,
+                pkg.tl_cur_pos[0], pkg.tl_cur_pos[1], pkg.tl_cur_pos[2]);
+            Thread.Sleep(100);
+        }
 
+        // ---- Step 6: Wait for weave MoveL, then WeaveEnd ----
+        Console.WriteLine("\nStep 6: Wait for weave MoveL, then WeaveEnd");
+        weaveThread.Join();
+        robot.WeaveEnd(0);
+        Thread.Sleep(500);
 
+        // ---- Step 7: MoveL back to start ----
+        Console.WriteLine("\nStep 7: MoveL back to start");
+        rtn = robot.MoveL(j1, d1, 1, 0, 100, 100, 50, -1, 0, epos, 0, 0, offset_pos, 50, 0, 0, 10);
+        Console.WriteLine("  MoveL(back) rtn={0}", rtn);
 
-
-
-
-
-
-
-
-
+        robot.GetRobotRealTimeState(ref pkg);
+        Console.WriteLine("\n  Final robot state: main_code={0}, sub_code={1}", pkg.main_code, pkg.sub_code);
+        Console.WriteLine("============================================================");
+        Console.WriteLine("  Weave Speed and Offset Test Complete");
+        Console.WriteLine("============================================================");
+    }

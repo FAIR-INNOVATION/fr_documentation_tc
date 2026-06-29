@@ -495,7 +495,7 @@
     * @param [in] timeout 等待超時時間ms
     * @return 錯誤碼
     */
-    int ConveyorComDetect(int timeout);
+    public int ConveyorComDetect(int timeout)
 
 傳送帶通訊輸入檢測觸發
 +++++++++++++++++++++++++++++
@@ -598,62 +598,48 @@
     :linenos:
 
     private void btnConvert_Click(object sender, EventArgs e)
-        {
-        Robot robot = new Robot();
-        robot.RPC("192.168.58.2");
-        DescPose pos1 = new DescPose(0, 0, 0, 0 ,0 ,0);
-        DescPose pos2 = new DescPose(0, 0, 0, 0, 0, 0);
+    {
+        // Conveyor belt tracking
+        DescPose pos1 = new DescPose(-354.549, 63.914, 270.176, -179.679, -0.134, 2.468);
+        DescPose pos2 = new DescPose(-351.203, -213.393, 351.054, -179.932, -0.508, 2.472);
 
-        pos1.tran.x = -351.175;
-        pos1.tran.y = 3.389;
-        pos1.tran.z = 431.172;
-        pos1.rpy.rx = -179.111;
-        pos1.rpy.ry = -0.241;
-        pos1.rpy.rz = 90.388;
-
-        pos2.tran.x = -333.654;
-        pos2.tran.y = -229.003;
-        pos2.tran.z = 404.335;
-        pos2.rpy.rx = -179.139;
-        pos2.rpy.ry = -0.779;
-        pos2.rpy.rz = 91.269;
-        int rtn = -1;
-
-        double[] cmp = new double[3] { 0, 9.99, 0};
-        rtn = robot.ConveyorCatchPointComp(cmp);
-        if(rtn != 0)
+        double[] cmp = { 0.0, 0.0, 0.0 };
+        int rtn = robot.ConveyorCatchPointComp(cmp); // Set conveyor pick-up point compensation
+        if (rtn != 0)
         {
             return;
         }
-        Console.WriteLine($"ConveyorCatchPointComp: rtn  {rtn}");
+        Console.WriteLine("ConveyorCatchPointComp: rtn  " + rtn);
 
-        rtn = robot.MoveCart(pos1, 0, 0, 100.0f, 180.0f, 100.0f, -1.0f, -1);
-        Console.WriteLine($"MoveCart: rtn  {rtn}");
+        rtn = robot.MoveCart(pos1, 1, 0, (float)30.0, (float)180.0, (float)100.0, (float)-1.0, -1);
+        Console.WriteLine("MoveCart: rtn  " + rtn);
 
-        rtn = robot.ConveyorIODetect(10000);
-        Console.WriteLine($"ConveyorIODetect: rtn  {rtn}");
+        rtn = robot.ConveyorIODetect(10000); // Conveyor workpiece I/O detection
+        Console.WriteLine("ConveyorIODetect: rtn   " + rtn);
 
-        robot.ConveyorGetTrackData(1);
-        rtn = robot.ConveyorTrackStart(1);
-        Console.WriteLine($"ConveyorTrackStart: rtn  {rtn}");
+        robot.ConveyorGetTrackData(1); // Configure conveyor tracking for picking
+        rtn = robot.ConveyorTrackStart(1); // Start tracking
+        Console.WriteLine("ConveyorTrackStart: rtn  " + rtn);
 
-        rtn = robot.ConveyorTrackMoveL("cvrCatchPoint", 0, 0, 100.0f, 0.0f, 100.0f, -1.0f, 0, 0);
-        Console.WriteLine($"ConveyorTrackMoveL: rtn  {rtn}");
+        rtn = robot.ConveyorTrackMoveL("cvrCatchPoint", 1, 0, (float)100.0, (float)0.0, (float)100.0, (float)-1.0, 0, 0);
+        Console.WriteLine("ConveyorTrackMoveL: rtn  " + rtn);
 
-        rtn = robot.MoveGripper(1, 59, 43, 21, 30000, 0);
-        Console.WriteLine($"MoveGripper: rtn  {rtn}");
+        rtn = robot.MoveGripper(2, 30, 60, 30, 30000, 0, 0, 0, 50, 50);
+        Console.WriteLine("ConveyorTrackMoveL: rtn  " + rtn);
+            
 
-        rtn = robot.ConveyorTrackMoveL("cvrRaisePoint", 0, 0, 100.0f, 0.0f, 100.0f, -1.0f, 0, 0);
-        Console.WriteLine($"ConveyorTrackMoveL: rtn  {rtn}");
+        rtn = robot.ConveyorTrackMoveL("cvrRaisePoint", 1, 0, (float)100.0, (float)0.0, (float)100.0, (float)-1.0, 0, 0);
+        Console.WriteLine("ConveyorTrackMoveL: rtn   " + rtn);
 
-        rtn = robot.ConveyorTrackEnd();
-        Console.WriteLine($"ConveyorTrackEnd: rtn  {rtn}");
+        rtn = robot.ConveyorTrackEnd(); // Stop conveyor tracking
+        Console.WriteLine("ConveyorTrackEnd: rtn  " + rtn);
 
-        rtn = robot.MoveCart(pos2, 0, 0, 100.0f, 180.0f, 100.0f, -1.0f, -1);
-        Console.WriteLine($"MoveCart: rtn  {rtn}");
+        rtn = robot.MoveCart(pos2, 1, 0, (float)30.0, (float)180.0, (float)100.0, (float)-1.0, -1);
+        Console.WriteLine("MoveCart: rtn  " + rtn);
 
-        rtn = robot.MoveGripper(1, 100, 43, 21, 30000, 0);
-        Console.WriteLine($"MoveGripper: rtn  {rtn}");
+        rtn = robot.MoveGripper(2, 100, 60, 30, 30000, 0,0,0,50,50);
+        Console.WriteLine("MoveGripper: rtn  " + rtn);
+
     }
 
 末端傳感器配置
@@ -850,33 +836,35 @@
     */
     int GetAxleLuaEnableStatus(ref int status);
 
-設置末端LUA末端設備啓用類型
+設置末端LUA末端設備啟用類型
 +++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 設置末端LUA末端設備啓用類型
-    * @param [in] forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
-    * @param [in] gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
-    * @param [in] IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+    * @brief 設置末端LUA末端設備啟用類型
+    * @param [in] forceSensorEnable 力感測器啟用狀態，0-不啟用；1-啟用
+    * @param [in] gripperEnable 夾爪啟用狀態，0-不啟用；1-啟用
+    * @param [in] IOEnable IO設備啟用狀態，0-不啟用；1-啟用
+    * @param [in] dexhandEnable 靈巧手設備啟用狀態，0-不啟用；1-啟用
     * @return  錯誤碼
     */
-    int SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable);
+    public int SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable, int dexhandEnable)
 
-獲取末端LUA末端設備啓用類型
+獲取末端LUA末端設備啟用類型
 +++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 獲取末端LUA末端設備啓用類型
-    * @param [out] forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
-    * @param [out] gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
-    * @param [out] IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+    * @brief 獲取末端LUA末端設備啟用類型
+    * @param [out] forceSensorEnable 力感測器啟用狀態，0-不啟用；1-啟用
+    * @param [out] gripperEnable 夾爪啟用狀態，0-不啟用；1-啟用
+    * @param [out] IOEnable IO設備啟用狀態，0-不啟用；1-啟用
+    * @param [out] dexhandEnable 靈巧手設備啟用狀態，0-不啟用；1-啟用
     * @return  錯誤碼
     */
-    int GetAxleLuaEnableDeviceType(ref int forceSensorEnable, ref int gripperEnable, ref int IOEnable);
+    public int GetAxleLuaEnableDeviceType(ref int forceSensorEnable, ref int gripperEnable, ref int IOEnable, ref int dexhandEnable)
 
 獲取當前配置的末端設備
 +++++++++++++++++++++++++++++++++++++++++++++++++
@@ -885,38 +873,47 @@
 
     /**
     * @brief 獲取當前配置的末端設備
-    * @param [out] forceSensorEnable 力傳感器啓用設備編號 0-未啓用；1-啓用
-    * @param [out] gripperEnable 夾爪啓用設備編號，0-不啓用；1-啓用
-    * @param [out] IODeviceEnable IO設備啓用設備編號，0-不啓用；1-啓用
+    * @param [out] forceSensorEnable 力感測器啟用設備編號 0-未啟用；1-啟用
+    * @param [out] gripperEnable 夾爪啟用設備編號，0-不啟用；1-啟用
+    * @param [out] IODeviceEnable IO設備啟用設備編號，0-不啟用；1-啟用
+    * @param [out] decHandEnable 靈巧手啟用設備編號，0-不啟用；1-啟用
     * @return  錯誤碼
     */
-    int GetAxleLuaEnableDevice(ref int[] forceSensorEnable, ref int[] gripperEnable, ref int[] IODeviceEnable);
+    public int GetAxleLuaEnableDevice(ref int[] forceSensorEnable, ref int[] gripperEnable, ref int[] IODeviceEnable, ref int[] decHandEnable)
 
-設置啓用夾爪動作控制功能
+設置啟用夾爪動作控制功能
 +++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 設置啓用夾爪動作控制功能
+    * @brief 設置啟用夾爪動作控制功能
     * @param [in] id 夾爪設備編號
-    * @param [in] func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+    * @param [in] func func[0]-夾爪使能；func[1]-夾爪初始化；func[2]-位置設置；func[3]-速度設置；func[4]-力矩設置；func[6]-讀夾爪狀態；
+        func[7]-讀初始化狀態；func[8]-讀故障碼；func[9]-讀位置；func[10]-讀速度；func[11]-讀力矩; func[12]-旋轉夾爪旋轉圈數設置； 
+        func[13]-旋轉夾爪旋轉速度設置； func[14]-旋轉夾爪旋轉力矩設置； func[15]-讀旋轉夾爪狀態；func[16]-讀旋轉夾爪初始化狀態；
+        func[17]-讀旋轉夾爪圈數；func[18]-讀旋轉夾爪速度；func[19]-讀旋轉夾爪力矩；func[20]-多軸同步運動設置；func[21]-故障清除指令；
+        func[22]-單軸運行狀態；func[23]-所有軸運行狀態；
     * @return  錯誤碼
     */
-    int SetAxleLuaGripperFunc(int id, int[] func);
+    public int SetAxleLuaGripperFunc(int id, int[] func)
 
-獲取啓用夾爪動作控制功能
+獲取啟用夾爪動作控制功能
 +++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
     :linenos:
 
     /**
-    * @brief 獲取啓用夾爪動作控制功能
+    * @brief 獲取啟用夾爪動作控制功能
     * @param [in] id 夾爪設備編號
-    * @param [out] func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+    * @param [out] func func[0]-夾爪使能；func[1]-夾爪初始化；func[2]-位置設置；func[3]-速度設置；func[4]-力矩設置；func[6]-讀夾爪狀態；
+        func[7]-讀初始化狀態；func[8]-讀故障碼；func[9]-讀位置；func[10]-讀速度；func[11]-讀力矩; func[12]-旋轉夾爪旋轉圈數設置； 
+        func[13]-旋轉夾爪旋轉速度設置； func[14]-旋轉夾爪旋轉力矩設置； func[15]-讀旋轉夾爪狀態；func[16]-讀旋轉夾爪初始化狀態；
+        func[17]-讀旋轉夾爪圈數；func[18]-讀旋轉夾爪速度；func[19]-讀旋轉夾爪力矩；func[20]-多軸同步運動設置；func[21]-故障清除指令；
+        func[22]-單軸運行狀態；func[23]-所有軸運行狀態；
     * @return  錯誤碼
     */
-    int GetAxleLuaGripperFunc(int id, ref int[] func);
+    public int GetAxleLuaGripperFunc(int id, ref int[] func)
 
 機器人Ethercat從站文件寫入
 +++++++++++++++++++++++++++++++++++++++++++++++++
@@ -963,7 +960,7 @@
     private void button41_Click(object sender, EventArgs e)
     {
         ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
-        robot.AxleLuaUpload("D://zUP/AXLE_LUA_End_JunDuo_Xinjingcheng.lua");
+        robot.AxleLuaUpload("D://zUP/AXLE_LUA_End_JunDuo_V0.4_20260602.lua");
 
         AxleComParam param = new AxleComParam(7, 8, 1, 0, 5, 3, 1);
         robot.SetAxleCommunicationParam(param);
@@ -977,22 +974,25 @@
         robot.SetAxleLuaEnable(1);
         int luaEnableStatus = 0;
         robot.GetAxleLuaEnableStatus(ref luaEnableStatus);
-        robot.SetAxleLuaEnableDeviceType(0, 1, 0);
+        robot.SetAxleLuaEnableDeviceType(0, 1, 0, 0);
 
         int forceEnable = 0;
         int gripperEnable = 0;
         int ioEnable = 0;
-        robot.GetAxleLuaEnableDeviceType(ref forceEnable, ref gripperEnable, ref ioEnable);
+        int dexhandEnable = 0;
+        robot.GetAxleLuaEnableDeviceType(ref forceEnable, ref gripperEnable, ref ioEnable, ref dexhandEnable);
         Console.WriteLine("GetAxleLuaEnableDeviceType param is {0} {1} {2}", forceEnable, gripperEnable, ioEnable);
 
-        int[] func = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        int[] func = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         robot.SetAxleLuaGripperFunc(1, func);
-        int[] getFunc = new int[16];
+
+        int[] getFunc = new int[32];
         robot.GetAxleLuaGripperFunc(1, ref getFunc);
         int[] getforceEnable = new int[16];
         int[] getgripperEnable = new int[16];
         int[] getioEnable = new int[16];
-        robot.GetAxleLuaEnableDevice(ref getforceEnable, ref getgripperEnable, ref getioEnable);
+        int[] dexhandEnable1 = new int[16];
+        robot.GetAxleLuaEnableDevice(ref getforceEnable, ref getgripperEnable, ref getioEnable,ref dexhandEnable1);
         Console.WriteLine("\ngetforceEnable status : ");
         foreach (int i in getforceEnable)
         {
@@ -1010,10 +1010,10 @@
         }
         Console.WriteLine();
         robot.ActGripper(1, 0);
-        Thread.Sleep(2000);
+        Thread.Sleep(3000);
         robot.ActGripper(1, 1);
-        Thread.Sleep(2000);
-        robot.MoveGripper(1, 90, 10, 100, 50000, 0, 0, 0, 0, 0);
+        Thread.Sleep(4000);
+        robot.MoveGripper(1, 50, 10, 100, 50000, 0, 0, 0, 0, 0);
         int pos = 0;
         while (true)
         {
@@ -1021,7 +1021,7 @@
             Console.WriteLine("gripper pos is " + pkg.gripper_position);
             Thread.Sleep(100);
         }
-    }
+    } 
 
 獲取SmartTool按鈕狀態
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1955,4 +1955,186 @@
         Console.WriteLine($"AllOpenLuaDelete rtn is {rtn}");
 
         return 0;
+    }
+
+控制靈巧手運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:    
+
+    /**
+    * @brief  控制靈巧手運動
+    * @param  [in] idstart  起始從站號
+    * @param  [in] slaveNum  數量
+    * @param  [in] pos[16]  位置(-360~360) 
+    * @param  [in] speed[16]  速度百分比，範圍[0~100]
+    * @param  [in] force[16]  力矩百分比，範圍[0~100]
+    * @param  [in] max_time  最大等待時間，範圍[0~30000]，單位ms
+    * @return  錯誤碼
+    */
+    public int SetDexterousHandsMove(int idstart, int slaveNum, double[] pos, int[] speed, int[] force, int max_time)
+    
+控制靈巧手復位激活
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:   
+
+    /**
+    * @brief  控制靈巧手復位激活
+    * @param  [in] id  從站號
+    * @param  [in] act  0-復位 1-激活
+    * @return  錯誤碼
+    */
+    public int SetDexterousHandsAct(int id, int act)
+
+清除靈巧手錯誤
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:   
+
+    /**
+    * @brief  清除靈巧手錯誤
+    * @return  錯誤碼
+    */
+    public int ClearDexterousHandsError()
+    
+設置啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:   
+
+    /**
+    * @brief 設置啟用靈巧手動作控制功能
+    * @param [in] id 靈巧手從站編號
+    * @param [in] func 0-夾持觸發、1-夾爪初始化、2-位置設置、3-速度設置、4-力矩設置、6-讀夾爪狀態、7-讀初始化狀態、8-讀故障碼、9-讀位置、10-讀速度、11-讀力矩、12-旋轉圈數設置、13-旋轉速度設置、14-旋轉力矩設置、15-讀旋轉夾爪狀態、16-讀旋轉初始化狀態、17-讀旋轉圈數、18-讀旋轉速度、19-讀旋轉力矩、20-多軸同步運動設置、21-故障清除指令、22-單軸運行狀態、23-所有軸運行狀態
+    * @return  錯誤碼
+    */
+    public int SetDexterousHandsFunc(int id, int[] func)
+    
+獲取啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:   
+
+    /**
+    * @brief 獲取啟用靈巧手動作控制功能
+    * @param [in] id 靈巧手設備編號
+    * @param [out] func 0-夾持觸發、1-夾爪初始化、2-位置設置、3-速度設置、4-力矩設置、6-讀夾爪狀態、7-讀初始化狀態、8-讀故障碼、9-讀位置、10-讀速度、11-讀力矩、12-旋轉圈數設置、13-旋轉速度設置、14-旋轉力矩設置、15-讀旋轉夾爪狀態、16-讀旋轉初始化狀態、17-讀旋轉圈數、18-讀旋轉速度、19-讀旋轉力矩、20-多軸同步運動設置、21-故障清除指令、22-單軸運行狀態、23-所有軸運行狀態
+    * @return  錯誤碼
+    */
+    public int GetDexterousHandsFunc(int id, ref int[] func)
+
+末端靈巧手配置及運動代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+    
+    private void button105_Click(object sender, EventArgs e)
+    {
+        int id = 1;               // 從站號
+        int slaveNum = 4;         // 控制4根手指
+        int max_time = 8000;      // 最大等待時間8秒
+        int[] speed = new int[16]; // 速度陣列，全部為0表示使用默認速度
+        int[] force = new int[16]; // 力矩陣列
+
+        // 初始化力矩陣列：前4根手指設為50%，其餘為0（透過Move指令發送數值）
+        for (int i = 0; i < 16; i++)
+            force[i] = (i < 4) ? 50 : 0;
+
+        // 輔助函數：設置位置陣列（僅前4根手指有效）
+        double[] pos = new double[16];
+        void SetPositions(double v1, double v2, double v3, double v4)
+        {
+            for (int i = 0; i < 16; i++)
+                pos[i] = 0;
+            pos[0] = v1;
+            pos[1] = v2;
+            pos[2] = v3;
+            pos[3] = v4;
+        }
+
+        JointPos j1 = new JointPos(-91.876, -85.920, 109.279, -86.239, -96.664, -28.563);
+        JointPos j2 = new JointPos(-40.954, -85.920, 109.279, -86.239, -96.664, -28.563);
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+
+        Console.WriteLine("===== 靈巧手完整功能測試開始 =====");
+
+        // 1. 清除錯誤
+        int ret = robot.ClearDexterousHandsError();
+        Console.WriteLine($"ClearDexterousHandsError -> {ret}");
+
+        // ========== 2. 設置功能開關 ==========
+        int[] setFunc = new int[32];
+        setFunc[2] = 1;   // 啟用位置設置功能
+        setFunc[4] = 1;   // 啟用力矩設置功能
+        setFunc[9] = 1;   // 讀取位置
+        setFunc[10] = 1;  // 讀取力矩
+        setFunc[11] = 1;  // 讀取狀態
+        setFunc[22] = 1;  // 單軸運動狀態
+
+        ret = robot.SetDexterousHandsFunc(id, setFunc);
+        Console.WriteLine($"SetDexterousHandsFunc(啟用初始化及位置/力矩功能) -> {ret}");
+
+        // ========== 3. 讀取功能狀態（驗證設置生效） ==========
+        int[] getFunc = new int[32];  // GetDexterousHandsFunc 返回32個整數
+        ret = robot.GetDexterousHandsFunc(id, ref getFunc);
+        Console.WriteLine($"GetDexterousHandsFunc -> {ret}");
+        if (ret == 0)
+        {
+            // 打印全部32個數值
+            Console.WriteLine("GetDexterousHandsFunc 返回的全部32個數值：");
+            for (int i = 0; i < getFunc.Length; i++)
+            {
+                Console.Write($"  [{i}]={getFunc[i]}");
+                if ((i + 1) % 8 == 0)
+                    Console.WriteLine();          // 每8個換行
+                else if (i < getFunc.Length - 1)
+                    Console.Write(", ");
+            }
+            if (getFunc.Length % 8 != 0)
+                Console.WriteLine();              // 最後一行不足8個時補換行
+        }
+
+        // ========== 4. 激活靈巧手 ==========
+        ret = robot.SetDexterousHandsAct(id, 1);
+        Console.WriteLine($"SetDexterousHandsAct(激活) -> {ret}");
+        if (ret != 0)
+        {
+            Console.WriteLine("激活失敗，測試中止");
+            return;
+        }
+
+        // ========== 5. 初始移動至20°（透過Move指令發送位置和力矩數值） ==========
+        SetPositions(20, 20, 20, 20);
+        ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+        Console.WriteLine($"初始移動至20° -> {ret}");
+        robot.Sleep(5000);
+
+        // ========== 6. 往復運動10次（10° ↔ 50°） ==========
+        Console.WriteLine("開始10次往復運動...");
+        for (int iteration = 1; iteration <= 10; iteration++)
+        {
+            robot.MoveJ(j1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+
+            SetPositions(10, 10, 10, 10);
+            ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+            Console.WriteLine($"[{iteration}] 移動至10° -> {ret}");
+            robot.Sleep(1000);
+
+            robot.MoveJ(j2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+
+            SetPositions(50, 50, 50, 50);
+            ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+            Console.WriteLine($"[{iteration}] 移動至50° -> {ret}");
+            robot.Sleep(1000);
+        }
+
+        Console.WriteLine("測試完成（功能開關設置/讀取 + 激活 + 10次往復運動）。");
     }

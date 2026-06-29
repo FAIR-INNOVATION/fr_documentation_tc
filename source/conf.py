@@ -9,7 +9,7 @@
 project = '法奧協作機器人使用者手冊'
 copyright = '2022-2026， 法奧（蘇州）機器人技術股份有限公司'
 author = '法奧（蘇州）機器人技術股份有限公司'
-release = '3.9.6'
+release = '3.9.7'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -23,7 +23,7 @@ language = 'zh_Hant'
 locale_dirs = ['locale/']  # 設定本地化資料目錄
 
 # 註：在生成html的時候這句話要註釋
-# latex_engine = 'xelatex'
+latex_engine = 'lualatex'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

@@ -204,7 +204,7 @@
       uint8_t ft_sensor_active;  // 力矩感測器激活狀態，0-復位，1-激活 
       uint8_t EmergencyStop;   // 急停標誌，0-急停未按下，1-急停按下 
       int   motion_done;    // 運動到位信號，1-到位，0-未到位 
-      uint8_t gripper_motiondone; // 夾爪運動完成信號，1-完成，0-未完成 
+      uint8_t gripper_motiondone; // 夾爪運動完成訊號，0-未完成，1-完成(未偵測到物體)，2-運動完成（偵測到物體）
       int   mc_queue_len;    // 運動指令隊列長度 
       uint8_t collisionState;   // 碰撞檢測，1-碰撞，0-無碰撞 
       int   trajectory_pnum;  // 軌跡點編號 
@@ -345,7 +345,7 @@
         FtSensorActive = 30,        // 力矩感測器激活狀態，0-復位，1-激活
         EmergencyStop = 31,         // 急停標誌，0-急停未按下，1-急停按下
         MotionDone = 32,            // 運動到位信號，1-到位，0-未到位
-        GripperMotiondone = 33,     // 夾爪運動完成信號，1-完成，0-未完成
+        GripperMotiondone = 33,     // 夾爪運動完成訊號，0-未完成，1-完成(未偵測到物體)，2-運動完成（偵測到物體）
         McQueueLen = 34,            // 運動指令隊列長度
         CollisionState = 35,        // 碰撞檢測，1-碰撞，0-無碰撞
         TrajectoryPnum = 36,        // 軌跡點編號

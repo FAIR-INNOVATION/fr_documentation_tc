@@ -224,9 +224,9 @@ TPD軌跡復現
             return -1;
         }
         
-        rtn = robot.TrajectoryJUpLoad("D://zUP/trajHelix_aima_1.txt");
+        rtn = robot.TrajectoryJUpLoad("D://zUP/horse.txt");
         printf("Upload TrajectoryJ A %d\n", rtn);
-        char traj_file_name[90] = "/fruser/traj/trajHelix_aima_1.txt";
+        char traj_file_name[90] = "horse.txt";
         rtn = robot.LoadTrajectoryJ(traj_file_name, 100, 1);
         printf("LoadTrajectoryJ %s, rtn is: %d\n", traj_file_name, rtn);
         DescPose traj_start_pose;
@@ -463,24 +463,28 @@ TPD軌跡復現
 .. code-block:: c#
     :linenos:
 
-    private void button8_Click(object sender, EventArgs e)
+    private void button87_Click(object sender, EventArgs e)
     {
-        int rtn = 0;
+        // Upload trajectory file
+        int rtn = robot.TrajectoryJUpLoad(@"D:\zUP\horse.txt");
+        Console.WriteLine($"Upload TrajectoryJ A {rtn}");
 
-        string nameA = "/fruser/traj/A.txt";
-        string nameB = "/fruser/traj/B.txt";
+        string trajFileName = "horse.txt";
+        rtn = robot.LoadTrajectoryLA(trajFileName, 2, 0, 0, 1, 40, 100, 100, 1);
+        Console.WriteLine($"LoadTrajectoryLA {trajFileName}, rtn is: {rtn}");
 
-        rtn = robot.LoadTrajectoryLA(nameB, 0, 0, 0, 1, 100.0, 100.0, 1000.0);    // 直線擬合
-        Console.WriteLine($"LoadTrajectoryLA rtn is {rtn}");
+        DescPose trajStartPose = new DescPose();
+        rtn = robot.GetTrajectoryStartPose(trajFileName, ref trajStartPose);
+        Console.WriteLine($"GetTrajectoryStartPose is: {rtn}");
+        Console.WriteLine($"desc_pos: {trajStartPose.tran.x},{trajStartPose.tran.y},{trajStartPose.tran.z},{trajStartPose.rpy.rx},{trajStartPose.rpy.ry},{trajStartPose.rpy.rz}");
 
-        DescPose startPos = new DescPose(0, 0, 0, 0, 0, 0);
-        robot.GetTrajectoryStartPose(nameA, ref startPos);
+        Thread.Sleep(1000);
 
-        //
-        robot.MoveCart(startPos, 1, 0, (float)100.0, (float)100.0, (float)100.0, -1, -1);
+        robot.SetSpeed(50);
+        robot.MoveCart(trajStartPose, 0, 0, 100, 100, 100, -1, -1);
 
         rtn = robot.MoveTrajectoryLA();
-        Console.WriteLine($"MoveTrajectoryLA rtn is {rtn}");
+        Console.WriteLine($"MoveTrajectoryLA rtn is: {rtn}");
     }
 
 運動到TPD軌跡記錄起點

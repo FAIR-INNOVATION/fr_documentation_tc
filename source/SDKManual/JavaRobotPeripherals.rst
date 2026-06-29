@@ -723,30 +723,32 @@
     */
     int GetAxleLuaEnableStatus(int[] status)
 
-設置末端LUA末端設備啓用類型
+設置末端LUA末端設備啟用類型
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-    * @brief 設置末端LUA末端設備啓用類型
-    * @param forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
-    * @param gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
-    * @param IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+    * @brief 設置末端LUA末端設備啟用類型
+    * @param forceSensorEnable 力感測器啟用狀態，0-不啟用；1-啟用
+    * @param gripperEnable 夾爪啟用狀態，0-不啟用；1-啟用
+    * @param IOEnable IO設備啟用狀態，0-不啟用；1-啟用
+    * @param dexhandEnable 靈巧手啟用狀態，0-不啟用；1-啟用
     * @return  錯誤碼
     */
-    public int SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable)
+    public int SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable, int dexhandEnable)
 
-獲取末端LUA末端設備啓用類型
+獲取末端LUA末端設備啟用類型
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-     * @brief 獲取末端LUA末端設備啓用類型
-     * @param enable enable[0]:forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
-     * @param enable enable[1]:gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
-     * @param enable enable[2]:IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+     * @brief 獲取末端LUA末端設備啟用類型
+     * @param enable enable[0]:forceSensorEnable 力感測器啟用狀態，0-不啟用；1-啟用
+     * @param enable enable[1]:gripperEnable 夾爪啟用狀態，0-不啟用；1-啟用
+     * @param enable enable[2]:IOEnable IO設備啟用狀態，0-不啟用；1-啟用
+     * @param enable enable[3]:dexhandEnable 靈巧手啟用狀態，0-不啟用；1-啟用
      * @return  錯誤碼
      */
     public int GetAxleLuaEnableDeviceType(int[] enable)
@@ -758,35 +760,45 @@
 
     /**
      * @brief 獲取當前配置的末端設備
-     * @param forceSensorEnable 力傳感器啓用設備編號 0-未啓用；1-啓用
-     * @param gripperEnable 夾爪啓用設備編號，0-不啓用；1-啓用
-     * @param IODeviceEnable IO設備啓用設備編號，0-不啓用；1-啓用
+     * @param forceSensorEnable 力感測器啟用設備編號 0-未啟用；1-啟用
+     * @param gripperEnable 夾爪啟用設備編號，0-不啟用；1-啟用
+     * @param IODeviceEnable IO設備啟用設備編號，0-不啟用；1-啟用
+     * @param dexhandEnable 靈巧手啟用狀態，0-不啟用；1-啟用
      * @return  錯誤碼
      */
-    public int GetAxleLuaEnableDevice(int[] forceSensorEnable, int[] gripperEnable, int[] IODeviceEnable)
+    public int GetAxleLuaEnableDevice(int[] forceSensorEnable, int[] gripperEnable, int[] IODeviceEnable, int[] dexhandEnable)
 
-設置啓用夾爪動作控制功能
+
+設置啟用夾爪動作控制功能
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-     * @brief 設置啓用夾爪動作控制功能
+     * @brief 設置啟用夾爪動作控制功能
      * @param id 夾爪設備編號
-     * @param func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+     * @param func func[0]-夾爪使能；func[1]-夾爪初始化；func[2]-位置設置；func[3]-速度設置；func[4]-力矩設置；func[6]-讀夾爪狀態；
+        func[7]-讀初始化狀態；func[8]-讀故障碼；func[9]-讀位置；func[10]-讀速度；func[11]-讀力矩; func[12]-旋轉夾爪旋轉圈數設置； 
+        func[13]-旋轉夾爪旋轉速度設置； func[14]-旋轉夾爪旋轉力矩設置； func[15]-讀旋轉夾爪狀態；func[16]-讀旋轉夾爪初始化狀態；
+        func[17]-讀旋轉夾爪圈數；func[18]-讀旋轉夾爪速度；func[19]-讀旋轉夾爪力矩；func[20]-多軸同步運動設置；func[21]-故障清除指令；
+        func[22]-單軸運行狀態；func[23]-所有軸運行狀態；
      * @return  錯誤碼
      */
     public int SetAxleLuaGripperFunc(int id, int[] func)
 
-獲取啓用夾爪動作控制功能
+獲取啟用夾爪動作控制功能
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .. code-block:: Java
     :linenos:
 
     /**
-     * @brief 獲取啓用夾爪動作控制功能
+     * @brief 獲取啟用夾爪動作控制功能
      * @param id 夾爪設備編號
-     * @param func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+     * @param func func[0]-夾爪使能；func[1]-夾爪初始化；func[2]-位置設置；func[3]-速度設置；func[4]-力矩設置；func[6]-讀夾爪狀態；
+        func[7]-讀初始化狀態；func[8]-讀故障碼；func[9]-讀位置；func[10]-讀速度；func[11]-讀力矩; func[12]-旋轉夾爪旋轉圈數設置； 
+        func[13]-旋轉夾爪旋轉速度設置； func[14]-旋轉夾爪旋轉力矩設置； func[15]-讀旋轉夾爪狀態；func[16]-讀旋轉夾爪初始化狀態；
+        func[17]-讀旋轉夾爪圈數；func[18]-讀旋轉夾爪速度；func[19]-讀旋轉夾爪力矩；func[20]-多軸同步運動設置；func[21]-故障清除指令；
+        func[22]-單軸運行狀態；func[23]-所有軸運行狀態；
      * @return  錯誤碼
      */
     public int GetAxleLuaGripperFunc(int id, int[] func)
@@ -1804,3 +1816,154 @@ SmartTool按鈕代碼示例
         robot.Sleep(1000);
         return 0;
     }
+
+控制靈巧手運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 控制靈巧手運動
+    * @param idstart 起始從站號
+    * @param slaveNum 數量
+    * @param pos 位置陣列，長度16，範圍(-360~360)
+    * @param speed 速度百分比陣列，長度16，範圍[0~100]
+    * @param force 力矩百分比陣列，長度16，範圍[0~100]
+    * @param max_time 最大等待時間，範圍[0~30000]，單位ms
+    * @return 錯誤碼
+    */
+    public int SetDexterousHandsMove(int idstart, int slaveNum, double[] pos, int[] speed, int[] force, int max_time) 
+        
+控制靈巧手復位激活
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 控制靈巧手復位激活
+    * @param id 從站號
+    * @param act 0-復位 1-激活
+    * @return 錯誤碼
+    */
+    public int SetDexterousHandsAct(int id, int act)
+            
+清除靈巧手錯誤
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 清除靈巧手錯誤
+    * @return 錯誤碼
+    */
+    public int ClearDexterousHandsError()
+                
+設置啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 設置啟用靈巧手動作控制功能
+    * @param id 靈巧手從站編號
+    * @param func 功能陣列，長度為32，Bit0-夾持觸發、Bit1-夾爪初始化、Bit2-位置設置、Bit3-速度設置、Bit4-力矩設置、Bit6-讀夾爪狀態、Bit7-讀初始化狀態、Bit8-讀故障碼、Bit9-讀位置、Bit10-讀速度、Bit11-讀力矩、Bit12-旋轉圈數設置、Bit13-旋轉速度設置、Bit14-旋轉力矩設置、Bit15-讀旋轉夾爪狀態、Bit16-讀旋轉初始化狀態、Bit17-讀旋轉圈數、Bit18-讀旋轉速度、Bit19-讀旋轉力矩、Bit20-多軸同步運動設置、Bit21-故障清除指令、Bit22-單軸運行狀態、Bit23-所有軸運行狀態
+    * @return 錯誤碼
+    */
+    public int SetDexterousHandsFunc(int id, int[] func)
+                    
+獲取啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取啟用靈巧手動作控制功能
+    * @param id 靈巧手設備編號
+    * @param func 輸出參數陣列，長度為32，Bit0-夾持觸發、Bit1-夾爪初始化、Bit2-位置設置、Bit3-速度設置、Bit4-力矩設置、Bit6-讀夾爪狀態、Bit7-讀初始化狀態、Bit8-讀故障碼、Bit9-讀位置、Bit10-讀速度、Bit11-讀力矩、Bit12-旋轉圈數設置、Bit13-旋轉速度設置、Bit14-旋轉力矩設置、Bit15-讀旋轉夾爪狀態、Bit16-讀旋轉初始化狀態、Bit17-讀旋轉圈數、Bit18-讀旋轉速度、Bit19-讀旋轉力矩、Bit20-多軸同步運動設置、Bit21-故障清除指令、Bit22-單軸運行狀態、Bit23-所有軸運行狀態
+    * @return 錯誤碼
+    */
+    public int GetDexterousHandsFunc(int id, int[] func)
+                    
+末端靈巧手配置及運動代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: Java
+    :linenos:
+
+    public static int TestDexterousHands(Robot robot) {
+        int id = 1;
+        int slaveNum = 4;
+        int max_time = 8000;
+        int[] speed = new int[16]; 
+        int[] force = new int[16]; 
+
+        robot.LoggerInit(FrLogType.DIRECT, FrLogLevel.INFO, "D://log", 10, 10);
+        for (int i = 0; i < 16; i++) {
+            force[i] = (i < 4) ? 50 : 0;
+        }
+
+        final double[] pos = new double[16];
+
+        JointPos j1 = new JointPos(-91.876, -85.920, 109.279, -86.239, -96.664, -28.563);
+        JointPos j2 = new JointPos(-40.954, -85.920, 109.279, -86.239, -96.664, -28.563);
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+
+        int ret = robot.ClearDexterousHandsError();
+        System.out.println("ClearDexterousHandsError -> " + ret);
+
+        int[] setFunc = new int[32];
+        setFunc[2] = 1;
+        setFunc[4] = 1;
+        setFunc[9] = 1;
+        setFunc[10] = 1;
+        setFunc[11] = 1;
+        setFunc[22] = 1;
+
+        ret = robot.SetDexterousHandsFunc(id, setFunc);
+
+        int[] getFunc = new int[32];
+        ret = robot.GetDexterousHandsFunc(id, getFunc);
+        System.out.println("GetDexterousHandsFunc -> " + ret);
+        if (ret == 0) {
+            for (int i = 0; i < getFunc.length; i++) {
+                System.out.print("  [" + i + "]=" + getFunc[i]);
+                if ((i + 1) % 8 == 0) {
+                    System.out.println();
+                } else if (i < getFunc.length - 1) {
+                    System.out.print(", ");
+                }
+            }
+            if (getFunc.length % 8 != 0) {
+                System.out.println();
+            }
+        }
+
+        ret = robot.SetDexterousHandsAct(id, 1);
+        if (ret != 0) {
+            return ret;
+        }
+
+        setPositions(pos, 20, 20, 20, 20);
+        ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+        robot.Sleep(5000);
+        
+        for (int iteration = 1; iteration <= 10; iteration++) {
+            robot.MoveJ(j1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+
+            setPositions(pos, 10, 10, 10, 10);
+            ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+            robot.Sleep(1000);
+
+            robot.MoveJ(j2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
+            setPositions(pos, 50, 50, 50, 50);
+            ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+            robot.Sleep(1000);
+        }
+        return 0;
+    }    

@@ -13,6 +13,25 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.7
+     - 2026-06-25
+     - | 1.PhotoelectricSensorTCPCalibration()參數可自適應無路徑的檔案名稱；
+       | 2.LoadTrajectoryJ()參數可自適應無路徑的檔案名稱；
+       | 3.LoadTrajectoryLA()參數可自適應無路徑的檔案名稱；
+       | 4.LoadDefaultProgConfig()參數可自適應無路徑的檔案名稱；
+       | 5.ProgramLoad()參數可自適應無路徑的檔案名稱；
+       | 6.SetAxleLuaEnableDeviceType()介面增加靈巧手啟用狀態參數；
+       | 7.GetAxleLuaEnableDeviceType()介面增加靈巧手啟用狀態參數；
+       | 8.修改獲取當前配置的末端設備啟用類型、夾爪動作控制介面；
+       | 9.新增靈巧手使能及功能碼；
+       | 10.新增SetDexterousHandsMove ()控制靈巧手運動介面；
+       | 11.新增SetDexterousHandsAct ()控制靈巧手復位激活介面；
+       | 12.新增ClearDexterousHandsError ()清除靈巧手錯誤介面；
+       | 13.新增SetDexterousHandsFunc()設置啟用靈巧手動作控制功能介面；
+       | 14.新增GetDexterousHandsFunc()獲取啟用靈巧手動作控制功能介面；
+       | 15.新增設置、獲取擺動結束回週期零點介面；
+       | 16.新增SetWeaveOffsetRT()設置擺動實時偏移、SetSpeedInstant()實時設置速度介面。
+
    * - V3.9.6
      - 2026-05-26
      - | 1.更新機器人狀態反饋結構體，增加擴展軸座標系編號狀態；

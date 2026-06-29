@@ -1377,7 +1377,7 @@
 
     /**
     * @brief 光電感測器TCP標定
-    * @param luaPath 自動標定lua程式路徑：QX版本機器人-"/fruser/FR_CalibrateTheToolTcp.lua";LA版本機器人-"/usr/local/etc/controller/lua/FR_CalibrateTheToolTcp.lua"
+    * @param luaPath 自動標定lua程式路徑："FR_CalibrateTheToolTcp.lua"
     * @param offset 示教點偏移(x,y,z)mm
     * @param TCP 標定後的工具座標系(x,y,z,rx,ry,rz)
     * @return 錯誤碼
@@ -1393,7 +1393,7 @@
     {
         DescTran offset = new DescTran(10.0, 10.0, 3.0 );
         DescPose TCP = new DescPose();
-        int rtn = robot.PhotoelectricSensorTCPCalibration("/fruser/FR_CalibrateTheToolTcp.lua", offset, TCP);
+        int rtn = robot.PhotoelectricSensorTCPCalibration("FR_CalibrateTheToolTcp.lua", offset, TCP);
         System.out.printf("PhotoelectricSensorTCPCalibration rtn is %d %f %f %f %f %f %f \n", rtn, TCP.tran.x, TCP.tran.y, TCP.tran.z, TCP.rpy.rx, TCP.rpy.ry, TCP.rpy.rz);
         robot.CloseRPC();
         robot.Sleep(9999999);

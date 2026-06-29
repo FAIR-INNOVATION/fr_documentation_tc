@@ -835,7 +835,7 @@
     */
     errno_t GetAxleLuaEnableStatus(int status[]);
 
-設置末端LUA末端設備啓用類型
+設置末端LUA末端設備啟用類型
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -843,15 +843,16 @@
     :linenos:
 
     /**
-    * @brief 設置末端LUA末端設備啓用類型
-    * @param forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
-    * @param gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
-    * @param IOEnable IO設備啓用狀態，0-不啓用；1-啓用
+    * @brief 設置末端LUA末端設備啟用類型
+    * @param forceSensorEnable 力感測器啟用狀態，0-不啟用；1-啟用
+    * @param gripperEnable 夾爪啟用狀態，0-不啟用；1-啟用
+    * @param IOEnable IO設備啟用狀態，0-不啟用；1-啟用
+    * @param dexhandEnable 靈巧手啟用狀態，0-不啟用；1-啟用
     * @return  錯誤碼
     */
-    errno_t SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable);
+    errno_t SetAxleLuaEnableDeviceType(int forceSensorEnable, int gripperEnable, int IOEnable, int dexhandEnable);
 
-設置末端LUA末端設備啓用類型
+設置末端LUA末端設備啟用類型
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -859,13 +860,14 @@
     :linenos:
         
     /**
-    * @brief 獲取末端LUA末端設備啓用類型
-    * @param enable enable[0]:forceSensorEnable 力傳感器啓用狀態，0-不啓用；1-啓用
-    * @param enable enable[1]:gripperEnable 夾爪啓用狀態，0-不啓用；1-啓用
-    * @param enable enable[2]:IOEnable IO設備啓用狀態，0-不啓用；1-啓用
-    * @return  錯誤碼
+    * @brief 獲取末端LUA末端設備啟用類型
+    * @param enable enable[0]:forceSensorEnable 力感測器啟用狀態，0-不啟用；1-啟用
+    * @param enable enable[1]:gripperEnable 夾爪啟用狀態，0-不啟用；1-啟用
+    * @param enable enable[2]:IOEnable IO設備啟用狀態，0-不啟用；1-啟用
+    * @param enable enable[3]:dexhandEnable 靈巧手啟用狀態，0-不啟用；1-啟用
+    * @return 錯誤碼
     */
-    errno_t GetAxleLuaEnableDeviceType(int* forceSensorEnable, int* gripperEnable, int* IOEnable);
+    errno_t GetAxleLuaEnableDeviceType(int* forceSensorEnable, int* gripperEnable, int* IOEnable, int* dexhandEnable);
 
 獲取當前配置的末端設備
 ++++++++++++++++++++++++++++++++++
@@ -876,14 +878,15 @@
 
     /**
     * @brief 獲取當前配置的末端設備
-    * @param forceSensorEnable 力傳感器啓用設備編號 0-未啓用；1-啓用
-    * @param gripperEnable 夾爪啓用設備編號，0-不啓用；1-啓用
-    * @param IODeviceEnable IO設備啓用設備編號，0-不啓用；1-啓用
-    * @return  錯誤碼
+    * @param [out] forceSensorEnable 力感測器啟用設備編號 0-未啟用；1-啟用
+    * @param [out] gripperEnable 夾爪啟用設備編號，0-不啟用；1-啟用
+    * @param [out] IODeviceEnable IO設備啟用設備編號，0-不啟用；1-啟用
+    * @param [out] decHandEnable 靈巧手啟用設備編號，0-不啟用；1-啟用
+    * @return 錯誤碼
     */
-    errno_t GetAxleLuaEnableDevice(int forceSensorEnable[], int gripperEnable[], int IODeviceEnable[]);
+    errno_t GetAxleLuaEnableDevice(int forceSensorEnable[], int gripperEnable[], int IODeviceEnable[], int decHandEnable[]);
 
-設置啓用夾爪動作控制功能
+設置啟用夾爪動作控制功能
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -891,14 +894,18 @@
     :linenos:
 
     /**
-    * @brief 設置啓用夾爪動作控制功能
+    * @brief 設置啟用夾爪動作控制功能
     * @param id 夾爪設備編號
-    * @param func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+    * @param func func[0]-夾爪使能；func[1]-夾爪初始化；func[2]-位置設置；func[3]-速度設置；func[4]-力矩設置；func[6]-讀夾爪狀態；
+        func[7]-讀初始化狀態；func[8]-讀故障碼；func[9]-讀位置；func[10]-讀速度；func[11]-讀力矩; func[12]-旋轉夾爪旋轉圈數設置； 
+        func[13]-旋轉夾爪旋轉速度設置； func[14]-旋轉夾爪旋轉力矩設置； func[15]-讀旋轉夾爪狀態；func[16]-讀旋轉夾爪初始化狀態；
+        func[17]-讀旋轉夾爪圈數；func[18]-讀旋轉夾爪速度；func[19]-讀旋轉夾爪力矩；func[20]-多軸同步運動設置；func[21]-故障清除指令；
+        func[22]-單軸運行狀態；func[23]-所有軸運行狀態；
     * @return  錯誤碼
     */
-    errno_t SetAxleLuaGripperFunc(int id, int func[]);
+    errno_t SetAxleLuaGripperFunc(int id, int func[32]);
 
-獲取啓用夾爪動作控制功能
+獲取啟用夾爪動作控制功能
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
 
@@ -906,12 +913,16 @@
     :linenos:
 
     /**
-    * @brief 獲取啓用夾爪動作控制功能
+    * @brief 獲取啟用夾爪動作控制功能
     * @param id 夾爪設備編號
-    * @param func func[0]-夾爪使能；func[1]-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩
+    * @param func func[0]-夾爪使能；func[1]-夾爪初始化；func[2]-位置設置；func[3]-速度設置；func[4]-力矩設置；func[6]-讀夾爪狀態；
+        func[7]-讀初始化狀態；func[8]-讀故障碼；func[9]-讀位置；func[10]-讀速度；func[11]-讀力矩; func[12]-旋轉夾爪旋轉圈數設置； 
+        func[13]-旋轉夾爪旋轉速度設置； func[14]-旋轉夾爪旋轉力矩設置； func[15]-讀旋轉夾爪狀態；func[16]-讀旋轉夾爪初始化狀態；
+        func[17]-讀旋轉夾爪圈數；func[18]-讀旋轉夾爪速度；func[19]-讀旋轉夾爪力矩；func[20]-多軸同步運動設置；func[21]-故障清除指令；
+        func[22]-單軸運行狀態；func[23]-所有軸運行狀態；
     * @return  錯誤碼
     */
-    errno_t GetAxleLuaGripperFunc(int id, int func[]);
+    errno_t GetAxleLuaGripperFunc(int id, int func[32]);
 
 機器人Ethercat從站文件寫入
 ++++++++++++++++++++++++++++++++++
@@ -964,69 +975,73 @@
 
     int TestAxleLua(void)
     {
-      ROBOT_STATE_PKG pkg = {};
-      FRRobot robot;
-      robot.LoggerInit();
-      robot.SetLoggerLevel(1);
-      int rtn = robot.RPC("192.168.58.2");
-      if (rtn != 0)
-      {
-        return -1;
-      }
-      robot.SetReConnectParam(true, 30000, 500);
-      robot.AxleLuaUpload("D://zUP/AXLE_LUA_End_DaHuan.lua");
-      AxleComParam param(7, 8, 1, 0, 5, 3, 1);
-      robot.SetAxleCommunicationParam(param);
-      AxleComParam getParam;
-      robot.GetAxleCommunicationParam(&getParam);
-      printf("GetAxleCommunicationParam param is %d %d %d %d %d %d %d\n", getParam.baudRate, getParam.dataBit, getParam.stopBit, getParam.verify, getParam.timeout, getParam.timeoutTimes, getParam.period);
-      robot.SetAxleLuaEnable(1);
-      int luaEnableStatus = 0;
-      robot.GetAxleLuaEnableStatus(&luaEnableStatus);
-      robot.SetAxleLuaEnableDeviceType(0, 1, 0);
-      int forceEnable = 0;
-      int gripperEnable = 0;
-      int ioEnable = 0;
-      robot.GetAxleLuaEnableDeviceType(&forceEnable, &gripperEnable, &ioEnable);
-      printf("GetAxleLuaEnableDeviceType param is %d %d %d\n", forceEnable, gripperEnable, ioEnable);
-      int func[16] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-      robot.SetAxleLuaGripperFunc(1, func);
-      int getFunc[16] = { 0 };
-      robot.GetAxleLuaGripperFunc(1, getFunc);
-      int getforceEnable[16] = { 0 };
-      int getgripperEnable[16] = { 0 };
-      int getioEnable[16] = { 0 };
-      robot.GetAxleLuaEnableDevice(getforceEnable, getgripperEnable, getioEnable);
-      printf("\ngetforceEnable status : ");
-      for (int i = 0; i < 16; i++)
-      {
-        printf("%d,", getforceEnable[i]);
-      }
-      printf("\ngetgripperEnable status : ");
-      for (int i = 0; i < 16; i++)
-      {
-        printf("%d,", getgripperEnable[i]);
-      }
-      printf("\ngetioEnable status : ");
-      for (int i = 0; i < 16; i++)
-      {
-        printf("%d,", getioEnable[i]);
-      }
-      printf("\n");
-      robot.ActGripper(1, 0);
-      robot.Sleep(2000);
-      robot.ActGripper(1, 1);
-      robot.Sleep(2000);
-      robot.MoveGripper(1, 90, 10, 100, 50000, 0, 0, 0, 0, 0);
-      int pos = 0;
-      while (true)
-      {
-        robot.GetRobotRealTimeState(&pkg);
-        printf("gripper pos is %u\n", pkg.gripper_position);
-        robot.Sleep(100);
-      }
-      robot.CloseRPC();
-      return 0;
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return -1;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        robot.AxleLuaUpload("D://zUP/AXLE_LUA_End_DaHuan.lua");
+        AxleComParam param(7, 8, 1, 0, 5, 3, 1);
+        robot.SetAxleCommunicationParam(param);
+        AxleComParam getParam;
+        robot.GetAxleCommunicationParam(&getParam);
+        printf("GetAxleCommunicationParam param is %d %d %d %d %d %d %d\n", getParam.baudRate, getParam.dataBit, getParam.stopBit, getParam.verify, getParam.timeout, getParam.timeoutTimes, getParam.period);
+        robot.SetAxleLuaEnable(1);
+        int luaEnableStatus = 0;
+        robot.GetAxleLuaEnableStatus(&luaEnableStatus);
+        robot.SetAxleLuaEnableDeviceType(0, 1, 0, 0);
+        int forceEnable = 0;
+        int gripperEnable = 0;
+        int ioEnable = 0;
+        int dexhandEnable = 0;
+        robot.GetAxleLuaEnableDeviceType(&forceEnable, &gripperEnable, &ioEnable, &dexhandEnable);
+        printf("GetAxleLuaEnableDeviceType param is %d %d %d %d\n", forceEnable, gripperEnable, ioEnable, dexhandEnable);
+        int func[32] = { 0,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+        rtn = robot.SetAxleLuaGripperFunc(2, func);
+        printf("SetAxleLuaGripperFunc rtn is %d\n", rtn);
+        int getFunc[32] = { 0 };
+        rtn = robot.GetAxleLuaGripperFunc(2, getFunc);
+        printf("GetAxleLuaGripperFunc rtn is %d\n", rtn);
+        int getforceEnable[16] = { 0 };
+        int getgripperEnable[16] = { 0 };
+        int getioEnable[16] = { 0 };
+        int dexhandEnable1[16] = { 0 };
+        robot.GetAxleLuaEnableDevice(getforceEnable, getgripperEnable, getioEnable, dexhandEnable1);
+        printf("\ngetforceEnable status : ");
+        for (int i = 0; i < 16; i++)
+        {
+            printf("%d,", getforceEnable[i]);
+        }
+        printf("\ngetgripperEnable status : ");
+        for (int i = 0; i < 16; i++)
+        {
+            printf("%d,", getgripperEnable[i]);
+        }
+        printf("\ngetioEnable status : ");
+        for (int i = 0; i < 16; i++)
+        {
+            printf("%d,", getioEnable[i]);
+        }
+        printf("\n");
+        robot.ActGripper(2, 0);
+        robot.Sleep(2000);
+        robot.ActGripper(2, 1);
+        robot.Sleep(2000);
+        robot.MoveGripper(2, 1, 10, 100, 50000, 0, 0, 0, 0, 0);
+        int pos = 0;
+        while (true)
+        {
+            robot.GetRobotRealTimeState(&pkg);
+            printf("gripper pos is %u\n", pkg.gripper_position);
+            robot.Sleep(100);
+        }
+        robot.CloseRPC();
+        return 0;
     }
 
 獲取SmartTool按鈕狀態
@@ -2041,3 +2056,189 @@ SmartTool按鈕代碼示例
         robot.Sleep(1000);
         return 0;
     }
+
+    
+控制靈巧手運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 控制靈巧手運動
+    * @param [in] idstart 起始從站號
+    * @param [in] slaveNum 數量
+    * @param [in] pos 位置陣列，長度16，範圍(-360~360)
+    * @param [in] speed 速度百分比陣列，長度16，範圍[0~100]
+    * @param [in] force 力矩百分比陣列，長度16，範圍[0~100]
+    * @param [in] max_time 最大等待時間，範圍[0~30000]，單位ms
+    * @return 錯誤碼，成功返回0
+    */
+    errno_t SetDexterousHandsMove(int idstart, int slaveNum, double pos[16], int speed[16], int force[16], int max_time);
+        
+控制靈巧手復位激活
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 控制靈巧手復位激活
+    * @param [in] id 從站號
+    * @param [in] act 0-復位 1-激活
+    * @return 錯誤碼，成功返回0
+    */
+    errno_t SetDexterousHandsAct(int id, int act);
+            
+清除靈巧手錯誤
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 清除靈巧手錯誤
+    * @return 錯誤碼，成功返回0
+    */
+    errno_t ClearDexterousHandsError();
+                
+設置啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 設置啟用靈巧手動作控制功能
+    * @param [in] id 靈巧手設備編號
+    * @param [in] func 0-夾持觸發、1-夾爪初始化、2-位置設置、3-速度設置、4-力矩設置、6-讀夾爪狀態、7-讀初始化狀態、8-讀故障碼、9-讀位置、10-讀速度、11-讀力矩、12-旋轉圈數設置、13-旋轉速度設置、14-旋轉力矩設置、15-讀旋轉夾爪狀態、16-讀旋轉初始化狀態、17-讀旋轉圈數、18-讀旋轉速度、19-讀旋轉力矩、20-多軸同步運動設置、21-故障清除指令、22-單軸運行狀態、23-所有軸運行狀態
+    * @return 錯誤碼
+    */
+    errno_t SetDexterousHandsFunc(int id, int func[32]);
+                    
+獲取啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    /**
+    * @brief 獲取啟用靈巧手動作控制功能
+    * @param [in] id 靈巧手設備編號
+    * @param [out] func 0-夾持觸發、1-夾爪初始化、2-位置設置、3-速度設置、4-力矩設置、6-讀夾爪狀態、7-讀初始化狀態、8-讀故障碼、9-讀位置、10-讀速度、11-讀力矩、12-旋轉圈數設置、13-旋轉速度設置、14-旋轉力矩設置、15-讀旋轉夾爪狀態、16-讀旋轉初始化狀態、17-讀旋轉圈數、18-讀旋轉速度、19-讀旋轉力矩、20-多軸同步運動設置、21-故障清除指令、22-單軸運行狀態、23-所有軸運行狀態
+    * @return 錯誤碼
+    */
+    errno_t GetDexterousHandsFunc(int id, int func[32]);
+                        
+末端靈巧手配置及運動代碼示例
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:
+
+    int TestDexterousHands()
+    {
+    ROBOT_STATE_PKG pkg = {};
+    FRRobot robot;
+    robot.LoggerInit();
+    robot.SetLoggerLevel(1);
+    int rtn = robot.RPC("192.168.58.2");
+    if (rtn != 0)
+    {
+        return -1;
+    }
+    robot.SetReConnectParam(true, 30000, 500);
+    int id = 1;        // 從站號
+    int slaveNum = 4;     // 控制4個手指
+    int max_time = 8000;   // 最大等待時間 8秒
+    int speed[16] = {0};   // 速度陣列，全0表示使用默認速度
+    int force[16] = {0};   // 力矩陣列
+    // 初始化力矩陣列：前4個手指設為50%，其餘為0（透過Move指令下發數值）
+    for (int i = 0; i < 16; i++)
+    {
+        force[i] = (i < 4) ? 50 : 0;
+    }
+    // 輔助函數：設置位置陣列（前4個手指有效）
+    double pos[16] = {0.0};
+    JointPos j1(-91.876, -85.920, 109.279, -86.239, -96.664, -28.563);
+    JointPos j2(-40.954, -85.920, 109.279, -86.239, -96.664, -28.563);
+    ExaxisPos epos(0, 0, 0, 0);
+    DescPose offset_pos(0, 0, 0, 0, 0, 0);
+    printf("===== 靈巧手完整功能測試開始 =====\n");
+    // 1. 清除錯誤
+    int ret = robot.ClearDexterousHandsError();
+    printf("ClearDexterousHandsError rtn %d\n", ret);
+    // ========== 2. 設置功能開關 ==========
+    int setFunc[32] = {0};
+    setFunc[2] = 1;  // 啟用位置設置功能
+    setFunc[4] = 1;  // 啟用力矩設置功能
+    setFunc[9] = 1;  // 讀位置
+    setFunc[10] = 1;  // 讀力矩
+    setFunc[11] = 1;  // 讀狀態
+    setFunc[22] = 1;  // 單軸運動狀態
+    ret = robot.SetDexterousHandsFunc(id, setFunc);
+    printf("SetDexterousHandsFunc(使能+初始化+位置/速度/力矩功能啟用) rtn %d\n", ret);
+    // ========== 3. 讀取功能狀態（驗證設置是否生效） ==========
+    int getFunc[32] = {0}; // GetDexterousHandsFunc 返回32個整數
+    ret = robot.GetDexterousHandsFunc(id, getFunc);
+    printf("GetDexterousHandsFunc rtn %d\n", ret);
+    if (ret == 0)
+    {
+        // 打印全部32個數值
+        printf("GetDexterousHandsFunc 返回的全部32個數值:");
+        for (int i = 0; i < 32; i++)
+        {
+        printf(" [%d]={%d}", i, getFunc[i]);
+        if ((i + 1) % 8 == 0)
+        {
+            printf("\n");
+        } 
+        else if (i < 31)
+        {
+            printf(", ");
+        }
+        }
+    }
+    // ========== 4. 激活靈巧手 ==========
+    ret = robot.SetDexterousHandsAct(id, 1);
+    printf("SetDexterousHandsAct(激活) rtn %d\n", ret);
+    if (ret != 0)
+    {
+        printf("激活失敗，測試中止");
+        return -1;
+    }
+    // ========== 5. 初始移動到 20°（透過Move指令下發位置和力矩數值） ==========
+    memset(pos, 0, sizeof(pos));
+    pos[0] = 20;
+    pos[1] = 20;
+    pos[2] = 20;
+    pos[3] = 20;
+    ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+    printf("初始移動 20° -> %d\n", ret);
+    robot.Sleep(5000);
+    // ========== 6. 往復運動10次（10° ↔ 50°） ==========
+    printf("開始往復運動10次...");
+    for (int iteration = 1; iteration <= 10; iteration++)
+    {
+        robot.MoveJ(&j1, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        memset(pos, 0, sizeof(pos));
+        pos[0] = 10;
+        pos[1] = 10;
+        pos[2] = 10;
+        pos[3] = 10;
+        ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+        printf("移動到 10° -> %d\n", ret);
+        robot.Sleep(1000);
+        robot.MoveJ(&j2, 0, 0, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        memset(pos, 0, sizeof(pos));
+        pos[0] = 50;
+        pos[1] = 50;
+        pos[2] = 50;
+        pos[3] = 50;
+        ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time);
+        printf("移動到 50° -> %d\n", ret);
+        robot.Sleep(1000);
+    }
+    printf("測試完成（功能開關設置/讀取 + 激活 + 10次往復運動）。");
+    return 0;
+    }        

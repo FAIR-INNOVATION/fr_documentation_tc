@@ -13,6 +13,36 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.7
+     - 2026-06-25
+     - | 1.新增夾爪工件掉落報警錯誤，主故障碼8，子故障碼3。
+       | 2.更新機器人狀態回饋結構體，夾爪運動完成信號新增是否偵測到物體狀態；夾爪故障新增2-指令錯誤、3-工件掉落、其他-夾爪故障碼+3；
+       | 3.更新設置LUA程式停止/暫停後輸出復位代碼示例，優化載入lua檔案介面僅需要輸入lua檔案名稱，不再需要輸入路徑。
+       | 4.更新光電感測器TCP校準代碼示例，優化載入檔案介面僅需要輸入lua檔案名稱，不再需要輸入路徑。
+       | 5.更新設置軌跡運行中的速度代碼示例，優化載入軌跡J檔案介面僅需要輸入軌跡J檔案名稱，不再需要輸入路徑。
+       | 6.更新機器人軌跡J檔案複現代碼示例，優化載入軌跡J檔案介面僅需要輸入軌跡J檔案名稱，不再需要輸入路徑。
+       | 7.更新軌跡複現（軌跡前瞻）代碼示例，優化載入軌跡J檔案介面僅需要輸入軌跡J檔案名稱，不再需要輸入路徑。
+       | 8.LoadDefaultProgConfig()介面作業程式名稱參數僅需要輸入lua檔案名稱，不再需要輸入路徑。
+       | 9.ProgramLoad()介面作業程式名稱參數僅需要輸入lua檔案名稱，不再需要輸入路徑。
+       | 10.GetLoadedProgram()介面作業程式名稱參數僅需要輸入lua檔案名稱，不再需要輸入路徑。
+       | 11.更新機器人LUA程式操作代碼示例，優化載入檔案介面僅需要輸入lua檔案名稱，不再需要輸入路徑。
+       | 12.SetAxleLuaEnableDeviceType()介面增加靈巧手啟用狀態參數；
+       | 13.GetAxleLuaEnableDeviceType()介面增加靈巧手啟用狀態參數；
+       | 14.GetAxleLuaEnableDevice()介面增加靈巧手啟用設備編號狀態參數；
+       | 15.SetAxleLuaGripperFunc()介面夾爪功能碼陣列擴充至32個，增加旋轉夾爪控制等；
+       | 16.GetAxleLuaGripperFunc()介面夾爪功能碼陣列擴充至32個，增加旋轉夾爪狀態等；
+       | 17.SetCoderCompenParams()更新介面名稱錯誤；
+       | 18.新增SetDexterousHandsMove ()控制靈巧手運動介面。
+       | 19.新增SetDexterousHandsAct ()控制靈巧手復位激活介面。
+       | 20.新增ClearDexterousHandsError ()清除靈巧手錯誤介面。
+       | 21.新增SetDexterousHandsFunc()設置啟用靈巧手動作控制功能介面。
+       | 22.新增GetDexterousHandsFunc()獲取啟用靈巧手動作控制功能介面。
+       | 23.新增FT_LinInsertion()直線插入介面及力感測器旋轉插入代碼示例。
+       | 24.新增FT_FindSurface()、FT_CalCenterStart()、FT_CalCenterEnd()表面定位相關介面及代碼示例。
+       | 25.新增SetWeaveBackCenterConfig()、GetWeaveBackCenterConfig()設置、獲取擺動結束回週期零點參數。
+       | 26.新增SetWeaveOffsetRT()設置擺動實時偏移介面；
+       | 27.新增SetSpeedInstant()實時設置速度介面；
+
    * - V3.9.6
      - 2026-05-26
      - | 1.更新機器人狀態反饋結構體，增加擴展軸座標系編號狀態；

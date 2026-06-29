@@ -810,7 +810,7 @@
     "返回值", "- 錯誤碼 成功-0  失敗- errcode 
     - ``enable``：0-不啓用；1-啓用"
 
-設置末端LUA末端設備啓用類型
+設置末端LUA末端設備啟用類型
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -818,15 +818,17 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``SetAxleLuaEnableDeviceType(forceSensorEnable, gripperEnable, IOEnable)``"
-    "描述", "設置末端LUA末端設備啓用類型"
-    "必選參數", "- ``forceSensorEnable``：力傳感器啓用狀態，0-不啓用；1-啓用
-    - ``gripperEnable``：夾爪啓用狀態，0-不啓用；1-啓用
-    - ``IOEnable``：IO設備啓用狀態，0-不啓用；1-啓用"
+    "原型", "``SetAxleLuaEnableDeviceType(self, forceSensorEnable, gripperEnable, IOEnable, dexhandEnable)``"
+    "描述", "設置末端LUA末端設備啟用類型"
+    "必選參數", "
+    - ``forceSensorEnable``：力感測器啟用狀態，0-不啟用；1-啟用
+    - ``gripperEnable``：夾爪啟用狀態，0-不啟用；1-啟用
+    - ``IOEnable``：IO設備啟用狀態，0-不啟用；1-啟用
+    - ``dexhandEnable``：靈巧手啟用狀態，0-不啟用；1-啟用"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-獲取末端LUA末端設備啓用類型
+獲取末端LUA末端設備啟用類型
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -835,13 +837,14 @@
     :widths: 10 30
 
     "原型", "``GetAxleLuaEnableDeviceType()``"
-    "描述", "獲取末端LUA末端設備啓用類型"
+    "描述", "獲取末端LUA末端設備啟用類型"
     "必選參數", "無"
     "默認參數", "無"
     "返回值", "- 錯誤碼 成功-0  失敗- errcode 
-    - ``forceSensorEnable``：力傳感器啓用狀態，0-不啓用；1-啓用
-    - ``gripperEnable``：夾爪啓用狀態，0-不啓用；1-啓用
-    - ``IOEnable``：IO設備啓用狀態，0-不啓用；1-啓用"
+    - ``forceSensorEnable``：力感測器啟用狀態，0-不啟用；1-啟用
+    - ``gripperEnable``：夾爪啟用狀態，0-不啟用；1-啟用
+    - ``IOEnable``：IO設備啟用狀態，0-不啟用；1-啟用
+    - ``dexhandEnable``：靈巧手啟用狀態，0-不啟用；1-啟用"
 
 獲取當前配置的末端設備
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -856,11 +859,12 @@
     "必選參數", "無"
     "默認參數", "無"
     "返回值", "- 錯誤碼 成功-0  失敗- errcode 
-    - ``forceSensorEnable[8]``：力傳感器啓用狀態，0-不啓用；1-啓用
-    - ``gripperEnable[8]``：夾爪啓用狀態，0-不啓用；1-啓用
-    - ``IOEnable[8]``：IO設備啓用狀態，0-不啓用；1-啓用"
+    - ``forceSensorEnable[8]``：力感測器啟用狀態，0-不啟用；1-啟用
+    - ``gripperEnable[8]``：夾爪啟用狀態，0-不啟用；1-啟用
+    - ``IOEnable[8]``：IO設備啟用狀態，0-不啟用；1-啟用
+    - ``dexhandEnable``：靈巧手啟用狀態，0-不啟用；1-啟用"
 
-設置啓用夾爪動作控制功能
+設置啟用夾爪動作控制功能
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -869,13 +873,14 @@
     :widths: 10 30
 
     "原型", "``SetAxleLuaGripperFunc(id, func)``"
-    "描述", "設置啓用夾爪動作控制功能"
-    "必選參數", "- ``id``：夾爪設備編號
-    - ``func``：0-夾爪使能；1-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩,12-15預留"
+    "描述", "設置啟用夾爪動作控制功能"
+    "必選參數", "
+    - ``id``：夾爪設備編號
+    - ``func``：0-夾爪使能；1-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩,12-旋轉夾爪旋轉圈數設置； 13-旋轉夾爪旋轉速度設置； 14-旋轉夾爪旋轉力矩設置； 15-讀旋轉夾爪狀態；16-讀旋轉夾爪初始化狀態；17-讀旋轉夾爪圈數；18-讀旋轉夾爪速度；19-讀旋轉夾爪力矩；20-多軸同步運動設置；21-故障清除指令；22-單軸運行狀態；23-所有軸運行狀態；"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode "
 
-獲取啓用夾爪動作控制功能
+獲取啟用夾爪動作控制功能
 +++++++++++++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.5
 
@@ -884,11 +889,11 @@
     :widths: 10 30
 
     "原型", "``GetAxleLuaGripperFunc(id)``"
-    "描述", "獲取啓用夾爪動作控制功能"
+    "描述", "獲取啟用夾爪動作控制功能"
     "必選參數", "- ``id``：夾爪設備編號"
     "默認參數", "無"
     "返回值", "- 錯誤碼 成功-0  失敗- errcode 
-    - ``func``：0-夾爪使能；1-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩,12-15預留"
+    - ``func``：0-夾爪使能；1-夾爪初始化；2-位置設置；3-速度設置；4-力矩設置；6-讀夾爪狀態；7-讀初始化狀態；8-讀故障碼；9-讀位置；10-讀速度；11-讀力矩,12-旋轉夾爪旋轉圈數設置； 13-旋轉夾爪旋轉速度設置； 14-旋轉夾爪旋轉力矩設置； 15-讀旋轉夾爪狀態；16-讀旋轉夾爪初始化狀態；17-讀旋轉夾爪圈數；18-讀旋轉夾爪速度；19-讀旋轉夾爪力矩；20-多軸同步運動設置；21-故障清除指令；22-單軸運行狀態；23-所有軸運行狀態；"
 
 機器人Ethercat從站文件寫入
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -1848,3 +1853,177 @@ SmartTool按鈕代碼示例
 
     # 調用測試函數
     TestCtrlOpenLuaOperate(robot)
+
+控制靈巧手運動
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetDexterousHandsMove(self, idstart, slaveNum, pos, speed, force, max_time)``"
+    "描述", "控制靈巧手運動"
+    "必選參數", "
+    - ``idstart``：起始從站號;
+    - ``slaveNum``：數量;
+    - ``pos[16]``：位置(-360~360);
+    - ``speed[16]``：速度百分比，範圍[0~100];
+    - ``force[16]``：力矩百分比，範圍[0~100];
+    - ``max_time``：最大等待時間，範圍[0~30000]，單位ms;"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+        
+控制靈巧手復位激活
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetDexterousHandsAct(self, id, act)``"
+    "描述", "控制靈巧手復位激活"
+    "必選參數", "
+    - ``id``：從站號;
+    - ``act``：0-復位 1-激活"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+        
+清除靈巧手錯誤
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``ClearDexterousHandsError(self)``"
+    "描述", "清除靈巧手錯誤"
+    "必選參數", "無"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    
+設置啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetDexterousHandsFunc(self, id, func)``"
+    "描述", "設置啟用靈巧手動作控制功能"
+    "必選參數", "
+    - ``id``：靈巧手從站編號;
+    - ``func``：功能陣列，32個元素
+        0-夾持觸發、1-夾爪初始化、2-位置設置、3-速度設置、4-力矩設置、
+        6-讀夾爪狀態、7-讀初始化狀態、8-讀故障碼、9-讀位置、10-讀速度、
+        11-讀力矩、12-旋轉圈數設置、13-旋轉速度設置、14-旋轉力矩設置、
+        15-讀旋轉夾爪狀態、16-讀旋轉初始化狀態、17-讀旋轉圈數、18-讀旋轉速度、
+        19-讀旋轉力矩、20-多軸同步運動設置、21-故障清除指令、22-單軸運行狀態、
+        23-所有軸運行狀態"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+    
+獲取啟用靈巧手動作控制功能
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetDexterousHandsFunc(self, id)``"
+    "描述", "獲取啟用靈巧手動作控制功能"
+    "必選參數", "
+    - ``id``：靈巧手從站編號;
+    - ``func``：功能陣列，32個元素
+        0-夾持觸發、1-夾爪初始化、2-位置設置、3-速度設置、4-力矩設置、
+        6-讀夾爪狀態、7-讀初始化狀態、8-讀故障碼、9-讀位置、10-讀速度、
+        11-讀力矩、12-旋轉圈數設置、13-旋轉速度設置、14-旋轉力矩設置、
+        15-讀旋轉夾爪狀態、16-讀旋轉初始化狀態、17-讀旋轉圈數、18-讀旋轉速度、
+        19-讀旋轉力矩、20-多軸同步運動設置、21-故障清除指令、22-單軸運行狀態、
+        23-所有軸運行狀態"
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode"
+
+末端靈巧手配置及運動代碼示例  
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: python
+    :linenos:  
+     
+    from fairino import Robot
+    import time
+    robot = Robot.RPC('192.168.58.2')
+
+    def main(self):
+
+        id = 1                 
+        slaveNum = 4         
+        max_time = 8000      
+        speed = [0] * 16     
+        force = [0] * 16     
+
+        for i in range(16):
+            force[i] = 50 if i < 4 else 0
+
+        def set_positions(v1, v2, v3, v4):
+            pos = [0.0] * 16
+            pos[0] = v1
+            pos[1] = v2
+            pos[2] = v3
+            pos[3] = v4
+            return pos
+
+        j1 = [-53.426,-85.916,109.280,-86.236,-96.663,-28.560]
+        j2 = [-91.877,-85.917,109.281,-86.236,-96.663,-28.560]
+        epos = [0, 0, 0, 0]
+        offset_pos = [0, 0, 0, 0, 0, 0]
+
+        ret = robot.ClearDexterousHandsError()
+        print(f"ClearDexterousHandsError -> {ret}")
+
+        setFunc = [0] * 32
+        setFunc[2] = 1   
+        setFunc[4] = 1   
+        setFunc[9] = 1   
+        setFunc[10] = 1  
+        setFunc[11] = 1  
+        setFunc[22] = 1  
+
+        ret = robot.SetDexterousHandsFunc(id, setFunc)
+        print(f"SetDexterousHandsFunc(使能+初始化+位置/速度/力矩功能啟用) -> {ret}")
+
+        ret, getFunc = robot.GetDexterousHandsFunc(id)
+        print(f"GetDexterousHandsFunc -> {ret}")
+        if ret == 0:
+            print("GetDexterousHandsFunc :")
+            for i in range(len(getFunc)):
+                print(f"  [{i}]={getFunc[i]}", end="")
+                if (i + 1) % 8 == 0:
+                    print()  
+                elif i < len(getFunc) - 1:
+                    print(", ", end="")
+            if len(getFunc) % 8 != 0:
+
+        ret = robot.SetDexterousHandsAct(id, 1)
+        print(f"SetDexterousHandsAct() -> {ret}")
+        if ret != 0:
+            return
+            pos = set_positions(20, 20, 20, 20)
+        ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time)
+        print(f"ret: {ret}")
+        time.sleep(5)
+
+        for iteration in range(1, 11):
+            robot.MoveJ(joint_pos=j1, tool=1, user=0, vel=100, acc=100, ovl=100,
+                        exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+
+            pos = set_positions(10, 10, 10, 10)
+            ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time)
+            time.sleep(1)
+
+            robot.MoveJ(joint_pos=j2, tool=1, user=0, vel=100, acc=100, ovl=100,
+                        exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+
+            pos = set_positions(50, 50, 50, 50)
+            ret = robot.SetDexterousHandsMove(id, slaveNum, pos, speed, force, max_time)
+            time.sleep(1)
+
+    main(robot)

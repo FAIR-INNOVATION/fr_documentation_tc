@@ -217,14 +217,14 @@
 
         public byte EmergencyStop;          // 急停標誌，0-未按下，1-按下
         public int motion_done;             // 運動到位信號，1-到位，0-未到位
-        public byte gripper_motiondone;     // 夾爪運動完成信號，1-完成，0-未完成
+        public byte gripper_motiondone;     // 夾爪運動完成訊號，0-未完成，1-完成(未偵測到物體)，2-運動完成（偵測到物體）
         public int mc_queue_len;            // 運動指令隊列長度
         public byte collisionState;         // 碰撞檢測，1-碰撞，0-無碰撞
         public int trajectory_pnum;         // 軌跡點編號
         public byte safety_stop0_state;     // 安全停止信號SI0
         public byte safety_stop1_state;     // 安全停止信號SI1
         public byte gripper_fault_id;       // 錯誤夾爪號
-        public UInt16 gripper_fault;     /* 夾爪故障 */
+        public UInt16 gripper_fault;     /* 夾爪故障0-無故障 1-485超時 2-指令錯誤 3-工件掉落 其他-夾爪故障碼 */
         public UInt16 gripper_active;    /* 夾爪激活狀態 */
         public byte gripper_position;       // 夾爪位置
         public byte gripper_speed;       /* 夾爪速度 */

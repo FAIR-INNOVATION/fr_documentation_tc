@@ -1334,3 +1334,140 @@
     print(f"PhotoelectricSensorTCPCalibration rtn is {rtn},{TCP[0]},{TCP[1]},{TCP[2]},{TCP[3]},{TCP[4]},{TCP[5]}")
     robot.CloseRPC()
     return 0
+
+即時設置速度(指令幀，低延遲)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetSpeedInstant(self, vel)``"
+    "描述", "即時設置速度(指令幀，低延遲)"
+    "必選參數", "
+    - ``vel``：速度百分比，範圍[0~100]"
+    "默認參數", "無"
+    "返回值", "
+    - 錯誤碼 成功-0  失敗- errcode"
+
+設置擺動實時偏移
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``SetWeaveOffsetRT(self, offset)``"
+    "描述", "設置擺動實時偏移"
+    "必選參數", "
+    - ``offset``：實時偏移量[x,y,z,rx,ry,rz]，單位[mm，°]"
+    "默認參數", "無"
+    "返回值", "
+    - 錯誤碼 成功-0  失敗- errcode"
+
+擺動調速與實時偏移測試代碼示例    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+    :linenos: 
+
+    from fairino import Robot
+    import time
+    import threading
+
+
+    def main():
+        robot = Robot.RPC('192.168.58.2')
+        time.sleep(0.5)  
+
+        epos = [0.0, 0.0, 0.0, 0.0]
+        offset_pos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+        j1 = [5.027, -84.331, -75.139, -103.690, 86.379, 20.794]
+        d1 = [324.752, -83.339, 366.314, -172.321, -0.936, -106.047]
+
+        j2 = [-35.335, -117.598, -57.174, -95.234, 90.001, -19.560]
+        d2 = [324.999, -355.439, 260.000, 179.995, 0.003, -105.775]
+
+        j3 = [59.787, -117.594, -57.183, -95.222, 90.006, 75.562]
+        d3 = [324.998, 355.441, 260.002, 179.995, 0.003, -105.775]
+
+        rtn = 0
+
+        print("\nStep 1: MoveJ to start point")
+        rtn = robot.MoveJ(joint_pos=j1, desc_pos=d1, tool=1, user=0, vel=100, acc=100, ovl=50,
+                        exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+        print(f"  MoveJ(j1) rtn={rtn}")
+        time.sleep(0.5)
+
+        print("\nStep 2: MoveJ to weave entry point")
+        rtn = robot.MoveJ(joint_pos=j2, desc_pos=d2, tool=1, user=0, vel=100, acc=100, ovl=50,
+                        exaxis_pos=epos, blendT=-1, offset_flag=0, offset_pos=offset_pos)
+        print(f"  MoveJ(j2) rtn={rtn}")
+        time.sleep(0.5)
+
+        print("\nStep 3: WeaveStart + MoveL in background thread")
+        robot.WeaveStart(0)
+
+        weave_running = True
+        move_rtn = [0]  
+
+        def weave_move_thread():
+            rtn_val = robot.MoveL(joint_pos=j3, desc_pos=d3, tool=1, user=0, vel=100, acc=100, ovl=5,
+                                blendR=-1, offset_flag=0, exaxis_pos=epos, search=0,
+                                offset_pos=offset_pos, config=5, velAccParamMode=0, overSpeedStrategy=0, speedPercent=10)
+            print(f"  MoveL(weave) thread finished, rtn={rtn_val}")
+            move_rtn[0] = rtn_val
+            nonlocal weave_running
+            weave_running = False
+
+        weave_thread = threading.Thread(target=weave_move_thread)
+        weave_thread.daemon = True
+        weave_thread.start()
+        time.sleep(0.5)  
+
+        print("\nStep 4: SetSpeed test during weaving")
+        speed_values = [20, 50, 80, 30, 60, 10]
+        for speed in speed_values:
+            if not weave_running:
+                break
+            rtn = robot.SetSpeedInstant(speed)
+            print(f"  SetSpeed({speed}) -> rtn={rtn}")
+            # rtn, pkg = robot.GetRobotRealTimeState()
+            # print(f"target_TCP_CmpSpeed: [{', '.join([f'{x:.3f}' for x in pkg.target_TCP_CmpSpeed])}]")
+            time.sleep(5)
+
+        time.sleep(5)
+
+        print("\nStep 5: SetWeaveOffsetRT test (50 iterations, delta=0.1)")
+        accum_offset = 0.0
+        for i in range(50):
+            if not weave_running:
+                break
+            accum_offset += 1
+            weave_offset = [0.0, 0.0, accum_offset, 0.0, 0.0, 0.0]
+            rtn = robot.SetWeaveOffsetRT(weave_offset)
+            rtn, pkg = robot.GetRobotRealTimeState()
+            print(f"  [{i+1}/50] SetWeaveOffsetRT(x={accum_offset:.1f}) -> rtn={rtn}, "
+                f"TCP_pos=({pkg.tl_cur_pos[0]:.2f},{pkg.tl_cur_pos[1]:.2f},{pkg.tl_cur_pos[2]:.2f})")
+            time.sleep(0.1)
+
+        print("\nStep 6: Wait for weave MoveL, then WeaveEnd")
+        weave_thread.join()
+        robot.WeaveEnd(0)
+        time.sleep(0.5)
+
+        print("\nStep 7: MoveL back to start")
+        rtn = robot.MoveL(joint_pos=j1, desc_pos=d1, tool=1, user=0, vel=100, acc=100, ovl=50,
+                        blendR=-1, offset_flag=0, exaxis_pos=epos, search=0,
+                        offset_pos=offset_pos, config=50, velAccParamMode=0, overSpeedStrategy=0, speedPercent=10)
+        print(f"  MoveL(back) rtn={rtn}")
+
+        rtn, pkg = robot.GetRobotRealTimeState()
+        print(f"\n  Final robot state: main_code={pkg.main_code}, sub_code={pkg.sub_code}")
+        
+        robot.CloseRPC()
+
+
+    if __name__ == "__main__":
+        main()    

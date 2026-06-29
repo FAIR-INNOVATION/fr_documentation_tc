@@ -396,7 +396,7 @@ UDP擴展軸通訊參數
         public int ft_sensor_active;                // 力感測器激活狀態
         public int EmergencyStop;                   // 急停狀態
         public int motion_done;                     // 運動完成
-        public int gripper_motiondone;              // 夾爪運動完成
+        public int gripper_motiondone;              // 夾爪運動完成訊號，0-未完成，1-完成(未偵測到物體)，2-運動完成（偵測到物體）
         public int mc_queue_len;                    // 運動佇列長度
         public int collisionState;                  // 碰撞狀態
         public int trajectory_pnum;                 // 軌跡點序號
@@ -553,7 +553,7 @@ UDP擴展軸通訊參數
         FtSensorActive,         // 力矩感測器啟動狀態，0-復位，1-啟動
         EmergencyStop,          // 急停標誌，0-急停未按下，1-急停按下
         MotionDone,             // 運動到位信號，1-到位，0-未到位
-        GripperMotiondone,      // 夾爪運動完成信號，1-完成，0-未完成
+        GripperMotiondone,      // 夾爪運動完成訊號，0-未完成，1-完成(未偵測到物體)，2-運動完成（偵測到物體）
         McQueueLen,             // 運動指令佇列長度
         CollisionState,         // 碰撞偵測，1-碰撞，0-無碰撞
         TrajectoryPnum,         // 軌跡點編號

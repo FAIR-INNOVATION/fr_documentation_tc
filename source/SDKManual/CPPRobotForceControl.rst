@@ -1268,4 +1268,4 @@
     * @param [in] torqueCoeff J1-J6力矩補償係數[0-1]
     * @return 錯誤碼
     */
-    errno_t SerCoderCompenParams(int status, double torqueCoeff[6]);
+    errno_t SetCoderCompenParams(int status, double torqueCoeff[6]);
