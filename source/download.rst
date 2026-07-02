@@ -4,7 +4,8 @@
 
 宣傳冊
 --------------
-    :download:`法奧意威公司簡介 <_static/_doc/法奥意威公司简介.pdf>`
+
+    :download:`法奧意威公司簡介 <_static/_doc/FAIRINO公司简介.pdf>`
 
     :download:`法奧意威產品手冊 <_static/_doc/FAIRINO产品手册.pdf>`
 
@@ -12,9 +13,11 @@
 
     :download:`法奧意威醫療產業案例 <_static/_doc/法奥意威医疗行业案例.pdf>`
 
-    :download:`法奧意威焊接宣傳冊 <_static/_doc/法奥意威焊接宣传册.pdf>`
+    :download:`法奧意威焊接宣傳冊 <_static/_doc/FAIRINO焊接宣传册.pdf>`
 
     :download:`法奧意威碼垛宣傳冊 <_static/_doc/法奥意威码垛宣传册.pdf>`
+    
+    :download:`法奧人形機器人 <_static/_doc/FAIRINO人形机器人.pdf>`
 
 資質認證
 ---------------------------------
