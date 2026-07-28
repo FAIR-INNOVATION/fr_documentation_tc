@@ -210,78 +210,79 @@
      */
     errno_t ComputeExTCF(DescPose *tcp_pose);  
 
-設置外部工具坐標系
+設置外部工具座標系
 ++++++++++++++++++++++++++++++++++
-.. versionchanged:: C++SDK-v2.1.2.0
+.. versionchanged:: C++SDK-v3.9.8
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  設置外部工具坐標系
-    * @param  [in] id 坐標系編號，範圍[0~14]
+    * @brief  設置外部工具座標系
+    * @param  [in] id 座標系編號，20-39對應外部工具座標系0-19
     * @param  [in] etcp  工具中心點相對末端法蘭中心位姿
-    * @param  [in] etool  待定
+    * @param  [in] etool  安裝在機器人末端的工件座標系位姿
     * @return  錯誤碼
     */
     errno_t  SetExToolCoord(int id, DescPose *etcp, DescPose *etool);
 
-設置外部工具坐標系列表
+設置外部工具座標系列表
 ++++++++++++++++++++++++++++++++++
-.. versionchanged:: C++SDK-v2.1.2.0
+.. versionchanged:: C++SDK-v3.9.8
 
 .. code-block:: c++
     :linenos:
 
     /**
-    * @brief  設置外部工具坐標系列表
-    * @param  [in] id 坐標系編號，範圍[0~14]
+    * @brief  設置外部工具座標系列表
+    * @param  [in] id 座標系編號，20-39對應外部工具座標系0-19
     * @param  [in] etcp  工具中心點相對末端法蘭中心位姿
-    * @param  [in] etool  待定
+    * @param  [in] etool  安裝在機器人末端的工件座標系位姿
     * @return  錯誤碼
     */
     errno_t  SetExToolList(int id, DescPose *etcp, DescPose *etool);
 
-機器人外部工具坐標系操作代碼示例
+機器人外部工具座標系操作代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionchanged:: C++SDK-v3.9.8
 
 .. code-block:: c++
     :linenos:
 
     int TestExtCoord(void)
     {
-       ROBOT_STATE_PKG pkg = {};
-       FRRobot robot;
-       robot.LoggerInit();
-       robot.SetLoggerLevel(1);
-       int rtn = robot.RPC("192.168.58.2");
-       if (rtn != 0)
-       {
-          return -1;
-       }
-       robot.SetReConnectParam(true, 30000, 500);
-       DescPose p1Desc(-89.606, 779.517, 193.516, 178.000, 0.476, -92.484);
-       JointPos p1Joint(-108.145, -50.137, 85.818, -125.599, -87.946, 74.329);
-       DescPose p2Desc(-24.656, 850.384, 191.361, 177.079, -2.058, -95.355);
-       JointPos p2Joint(-111.024, -41.538, 69.222, -114.913, -87.743, 74.329);
-       DescPose p3Desc(-99.813, 766.661, 241.878, -176.817, 1.917, -91.604);
-       JointPos p3Joint(-107.266, -56.116, 85.971, -122.560, -92.548, 74.331);
-       ExaxisPos exaxisPos(0, 0, 0, 0);
-       DescPose offdese(0, 0, 0, 0, 0, 0);
-       DescPose posTCP[3] = { p1Desc , p2Desc , p3Desc };
-       DescPose coordRtn = {};
-       robot.MoveJ(&p1Joint, &p1Desc, 1, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
-       robot.SetExTCPPoint(1);
-       robot.MoveJ(&p2Joint, &p2Desc, 1, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
-       robot.SetExTCPPoint(2);
-       robot.MoveJ(&p3Joint, &p3Desc, 1, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
-       robot.SetExTCPPoint(3);
-       rtn = robot.ComputeExTCF(&coordRtn);
-       printf("ComputeExTCF          %d coord is %f %f %f %f %f %f \n", rtn, coordRtn.tran.x, coordRtn.tran.y, coordRtn.tran.z, coordRtn.rpy.rx, coordRtn.rpy.ry, coordRtn.rpy.rz);
-       robot.SetExToolCoord(1, &coordRtn, &offdese);
-       robot.SetExToolList(1, &coordRtn, &offdese);
-       robot.CloseRPC();
-       return 0;
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return -1;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        DescPose p1Desc(-89.606, 779.517, 193.516, 178.000, 0.476, -92.484);
+        JointPos p1Joint(-108.145, -50.137, 85.818, -125.599, -87.946, 74.329);
+        DescPose p2Desc(-24.656, 850.384, 191.361, 177.079, -2.058, -95.355);
+        JointPos p2Joint(-111.024, -41.538, 69.222, -114.913, -87.743, 74.329);
+        DescPose p3Desc(-99.813, 766.661, 241.878, -176.817, 1.917, -91.604);
+        JointPos p3Joint(-107.266, -56.116, 85.971, -122.560, -92.548, 74.331);
+        ExaxisPos exaxisPos(0, 0, 0, 0);
+        DescPose offdese(0, 0, 0, 0, 0, 0);
+        DescPose posTCP[3] = { p1Desc , p2Desc , p3Desc };
+        DescPose coordRtn = {};
+        robot.MoveJ(&p1Joint, 1, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+        robot.SetExTCPPoint(1);
+        robot.MoveJ(&p2Joint, 1, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+        robot.SetExTCPPoint(2);
+        robot.MoveJ(&p3Joint, 1, 0, 100, 100, 100, &exaxisPos, -1, 0, &offdese);
+        robot.SetExTCPPoint(3);
+        rtn = robot.ComputeExTCF(&coordRtn);
+        printf("ComputeExTCF          %d coord is %f %f %f %f %f %f \n", rtn, coordRtn.tran.x, coordRtn.tran.y, coordRtn.tran.z, coordRtn.rpy.rx, coordRtn.rpy.ry, coordRtn.rpy.rz);
+        robot.SetExToolCoord(21, &coordRtn, &offdese);
+        robot.SetExToolList(21, &coordRtn, &offdese);
+        robot.CloseRPC();
+        return 0;
     }
 
 設置工件參考點-三點法

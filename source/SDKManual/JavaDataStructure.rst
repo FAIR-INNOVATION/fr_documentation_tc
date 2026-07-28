@@ -497,6 +497,7 @@ UDP擴展軸通訊參數
         public int socketReadTimeout;                // Socket讀取超時
         public int tsWebStateComErr;                 // TS Web狀態通信錯誤
         public int exaxisCoordID;                  //擴展軸座標系編號
+        public int programRunState                //LUA程式運行狀態 0-程式未運行；1-程式運行中(包含程式暫停)
     }
   
 機器人狀態反饋配置結果類
@@ -653,4 +654,5 @@ UDP擴展軸通訊參數
         SocketReadTimeout,      // socket讀取超時，bit0-bit4對應socketID 1-4
         TsWebStateComErr,       // web-扭矩通訊失敗：0-正常，1-失敗
         ExaxisCoordID           // 擴展軸座標系編號
+        programRunState         //LUA程式運行狀態 0-程式未運行；1-程式運行中(包含程式暫停)
     };

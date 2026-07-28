@@ -207,9 +207,9 @@
 
     "原型", "``SetExToolCoord(id,etcp,etool)``"
     "描述", "設置外部工具座標系"
-    "必選參數", "- ``id``:座標系編號，範圍[0~14]；
-    - ``etcp``:外部工具座標系，單位[mm][°]；
-    - ``etool``:末端工具座標系，單位[mm][°]；"
+    "必選參數", "- ``id``:座標系編號，20-39對應外部工具座標系0-19；
+    - ``etcp``:[x,y,z,rx,ry,rz] 外部工具座標系，單位[mm][°]；
+    - ``etool``:[x,y,z,rx,ry,rz] 末端工具座標系，單位[mm][°]；"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
@@ -221,9 +221,9 @@
 
     "原型", "``SetExToolList(id,etcp ,etool)``"
     "描述", "設置外部工具座標系列表"
-    "必選參數", "- ``id``:座標系編號，範圍[0~14]；
-    - ``etcp``:外部工具座標系，單位[mm][°]；
-    - ``etool``:末端工具座標系，單位[mm][°]；"
+    "必選參數", "- ``id``:座標系編號，20-39對應外部工具座標系0-19；
+    - ``etcp``:[x,y,z,rx,ry,rz] 外部工具座標系，單位[mm][°]；
+    - ``etool``:[x,y,z,rx,ry,rz] 末端工具座標系，單位[mm][°]；"
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode "
 
@@ -232,31 +232,42 @@
 .. code-block:: python
     :linenos:
 
-    from fairino import Robot
+    from time import sleep
     import time
-    import threading
-    # 與機器人控制器建立連接，連接成功返回一個機器人對象
+    from fairino import Robot
+
     robot = Robot.RPC('192.168.58.2')
-    p1Desc = [-89.606, 779.517, 193.516, 178.000, 0.476, -92.484]
-    p1Joint = [-108.145, -50.137, 85.818, -125.599, -87.946, 74.329]
-    p2Desc = [-24.656, 850.384, 191.361, 177.079, -2.058, -95.355]
-    p2Joint = [-111.024, -41.538, 69.222, -114.913, -87.743, 74.329]
-    p3Desc = [-99.813, 766.661, 241.878, -176.817, 1.917, -91.604]
-    p3Joint = [-107.266, -56.116, 85.971, -122.560, -92.548, 74.331]
-    exaxisPos = [0, 0, 0, 0]
-    offdese = [0, 0, 0, 0, 0, 0]
-    posTCP = [p1Desc, p2Desc, p3Desc]
-    robot.MoveJ(joint_pos=p1Joint,tool=1, user=0, vel=50)
-    robot.SetExTCPPoint(1)
-    robot.MoveJ(joint_pos=p2Joint,tool=1, user=0, vel=50)
-    robot.SetExTCPPoint(2)
-    robot.MoveJ(joint_pos=p3Joint,tool=1, user=0, vel=50)
-    robot.SetExTCPPoint(3)
-    rtn,coordRtn = robot.ComputeExTCF()
-    print(f"ComputeExTCF {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
-    robot.SetExToolCoord(1, coordRtn, offdese)
-    robot.SetExToolList(1, coordRtn, offdese)
-    robot.CloseRPC()
+
+    def TestExtCoord(self):
+        p1Desc = [-89.606, 779.517, 193.516, 178.000, 0.476, -92.484]
+        p1Joint = [-108.145, -50.137, 85.818, -125.599, -87.946, 74.329]
+
+        p2Desc = [-24.656, 850.384, 191.361, 177.079, -2.058, -95.355]
+        p2Joint = [-111.024, -41.538, 69.222, -114.913, -87.743, 74.329]
+
+        p3Desc = [-99.813, 766.661, 241.878, -176.817, 1.917, -91.604]
+        p3Joint = [-107.266, -56.116, 85.971, -122.560, -92.548, 74.331]
+
+        exaxisPos = [0, 0, 0, 0]
+        offdese = [0, 0, 0, 0, 0, 0]
+
+        posTCP = [p1Desc, p2Desc, p3Desc]
+        # coordRtn = DescPose()
+
+        robot.MoveJ(joint_pos=p1Joint,tool=1, user=0, vel=50)
+        robot.SetExTCPPoint(1)
+        robot.MoveJ(joint_pos=p2Joint,tool=1, user=0, vel=50)
+        robot.SetExTCPPoint(2)
+        robot.MoveJ(joint_pos=p3Joint,tool=1, user=0, vel=50)
+        robot.SetExTCPPoint(3)
+        rtn,coordRtn = robot.ComputeExTCF()
+        print(f"ComputeExTCF {rtn}  coord is {coordRtn[0]} {coordRtn[1]} {coordRtn[2]} {coordRtn[3]} {coordRtn[4]} {coordRtn[5]}")
+
+        robot.SetExToolCoord(21, coordRtn, offdese)
+        robot.SetExToolList(21, coordRtn, offdese)
+
+        robot.CloseRPC()
+    TestExtCoord(robot)
 
 設置工件參考點-三點法
 ++++++++++++++++++++++++

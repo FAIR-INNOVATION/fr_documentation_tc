@@ -376,6 +376,125 @@
     "默認參數", "無"
     "返回值", "錯誤碼 成功-0  失敗- errcode"
 
+獲取焊機控制模式
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v3.9.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetWeldMachineCtrlMode(self)``"
+    "描述", "獲取焊機控制模式"
+    "必選參數", "
+    - ``mode``：mode 焊機控制模式;0-直流一元模式；1-脈衝一元模式；2-JOB模式；3-近控模式；4-分別模式；5-CC/CV模式；6-TIG；7-CMT
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+獲取焊機控制模式代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-v3.9.8
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+
+    def main():
+        robot = Robot.RPC('192.168.58.2')
+        time.sleep(0.5)  
+
+        robot.WeldingSetProcessParam(1, 177, 27, 1000, 178, 28, 176, 26, 1000)
+        robot.WeldingSetProcessParam(2, 188, 28, 555, 199, 29, 133, 23, 333)
+
+        start_current = 0
+        start_voltage = 0
+        start_time = 0
+        weld_current = 0
+        weld_voltage = 0
+        end_current = 0
+        end_voltage = 0
+        end_time = 0
+
+        error, start_current, start_voltage, start_time, weld_current, weld_voltage, end_current,end_voltage, end_time = robot.WeldingGetProcessParam(1)
+        print(f"the Num 1 process param is {start_current} {start_voltage} {start_time} {weld_current} {weld_voltage} {end_current} {end_voltage} {end_time}")
+
+        error, start_current, start_voltage, start_time, weld_current, weld_voltage, end_current,end_voltage, end_time = robot.WeldingGetProcessParam(2)
+        print(f"the Num 2 process param is {start_current} {start_voltage} {start_time} {weld_current} {weld_voltage} {end_current} {end_voltage} {end_time}")
+
+        rtn = robot.WeldingSetCurrentRelation(0, 400, 0, 10, 0)
+        print(f"WeldingSetCurrentRelation rtn is: {rtn}")
+
+        rtn = robot.WeldingSetVoltageRelation(0, 40, 0, 10, 1)
+        print(f"WeldingSetVoltageRelation rtn is: {rtn}")
+
+        current_min = 0
+        current_max = 0
+        vol_min = 0
+        vol_max = 0
+        output_vmin = 0
+        output_vmax = 0
+        cur_index = 0
+        vol_index = 0
+
+        rtn,current_min, current_max, output_vmin, output_vmax, cur_index = robot.WeldingGetCurrentRelation()
+        print(f"WeldingGetCurrentRelation rtn is: {rtn}")
+        print(
+            f"current min {current_min} current max {current_max} output vol min {output_vmin} output vol max {output_vmax}")
+
+        rtn,vol_min, vol_max, output_vmin, output_vmax, vol_index = robot.WeldingGetVoltageRelation()
+        print(f"WeldingGetVoltageRelation rtn is: {rtn}")
+        print(f"vol min {vol_min} vol max {vol_max} output vol min {output_vmin} output vol max {output_vmax}")
+
+        rtn = robot.WeldingSetCurrent(1, 100, 0, 0)
+        print(f"WeldingSetCurrent rtn is: {rtn}")
+
+        time.sleep(3)
+
+        rtn = robot.WeldingSetVoltage(1, 10, 0, 0)
+        print(f"WeldingSetVoltage rtn is: {rtn}")
+
+        rtn = robot.WeaveSetPara(0, 0, 2.000000, 0, 10.000000, 0.000000, 0.000000, 0, 0, 0, 0, 0,0.0, 60.000000)
+        print(f"rtn is: {rtn}")
+
+        robot.WeaveOnlineSetPara(0, 0, 1, 0, 20, 0, 0, 0, 0)
+
+        rtn = robot.WeldingSetCheckArcInterruptionParam(1, 200)
+        print(f"WeldingSetCheckArcInterruptionParam {rtn}")
+
+        rtn = robot.WeldingSetReWeldAfterBreakOffParam(1, 5.7, 98.2, 0)
+        print(f"WeldingSetReWeldAfterBreakOffParam {rtn}")
+
+        enable = 0
+        length = 0
+        velocity = 0
+        move_type = 0
+        check_enable = 0
+        arc_interrupt_time_length = 0
+
+        rtn,check_enable, arc_interrupt_time_length = robot.WeldingGetCheckArcInterruptionParam()
+        print(
+            f"WeldingGetCheckArcInterruptionParam checkEnable {check_enable} arcInterruptTimeLength {arc_interrupt_time_length}")
+
+        rtn,enable, length, velocity, move_type = robot.WeldingGetReWeldAfterBreakOffParam()
+        print(
+            f"WeldingGetReWeldAfterBreakOffParam enable = {enable}, length = {length}, velocity = {velocity}, moveType = {move_type}")
+
+        robot.SetWeldMachineCtrlModeExtDoNum(17)
+        for i in range(5):
+            robot.SetWeldMachineCtrlMode(0,1)
+            error,getCtrlMode=robot.GetWeldMachineCtrlMode
+            print(f"GetWeldMachineCtrlMode = {getCtrlMode}")
+            time.sleep(1)
+            robot.SetWeldMachineCtrlMode(1,1)
+            error, getCtrlMode = robot.GetWeldMachineCtrlMode
+            print(f"GetWeldMachineCtrlMode = {getCtrlMode}")
+            time.sleep(1)
+
+        robot.CloseRPC()
+
 焊接開始
 ++++++++++++++++++++++++++++++++++
 .. versionadded:: python SDK-v2.0.1
@@ -859,6 +978,116 @@
     rtn = robot.SetWireSearchExtDIONum(0, 1)
     print(f"SetWireSearchExtDIONum rtn is {rtn}")
     robot.CloseRPC()
+
+獲取擴展DI功能配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-V3.9.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetExtDIConfig(self)``"
+    "描述", "獲取擴展DI功能配置"
+    "必選參數", "
+    - ``DIConfig``：擴展DI輸入配置；DIConfig[0]-焊機準備擴展DI端口
+    - ``DIConfig[1]``：起弧成功擴展DI端口
+    - ``DIConfig[2]``：焊接中斷恢復擴展DI端口
+    - ``DIConfig[3]``：焊接中斷退出擴展DI端口
+    - ``DIConfig[4]``：焊絲尋位成功擴展DI端口
+    - ``DIConfig[5]``：雷射焊機運行狀態擴展DI端口
+    - ``DIConfig[6]``：雷射焊機故障狀態擴展DI端口
+    - ``DIConfig[7-15]``：預留
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+獲取擴展DO功能配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-V3.9.8
+
+.. csv-table:: 
+    :stub-columns: 1
+    :widths: 10 30
+
+    "原型", "``GetExtDOConfig(self)``"
+    "描述", "獲取擴展DO功能配置"
+    "必選參數", "
+    - ``DOConfig``：擴展DO輸入配置；DOConfig[0]-焊機起弧擴展DO端口
+    - ``DOConfig[1]``：氣體檢測擴展DO端口
+    - ``DOConfig[2]``：正向送絲擴展DO端口
+    - ``DOConfig[3]``：反向送絲擴展DO端口
+    - ``DOConfig[4]``：焊絲尋位擴展DO端口
+    - ``DOConfig[5]``：焊機控制模式擴展DO端口
+    - ``DOConfig[6]``：雷射焊機使能擴展DO端口
+    - ``DOConfig[7]``：雷射焊機啟動(出光)擴展DO端口
+    - ``DOConfig[8]``：雷射焊機復位擴展DO端口
+    - ``DOConfig[9-15]``：預留
+    "
+    "默認參數", "無"
+    "返回值", "錯誤碼 成功-0  失敗- errcode" 
+
+獲取擴展DI/DO代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. versionadded:: python SDK-V3.9.8
+
+.. code-block:: python
+    :linenos:
+
+    from fairino import Robot
+    import time
+
+    def main():
+        robot = Robot.RPC('192.168.58.2')
+        time.sleep(0.5)  
+
+    rtn = robot.SetArcStartExtDoNum(10)
+        print(f"SetArcStartExtDoNum rtn is {rtn}")
+
+        rtn = robot.SetAirControlExtDoNum(20)
+        print(f"SetAirControlExtDoNum rtn is {rtn}")
+
+        rtn = robot.SetWireForwardFeedExtDoNum(30)
+        print(f"SetWireForwardFeedExtDoNum rtn is {rtn}")
+
+        rtn = robot.SetWireReverseFeedExtDoNum(40)
+        print(f"SetWireReverseFeedExtDoNum rtn is {rtn}")
+
+        rtn = robot.SetWeldReadyExtDiNum(50)
+        print(f"SetWeldReadyExtDiNum rtn is {rtn}")
+
+        rtn = robot.SetArcDoneExtDiNum(60)
+        print(f"SetArcDoneExtDiNum rtn is {rtn}")
+
+        rtn = robot.SetExtDIWeldBreakOffRecover(70, 80)
+        print(f"SetExtDIWeldBreakOffRecover rtn is {rtn}")
+
+        rtn = robot.SetWireSearchExtDIONum(0, 1)
+        print(f"SetWireSearchExtDIONum rtn is {rtn}")
+
+        rtn, DIConfig = robot.GetExtDIConfig()
+        print(f"GetExtDIConfig rtn is {rtn}")
+        print(f"welder ready {DIConfig[0]}")
+        print(f"arc done {DIConfig[1]}")
+        print(f"reweld start {DIConfig[2]}")
+        print(f"abort reweld {DIConfig[3]}")
+        print(f"wiresearch done {DIConfig[4]}")
+        print(f"Laser welding State {DIConfig[5]}")
+        print(f"laser welding error state {DIConfig[6]}")
+
+        rtn, DOConfig = robot.GetExtDOConfig()
+        print(f"GetExtDOConfig rtn is {rtn}")
+        print(f"Arc Start {DOConfig[0]}")
+        print(f"Air Test {DOConfig[1]}")
+        print(f"Wire forward {DOConfig[2]}")
+        print(f"Wire Inverse {DOConfig[3]}")
+        print(f"wiresearch {DOConfig[4]}")
+        print(f"Weld Mode {DOConfig[5]}")
+        print(f"laser Enable {DOConfig[6]}")
+        print(f"Laser On {DOConfig[7]}")
+        print(f"Laser Reset Error {DOConfig[8]}")
+
+        robot.CloseRPC()
 
 電弧跟蹤控制
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

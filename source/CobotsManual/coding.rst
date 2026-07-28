@@ -176,7 +176,7 @@
 
    作用：程式樹模式和lua編輯模式互相切換。
 
-頂部右側圖示說明如下：
+頂部右側圖標說明如下：
 
 .. note:: 
    .. image:: coding/240.png
@@ -184,8 +184,44 @@
       :align: left
 
    名稱：**程式編程新增/編輯**
+   
+   作用：新增/編輯當前程式命令的內容
 
-   作用：新增/編輯目前程式命令的內容
+.. note:: 
+   .. image:: coding/245.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**局部示教點**
+   
+   作用：僅應用於當前程式的示教點
+
+.. note:: 
+   .. image:: coding/242.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**NewDofile子程式界面**
+   
+   作用：當前程式命令中存在NewDofile指令時，點擊進入選擇子程式名稱查看子程式內容。
+
+.. note:: 
+   .. image:: coding/244.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**當前示教程式備份**
+   
+   作用：記錄當前程式的修改內容
+
+.. note:: 
+   .. image:: coding/602.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**Print列印日誌**
+   
+   作用：指定資訊輸出至 WebApp 列印視窗，方便偵錯與資料追溯
 
 .. note:: 
    .. image:: coding/241.png
@@ -193,17 +229,17 @@
       :align: left
 
    名稱：**機器人模型**
-
-   作用：返回機器人3D模型介面
+   
+   作用：返回機器人3D模型界面
 
 .. note:: 
-   .. image:: coding/242.png
+   .. image:: coding/596.png
       :height: 0.75in
       :align: left
 
-   名稱：**NewDofile子程式介面**
-
-   作用：當程式指令中存在NewDofile指令時，點選進入選擇子程序名稱查看子程序內容。
+   名稱：**Socket 網路偵錯**
+   
+   作用：網路通訊偵錯界面
 
 .. note:: 
    .. image:: coding/243.png
@@ -211,26 +247,53 @@
       :align: left
 
    名稱：**Modbus TCP設定**
-
+   
    作用：配置Modbus TCP通訊的參數
 
 .. note:: 
-   .. image:: coding/244.png
+   .. image:: coding/597.png
       :height: 0.75in
       :align: left
 
-   名稱：**Modbus TCP設定**
-
-   作用：配置Modbus TCP通訊的參數
+   名稱：**Modbus RTU設定**
+   
+   作用：配置Modbus RTU通訊的參數
 
 .. note:: 
-   .. image:: coding/245.png
+   .. image:: coding/598.png
       :height: 0.75in
       :align: left
 
-   名稱：**Modbus TCP設定**
+   名稱：**後台程式管理**
+   
+   作用：配置後台程式界面
 
-   作用：配置Modbus TCP通訊的參數
+.. note:: 
+   .. image:: coding/599.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**使用者變數管理**
+   
+   作用：配置使用者變數界面
+
+.. note:: 
+   .. image:: coding/600.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**示教點**
+   
+   作用：配置示教點界面
+
+.. note:: 
+   .. image:: coding/601.png
+      :height: 0.75in
+      :align: left
+
+   名稱：**主程式配置**
+   
+   作用：配置主程式
 
 程式命令
 ~~~~~~~~~~~
@@ -1431,6 +1494,98 @@ DMP是一種軌跡模仿學習的方法，需要事先規劃參考軌跡。在�
 
 .. centered:: 圖表 9.5-33 WPTrsf指令介面
 
+工件轉換和安全速度功能
+**************************************************************
+
+概述
+""""""""""""""""""""""""""""""""""""
+
+工件轉換功能是指將當前工件座標系下的PTP\LIN\ARC\CIR運動軌跡遷移至目標工件座標系下運行。
+
+安全速度功能是指機器人笛卡爾\關節空間中速度限制的開放配置，實現工作空間和關節空間的速度保護。
+
+工件轉換功能操作流程
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+**Step1**：透過WebApp標定機器人工件座標系。該功能的具體操作步驟可參考相應章節的用戶手冊。
+
+**Step2**：點位示教。透過WebApp示教PTP\LIN\ARC\CIR運動點位及編寫LUA程式，該功能的具體操作步驟可參考相應章節的用戶手冊。
+
+**Step3**：轉換工件座標系設置。在WebApp主界面，點擊「示教程式」-「程式編程」，進入「運動指令」指令區。
+
+.. image:: coding/583.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 9.5-33-1 「運動指令」指令區
+
+在「運動指令」指令區，點擊「工件轉換」按鈕，進入「WPTrsf」指令配置界面。
+
+.. image:: coding/584.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.5-33-2 WPTrsf指令配置
+
+「WPTrsf」指令配置界面->「指令編輯」配置區，「選擇工件座標系」下拉框中選擇目標轉換的工件座標系編號，點擊「加入」-「應用」按鈕，完成工件轉換功能配置。
+
+**Step4**：編寫工件轉換功能的LUA程式。調整步驟2至步驟3生成的指令順序，運行該LUA程式即可實現工件轉換功能。
+
+.. image:: coding/585.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 9.5-33-3 工件轉換功能的LUA程式
+
+安全速度功能操作流程
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+在WebApp主界面，點擊「初始設置」-「安全」-「安全速度」，進入「安全速度」配置區。
+
+.. image:: coding/586.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.5-33-4 安全速度指令配置
+
+「安全速度」配置區->「功能啟用」下拉框中，可以選擇「不啟用」、「手動模式啟用」及「所有模式啟用」選項。
+
+其中「手動模式啟用」表示為在WebApp中切換為手動模式時啟用；「所有模式啟用」表示為在WebApp中切換為手動模式、自動模式及拖動模式時啟用。
+
+下圖所示的「安全速度」配置區，「TCP限制速度」、「J1限制速度」、「J2限制速度」、「J3限制速度」、「J4限制速度」、「J5限制速度」及「J6限制速度」輸入框內，可以分別設置機器人笛卡爾和關節空間中的速度保護。
+
+值得注意的是，上述速度保護在機器人運動過程中，按其中最小值優先觸發。
+
+「安全速度」配置區->「超速後模式」下拉框中，可以選擇「停止報警」、「自動限速」及「停止報警後去使能」選項，如下表所示。
+
+.. centered:: 表 9.5-4  不同「功能啟用」選項下的「超速後模式」選擇
+
+.. list-table::
+   :widths: 25 25 25 25
+   :header-rows: 0
+   :align: center
+
+   * - \
+     - **停止報警**
+     - **自動限速**
+     - **停止報警後去使能**
+
+   * - **手動模式啟用**
+     - 支援
+     - 支援
+     - 支援
+
+   * - **所有模式啟用**
+     - 支援
+     - 不支援
+     - 支援
+			
+「停止報警」：當關節指令和反饋速度均超越安全速度時，WebApp提示超速警告；
+
+「自動限速」：當關節指令和反饋速度均超越安全速度時，將自動降速在安全速度內；
+
+「停止報警後去使能」：當關節指令和反饋速度均超越安全速度時，WebApp提示超速警告且機器人全關節去使能。   
+
 工具轉換命令
 ++++++++++++++++
 
@@ -1727,6 +1882,71 @@ Acc指令是實現機器人加速度可單獨設定功能，透過調節運動�
    :align: center
 
 .. centered:: 圖表 9.7-5 Conveyor指令介面
+
+輸送帶原地跟蹤運動功能
+***********************************************************************
+
+概述
+"""""""""""""""""""""""""""""""""""
+
+本功能是指機器人能夠識別並同步追蹤在輸送帶上運動的物體，然後在不停止輸送帶的情況下，實現機器人與物體的「相對靜止」運動。
+
+操作流程
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+**Step1**：點擊「輔助應用」-「工藝包」-「輸送帶跟蹤」進行輸送帶跟蹤參數配置，包括「I/O配置」、「參數配置」、「抓取點補償」（僅「跟蹤抓取」功能需配置）和「參考點配置」。其中「參考點配置」中的「起始點a」的位置，為輸送帶運動開始時的物體位置；「終點b」的位置，為輸送帶運動結束的物體位置。詳細操作步驟見相應章節。
+
+**Step2**：跟蹤運動使用工件座標系作為輸送帶座標系，因此需要設置工件座標系。點擊「初始設置」-「基礎」，選擇「工件座標系」，點擊選擇「wobjcoord0」以外的工件座標系進行標定，標定方式參考相應章節。
+
+**Step3**：點擊「示教程式」-「程式編程」-「輸送帶」，進入輸送帶功能配置頁面。
+
+**Step4**：點擊「跟蹤開啟」按鈕，工作模式選為「跟蹤運動」，點擊「添加」按鈕。
+
+.. image:: coding/590.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.7-5-1 跟蹤開啟設置
+
+**Step5**：點擊「I/O即時檢測」按鈕，設置最大等待時間，點擊「添加」按鈕。
+
+.. image:: coding/591.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.7-5-2 I/O即時檢測設置
+
+**Step6**：點擊「位置即時檢測」按鈕，工作模式選為「跟蹤運動」，點擊「添加」按鈕。
+
+.. image:: coding/592.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.7-5-3 位置即時檢測設置
+
+**Step7**：點擊「原地跟蹤運動」按鈕，工作模式有「時間」、「距離」和「時間+距離」三種。其中，「時間」模式，需設置運動時間，從輸送帶跟蹤開啟處計算，滿足設定的時間後，會停止跟蹤運動；「距離」模式，需設置運動距離，從輸送帶跟蹤開啟處計算，滿足設定的距離後，會停止跟蹤運動；「時間+距離」模式，需同時設置運動時間和運動距離，從輸送帶跟蹤開啟處計算，滿足設定的時間或距離的一個條件時，會停止跟蹤運動。注意：為了運動環境的安全，這三種運動模式的最大跟蹤位置，均不會超過輸送帶標定時「終點b」的位置。點擊「添加」按鈕。
+
+.. image:: coding/593.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.7-5-4 原地跟蹤運動參數設置
+
+**Step8**：點擊「跟蹤關閉」按鈕，點擊「添加」按鈕。
+
+.. image:: coding/594.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.7-5-5 跟蹤關閉設置
+
+**Step9**：生成的輸送帶原地跟蹤運動的lua程式如圖所示，運行該程式，即可實現輸送帶原地跟蹤運動。
+
+.. image:: coding/595.png
+   :width: 4in
+   :align: center
+
+.. centered:: 圖表 9.7-5-6 輸送帶原地跟蹤運動lua程式
 
 打磨設備命令
 ++++++++++++++++
@@ -8690,3 +8910,75 @@ Scoket通訊
    :align: center
 
 .. centered:: 圖表 9.39‑10 機器人運動中列印目前位置及DI示例
+
+大型LUA程式及子程式web載入功能優化功能
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+背景
+++++++++++++++++++++++++++++++++++++++++++++++
+
+當前機器人無法處理大型lua程式（20w+），當上傳大型lua程式時web頁面無法進行載入及使用；
+
+同時匯入程式時，當前匯入邏輯不進行程式解析校驗，匯入程式後需手動開啟儲存校驗，當使用同時大量子程式呼叫時，需手動逐一開啟，耗時嚴重，極大的降低工作效率。
+
+概述
+++++++++++++++++++++++++++++++++++++++++++++++
+
+此次優化針對匯入的程式，後端自動進行解析儲存，後續子程式上傳後無需手動開啟儲存可直接呼叫。
+
+其中針對大型lua程式，web前端匯入大型lua程式（不需要二次解析的原生lua程式）時以RAW前綴命名，如RAW_test.lua。此類程式代表該程式均為原生lua語句，不包含應用業務資訊，可直接放入lua直譯器中運行的程式，控制器只需要對其進行語法校驗，不再逐行進行解析，此舉可大幅減少檔案匯入解析時間，同時前端不再針對大型lua程式進行動畫渲染，程式以文字形式進行展示，不再動態顯示高亮以及運行行號，提高前端的資料渲染效率。具體需要解析語句可參考1.4章節。
+
+Web在匯入程式後需增加進度條提示，同時匯入成功後進行提示。
+
+針對大型lua程式，建議使用子程式+RAW_方式配合使用，可提高操作效率。
+
+大型lua程式操作流程
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+**Step1**：將大型lua程式以RAW_命名，如RAW_test200000.lua。
+
+**Step2**：開啟web頁面，依序點擊「示教程式」->「程式編程」按鈕，選擇「匯入」指令，在「匯入」檔案中選擇RAW_test200000.lua。
+
+.. image:: coding/587.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.40‑1 RAW_檔案匯入    
+
+**Step3**：等待匯入完成，匯入完成時已完成匯入、解析、儲存、渲染等操作，此時檔案可直接運行。
+
+.. image:: coding/588.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.40‑2 匯入等待提示   
+
+子程式操作流程
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+**Step1**：開啟web頁面，依序點擊「示教程式」->「程式編程」按鈕，選擇「匯入」指令，在「匯入」檔案中批量選擇主程式以及子程式。
+
+**Step2**：等待所有程式匯入成功，切換機器人為自動模式，即可直接運行主程式。
+
+注意事項
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+RAW_檔案只對語法進行校驗，不對檔案內容進行逐行解析生成，包含點位資訊，IO操作等便於客戶使用的自訂整合lua函數，此類函數需要結合使用者自訂資料進行二次生成可直接運行的lua函數，無法在RAW_檔案中使用。
+
+.. image:: coding/589.png
+   :width: 6in
+   :align: center
+
+.. centered:: 圖表 9.40‑3 匯入LUA程式流程圖 
+
+RAW_檔案編寫可參考FRLua程式腳本使用者手冊，其中以下lua函數需要進行解析，不適用於RAW_檔案。
+
+laserPTP(), EXT_AXIS_PTP(), SPTP(), NewSP(), SplinePTP(), laserLin(), SLIN(), Lin(), laserARC(), ARC() 
+laserCircle(), Circle(), TCPComputeCircleCenter(), unifCircle(), NewSpiral(), Spiral(), SCIRC() 
+ModbusSlaveWriteDO(), ModbusSlaveWriteDI(), ModbusSlaveWriteAO(), ModbusSlaveWriteAI(), ModbusSlaveReadDO(), ModbusSlaveReadDI(), ModbusSlaveReadAO(), ModbusSlaveReadAI(), ModbusSlaveWaitDI(), ModbusSlaveWaitAI()
+ModbusMasterWriteDO(), ModbusMasterWriteAO(), ModbusMasterReadDO(), ModbusMasterReadDI(), ModbusMasterReadAO(), ModbusMasterReadAI(), ModbusMasterWaitDI(), ModbusMasterWaitAI()
+ModbusSlaveWriteDO_RTU(), ModbusSlaveWriteDI_RTU(), ModbusSlaveWriteAO_RTU(), ModbusSlaveWriteAI_RTU(), ModbusSlaveReadDO_RTU(), ModbusSlaveReadDI_RTU(), ModbusSlaveReadAO_RTU(), ModbusSlaveReadAI_RTU(), ModbusSlaveWaitDI_RTU(), ModbusSlaveWaitAI_RTU()
+ModbusMasterWriteDO_RTU(), ModbusMasterWriteAO_RTU(), ModbusMasterReadDO_RTU(), ModbusMasterReadDI_RTU(), ModbusMasterReadAO_RTU(), ModbusMasterReadAI_RTU(), ModbusMasterWaitDI_RTU(), ModbusMasterWaitAI_RTU(), SetAO(), SetAuxAO(), SetToolAO(), WaitAI()
+FieldBusSlaveWaitAI(), WaitToolAI(), WaitAuxAI(), SPLCSetAO(), SPLCSetToolAO(), SetToolList(), SetWObjList(), SetExToolList(), PostureAdjustOn(), RegisterVar(), SetSysVarValue(), GetSysVarValue(), MultilayerOffsetTrsfToBase(), GetSegWeldDisDir(), DMP()
+LTSearchStart(), PointTableSwitch(), GetSegmentWeldPoint(), LaserRecordPoint(), GetIntersectionThrough3Point(), GetIntersectionThrough4Point(), GetUserVal(), SetUserVal(), MoveToIntersectLineStart(), MoveIntersectLine(), OriginPointWeaveStart()
+MatrixMoveStart(), MatrixMoveEnd(), MatrixSetCountPlus(), MatrixGetCount(), MatrixSetStartCount().   

@@ -299,13 +299,14 @@
     :linenos:
 
     /**
-    * @brief 設置安全速度參數
-    * @param [in] enable 0-關；1-手動模式啟用；2-所有模式啟用
+    * @brief 设置安全速度参数
+    * @param [in] enable 0-关；1-手动模式启用；2-所有模式启用
     * @param [in] maxTCPVel 限制最大TCP速度;[0-1000]mm/s
-    * @param [in] strategy 超速後策略；0-停止報警；1-自動限速；2-停止報警並去使能
-    * @return 錯誤碼
+    * @param [in] strategy 超速后策略；0-停止报警；1-自动限速；2-停止报警并去使能
+    * @param [in] maxJointVel 6个关节最大速度(°/s) 默认为45°/s
+    * @return 错误码
     */
-    errno_t SetVelReducePara(int enable, double maxTCPVel, int strategy);
+    errno_t SetVelReducePara(int enable, double maxTCPVel, int strategy, std::vector<double> maxJointVel = {45.0, 45.0, 45.0, 45.0, 45.0, 45.0});
         
 設置安全速度參數的SDK代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -356,3 +357,42 @@
         robot.Sleep(1000);
         return 0;
     }
+
+設置機器人關節安全速度代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:    
+
+    int TestSetJointVelReducePara()
+    {
+        ROBOT_STATE_PKG pkg = {};
+        FRRobot robot;
+        robot.LoggerInit();
+        robot.SetLoggerLevel(1);
+        int rtn = robot.RPC("192.168.58.2");
+        if (rtn != 0)
+        {
+            return -1;
+        }
+        robot.SetReConnectParam(true, 30000, 500);
+        JointPos j1(10.220, -11.121, -118.086, -46.739, 82.036, 131.503);
+        JointPos j2(89.782, -11.122, -118.086, -46.740, 82.036, 131.504);
+        ExaxisPos epos(0, 0, 0, 0);
+        DescPose offset_pos(0, 0, 0, 0, 0, 0);
+        robot.SetSpeed(20);
+
+        std::vector<double> maxJointVelA = {100.0, 100.0, 100.0, 100.0, 100.0, 100.0 };
+        rtn = robot.SetVelReducePara(2, 200, 0, maxJointVelA);
+        printf("SetVelReducePara param error rtn is %d\n", rtn);
+        robot.MoveJ(&j1, 1, 2, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.MoveJ(&j2, 1, 2, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        std::vector<double> maxJointVelB = { 20.0, 20.0, 20.0, 20.0, 20.0, 20.0 };
+        rtn = robot.SetVelReducePara(2, 200, 0, maxJointVelB);
+        printf("SetVelReducePara reduce vel rtn is %d\n", rtn);
+        robot.MoveJ(&j1, 1, 2, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.MoveJ(&j2, 1, 2, 100, 100, 100, &epos, -1, 0, &offset_pos);
+        robot.Sleep(2000);
+        robot.CloseRPC();
+        return 0;
+    }    

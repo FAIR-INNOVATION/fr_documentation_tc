@@ -138,82 +138,123 @@
 
 設置焊接參數代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++++++
+
 .. code-block:: Java
     :linenos:
 
-    public static int TestSetWeldParam(Robot robot)
-    {
-        WeldingProcessParam para1=new WeldingProcessParam(177, 27, 1000, 178, 28, 176, 26, 1000);
-        WeldingProcessParam para2=new WeldingProcessParam(188, 28, 555, 199, 29, 133, 23, 333);
-
+    public static int TestSetWeldParam(Robot robot) {
+        // 1. 設置焊接工藝參數
+        WeldingProcessParam para1 = new WeldingProcessParam(177, 27, 1000, 178, 28, 176, 26, 1000);
+        WeldingProcessParam para2 = new WeldingProcessParam(188, 28, 555, 199, 29, 133, 23, 333);
         robot.WeldingSetProcessParam(1, para1);
         robot.WeldingSetProcessParam(2, para2);
 
-        double startCurrent = 0;
-        double startVoltage = 0;
-        int startTime = 0;
-        double weldCurrent = 0;
-        double weldVoltage = 0;
-        double endCurrent = 0;
-        double endVoltage = 0;
-        int endTime = 0;
+        // 2. 獲取並打印第1組參數
+        WeldingProcessParam param = new WeldingProcessParam(0, 0, 0, 0, 0, 0, 0, 0);
+        robot.WeldingGetProcessParam(1, param);
+        System.out.println("the Num 1 process param is "
+                + param.startCurrent + " " + param.startVoltage + " "
+                + param.startTime + " " + param.weldCurrent + " "
+                + param.weldVoltage + " " + param.endCurrent + " "
+                + param.endVoltage + " " + param.endTime);
 
-        WeldingProcessParam param=new WeldingProcessParam( startCurrent, startVoltage, startTime, weldCurrent, weldVoltage, endCurrent, endVoltage, endTime);
-        robot.WeldingGetProcessParam(1,param);
-        robot.WeldingGetProcessParam(2,param);
+        // 3. 獲取並打印第2組參數
+        robot.WeldingGetProcessParam(2, param);
+        System.out.println("the Num 2 process param is "
+                + param.startCurrent + " " + param.startVoltage + " "
+                + param.startTime + " " + param.weldCurrent + " "
+                + param.weldVoltage + " " + param.endCurrent + " "
+                + param.endVoltage + " " + param.endTime);
 
-        WeldCurrentAORelation rela1=new WeldCurrentAORelation(0,400,0,10,0);
+        // 4. 設置電流/電壓關係並打印返回值
+        WeldCurrentAORelation rela1 = new WeldCurrentAORelation(0, 400, 0, 10, 0);
         int rtn = robot.WeldingSetCurrentRelation(rela1);
+        System.out.println("WeldingSetCurrentRelation rtn is: " + rtn);
 
-        WeldVoltageAORelation rela2=new WeldVoltageAORelation(0, 40, 0, 10, 1);
+        WeldVoltageAORelation rela2 = new WeldVoltageAORelation(0, 40, 0, 10, 1);
         rtn = robot.WeldingSetVoltageRelation(rela2);
+        System.out.println("WeldingSetVoltageRelation rtn is: " + rtn);
 
-        double current_min = 0;
-        double current_max = 0;
-        double vol_min = 0;
-        double vol_max = 0;
-        double output_vmin = 0;
-        double output_vmax = 0;
-        int curIndex = 0;
-        int volIndex = 0;
-        WeldCurrentAORelation rela3=new WeldCurrentAORelation(current_min, current_max, output_vmin, output_vmax, curIndex);
+        // 5. 獲取並打印電流關係
+        WeldCurrentAORelation rela3 = new WeldCurrentAORelation(0, 0, 0, 0, 0);
         rtn = robot.WeldingGetCurrentRelation(rela3);
+        System.out.println("WeldingGetCurrentRelation rtn is: " + rtn);
+        System.out.println("current min " + rela3.currentMin
+                + " current max " + rela3.currentMax
+                + " output vol min " + rela3.outputVoltageMin
+                + " output vol max " + rela3.outputVoltageMax);
 
-        WeldVoltageAORelation rela4=new WeldVoltageAORelation(0,0,0,0,0);
+        // 6. 獲取並打印電壓關係
+        WeldVoltageAORelation rela4 = new WeldVoltageAORelation(0, 0, 0, 0, 0);
         rtn = robot.WeldingGetVoltageRelation(rela4);
+        System.out.println("WeldingGetVoltageRelation rtn is: " + rtn);
+        System.out.println("vol min " + rela4.weldVoltageMin
+                + " vol max " + rela4.weldVoltageMax
+                + " output vol min " + rela4.outputVoltageMin
+                + " output vol max " + rela4.outputVoltageMax);
 
+        // 7. 設置電流/電壓並打印返回值
         rtn = robot.WeldingSetCurrent(0, 100, 0, 0);
+        System.out.println("WeldingSetCurrent rtn is: " + rtn);
 
-        robot.Sleep(3000);
+        robot.Sleep(3000);  // 對應 this_thread::sleep_for(chrono::seconds(3))
 
         rtn = robot.WeldingSetVoltage(0, 10, 0, 0);
+        System.out.println("WeldingSetVoltage rtn is: " + rtn);
 
+        // 8. 設置擺動參數
         rtn = robot.WeaveSetPara(0, 0, 2.000000, 0, 10.000000, 0.000000, 0.000000, 0, 0, 0, 0, 0, 60.000000,0);
+        System.out.println("rtn is: " + rtn);
 
         robot.WeaveOnlineSetPara(0, 0, 1, 0, 20, 0, 0, 0, 0);
 
+        // 9. 設置斷弧檢測和重焊參數
         rtn = robot.WeldingSetCheckArcInterruptionParam(1, 200);
+        System.out.println("WeldingSetCheckArcInterruptionParam  " + rtn);
+
         rtn = robot.WeldingSetReWeldAfterBreakOffParam(1, 5.7, 98.2, 0);
-        int enable = 0;
-        double length = 0;
-        double velocity = 0;
-        int moveType = 0;
-        int checkEnable = 0;
-        int arcInterruptTimeLength = 0;
-        List<Integer> inter=new ArrayList<>();
-        List<Number> num=new ArrayList<>();
+        System.out.println("WeldingSetReWeldAfterBreakOffParam  " + rtn);
 
-        inter = robot.WeldingGetCheckArcInterruptionParam();
-        num = robot.WeldingGetReWeldAfterBreakOffParam();
+        // 10. 獲取並打印斷弧檢測參數
+        List<Integer> inter = robot.WeldingGetCheckArcInterruptionParam();
+        int checkEnable = inter.get(0);
+        int arcInterruptTimeLength = inter.get(1);
+        System.out.println("WeldingGetCheckArcInterruptionParam checkEnable " + checkEnable
+                + "  arcInterruptTimeLength " + arcInterruptTimeLength);
 
+        // 11. 獲取並打印重焊參數（返回 List<Number>）
+        List<Number> num = robot.WeldingGetReWeldAfterBreakOffParam();
+        int enable = num.get(0).intValue();
+        double length = num.get(1).doubleValue();
+        double velocity = num.get(2).doubleValue();
+        int moveType = num.get(3).intValue();
+        System.out.printf("WeldingGetReWeldAfterBreakOffParam enable = %d, length = %f, velocity = %f, moveType = %d%n",
+                enable, length, velocity, moveType);
+
+        // 12. 設置擴展 DO 並循環控制
         robot.SetWeldMachineCtrlModeExtDoNum(17);
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
+            int[] mode = new int[1];   // 用於接收輸出值
+
             robot.SetWeldMachineCtrlMode(0);
+            rtn = robot.GetWeldMachineCtrlMode(mode);
+            if (rtn == 0) {
+                System.out.println("GetWeldMachineCtrlMode " + mode[0]);
+            } else {
+                System.out.println("GetWeldMachineCtrlMode failed, err: " + rtn);
+            }
             robot.Sleep(1000);
+
             robot.SetWeldMachineCtrlMode(1);
+            rtn = robot.GetWeldMachineCtrlMode(mode);
+            if (rtn == 0) {
+                System.out.println("GetWeldMachineCtrlMode " + mode[0]);
+            } else {
+                System.out.println("GetWeldMachineCtrlMode failed, err: " + rtn);
+            }
             robot.Sleep(1000);
         }
+
         return 0;
     }
 
@@ -312,6 +353,58 @@
     * @return 錯誤碼
     */
     public int SetWeldMachineCtrlMode(int mode, int ioType)
+
+獲取焊機控制模式
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取焊機控制模式
+    * @param mode 焊機控制模式;0-直流一元模式；1-脈衝一元模式；2-JOB模式；3-近控模式；4-分別模式；5-CC/CV模式；6-TIG；7-CMT
+    * @return 錯誤碼
+    */
+    public int GetWeldMachineCtrlMode(int[] mode)
+
+獲取擴展DI功能配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取擴展DI功能配置
+    * @param DIConfig 擴展DI輸入配置；DIConfig[0]-焊機準備擴展DI端口；
+    * DIConfig[1]-起弧成功擴展DI端口；
+    * DIConfig[2]-焊接中斷恢復擴展DI端口；
+    * DIConfig[3]-焊接中斷退出擴展DI端口；
+    * DIConfig[4]-焊絲尋位成功擴展DI端口；
+    * DIConfig[5]-雷射焊機運行狀態擴展DI端口；
+    * DIConfig[6]-雷射焊機故障狀態擴展DI端口；
+    * DIConfig[7-15]-預留
+    * @return  錯誤碼
+    */
+    public int GetExtDIConfig(int[] DIConfig)
+
+獲取擴展DO功能配置
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    /**
+    * @brief 獲取擴展DO功能配置
+    * @param DOConfig 擴展DO輸入配置；DOConfig[0]-焊機起弧擴展DO端口；
+    * DOConfig[1]-氣體檢測擴展DO端口；
+    * DOConfig[2]-正向送絲擴展DO端口；
+    * DOConfig[3]-反向送絲擴展DO端口；
+    * DOConfig[4]-焊絲尋位擴展DO端口；
+    * DOConfig[5]-焊機控制模式擴展DO端口；
+    * DOConfig[6]-雷射焊機使能擴展DO端口；
+    * DOConfig[7]-雷射焊機啟動(出光)擴展DO端口；
+    * DOConfig[8]-雷射焊機復位擴展DO端口；
+    * DOConfig[9-15]-預留
+    * @return  錯誤碼
+    */
+    public int GetExtDOConfig(int[] DOConfig)    
 
 焊接開始
 ++++++++++++++++++++++++++++++++++
@@ -731,6 +824,18 @@
         robot.SetArcDoneExtDiNum(60);
         robot.SetExtDIWeldBreakOffRecover(70, 80);
         robot.SetWireSearchExtDIONum(0, 1);
+
+        int[] DIConfig = new int[16];
+        int[] DOConfig = new int[16];
+        int rtn = robot.GetExtDIConfig(DIConfig);
+        System.out.printf("GetExtDIConfig rtn is %d\n welder ready %d\narc done %d\nreweld start %d\nabort reweld %d\nwiresearch done %d\nLaser welding State %d\nlaser welding error state %d\n",
+            rtn, DIConfig[0], DIConfig[1], DIConfig[2], DIConfig[3], DIConfig[4], DIConfig[5], DIConfig[6]);
+
+        rtn = robot.GetExtDOConfig(DOConfig);
+        System.out.printf("GetExtDOConfig rtn is %d\n Arc Start %d\nAir Test %d\nWire forward %d\nWire Inverse %d\nwiresearch %d\nWeld Mode %d\nlaser Enable %d\nLaser On %d\nLaser Reset Error %d\n",
+            rtn, DOConfig[0], DOConfig[1], DOConfig[2], DOConfig[3], DOConfig[4], DOConfig[5], DOConfig[6], DOConfig[7], DOConfig[8]);
+
+
 
         return 0;
     }

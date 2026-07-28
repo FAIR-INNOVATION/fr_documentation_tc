@@ -210,7 +210,7 @@
 
     /**
     * @brief 設置外部工具座標系 
-    * @param [in] id 座標系編號，範圍[0~14] 
+    * @param [in] id 座標系編號，20-39對應外部工具座標系0-19
     * @param [in] etcp 工具中心點相對末端法蘭中心位姿 
     * @param [in] etool 待定 
     * @return 錯誤碼 
@@ -224,7 +224,7 @@
 
     /**
     * @brief  設置外部工具座標系列表
-    * @param  [in] id 座標系編號，範圍[0~14] 
+    * @param  [in] id 座標系編號，20-39對應外部工具座標系0-19
     * @param  [in] etcp  工具中心點相對末端法蘭中心位姿
     * @param  [in] etool  待定
     * @return  錯誤碼

@@ -250,9 +250,10 @@
     * @param [in] enable 0-關；1-手動模式啟用；2-所有模式啟用(不支持自動限速)
     * @param [in] maxTCPVel 限制最大TCP速度;[0-1000]mm/s
     * @param [in] strategy 超速後策略；0-停止報警；1-自動限速；2-停止報警並去使能
+    * @param [in] maxJointVel 6个关节最大速度(°/s) 默认为45°/s
     * @return 錯誤碼
     */
-    public int SetVelReducePara(int enable, double maxTCPVel, int strategy)
+    public int SetVelReducePara(int enable, double maxTCPVel, int strategy, double[] maxJointVel = null)
     
 設置安全速度參數的SDK代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -262,46 +263,27 @@
     public int TestSetVelReducePara()
     {
         int rtn = 0;
-        JointPos j1 = new JointPos(0, -90, 90, 0, 0, 0);
-        JointPos j2 = new JointPos(90, -90, 90, 0, 0, 0);
+        JointPos j1 = new JointPos(10.220, -11.121, -118.086, -46.739, 82.036, 131.503);
+        JointPos j2 = new JointPos(89.782, -11.122, -118.086, -46.740, 82.036, 131.504);
         ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
         DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+        double[] maxJointVel = new double[] { 100.0, 100.0, 100.0, 100.0, 100.0, 100.0 };
 
-        robot.SetSpeed(80);
+        robot.SetSpeed(20);
+        rtn = robot.SetVelReducePara(0, 200, 0, maxJointVel);
+        robot.MoveJ(j2, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
 
-        // 測試參數錯誤
-        rtn = robot.SetVelReducePara(2, 30, 1);
-        Console.WriteLine($"SetVelReducePara param error rtn is {rtn}");
+        // 1st
+        rtn = robot.SetVelReducePara(2, 200, 0, maxJointVel);
+        Console.WriteLine($"SetVelReduceParaA param error rtn is {rtn}");
+        robot.MoveJ(j1, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.MoveJ(j2, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
 
-        // 禁用減速
-        rtn = robot.SetVelReducePara(0, 30, 1);
-        Console.WriteLine($"SetVelReducePara disable reduce vel rtn is {rtn}");
-        robot.MoveJ(j1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-        robot.MoveJ(j2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-
-        // 啟用減速（手動模式）
-        rtn = robot.SetVelReducePara(1, 30, 1);
-        Console.WriteLine($"SetVelReducePara reduce vel rtn is {rtn}");
-        robot.MoveJ(j1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-        robot.MoveJ(j2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-
-        // 所有模式啟用，策略為停止報警並去使能
-        rtn = robot.SetVelReducePara(2, 30, 2);
-        Console.WriteLine($"SetVelReducePara disable robot rtn is {rtn}");
-        robot.MoveJ(j1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-        robot.MoveJ(j2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-
-        Thread.Sleep(2000);
-        robot.ResetAllError();
-        robot.RobotEnable(1);
-        Thread.Sleep(1000);
-
-        // 所有模式啟用，策略為停止報警（正常參數）
-        rtn = robot.SetVelReducePara(2, 30, 0);
-        Console.WriteLine($"SetVelReducePara report error rtn is {rtn}");
-        robot.MoveJ(j1, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-        robot.MoveJ(j2, 0, 0, 100, 100, 100, epos, -1, 0, offset_pos);
-
-        Thread.Sleep(1000);
-        return 0;
+        // 2rd
+        maxJointVel = new double[] { 20.0, 20.0, 20.0, 20.0, 20.0, 20.0 };
+        rtn = robot.SetVelReducePara(2, 200, 0, maxJointVel);
+        Console.WriteLine($"SetVelReduceParaB reduce vel rtn is {rtn}");
+        robot.MoveJ(j1, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.MoveJ(j2, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+        return 0; 
     }

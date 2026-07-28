@@ -304,6 +304,7 @@
       uint8_t socketReadTimeout;   //socket讀取超時，bit0-bit4:socketID 1-4
       uint8_t tsWebStateComErr;   //web-扭矩通訊失敗；0-正常；1-失敗
       uint8_t exaxisCoordID;     //擴展軸坐標系編號
+      uint8_t programRunState   //LUA程式運行狀態 0-程式未運行；1-程式運行中(包含程式暫停)
       uint16_t check_sum;     // 和校驗
     }ROBOT_STATE_PKG;
 
@@ -445,4 +446,5 @@
         SocketReadTimeout = 130,    // socket讀取超時，bit0-bit4對應socketID 1-4
         TsWebStateComErr = 131,     // web-扭矩通訊失敗：0-正常，1-失敗
         ExaxisCoordID = 132          //擴展軸坐標系編號
+        programRunState = 133       //LUA程式運行狀態 0-程式未運行；1-程式運行中(包含程式暫停)
     };

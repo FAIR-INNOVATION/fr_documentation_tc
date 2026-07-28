@@ -260,9 +260,10 @@
     * @param enable 0-關；1-手動模式啟用；2-所有模式啟用(不支持自動限速)
     * @param maxTCPVel 限制最大TCP速度;[0-1000]mm/s
     * @param strategy 超速後策略；0-停止報警；1-自動限速；2-停止報警並去使能
+    * @param maxJointVel 6个关节最大速度(°/s) 默认为45°/s
     * @return 錯誤碼
     */
-    public int SetVelReducePara(int enable, double maxTCPVel, int strategy)
+    public int SetVelReducePara(int enable, double maxTCPVel, int strategy, double[] maxJointVel)
         
 設置安全速度參數的SDK代碼示例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -307,5 +308,35 @@
         robot.MoveJ(j2, 0, 0, 100, 100, 100.0, epos, -1.0, 0, offset_pos);
 
         robot.Sleep(1000);
+        return 0;
+    }
+
+設置機器人關節安全速度代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: Java
+    :linenos:
+
+    public static int TestSetJointVelReducePara(Robot robot) {
+        ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
+
+        JointPos j1 = new JointPos(10.220, -11.121, -118.086, -46.739, 82.036, 131.503);
+        JointPos j2 = new JointPos(89.782, -11.122, -118.086, -46.740, 82.036, 131.504);
+        ExaxisPos epos = new ExaxisPos(0, 0, 0, 0);
+        DescPose offset_pos = new DescPose(0, 0, 0, 0, 0, 0);
+        robot.SetSpeed(20);
+
+        double[] maxJointVelA = {100.0, 100.0, 100.0, 100.0, 100.0, 100.0};
+        int rtn = robot.SetVelReducePara(2, 200, 0, maxJointVelA);
+        System.out.printf("SetVelReducePara param error rtn is %d\n", rtn);
+        robot.MoveJ(j1, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.MoveJ(j2, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+
+        double[] maxJointVelB = {20.0, 20.0, 20.0, 20.0, 20.0, 20.0};
+        rtn = robot.SetVelReducePara(2, 200, 0, maxJointVelB);
+        System.out.printf("SetVelReducePara reduce vel rtn is %d\n", rtn);
+        robot.MoveJ(j1, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+        robot.MoveJ(j2, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
+
+        robot.Sleep(2000);
         return 0;
     }
