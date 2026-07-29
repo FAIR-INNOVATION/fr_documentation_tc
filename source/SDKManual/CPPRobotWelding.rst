@@ -969,6 +969,7 @@
         robot.CloseRPC();
         return 0;
     }
+    
 電弧跟蹤控制
 +++++++++++++++++++++++++++
 .. versionadded:: C++SDK-v2.1.5.0
