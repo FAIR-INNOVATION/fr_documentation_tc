@@ -41,6 +41,12 @@
 
 .. toctree:: 
    :maxdepth: 6
+   :caption: 外掛商店
+
+   CapSoftware
+
+.. toctree:: 
+   :maxdepth: 6
    :caption: 開放平台
 
    ROSGuide/index
