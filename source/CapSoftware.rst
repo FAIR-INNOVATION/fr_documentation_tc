@@ -34,6 +34,10 @@
 
       .. raw:: html
 
+         <div style="font-size:16px;color:#888;margin-bottom:10px;">版本支援 >= 3.9.0</div>
+
+      .. raw:: html
+
          <div style="font-size:16px;color:#666;line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">提供完整的碼垛工藝包，支援箱型、模式、工作站、托盤等碼垛配置。</div>
 
       +++
@@ -76,6 +80,10 @@
       .. raw:: html
 
          <div style="font-size:16px;color:#888;margin-bottom:10px;">2026-07-31 更新</div>
+
+      .. raw:: html
+
+         <div style="font-size:16px;color:#888;margin-bottom:10px;">版本支援 >= 3.9.8</div>
 
       .. raw:: html
 
