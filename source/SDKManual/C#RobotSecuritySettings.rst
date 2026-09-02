@@ -287,3 +287,64 @@
         robot.MoveJ(j2, 1, 2, 100, 100, 100, epos, -1, 0, offset_pos);
         return 0; 
     }
+    
+獲取安全配置參數校驗和
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:  
+
+    /**
+    * @brief  獲取安全配置參數校驗和
+    * @param  [out] status 校驗狀態，0-有效，1-校驗中，2-校驗失敗
+    * @param  [out] checksum 校驗和 8位16進制
+    * @return  錯誤碼
+    */
+    public int GetSafetyParamsCheckSum(ref int status, ref uint checksum)
+        
+安全操作密碼校驗
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:  
+
+    /**
+    * @brief  安全操作密碼校驗
+    * @param  [in] status 校驗，0-開啟，1-關閉
+    * @param  [in] password 密碼
+    * @return  錯誤碼
+    */
+    public int SafetyOPPasswordCheck(int status, string password)
+            
+獲取安全配置參數校驗和及安全操作密碼校驗代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c++
+    :linenos:  
+
+    public void TestSafetyParamsCheckSum()
+    {
+        int status = 0;
+        uint checksum = 0;
+
+        int error = robot.GetSafetyParamsCheckSum(ref status, ref checksum);
+        Console.WriteLine("GetSafetyParamsCheckSum: error={0}, status={1}, hex_code={2:X8}", error, status, checksum);
+        Thread.Sleep(3000);
+
+        error = robot.SafetyOPPasswordCheck(0, "12345678");
+        Console.WriteLine("SafetyOPPasswordCheck: error={0}", error);
+
+        if (error == 0)
+        {
+            error = robot.SetAnticollision(0, new double[] { 2.0, 2.0, 2.0, 2.0, 2.0, 2.0 }, 1);
+            Console.WriteLine("SetAnticollision: error={0}", error);
+
+            error = robot.SetCollisionStrategy(0, 1000, 150, 0, new int[] { 10, 10, 10, 10, 10, 10 });
+            Console.WriteLine("SetCollisionStrategy: error={0}", error);
+        }
+
+        Thread.Sleep(1000);
+
+        error = robot.GetSafetyParamsCheckSum(ref status, ref checksum);
+        Console.WriteLine("GetSafetyParamsCheckSum(again): error={0}, status={1}, hex_code={2:X8}", error, status, checksum);
+    }    

@@ -187,6 +187,75 @@
     */
     public int GetSystemClock(ref double t_ms)
 
+同步系統時間至機器人
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 獲取目前上位機系統時間並發送給機器人，同步系統時間（由於QNX系統限制，同步精度為分鐘級）
+    * @return 錯誤碼
+    */
+    public int SetRobottime()
+
+同步系統時間至機器人代碼示例
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    public void testSetAndGetRobotTime()
+    {
+        double t_ms = 0.0;
+
+        int ret = robot.GetSystemClock(ref t_ms);
+        if (ret == 0)
+        {
+            Console.WriteLine($"system clock : {t_ms}");
+            // 將毫秒時間戳轉換為DateTime（UTC時間）
+            DateTime utcTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(t_ms);
+            Console.WriteLine($"BEFORE UTC Time   : {utcTime:yyyy-MM-dd HH:mm:ss}");
+        }
+        else
+        {
+            Console.WriteLine($"GetSystemClock failed,ret:{ret}");
+        }
+
+        robot.SetRobottime();
+
+        // 設定後獲取機器人時間
+        double t_ms_after = 0;
+        ret = robot.GetSystemClock(ref t_ms_after);
+        if (ret == 0)
+        {
+            Console.WriteLine($"system clock : {t_ms}");
+            DateTime robotTimeAfter = DateTimeOffset.FromUnixTimeMilliseconds((long)t_ms_after).UtcDateTime;
+
+            // 獲取設定前的PC時間（作為預期值）
+            DateTime pcTimeBefore = DateTime.Now;
+
+            // 將預期時間（PC時間）和機器人時間都截斷至分鐘
+            DateTime pcMinute = new DateTime(pcTimeBefore.Year, pcTimeBefore.Month, pcTimeBefore.Day,
+                                                pcTimeBefore.Hour, pcTimeBefore.Minute, 0, DateTimeKind.Utc);
+            DateTime robotMinute = new DateTime(robotTimeAfter.Year, robotTimeAfter.Month, robotTimeAfter.Day,
+                                                robotTimeAfter.Hour, robotTimeAfter.Minute, 0, DateTimeKind.Utc);
+
+            // 比較一致性
+            bool isConsistent = (pcMinute == robotMinute);
+            if (isConsistent)
+            {
+                Console.WriteLine($"Consistent     | PC time: {pcMinute:yyyy-MM-dd HH:mm}  | Robot time: {robotMinute:yyyy-MM-dd HH:mm}");
+            }
+            else
+            {
+                Console.WriteLine($"[Inconsistent | PC time: {pcMinute:yyyy-MM-dd HH:mm}  | Robot time: {robotMinute:yyyy-MM-dd HH:mm}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"GetSystemClock failed,ret:{ret}");
+        }
+    }    
+
 查詢機器人運動是否完成
 ++++++++++++++++++++++++++++++++++++
 .. code-block:: c#
@@ -420,9 +489,10 @@
     * @param [in] tool 工具號
     * @param [in] workPiece 工件號
     * @param [out] joint_pos 關節位置
+    * @param [in] config -1：自動求解，0-7對應八組解
     * @return 錯誤碼
     */
-    public int GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, ref JointPos joint_pos);
+    public int GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, ref JointPos joint_pos, int config = -1);
 
 逆運動學求解包含擴展軸位置程式碼範例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -432,27 +502,16 @@
     public void TestInverseKinExaxis()
     {
         ROBOT_STATE_PKG pkg = new ROBOT_STATE_PKG();
-        
-
-        DescPose desc = new DescPose(99.957f, -0.002f, 29.994f, -176.569f, -6.757f, -167.462f);
-        ExaxisPos exaxis = new ExaxisPos(100.0f, 0.0f, 0.0f, 0.0f);
-        JointPos jointPos = new JointPos(0,0,0,0,0,0);
-        DescPose offsetPos = new DescPose(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        int rtn;
         robot.GetRobotRealTimeState(ref pkg);
         int toolnum = pkg.tool;
         int workPcsNum = pkg.user;
 
-        robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum, ref jointPos);
+        DescPose desc = new DescPose(-547.469, -47.361, 184.149, 169.843, 4.579, 82.557);
+        ExaxisPos exaxis = new ExaxisPos(0.0, 0.0, 0.0, 0.0);
+        JointPos jointPos = new JointPos(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+        robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum, ref jointPos, 0);
         Console.WriteLine($"GetInverseKinExaxis joint is {jointPos.jPos[0]}, {jointPos.jPos[1]}, {jointPos.jPos[2]}, {jointPos.jPos[3]}, {jointPos.jPos[4]}, {jointPos.jPos[5]}");
-
-        robot.ExtAxisMove(exaxis, 100, -1);
-
-        int blendMode = 0;
-        int velAccMode = 0;
-        float oacc = 100.0f;
-        byte flag = 0;
-        robot.MoveJ(jointPos, desc, toolnum, workPcsNum, (float)100.0, (float)100.0, (float)100.0, exaxis, -1, 0, offsetPos);
     }
 
 獲取逆運動學是否有解

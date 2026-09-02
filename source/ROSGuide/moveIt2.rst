@@ -281,14 +281,448 @@ Plan&Execute按鈕是在規劃軌跡後自動控制機器人運動。
     :width: 6in
     :align: center
 
-fairino_hardware外掛（自訂機器人moveit配置套件）
+Gazebo模擬環境量產型機器人適配功能包
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+簡介
 ------------------------------------------------------------
+
+本專案提供FR系列量產型6自由度協作機器人在Gazebo Classic模擬環境下的模擬功能包，基於ROS2 Humble及ros2_control架構實現。每個機器人對應一個獨立的ROS2功能包，採用標準ros2_control的GazeboSystem硬體介面，支援關節控制與關節狀態回饋，本手冊工作空間預設名為FR_Gazebo_ws，若自訂請自行替換。
+
+支援的機型（11個功能包）
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+表1-1  支援機型與功能包對照表
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 0
+   :align: center
+
+   * - **機型** 
+     - **功能包**
+
+   * - FR3
+     - fr3v6_ros2_control
+
+   * - FR5
+     - fr5v6_ros2_control
+
+   * - FR10
+     - fr10v6_ros2_control
+
+   * - FR16
+     - fr16v6_ros2_control
+
+   * - FR20
+     - fr20v6_ros2_control
+
+   * - FR30
+     - fr30v6_ros2_control
+
+   * - FR3C
+     - fr3c_ros2_control
+
+   * - FR5C
+     - fr5c_ros2_control
+
+   * - FR5WML
+     - fr5l_ros2_control
+
+   * - FR3WML
+     - fr3wml_ros2_control
+
+   * - FR3WMS
+     - fr3wms_ros2_control
+
+核心特性
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 統一關節命名：所有機型均為6個旋轉關節，命名為j1 ~ j6，順序為基座→肩→肘→腕1→腕2→腕3。
+- 統一控制介面：透過/joint_trajectory_controller/joint_trajectory話題下發trajectory_msgs/msg/JointTrajectory指令（位置控制）。
+- 關節狀態回饋：透過各機型命名空間下的joint_states話題即時回饋關節角。
+- 示範腳本：每個功能包附帶*_demo.py，自動等待控制器就緒後示範各關節運動。
+
+.. image:: img/039.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖 1-1  Gazebo模擬環境中機器人載入效果
+
+環境要求
+------------------------------
+
+作業系統
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Ubuntu 22.04 LTS（ROS 2 Humble官方支援版本）。
+
+軟體依賴
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+表2-1  軟體依賴清單
+
+.. list-table::
+   :widths: 30 30 40
+   :header-rows: 0
+   :align: center
+
+   * - **軟體/元件** 
+     - **版本/說明**
+     - **安裝位置**
+
+   * - ROS 2
+     - Humble
+     - /opt/ros/humble
+
+   * - Gazebo
+     - Gazebo Classic 11（gzserver / gzclient）
+     - 隨gazebo_ros安裝
+
+   * - ros2_control原始碼工作空間
+     - 含ros2_control、gazebo_ros2_control、ros2_controllers、controller_manager、joint_trajectory_controller、joint_state_broadcaster等
+     - ~/ros2_control_ws
+
+   * - Python 3
+     - 執行launch與demo腳本
+     - 系統內建
+		
+.. note:: 本工程依賴的gazebo_ros2_control、joint_trajectory_controller、joint_state_broadcaster等包來自原始碼編譯的~/ros2_control_ws工作空間（ros-controls倉庫）。啟動/編譯前必須source該工作空間，否則會出現「無法找到控制器/外掛」錯誤。且建議使用預設編譯類型，避免因除錯符號導致外掛載入異常。
+
+功能包安裝及編譯步驟
+------------------------------------------------------------------------------------------
+
+前置準備：確認ros2_control工作空間
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+確認~/ros2_control_ws已存在且已編譯（內含ros-controls倉庫）。若已存在，直接進入3.2節。若需搭建，可執行以下命令：
+
+.. centered:: 程式碼3-1  搭建ros2_control工作空間
+    
+.. code-block:: console
+
+    # 1. 建立工作空間並拉取 ros-controls 原始碼
+    mkdir -p ~/ros2_control_ws/src
+    cd ~/ros2_control_ws/src
+    git clone https://github.com/ros-controls/ros2_control -b humble
+
+    # 2. 編譯（需已source ROS 2 Humble）
+    source /opt/ros/humble/setup.bash
+    cd ~/ros2_control_ws
+    rosdep install --from-paths src --ignore-src -r -y
+    colcon build
+    source ~/ros2_control_ws/install/setup.bash
+
+複製倉庫
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+首先，複製Gazebo適配功能包到本地，其中功能包包括fr3c_ros2_control、fr3v6_ros2_control、fr3wml_ros2_control、fr3wms_ros2_control、fr5c_ros2_control、fr5l_ros2_control、fr5v6_ros2_control、fr10v6_ros2_control、fr16v6_ros2_control、fr20v6_ros2_control、fr30v6_ros2_control。建立FR_Gazebo_ws/src資料夾，將上述功能包複製到src目錄下。
+
+.. image:: img/040.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖3-1  src目錄下機器人適配功能包
+
+編譯本工作空間
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+本工程所有功能包均為檔案型包（只安裝URDF/launch/config/meshes）。
+
+.. centered:: 程式碼3-2  編譯FR_Gazebo_ws工作空間
+    
+.. code-block:: console
+
+    # 1. 依序載入環境（順序不能顛倒）
+    source /opt/ros/humble/setup.bash
+    source ~/ros2_control_ws/install/setup.bash
+
+    # 2. 進入工作空間並編譯
+    cd ~/FR_Gazebo_ws
+    colcon build
+
+    # 3. 編譯完成後載入本工作空間環境
+    source ~/FR_Gazebo_ws/install/setup.bash
+
+驗證編譯結果
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+編譯成功後，install/目錄下應出現全部11個功能包：
+
+程式碼3-3  驗證編譯結果
+    
+.. code-block:: console
+
+    ls ~/FR_Gazebo_ws/install
+    # 應看到：fr3v6_ros2_control  fr5v6_ros2_control  fr10v6_ros2_control  ... 共 11 個
+
+.. image:: img/041.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖3-2  編譯成功終端輸出
+
+使用方法
+------------------------------------------------------------------------------------------
+
+啟動模擬（以FR5為例）
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. centered:: 程式碼4-1  啟動FR5模擬
+    
+.. code-block:: console
+
+    # 1. 依序載入環境
+    cd ~/FR_Gazebo_ws
+    source /opt/ros/humble/setup.bash
+    source ~/ros2_control_ws/install/setup.bash
+    source ~/FR_Gazebo_ws/install/setup.bash
+
+    # 2. 啟動（launch會自動啟動gzserver/gzclient、生成機器人並載入控制器，若需清理舊程序，請參考4.2節末尾的提示）
+    ros2 launch fr5v6_ros2_control spawn_fr5v6.launch.py
+    
+啟動過程中，launch會自動輪詢等待controller_manager就緒後載入控制器。看到以下日誌即表示就緒，若等待超過3分鐘仍未顯示「Successfully loaded」，請參考5.2節排查環境source順序：
+
+.. centered:: 程式碼4-2  控制器載入成功日誌
+    
+.. code-block:: console
+
+    Successfully loaded controller joint_trajectory_controller into state active
+
+.. image:: img/042.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖4-1  控制器載入成功終端日誌
+
+.. image:: img/043.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖4-2  Gazebo介面機器人初始姿態
+
+全機型啟動命令對照表
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+所有機型的操作流程一致，僅功能包名、launch檔名、命名空間不同：
+
+表4-1  全機型啟動命令對照表
+
+.. list-table::
+   :widths: 20 40 20 20
+   :header-rows: 0
+   :align: center
+
+   * - **機型** 
+     - **啟動命令**
+     - **命名空間**
+     - **關節狀態話題**
+
+   * - FR3 
+     - ros2 launch fr3v6_ros2_control spawn_fr3v6.launch.py
+     - fr3v6
+     - /fr3v6/joint_states
+
+   * - FR5 
+     - ros2 launch fr5v6_ros2_control spawn_fr5v6.launch.py
+     - fr5v6
+     - /fr5v6/joint_states
+
+   * - FR10 
+     - ros2 launch fr10v6_ros2_control spawn_fr10v6.launch.py
+     - fr10v6
+     - /fr10v6/joint_states
+
+   * - FR16 
+     - ros2 launch fr16v6_ros2_control spawn_fr16v6.launch.py
+     - fr16v6
+     - /fr16v6/joint_states
+
+   * - FR20 
+     - ros2 launch fr20v6_ros2_control spawn_fr20v6.launch.py
+     - fr20v6
+     - /fr20v6/joint_states
+
+   * - FR30 
+     - ros2 launch fr30v6_ros2_control spawn_fr30v6.launch.py
+     - fr30v6
+     - /fr30v6/joint_states
+
+   * - FR3C 
+     - ros2 launch fr3c_ros2_control spawn_fr3c.launch.py
+     - fr3c
+     - /fr3c/joint_states
+
+   * - FR3WML 
+     - ros2 launch fr3wml_ros2_control spawn_FR3WML.launch.py
+     - fr3wml
+     - /fr3wml/joint_states
+
+   * - FR3WMS 
+     - ros2 launch fr3wms_ros2_control spawn_FR3WMS.launch.py
+     - fr3wms
+     - /fr3wms/joint_states
+
+   * - FR5C 
+     - ros2 launch fr5c_ros2_control spawn_fr5c.launch.py
+     - fr5c
+     - /fr5c/joint_states
+
+   * - FR5WML 
+     - ros2 launch fr5l_ros2_control spawn_fr5l.launch.py
+     - fr5l
+     - /fr5l/joint_states
+			
+.. note:: 一次僅能啟動一個機型。若需切換須先關閉當前Gazebo程序（pkill -9 gzserver; pkill -9 gzclient），否則新實例會因連接埠衝突而失敗。
+
+手動控制（下發目標關節）
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+控制器就緒後，向/joint_trajectory_controller/joint_trajectory下發目標關節（6個關節弧度值）：
+
+.. centered:: 程式碼4-3  手動下發關節軌跡指令
+    
+.. code-block:: console
+
+    # 移動到目標關節 [1.57, -0.78, -1.57, -1.2, 1.57, 1.3]（單位：弧度）
+    ros2 topic pub --once /joint_trajectory_controller/joint_trajectory \
+    trajectory_msgs/msg/JointTrajectory \
+    "{joint_names: [j1,j2,j3,j4,j5,j6],
+        points: [{positions: [1.57, -0.78, -1.57, -1.2, 1.57, 1.3],
+                time_from_start: {sec: 2, nanosec: 0}}]}"
+
+    # 回零位
+    ros2 topic pub --once /joint_trajectory_controller/joint_trajectory \
+    trajectory_msgs/msg/JointTrajectory \
+    "{joint_names: [j1,j2,j3,j4,j5,j6],
+        points: [{positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                time_from_start: {sec: 2, nanosec: 0}}]}"
+
+.. note:: 角度換算公式為 弧度 = 角度 × π / 180。常用值：90° ≈ 1.5708，−90° ≈ −1.5708，100° ≈ 1.7453。
+
+執行示範腳本
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+每個功能包自帶示範腳本，會自動等待controller_manager就緒後，逐關節完成0→±90°的往復運動：
+
+.. centered:: 程式碼4-4  執行示範腳本
+    
+.. code-block:: console
+
+    # 以FR5為例（其他機型替換腳本路徑中的包名即可）
+    python3 ~/FR_Gazebo_ws/src/fr5v6_ros2_control/scripts/fr5v6_demo.py
+
+表4-2  全機型示範腳本路徑對照表
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 0
+   :align: center
+
+   * - **機型** 
+     - **示範腳本路徑**
+
+   * - FR3
+     - ~/FR_Gazebo_ws/src/fr3v6_ros2_control/scripts/fr3v6_demo.py
+
+   * - FR5
+     - ~/FR_Gazebo_ws/src/fr5v6_ros2_control/scripts/fr5v6_demo.py
+
+   * - FR10
+     - ~/FR_Gazebo_ws/src/fr10v6_ros2_control/scripts/fr10v6_demo.py
+
+   * - FR16
+     - ~/FR_Gazebo_ws/src/fr16v6_ros2_control/scripts/fr16v6_demo.py
+
+   * - FR20
+     - ~/FR_Gazebo_ws/src/fr20v6_ros2_control/scripts/fr20v6_demo.py
+
+   * - FR30
+     - ~/FR_Gazebo_ws/src/fr30v6_ros2_control/scripts/fr30v6_demo.py
+
+   * - FR3C
+     - ~/FR_Gazebo_ws/src/fr3c_ros2_control/scripts/fr3c_demo.py
+
+   * - FR3WML
+     - ~/FR_Gazebo_ws/src/fr3wml_ros2_control/scripts/fr3wml_demo.py
+
+   * - FR3WMS
+     - ~/FR_Gazebo_ws/src/fr3wms_ros2_control/scripts/fr3wms_demo.py
+
+   * - FR5C
+     - ~/FR_Gazebo_ws/src/fr5c_ros2_control/scripts/fr5c_demo.py
+
+   * - FR5WML
+     - ~/FR_Gazebo_ws/src/fr5l_ros2_control/scripts/fr5l_demo.py
+
+.. image:: img/044.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖4-3  示範腳本執行中機器人運動姿態
+
+監控關節狀態
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. centered:: 程式碼4-5  監控關節狀態
+    
+.. code-block:: console
+        
+    # 即時查看關節角
+    ros2 topic echo /joint_states
+
+.. image:: img/045.png
+    :width: 6in
+    :align: center
+
+.. centered:: 圖4-4  關節狀態即時輸出
+
+常見問題
+------------------------------------------------------------------------------------------
+
+啟動時報連接埠衝突/Gazebo打不開
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 原因：上一次的 Gazebo 程序未退出，佔用了連接埠。
+- 解決：啟動前先清理殘留程序：pkill -9 gzserver; pkill -9 gzclient
+
+一直卡在Waiting for controller_manager...，超過2分鐘
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 原因：controller_manager未就緒，常見於未source ~/ros2_control_ws/install/setup.bash，或網格載入過慢。
+- 解決：先Ctrl+C退出；確認已按順序source三個環境(ros2→ros2_control_ws→FR_Gazebo_ws）。
+
+手動發送指令但機器人不動
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 原因：大部分可能為時序問題，控制器尚未完全進入active狀態就發了指令，指令被丟棄。
+- 解決：確認終端列印Successfully loaded controller joint_trajectory_controller into state active後再發控制指令；或直接改用4.4節的demo腳本。
+
+提示無joint_trajectory_controller/gazebo_ros2_control外掛
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 原因：ros2_control相關依賴未載入。
+- 解決：確認已source ~/ros2_control_ws/install/setup.bash；並確認~/.bashrc或目前終端載入順序為ROS→ros2_control_ws→本工作空間。
+
+機器人載入後缺部件/關節顯示不完整
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 原因：URDF引用的網格檔案缺失。
+- 解決：確認對應功能包的meshes/目錄存在且完整。
+
+能否同時啟動兩個機型
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 不能。多個模擬實例會爭用同一Gazebo連接埠，應一次只啟動一個機型。
+
+fairino_hardware外掛（自訂機器人moveit配置套件）
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 fairino_hardware插件為連接moveit與機器人的中間層，透過fairino_hardware插件move_group將運動規劃傳送給moveit_control，然後轉發給ros2_control，ros2_control再透過fairino_hardwareware插件驅動實際機器人運動，並且fairino_hardware插件也會接受實際機器人的回饋資料，從而實際機器人的回饋資料，從而實際機器人的回饋實現rviz2模擬介面機器人模型與實際機器人的同步，從而實現使用者透過rviz2介面驅動實際機器人運動功能。
 
 並且由於fairino_hardware插件的實現，使得法奧機器人能夠接入ros2_control控制框架，使法奧機器人能夠兼容基於ros2_control的第三方功能包。
 
 fairino_hardware外掛程式編譯
-""""""""""""""""""""""""""""""""""
+------------------------------------------------------------
 編譯官方提供的ros2_ws功能包中的fairino_hardware插件功能包，透過上節編譯fairino_hardware插件功能包，然後將會在
 
 .. code-block:: shell
@@ -301,7 +735,7 @@ fairino_hardware外掛程式編譯
 要注意的是需要讓fairino_hardware插件對機器人各關節的命名與moveit2配置的機器人各關節命名相同，本fairino_hardware插件對機器人六個關節的命名由基坐標位置到機器人末端分別為j1、j2、j3、j4 、j5、j6，所以在moveit2配置的機器人時需要將機器人的關節命名為j1、j2、j3、j4、j5、j6。
 
 fairino_hardware插件使用
-""""""""""""""""""""""""""""""""""
+------------------------------------------------------------
 若採用配置的自訂機器人moveit配置包，進入目錄
 
 .. code-block:: shell
@@ -340,7 +774,7 @@ fairino_hardware插件使用
 當前的Moveit2控制器僅支援位置控制模式，請不要將robot_control_mode設置為1。
 
 運行插件
-""""""""""""""""""""""""""""""""""
+------------------------------------------------------------
 打開終端，然後轉到ros2_ws工作空間，並source工作空間，目的是將fairino_hardware插件添加進來，也可以將該路徑加載到“~/.bashrc”文件中，但不建議
 
 .. code-block:: shell
@@ -360,7 +794,7 @@ fairino_hardware插件使用
     ros2 launch fairino5_v6_robot_moveit_config demo.launch.py
 
 運行結果
-""""""""""""""""""""""""""""""""""
+------------------------------------------------------------
 demo.launch.py​​檔案啟動後，rviz2介面如下圖所示：
 
 .. image:: img/fairino_harware_024.png

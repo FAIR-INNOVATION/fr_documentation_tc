@@ -387,9 +387,10 @@
     * @param  tool 工具號
     * @param  workPiece 工件號
     * @param  joint_pos 關節位置
+    * @param  config -1：自動求解，0-7對應八組解
     * @return 錯誤碼
     */
-    public int GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, JointPos joint_pos)
+    public int GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, JointPos joint_pos, int config)
     
 逆運動學求解包含擴展軸位置程式碼範例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -402,15 +403,16 @@
         ExaxisPos exaxis=new ExaxisPos(100.0, 0.0, 0.0, 0.0);
         JointPos jointPos =new JointPos();
         DescPose offsetPos =new DescPose();
+
         ROBOT_STATE_PKG pkg=robot.GetRobotRealTimeState();
         int toolnum = pkg.tool;
         int workPcsNum = pkg.user;
-        robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum, jointPos);
+        robot.GetInverseKinExaxis(0, desc, exaxis, toolnum, workPcsNum, jointPos, 0);
         System.out.printf("GetInverseKinExaxis joint is %f, %f, %f, %f, %f, %f\n", jointPos.J1, jointPos.J2, jointPos.J3, jointPos.J4, jointPos.J5, jointPos.J6);
+
         robot.ExtAxisMove(exaxis, 100, -1);
         robot.MoveJ(jointPos, desc, toolnum, workPcsNum, 100.0, 100.0, 100.0, exaxis, -1, 0, offsetPos);
-        robot.CloseRPC();
-        robot.Sleep(9999999);
+
     }
 
 獲取逆運動學是否有解

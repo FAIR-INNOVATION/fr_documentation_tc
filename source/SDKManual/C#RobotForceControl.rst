@@ -481,6 +481,24 @@
     */
     public int FT_RotInsertion(int rcs, double angVelRot, double ft, double max_angle, int orn, double max_angAcc, int rotorn, int strategy)
 
+螺旋線探索
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief  螺旋線探索
+    * @param  [in] rcs 參考座標系，0-工具座標系，1-基座標系
+    * @param  [in] dr 每圈半徑進給量
+    * @param  [in] ft 力/扭矩閾值，fx,fy,fz,tx,ty,tz，範圍[0~100]
+    * @param  [in] max_t_ms 最大探索時間，單位ms
+    * @param  [in] max_vel 最大線速度，單位mm/s
+    * @param  [in] strategy 未檢測到力/力矩的處理策略，0-報錯；1-警告，繼續運動
+    * @return  錯誤碼
+    */
+    public int FT_SpiralSearch(int rcs, float dr, float ft, float max_t_ms, float max_vel, int strategy = 0)
+
 直線插入
 +++++++++++++++++++++++++++++++++++++++++++++
     
@@ -495,9 +513,10 @@
     * @param  [in] lin_a 直線加速度，單位mm/s^2，暫不使用
     * @param  [in] max_dis 最大插入距離，單位mm
     * @param  [in] linorn  插入方向，0-負方向，1-正方向
+    * @param  [in] strategy 未檢測到力/力矩的處理策略，0-報錯；1-警告，繼續運動
     * @return  錯誤碼
     */
-    public int FT_LinInsertion(int rcs, float ft, float lin_v, float lin_a, float max_dis, byte linorn)
+    public int FT_LinInsertion(int rcs, float ft, float lin_v, float lin_a, float max_dis, byte linorn, int strategy=0)
 
 力感測器旋轉插入代碼示例
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1027,9 +1046,10 @@
     * @param  [in] lin_a 探索直線加速度，單位mm/s^2，暫不使用，預設為0
     * @param  [in] max_dis 最大探索距離，單位mm
     * @param  [in] ft  動作終止力/扭矩閾值，fx,fy,fz,tx,ty,tz
+    * @param  [in] strategy 未檢測到力/力矩的處理策略，0-報錯；1-警告，繼續運動
     * @return  錯誤碼
     */
-    public int FT_FindSurface(int rcs, byte dir, byte axis, float lin_v, float lin_a, float max_dis, float ft)
+    public int FT_FindSurface(int rcs, byte dir, byte axis, float lin_v, float lin_a, float max_dis, float ft, int stragety = 0)
 
 計算中間平面位置開始
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

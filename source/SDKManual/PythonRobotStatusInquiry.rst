@@ -380,13 +380,14 @@
     :stub-columns: 1
     :widths: 10 30
 
-    "原型", "``GetInverseKinExaxis(type, desc_pos, exaxis, tool, workPiece)``"
+    "原型", "``GetInverseKinExaxis(type, desc_pos, exaxis, tool, workPiece, config = -1)``"
     "描述", "逆運動學求解，笛卡爾空間包含擴展軸位置"
     "必選參數", "- ``type``: 0-絕對位姿(基座標系)，1-增量位姿(基座標系)，2-增量位姿(工具座標系)
     - ``desc_pos``: 笛卡爾位姿
     - ``exaxis``: 擴展軸位置
     - ``tool``: 工具號
-    - ``workPiece``: 工件號"
+    - ``workPiece``: 工件號
+    - ``config -1``: 自動求解，0-7對應八組解"
     "預設參數", "無"
     "返回值", "- 錯誤碼 成功-0 失敗- errcode
     - ``joint_pos``：關節位置"

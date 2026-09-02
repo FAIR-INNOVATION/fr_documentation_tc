@@ -78,12 +78,12 @@
     :linenos:
 
     /**
-     * @brief  獲取夾爪運動狀態
-     * @param  [out] fault  0-無錯誤，1-有錯誤
-     * @param  [out] staus  0-運動未完成，1-運動完成
-     * @return  錯誤碼
-     */
-    errno_t  GetGripperMotionDone(uint16_t *fault, uint8_t *status);
+    * @brief  獲取夾爪運動狀態(僅末端開放協定定義，已適配設備獲取的運動狀態為透傳值)
+    * @param  [out] fault  0-無錯誤，其他-有錯誤
+    * @param  [out] status  0-運動未完成，1-運動完成未偵測到物體 2-運動完成偵測到物體
+    * @return  錯誤碼
+    */
+    errno_t GetGripperMotionDone(uint16_t *fault, uint8_t *status);
 
 獲取夾爪激活狀態
 ++++++++++++++++++++++++++

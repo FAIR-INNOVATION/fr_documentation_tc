@@ -182,6 +182,14 @@
         robot.Mode(0);
         Thread.Sleep(1000);
         robot.Mode(1);
+        
+        rtn = robot.HiSpeedManualSwitch(1);
+        Console.WriteLine($"change high speed mode {rtn}");
+        Thread.Sleep(10000);
+
+        rtn = robot.HiSpeedManualSwitch(0);
+        Console.WriteLine($"change low speed mode {rtn}");
+        Thread.Sleep(1000);
     }
 
 初始化日誌參數
@@ -296,3 +304,15 @@
         Console.WriteLine($"Firm driver6 Version  is: {ver[17]}");
         Console.WriteLine($"Firm end Version  is: {ver[18]}");
     }
+
+切換手動高速模式
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.. code-block:: c#
+    :linenos:
+
+    /**
+    * @brief 切換手動高速模式
+    * @param [in] state 0-退出手動高速；1-進入手動高速
+    * @return 錯誤碼
+    */
+    public int HiSpeedManualSwitch(int state)    

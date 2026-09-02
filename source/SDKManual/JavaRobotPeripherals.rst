@@ -74,8 +74,8 @@
     :linenos:
 
     /**
-    * @brief  獲取夾爪運動狀態
-    * @return List[0]:錯誤碼; List[1] : fault  0-無錯誤，1-有錯誤; List[2]: staus  0-運動未完成，1-運動完成
+    * @brief  獲取夾爪運動狀態(僅末端開放協定定義，已適配設備獲取的運動狀態為透傳值)
+    * @return List[0]:錯誤碼; List[1] : fault  0-無錯誤，其他-有錯誤; List[2]: staus  0-運動未完成，1-運動完成未偵測到物體 2-運動完成偵測到物體
     */
     List<Integer> GetGripperMotionDone(); 
 

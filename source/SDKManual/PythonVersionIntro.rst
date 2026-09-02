@@ -13,6 +13,26 @@
      - **日期**
      - **更新描述**
 
+   * - V3.9.9
+     - 2026-09-01
+     - | 1.更新獲取夾爪運動狀態介面GetGripperMotionDone()，更新夾爪狀態輸出參數定義及使用範圍；
+       | 2.修改GetInverseKinExaxis()包含擴展軸位置的逆運動學求解介面，增加關節配置參數，預設值為-1參考目前關節配置；
+       | 3.修改FT_SpiralSearch()、FT_LinInsertion()、FT_FindSurface()力控介面增加未檢測到力/力矩的處理策略參數；
+       | 4.修改SetDIConfig()、GetDIConfig()、SetDOConfig()、GetDOConfig()機器人控制箱CIO
+       | 5.功能配置介面參數描述，更新新增的功能名稱及功能碼；新增獲取安全配置參數校驗和介面GetSafetyParamsCheckSum()；
+       | 6.修改機器人基礎控制代碼示例，增加手動高速模式切換代碼示例；
+       | 7.新增安全操作密碼校驗介面SafetyOPPasswordCheck()；
+       | 8.新增等待夾爪運動狀態介面GripperWaitMotionDone()，支援逾時和策略設定（僅適用於末端開放協定）；
+       | 9.新增同步系統時間至機器人介面SetRobottime()；
+       | 10.新增關節空間伺服模式運動介面ServoJ()，支援多點位一次輸入；
+       | 11.新增雷射記錄復現+常規擺動代碼示例；
+       | 12.新增雷射記錄復現+擴展軸非同步運動+定點擺動代碼示例；
+       | 13.新增螺旋線探索介面FT_SpiralSearch()；
+       | 14.新增切換手動高速模式介面HiSpeedManualSwitch()；
+       | 15.新增安全雙通道CI功能配置介面SetSafetyDIConfig()；
+       | 16.新增安全雙通道CO功能配置介面SetSafetyDOConfig()；
+       | 17.新增安全雙通道CI/CO功能配置設定-讀取-清零驗證示例。
+
    * - V3.9.8
      - 2026-07-27
      - | 1.更新機器人狀態回饋結構體，增加目前機器人Lua程式運行狀態，0-程式未運行；1-程式運行中(包含程式暫停)；

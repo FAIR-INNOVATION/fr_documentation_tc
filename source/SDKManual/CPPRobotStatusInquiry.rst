@@ -403,9 +403,10 @@
     * @param [in] tool 工具號
     * @param [in] workPiece 工件號
     * @param [out] joint_pos 關節位置
+    * @param [in] config 關節空間配置，[-1]-參考目前關節位置解算，[0~7]-依據特定關節空間配置求解
     * @return 錯誤碼
     */
-    errno_t GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, JointPos& joint_pos);
+    errno_t GetInverseKinExaxis(int type, DescPose desc_pos, ExaxisPos exaxis, int tool, int workPiece, JointPos& joint_pos, int config = -1);
 
 逆運動學求解包含擴展軸位置程式碼範例
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
